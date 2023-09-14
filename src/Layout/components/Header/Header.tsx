@@ -1,10 +1,11 @@
-import FilterSelector from 'components/customs/FilterSelector';
-
-function Header() {
+type HeaderProp = {
+  className?: string;
+};
+function Header({ className }: HeaderProp) {
   return (
-    <>
-      <FilterSelector label="Địa chỉ" />
-    </>
+    <header className={`${className}`}>
+      <h1>Header</h1>
+    </header>
   );
 }
 
