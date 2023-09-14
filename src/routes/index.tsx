@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import DefaultLayout from 'Layout/DefaultLayout/DefaultLayout';
-import Home from 'pages/Home/Home';
-import NotFound from 'pages/NotFound';
+import DefaultLayout from '~/Layout/DefaultLayout';
+import Home from '~/pages/Home';
+import NotFound from '~/pages/NotFound';
 
 export default function AppRoutes() {
   return (
