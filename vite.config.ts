@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '~': path.resolve(path.__dirname, 'src'), // Đặt đường dẫn "~" tới thư mục "src"
+      '~': path.resolve(__dirname, 'src'), // Đặt đường dẫn "~" tới thư mục "src"
     },
   },
 });

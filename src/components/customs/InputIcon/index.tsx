@@ -30,7 +30,7 @@ const InputIcon = ({
   return (
     <div className="relative inline-block">
       <IonIcon
-        name={icon}
+        name={icon as any}
         className={`absolute left-3 top-2 text-2xl text-cs_gray ${isFocus ? 'text-cs_purple' : ''}`}
       />
       <input
