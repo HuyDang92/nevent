@@ -26,7 +26,7 @@ const SearchBar = ({value, onChange, className}: SearchBarProps) => {
                         value={value}
                         onChange={onChange}
                 />
-                <IonIcon name="search-outline" className={`absolute right-3 top-1.5 text-cs_gray text-2xl ${isFocus ? 'text-cs_purple' : ''}`}/>
+                <IonIcon name="search-outline" className={`absolute right-3 top-1.5 cursor-pointer text-cs_gray text-2xl ${isFocus ? 'text-cs_purple' : ''}`} />
             </div>
         </>
     )
