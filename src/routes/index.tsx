@@ -10,7 +10,6 @@ export default function AppRoutes() {
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
         </Route>
-
         <Route path="*" element={<Navigate to="/NotFound-404" />} />
         <Route path="/NotFound-404" element={<NotFound />} />
       </Routes>
