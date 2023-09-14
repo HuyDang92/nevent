@@ -26,8 +26,8 @@ const FilterSelector = ({ className, type = 'address', label }: FilterSelectorPr
   return (
     <div className={`w-72 ${className}`}>
       <Select label={label} className="text-white" color="blue-gray">
-        {optList.map((opt: Address) => (
-          <Option>{opt.name}</Option>
+        {optList.map((opt: Address, index: number) => (
+          <Option key={index}>{opt.name}</Option>
         ))}
       </Select>
     </div>

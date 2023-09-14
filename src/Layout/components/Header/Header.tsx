@@ -3,7 +3,7 @@ import FilterSelector from 'components/customs/FilterSelector';
 function Header() {
   return (
     <>
-      {/* <FilterSelector label="Địa chỉ" /> */}
+      <FilterSelector label="Địa chỉ" />
     </>
   );
 }
