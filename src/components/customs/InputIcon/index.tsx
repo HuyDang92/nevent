@@ -11,7 +11,7 @@ type InputProps = {
   className?: string;
 };
 
-const InputV2 = ({
+const InputIcon = ({
   icon,
   value,
   onChange,
@@ -45,4 +45,4 @@ const InputV2 = ({
     </div>
   );
 };
-export default InputV2;
+export default InputIcon;
