@@ -6,7 +6,10 @@ module.exports = withMT({
     extend: {
       colors: {
         darkLight: '#44425A',
-        
+        cs_light: '#fff',
+        cs_dark: '#44425A',
+        cs_purple: '#793FDF',
+        cs_gray: '#B6B6B6',
       },
       boxShadow: {
         'border-full': '0px 0px 20px 2px rgba(0,0,0,0.1)',

@@ -3,18 +3,18 @@ import { motion } from 'framer-motion'
 
 type ButtonProps = {
     className?: string,
-    children: React.ReactNode,
+    value: React.ReactNode,
     type?: 'button' | 'submit' | 'reset'
 }
 
-const Button = ({ className, children, type = 'button' }: ButtonProps) => {
+const Button = ({ className, value, type = 'button' }: ButtonProps) => {
     return (
         <motion.button
-            className={`bg-black text-white px-4 py-2 rounded-md ${className}`}
+            className={`px-4 py-2 ${className}`}
             whileTap={{ scale: 0.9 }}
             type={type}
         >
-            {children}
+            {value}
         </motion.button>
     )
 }
