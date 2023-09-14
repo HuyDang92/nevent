@@ -1,9 +1,10 @@
+import authSlice from '~/features/Auth/authSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { authApi } from 'features/Auth/authApi.service';
-import authSlice from 'features/Auth/authSlice';
+
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { authApi } from '~/features/Auth/authApi.service';
 
 const persistConfig = {
   key: 'root',
