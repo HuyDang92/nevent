@@ -1,35 +1,39 @@
-import IonIcon from "@reacticons/ionicons"
-import { useState, ChangeEvent } from "react"
+import IonIcon from '@reacticons/ionicons';
+import { useState, ChangeEvent } from 'react';
 
 type SearchBarProps = {
-    value: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    className?: string
-}
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+};
 
-const SearchBar = ({value, onChange, className}: SearchBarProps) => {
-    const [isFocus, setIsFocus] = useState(false)
-    const handleFocus = () => {
-        setIsFocus(true);
-    }
-    const handleBlur = () => {
-        setIsFocus(false);
-    }
-    return(
-        <>
-            <div className="relative inline-block">
-                <input  placeholder="Tìm kiếm sự kiện" 
-                        className={`bg-cs_light border-2 text-cs_purple border-cs_gray rounded-full w-96 h-10 px-4 py-3.5 focus:outline-none focus:border-cs_purple focus:placeholder-cs_purple ${className}`}
-                        type="text"
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        value={value}
-                        onChange={onChange}
-                />
-                <IonIcon name="search-outline" className={`absolute right-3 top-1.5 cursor-pointer text-cs_gray text-2xl ${isFocus ? 'text-cs_purple' : ''}`} />
-            </div>
-        </>
-    )
-}
+const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
+  const [isFocus, setIsFocus] = useState(false);
+  const handleFocus = () => {
+    setIsFocus(true);
+  };
+  const handleBlur = () => {
+    setIsFocus(false);
+  };
+  return (
+    <>
+      <div className="relative inline-block">
+        <input
+          placeholder="Tìm kiếm sự kiện"
+          className={`h-10 w-96 rounded-full border-2 border-cs_gray bg-cs_light px-4 py-3.5 text-cs_purple focus:border-cs_purple focus:placeholder-cs_purple focus:outline-none ${className}`}
+          type="text"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          value={value}
+          onChange={onChange}
+        />
+        <IonIcon
+          name="search-outline"
+          className={`absolute right-3 top-1.5 text-2xl text-cs_gray ${isFocus ? 'text-cs_purple' : ''}`}
+        />
+      </div>
+    </>
+  );
+};
 
-export default SearchBar
+export default SearchBar;
