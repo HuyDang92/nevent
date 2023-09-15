@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
@@ -7,15 +7,26 @@ import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 
 type HeaderProps = {
-  className?: string
-}
-const Header = ({className}: HeaderProps) => {
+  className?: string;
+};
+const Header = ({ className }: HeaderProps) => {
   const checkUser = true; //change this when login
 
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
-  React.useEffect(() => {
-    window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 960) {
+        setOpenNav(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Gỡ bỏ event listener trong hàm dọn dẹp của useEffect
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const navList = (
@@ -47,7 +58,7 @@ const Header = ({className}: HeaderProps) => {
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">
             <Typography className="cursor-pointer">
-              <img src="./src/assets/images/Logo-desktop.png" alt="" />
+              <img src="./src/assets/svg/logo-desktop.svg" alt="" />
             </Typography>
           </Link>
           <SearchBar className="hidden lg:inline-block" />
