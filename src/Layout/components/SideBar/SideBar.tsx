@@ -33,8 +33,10 @@ const SideBar = ({ className }: SideBarProp) => {
   };
 
   return (
-    <Card className={`h-[calc(100vh-2rem)] justify-between bg-transparent p-4 ${className}`}>
-      <List className="min-w-full">
+    <Card
+      className={`sticky top-10 mt-0 h-[calc(100vh-2rem)] justify-between bg-transparent p-4 pt-0 shadow-none ${className}`}
+    >
+      <List className="min-w-full pt-0">
         <Link to={'/'}>
           <ListItem
             onClick={() => handleOpen(0)}
