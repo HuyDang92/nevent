@@ -1,18 +1,27 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
-
+import logo from '~/assets/images/logo.svg';
 const Header = () => {
   const checkUser = true; //change this when login
 
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
-  React.useEffect(() => {
-    window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 960) {
+        setOpenNav(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      // Cleanup: remove the event listener when the component is unmounted
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const navList = (
@@ -39,8 +48,8 @@ const Header = () => {
   );
 
   return (
-    <Navbar className="mx-auto w-full rounded-none ">
-      <div className="container mx-auto flex items-center justify-between">
+    <Navbar className=" w-full rounded-none py-1">
+      <div className="flex items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">
             <Typography className="cursor-pointer">
