@@ -54,9 +54,9 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <Navbar className={`mx-auto w-full rounded-none ${className}`}>
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="w-full flex items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
-          <Link to="./">
+          <Link to="/">
             <Typography className="cursor-pointer">
               <img src="./src/assets/svg/logo-desktop.svg" alt="" />
             </Typography>
@@ -69,7 +69,7 @@ const Header = ({ className }: HeaderProps) => {
             {checkUser ? (
               <Dropdown />
             ) : (
-              <Link to="./">
+              <Link to="/">
                 <Typography className="cursor-pointer text-cs_purple sm:text-lg">Đăng nhập</Typography>
               </Link>
             )}
