@@ -33,7 +33,7 @@ const SideBar = ({ className }: SideBarProp) => {
   };
 
   return (
-    <Card className={`h-[calc(100vh-2rem)] justify-between bg-transparent p-4 w-[20vw] ${className}`}>
+    <Card className={`h-[calc(100vh-2rem)] justify-between bg-transparent p-4 ${className}`}>
       <List className="min-w-full">
         <Link to={'/'}>
           <ListItem
