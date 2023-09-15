@@ -6,7 +6,10 @@ import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 
-const Header = () => {
+type HeaderProps = {
+  className?: string
+}
+const Header = ({className}: HeaderProps) => {
   const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = React.useState(false);
@@ -39,7 +42,7 @@ const Header = () => {
   );
 
   return (
-    <Navbar className="mx-auto w-full rounded-none ">
+    <Navbar className={`mx-auto w-full rounded-none ${className}`}>
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">

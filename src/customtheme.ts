@@ -8,7 +8,7 @@ export const theme = {
             width: 'w-full',
             maxWidth: 'w-full',
             borderRadius: 'rounded-xl',
-            py: 'py-4',
+            py: 'py-2',
             px: 'px-8',
           },
           shadow: {
