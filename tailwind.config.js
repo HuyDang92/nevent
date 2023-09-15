@@ -8,7 +8,6 @@ module.exports = withMT({
         '2xs': '0.5rem',
       },
       colors: {
-        darkLight: '#44425A',
         cs_light: '#fff',
         cs_dark: '#44425A',
         cs_purple: '#793FDF',
