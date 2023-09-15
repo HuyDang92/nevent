@@ -17,10 +17,10 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
   };
   return (
     <>
-      <div className="relative inline-block">
+      <div className={`relative inline-block w-1/2 ${className}`}>
         <input
           placeholder="Tìm kiếm sự kiện"
-          className={`h-10 w-96 rounded-full border-2 border-cs_gray bg-cs_light px-4 py-3.5 text-cs_purple focus:border-cs_purple focus:placeholder-cs_purple focus:outline-none ${className}`}
+          className={`h-10 w-full rounded-full border-2 border-cs_gray bg-cs_light px-4 py-3.5 text-cs_purple focus:border-cs_purple focus:placeholder-cs_purple focus:outline-none `}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}

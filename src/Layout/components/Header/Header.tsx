@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 
 const Header = () => {
-  const checkUser = true; //change this when login
+  const checkUser = false; //change this when login
 
   const [openNav, setOpenNav] = React.useState(false);
 
@@ -17,35 +17,49 @@ const Header = () => {
 
   const navList = (
     <ul className="flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Link to="./">
-        <Button value="Tạo sự kiện" type="button" className="rounded-full border-2 border-cs_purple text-cs_purple" />
+      <Link to="./" className="">
+        <Button
+          value="Tạo sự kiện"
+          type="button"
+          className="hidden rounded-full border-2 border-cs_purple text-cs_purple lg:block"
+        />
+        <div className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:hidden">
+          <IonIcon name="add-circle-outline" className="text-2xl " />
+          <Typography className="cursor-pointer text-lg ">Tạo sự kiện</Typography>
+        </div>
       </Link>
-      <Link to="./">
-        <IonIcon name="wallet-outline" className="text-3xl text-cs_purple" />
+      <Link
+        to="./"
+        className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white"
+      >
+        <IonIcon name="wallet-outline" className="text-2xl " />
+        <Typography className="cursor-pointer text-lg  lg:hidden">Ví của tôi</Typography>
       </Link>
     </ul>
   );
 
   return (
-    <Navbar className="mx-auto w-full rounded-none py-4">
-      <div className="container mx-auto flex items-center justify-around">
+    <Navbar className="mx-auto w-full rounded-none ">
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">
             <Typography className="cursor-pointer">
               <img src="./src/assets/images/Logo-desktop.png" alt="" />
             </Typography>
           </Link>
-          <SearchBar />
+          <SearchBar className="hidden lg:inline-block" />
         </div>
-        <div className="flex w-1/3 items-center justify-end gap-5">
+        <div className="flex items-center justify-end gap-5 lg:w-1/3">
           <div className="hidden lg:block">{navList}</div>
-          {checkUser ? (
-            <Dropdown />
-          ) : (
-            <Link to="./">
-              <Typography className="cursor-pointer text-lg text-cs_purple">Đăng nhập</Typography>
-            </Link>
-          )}
+          <div className="">
+            {checkUser ? (
+              <Dropdown />
+            ) : (
+              <Link to="./">
+                <Typography className="cursor-pointer text-cs_purple sm:text-lg">Đăng nhập</Typography>
+              </Link>
+            )}
+          </div>
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -77,6 +91,7 @@ const Header = () => {
           </IconButton>
         </div>
       </div>
+
       <MobileNav open={openNav}>
         <div className="container mx-auto">
           {navList}
