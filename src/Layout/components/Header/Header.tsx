@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 
 const Header = () => {
-  const checkUser = false; //change this when login
+  const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = React.useState(false);
 
