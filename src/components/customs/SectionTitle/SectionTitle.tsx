@@ -5,7 +5,7 @@ type SectionTitleProps = {
 const SectionTitle = ({ value, className }: SectionTitleProps) => {
   return (
     <>
-      <div className={`mx-auto flex w-full items-center justify-center gap-6 ${className}`}>
+      <div className={`mx-auto my-5 flex w-full items-center justify-center gap-6 ${className}`}>
         <hr className="border-1 my-2 w-48 border-cs_dark" />
         <p className="text-3xl font-bold text-cs_dark">{value}</p>
         <hr className="border-1 my-2 w-48 border-cs_dark" />

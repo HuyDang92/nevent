@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ProductCard from '~/components/customs/ProductCard';
 import Button from '~/components/customs/Button';
 import SectionTitle from '~/components/customs/SectionTitle';
+import CategoryCard from '~/components/customs/CategoryCard/CategoryCard';
 
 function Home() {
   const tempData = [
@@ -112,11 +113,17 @@ function Home() {
 
   return (
     <>
-      <SectionTitle value="Sự kiện nổi bật" />
       <div className="p-5">
+        <SectionTitle value="Danh mục yêu thích" />
+        <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+          <CategoryCard />
+          <CategoryCard />
+          <CategoryCard />
+        </div>
+        <SectionTitle value="Sự kiện nổi bật" />
         <div className="grid grid-cols-4 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {tempData.slice(0, visibleProducts).map((data, index) => (
-            <ProductCard key={index} image={data.image} title={data.title} date={data.date} category={data.category} />
+            <ProductCard id={index} image={data.image} name={data.title} date={data.date} category={data.category} />
           ))}
         </div>
         {visibleProducts < tempData.length && (
