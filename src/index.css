@@ -4,6 +4,9 @@
 html {
   font-size: 16px;
 }
+body {
+  background-color: #f5f7fc;
+}
 * {
   font-family: 'Montserrat', sans-serif;
 }
