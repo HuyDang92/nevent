@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import ProductCard from '~/components/customs/ProductCard';
 import Button from '~/components/customs/Button';
@@ -5,7 +6,7 @@ import SectionTitle from '~/components/customs/SectionTitle';
 import CategoryCard from '~/components/customs/CategoryCard/CategoryCard';
 
 function Home() {
-  const tempData = [
+  const tempProductData = [
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
@@ -102,9 +103,32 @@ function Home() {
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
-  ]; //Thay đổi tempData bằng dữ liệu fetch ra từ database
+  ]; //Thay đổi tempProductData bằng dữ liệu fetch ra từ database
+  const tempCateData = [
+    {
+      img: './src/assets/images/pro.png',
+      name: 'Thể thao',
+    },
+    {
+      img: './src/assets/images/pro.png',
+      name: 'Âm nhạc',
+    },
+    {
+      img: './src/assets/images/pro.png',
+      name: 'Âm nhạc',
+    },
+    {
+      img: './src/assets/images/pro.png',
+      name: 'Âm nhạc',
+    },
+    {
+      img: './src/assets/images/pro.png',
+      name: 'Âm nhạc',
+    },
+  ]; //Thay đổi tempCateData bằng dữ liệu fetch ra từ database
 
-  //Nút xem thêm
+  //Nút xem thêm cho sản phẩm nổi bật
+  const [visibleCates, setVisibleCates] = useState(3); // Số lượng danh mục hiển thị ban đầu
   const [visibleProducts, setVisibleProducts] = useState(12); // Số lượng sản phẩm hiển thị ban đầu
 
   const showMoreProducts = () => {
@@ -114,19 +138,26 @@ function Home() {
   return (
     <>
       <div className="p-5">
-        <SectionTitle value="Danh mục yêu thích" />
-        <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-        </div>
-        <SectionTitle value="Sự kiện nổi bật" />
-        <div className="grid grid-cols-4 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {tempData.slice(0, visibleProducts).map((data, index) => (
-            <ProductCard id={index} image={data.image} name={data.title} date={data.date} category={data.category} />
+        <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
+        <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
+          {tempCateData.slice(0, visibleCates).map((data, index) => (
+            <CategoryCard id={index} image={data.img} name={data.name} link="/about" />
           ))}
         </div>
-        {visibleProducts < tempData.length && (
+        <SectionTitle value="Sự kiện nổi bật" />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {tempProductData.slice(0, visibleProducts).map((data, index) => (
+            <ProductCard
+              id={index}
+              image={data.image}
+              name={data.title}
+              date={data.date}
+              category={data.category}
+              link=""
+            />
+          ))}
+        </div>
+        {visibleProducts < tempProductData.length && (
           <Button className="mx-auto mt-5" onClick={showMoreProducts} value="Xem thêm" />
         )}
       </div>
