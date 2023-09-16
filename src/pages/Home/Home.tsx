@@ -1,16 +1,18 @@
-// import Button from '~/components/customs/Button';
-// // import Input from "~/components/customs/Input";
-// import InputIcon from '~/components/customs/InputIcon';
-// import SearchBar from '~/components/customs/SearchBar';
-// import Dropdown from '~/components/customs/Dropdown';
-
+import { MouseEvent } from 'react';
+import Button from '~/components/customs/Button';
+import logo from '~/assets/svg/logo-white.svg';
 function Home() {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e.target);
+  };
   return (
     <>
-      {/* <InputIcon icon="recording-outline" type="text" placeholder="hello" border="rounded-full" />
-      <Button value="Đăng nhập" className="rounded-full border-2 border-cs_purple text-cs_purple" />
-      <SearchBar />
-      <Dropdown /> */}
+      <Button
+        onClick={(e) => onClick(e)}
+        icon={logo}
+        className="rounded-xl bg-cs_purple text-cs_light"
+        value="Login Google"
+      ></Button>
     </>
   );
 }
