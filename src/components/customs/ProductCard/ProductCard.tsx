@@ -9,7 +9,7 @@ type ProductCardProps = {
   className?: string;
 };
 // Nhớ thay link đến sản phẩm
-const ProductCard = ({ image, link, name, date, category, id, className }: ProductCardProps) => {
+const ProductCard = ({ id, image, link, name, date, category, className }: ProductCardProps) => {
   return (
     <div className={`group w-full cursor-pointer transition hover:-translate-y-5 ${className}`} key={id}>
       <Link to={link}>
