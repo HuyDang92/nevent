@@ -9,7 +9,7 @@ export const theme = {
             maxWidth: 'w-full',
             borderRadius: 'rounded-xl',
             py: 'py-2',
-            px: 'px-8',
+            px: 'px-6',
           },
           shadow: {
             boxShadow: 'shadow-md',

@@ -32,11 +32,7 @@ const Header = ({ className }: HeaderProps) => {
   const navList = (
     <ul className="flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Link to="./" className="">
-        <Button
-          value="Tạo sự kiện"
-          type="button"
-          className="hidden rounded-full border-2 border-cs_purple text-cs_purple lg:block"
-        />
+        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" />
         <div className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:hidden">
           <IonIcon name="add-circle-outline" className="text-2xl " />
           <Typography className="cursor-pointer text-lg ">Tạo sự kiện</Typography>
@@ -53,8 +49,8 @@ const Header = ({ className }: HeaderProps) => {
   );
 
   return (
-    <Navbar className={`mx-auto w-full rounded-none ${className}`}>
-      <div className="w-full flex items-center justify-between">
+    <Navbar className={` mx-auto w-full rounded-none ${className}`}>
+      <div className="flex w-full items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="/">
             <Typography className="cursor-pointer">
