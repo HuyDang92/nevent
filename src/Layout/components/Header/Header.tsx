@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import { useState, useEffect } from 'react';
+=======
+import { useEffect, useState } from 'react';
+>>>>>>> b1cdfa534284af53a65697ea01252dac39a74207
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
+<<<<<<< HEAD
 
 type HeaderProps = {
   className?: string;
 };
 const Header = ({ className }: HeaderProps) => {
+=======
+import logo from '~/assets/images/logo.svg';
+const Header = () => {
+>>>>>>> b1cdfa534284af53a65697ea01252dac39a74207
   const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = useState(false);
@@ -20,11 +29,17 @@ const Header = ({ className }: HeaderProps) => {
         setOpenNav(false);
       }
     };
+<<<<<<< HEAD
 
     window.addEventListener('resize', handleResize);
 
     // Gỡ bỏ event listener trong hàm dọn dẹp của useEffect
     return () => {
+=======
+    window.addEventListener('resize', handleResize);
+    return () => {
+      // Cleanup: remove the event listener when the component is unmounted
+>>>>>>> b1cdfa534284af53a65697ea01252dac39a74207
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -49,8 +64,13 @@ const Header = ({ className }: HeaderProps) => {
   );
 
   return (
+<<<<<<< HEAD
     <Navbar className={` mx-auto w-full rounded-none ${className}`}>
       <div className="flex w-full items-center justify-between">
+=======
+    <Navbar className=" w-full rounded-none py-1">
+      <div className="flex items-center justify-between">
+>>>>>>> b1cdfa534284af53a65697ea01252dac39a74207
         <div className="flex w-1/2 items-center gap-5">
           <Link to="/">
             <Typography className="cursor-pointer">

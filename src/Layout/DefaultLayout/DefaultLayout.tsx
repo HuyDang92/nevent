@@ -7,14 +7,16 @@ import Footer from '../components/Footer';
 function DefaultLayout() {
   return (
     <>
-      <Header className="" />
+      <Header />
       <div className="relative my-5 flex">
-        <SideBar className="w-[25%]" />
+        <aside className="w-[25%]">
+          <SideBar />
+        </aside>
         <main className="w-[75%] rounded-[15px] bg-white shadow-border-light 2xl:container">
           <Outlet />
         </main>
       </div>
-      <Footer className="" />
+      <Footer />
     </>
   );
 }
