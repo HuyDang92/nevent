@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
-import logo from '~/assets/images/logo.svg';
-const Header = () => {
+
+type HeaderProps = {
+  className?: string;
+};
+const Header = ({ className }: HeaderProps) => {
   const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = useState(false);
@@ -17,9 +20,11 @@ const Header = () => {
         setOpenNav(false);
       }
     };
+
     window.addEventListener('resize', handleResize);
+
+    // Gỡ bỏ event listener trong hàm dọn dẹp của useEffect
     return () => {
-      // Cleanup: remove the event listener when the component is unmounted
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -48,12 +53,12 @@ const Header = () => {
   );
 
   return (
-    <Navbar className=" w-full rounded-none py-1">
-      <div className="flex items-center justify-between">
+    <Navbar className={`mx-auto w-full rounded-none ${className}`}>
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">
             <Typography className="cursor-pointer">
-              <img src="./src/assets/images/Logo-desktop.png" alt="" />
+              <img src="./src/assets/svg/logo-desktop.svg" alt="" />
             </Typography>
           </Link>
           <SearchBar className="hidden lg:inline-block" />
