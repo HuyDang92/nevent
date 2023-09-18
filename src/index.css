@@ -7,3 +7,6 @@ html {
 body {
   background-color: #f5f7fc;
 }
+* {
+  font-family: 'Montserrat', sans-serif;
+}
