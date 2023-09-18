@@ -8,7 +8,7 @@ function DefaultLayout() {
   return (
     <>
       <Header />
-      <div className="relative my-5 flex">
+      <div className="relative mx-auto my-5 flex max-w-[1728px]">
         <aside className="w-[25%]">
           <SideBar />
         </aside>

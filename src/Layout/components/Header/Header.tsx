@@ -49,8 +49,10 @@ const Header = ({ className }: HeaderProps) => {
   );
 
   return (
-    <Navbar className={` mx-auto w-full rounded-none ${className}`}>
-      <div className="flex w-full items-center justify-between">
+    <header
+      className={`sticky top-0 z-20 mx-auto w-full  rounded-none bg-white p-1 px-[30px] shadow-border-light ${className}`}
+    >
+      <div className="mx-auto flex w-full max-w-[1728px] items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="./">
             <Typography className="cursor-pointer">
@@ -110,7 +112,7 @@ const Header = ({ className }: HeaderProps) => {
           </Button> */}
         </div>
       </MobileNav>
-    </Navbar>
+    </header>
   );
 };
 

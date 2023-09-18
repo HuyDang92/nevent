@@ -34,13 +34,13 @@ const SideBar = ({ className }: SideBarProp) => {
 
   return (
     <Card
-      className={`sticky top-10 mt-0 h-[calc(100vh-2rem)] justify-between bg-transparent p-4 pt-0 shadow-none ${className}`}
+      className={`sticky top-[82px] mt-0 flex h-[calc(100vh-82px)] flex-col  justify-between bg-transparent py-4 pe-3 pt-0 shadow-none ${className}`}
     >
       <List className="min-w-full pt-0">
         <Link to={'/'}>
           <ListItem
             onClick={() => handleOpen(0)}
-            className={`focus:bg-cs_light ${open === 0 ? 'bg-cs_light shadow-md' : ''}`}
+            className={`focus:bg-cs_light ${open === 0 ? 'bg-cs_light shadow-border-light' : ''}`}
           >
             <ListItemPrefix>
               <IonIcon name="home" className={`text-xl ${open === 0 ? 'text-cs_purple' : 'text-cs_dark'}`} />
