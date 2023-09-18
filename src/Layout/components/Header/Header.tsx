@@ -20,11 +20,9 @@ const Header = ({ className }: HeaderProps) => {
         setOpenNav(false);
       }
     };
-
     window.addEventListener('resize', handleResize);
-
-    // Gỡ bỏ event listener trong hàm dọn dẹp của useEffect
     return () => {
+      // Cleanup: remove the event listener when the component is unmounted
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -54,7 +52,7 @@ const Header = ({ className }: HeaderProps) => {
     >
       <div className="mx-auto flex w-full max-w-[1728px] items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
-          <Link to="./">
+          <Link to="/">
             <Typography className="cursor-pointer">
               <img src="./src/assets/svg/logo-desktop.svg" alt="" />
             </Typography>
@@ -67,7 +65,7 @@ const Header = ({ className }: HeaderProps) => {
             {checkUser ? (
               <Dropdown />
             ) : (
-              <Link to="./">
+              <Link to="/">
                 <Typography className="cursor-pointer text-cs_purple sm:text-lg">Đăng nhập</Typography>
               </Link>
             )}
