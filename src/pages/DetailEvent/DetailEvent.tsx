@@ -13,9 +13,9 @@ function DetailEvent() {
   ];
   return (
     <div className="relative px-[30px] py-[54px]">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-start gap-[40px]">
         <div className="w-[calc(100%-355px)]">
-          <div className="flex h-[150px] flex-col justify-between text-[18px]">
+          <div className="flex flex-col justify-between text-[18px]">
             <Typography className="text-[2rem] font-bold text-cs_dark">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
