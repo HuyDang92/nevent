@@ -29,18 +29,18 @@ const SideBar = ({ className }: SideBarProp) => {
     { id: '5', name: 'Giải trí và vui chơi' },
   ];
   const handleOpen = (value: number) => {
-    setOpen(value);
+    setOpen(open === value ? 0 : value);
   };
 
   return (
     <Card
-      className={`sticky top-10 mt-0 h-[calc(100vh-2rem)] justify-between bg-transparent p-4 pt-0 shadow-none ${className}`}
+      className={`sticky top-[82px] mt-0 flex h-[calc(100vh-82px)] flex-col  justify-between bg-transparent py-4 pe-3 pt-0 shadow-none ${className}`}
     >
-      <List className="min-w-full pt-0">
+      <List className="min-w-full pt-0 ">
         <Link to={'/'}>
           <ListItem
             onClick={() => handleOpen(0)}
-            className={`focus:bg-cs_light ${open === 0 ? 'bg-cs_light shadow-md' : ''}`}
+            className={`px-7 focus:bg-cs_light ${open === 0 ? 'bg-cs_light  shadow-border-light' : ''}`}
           >
             <ListItemPrefix>
               <IonIcon name="home" className={`text-xl ${open === 0 ? 'text-cs_purple' : 'text-cs_dark'}`} />
@@ -60,7 +60,7 @@ const SideBar = ({ className }: SideBarProp) => {
           }
         >
           <ListItem className={`p-0 ${open === 1 ? 'bg-cs_light shadow-md' : ''}`} selected={open === 1}>
-            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
+            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3 px-7">
               <ListItemPrefix>
                 <CategoryIcon
                   fontSize="small"
@@ -73,10 +73,10 @@ const SideBar = ({ className }: SideBarProp) => {
             </AccordionHeader>
           </ListItem>
           <AccordionBody className="py-1">
-            <List className="p-0">
+            <List className="py-2">
               {cateList.map((cate: CateProp) => (
                 <Link to={`/`} key={cate.id}>
-                  <ListItem>
+                  <ListItem className="px-10">
                     <ListItemPrefix>
                       <IonIcon name="ellipse" className="text-2xs" />
                     </ListItemPrefix>
@@ -96,8 +96,8 @@ const SideBar = ({ className }: SideBarProp) => {
             />
           }
         >
-          <ListItem className={`p-0 ${open === 2 ? 'bg-cs_light shadow-md' : ''}`} selected={open === 2}>
-            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+          <ListItem className={`p-0  ${open === 2 ? 'bg-cs_light shadow-md' : ''}`} selected={open === 2}>
+            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3 px-7">
               <ListItemPrefix>
                 <IonIcon
                   name="location-sharp"
@@ -110,9 +110,9 @@ const SideBar = ({ className }: SideBarProp) => {
             </AccordionHeader>
           </ListItem>
           <AccordionBody className="py-1">
-            <List className="p-0">
+            <List className="py-2">
               <Link to={'/'}>
-                <ListItem>
+                <ListItem className="px-10">
                   <ListItemPrefix>
                     <IonIcon name="ellipse" className="text-2xs" />
                   </ListItemPrefix>
@@ -120,7 +120,7 @@ const SideBar = ({ className }: SideBarProp) => {
                 </ListItem>
               </Link>
               <Link to={'/'}>
-                <ListItem>
+                <ListItem className="px-10">
                   <ListItemPrefix>
                     <IonIcon name="ellipse" className="text-2xs" />
                   </ListItemPrefix>
@@ -133,7 +133,7 @@ const SideBar = ({ className }: SideBarProp) => {
         <Link to={'/help'}>
           <ListItem
             onClick={() => handleOpen(3)}
-            className={`focus:bg-cs_light ${open === 3 ? 'bg-cs_light shadow-md' : ''}`}
+            className={`px-7 focus:bg-cs_light ${open === 3 ? 'bg-cs_light shadow-md' : ''}`}
           >
             <ListItemPrefix>
               <IonIcon name="call-sharp" className={`text-xl ${open === 3 ? 'text-cs_purple' : 'text-cs_dark'}`} />
@@ -146,7 +146,7 @@ const SideBar = ({ className }: SideBarProp) => {
       </List>
       <List>
         <Link to={'/'}>
-          <ListItem>
+          <ListItem className="px-7">
             <ListItemPrefix>
               <IonIcon name="people-circle" className="text-xl" />
             </ListItemPrefix>
@@ -154,7 +154,7 @@ const SideBar = ({ className }: SideBarProp) => {
           </ListItem>
         </Link>
         <Link to={'/about'}>
-          <ListItem>
+          <ListItem className="px-7">
             <ListItemPrefix>
               <IonIcon name="alert-circle-outline" className="text-xl" />
             </ListItemPrefix>
@@ -162,7 +162,7 @@ const SideBar = ({ className }: SideBarProp) => {
           </ListItem>
         </Link>
         <Link to={'/'}>
-          <ListItem>
+          <ListItem className="px-7">
             <ListItemPrefix>
               <IonIcon name="help-circle-outline" className="text-xl" />
             </ListItemPrefix>

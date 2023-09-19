@@ -1,21 +1,27 @@
-import React from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
+import IonIcon from '@reacticons/ionicons';
 
 type ButtonProps = {
+  icon?: string;
   className?: string;
-  value: React.ReactNode;
+  value: ReactNode | string;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
 };
 
-const Button = ({ className, value, type = 'button', onClick }: ButtonProps) => {
+const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProps) => {
   return (
-    <motion.button
-      className={`rounded-full border-2 border-cs_purple px-4 py-2 font-bold text-cs_purple transition hover:bg-cs_purple hover:text-white ${className}`}
-      whileTap={{ scale: 0.9 }}
-      type={type}
-      onClick={onClick}
-    >
+    <motion.button onClick={onClick} className={`px-4 py-2 flex ${className}`} whileTap={{ scale: 0.9 }} type={type}>
+      {icon && (
+        <>
+            {icon?.includes('assets') ? (
+                <img src={icon} className="h-[30px] w-[30px] mr-[20px]" alt="" />
+              ) : (
+                <IonIcon name={icon} className="mr-[20px] text-3xl" />
+              )}
+        </>
+      )}
       {value}
     </motion.button>
   );

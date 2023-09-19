@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import ProductCard from '~/components/customs/ProductCard';
 import Button from '~/components/customs/Button';

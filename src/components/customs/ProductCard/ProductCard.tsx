@@ -11,7 +11,7 @@ type ProductCardProps = {
 // Nhớ thay link đến sản phẩm
 const ProductCard = ({ id, image, link, name, date, category, className }: ProductCardProps) => {
   return (
-    <div className={`group w-full cursor-pointer transition hover:-translate-y-5 ${className}`} key={id}>
+    <div className={`group w-full cursor-pointer transition  ${className}`} key={id}>
       <Link to={link}>
         <img
           src={image}

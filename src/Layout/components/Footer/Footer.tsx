@@ -9,14 +9,14 @@ type FooterProp = {
 function Footer({ className }: FooterProp) {
   return (
     <footer className={`bg-cs_dark text-cs_light ${className}`}>
-      <div className="grid grid-cols-1 gap-4 py-10 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 pb-10 pt-[70px] md:grid-cols-3">
         <div className="flex justify-center">
-          <ul className="text-left text-xl">
-            <Typography className="flex h-20 items-center font-medium">
-              <img src={LogoWhite} alt="Photo of NEVENT" />
-              <span className="text-3xl">NEVENT</span>
+          <ul className="text-left">
+            <Typography className="flex items-center font-medium">
+              <img src={LogoWhite} alt="Photo of NEVENT" className='w-[66px] h-[40px]'/>
+              <span className="text-[22px]">NEVENT</span>
             </Typography>
-            <li className='my-2'>
+            <li className='my-2 text-xl'>
               Hotline: <b>0999999999</b>
             </li>
             <li className='my-2'>Email: nevent@gmail.com</li>
@@ -28,8 +28,8 @@ function Footer({ className }: FooterProp) {
           </ul>
         </div>
         <div className="flex justify-center">
-          <ul className="text-left text-xl">
-            <Typography className="flex h-20 items-center text-2xl font-medium">THÔNG TIN</Typography>
+          <ul className="text-left">
+            <Typography className="flex items-center text-[22px] font-medium">THÔNG TIN</Typography>
             <li className='my-2'>
               <Link to={'/about'}>Về chúng tôi</Link>
             </li>
@@ -42,8 +42,8 @@ function Footer({ className }: FooterProp) {
           </ul>
         </div>
         <div className="flex justify-center">
-          <ul className="text-left text-xl">
-            <Typography className="flex h-20 items-center text-2xl font-medium">TRUNG TÂM HỖ TRỢ</Typography>
+          <ul className="text-left">
+            <Typography className="flex items-center text-[22px] font-medium">TRUNG TÂM HỖ TRỢ</Typography>
             <li className='my-2'>
               <Link to={'/'}>FAQs</Link>
             </li>
@@ -56,7 +56,7 @@ function Footer({ className }: FooterProp) {
           </ul>
         </div>
       </div>
-      <div className="border-t-2 border-cs_gray py-4">Copyright &copy; 2023 Team NEVENT</div>
+      <div className="border-t-2 border-cs_gray py-4 text-center">Copyright &copy; 2023 Team NEVENT</div>
     </footer>
   );
 }
