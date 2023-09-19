@@ -127,6 +127,7 @@ function Home() {
   ]; //Thay đổi tempCateData bằng dữ liệu fetch ra từ database
 
   //Nút xem thêm cho sản phẩm nổi bật
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [visibleCates, setVisibleCates] = useState(3); // Số lượng danh mục hiển thị ban đầu
   const [visibleProducts, setVisibleProducts] = useState(12); // Số lượng sản phẩm hiển thị ban đầu
 
@@ -157,7 +158,7 @@ function Home() {
           ))}
         </div>
         {visibleProducts < tempProductData.length && (
-          <div className="mx-auto mt-5 text-center">
+          <div className="mt-5 flex justify-center">
             <Button className="" onClick={showMoreProducts} value="Xem thêm" />
           </div>
         )}

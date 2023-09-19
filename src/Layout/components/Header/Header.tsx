@@ -54,7 +54,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="flex w-1/2 items-center gap-5">
           <Link to="/">
             <Typography className="cursor-pointer">
-              <img src="./src/assets/svg/logo-desktop.svg" alt="" />
+              <img src="./src/assets/svg/logo-desktop.svg" alt="123" />
             </Typography>
           </Link>
           <SearchBar className="hidden lg:inline-block" />
