@@ -29,7 +29,7 @@ const SideBar = ({ className }: SideBarProp) => {
     { id: '5', name: 'Giải trí và vui chơi' },
   ];
   const handleOpen = (value: number) => {
-    setOpen(value);
+    setOpen(open === value ? 0 : value);
   };
 
   return (
