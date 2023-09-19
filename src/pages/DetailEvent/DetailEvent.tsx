@@ -19,23 +19,36 @@ function DetailEvent() {
             <Typography className="text-[2rem] font-bold text-cs_dark">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
-            <div className="flex items-center gap-[15px]">
-              <IonIcon name="timer-outline" className="w-[10%] text-xl" />
-              <span className="w-[90%]">
-                Friday, 10 November 2023&nbsp;<span className="text-[#ff0000]"> (07:00 PM - 11:00 PM)</span>
-              </span>
-            </div>
-            <div className="flex items-center gap-[15px]">
-              <IonIcon name="navigate-outline" className="text-xl w-[10%]" />
-              <span className='w-[90%]'>
-                <b>Cung thể thao Điền Kinh - Mỹ Đình,</b> <br />
-                <span>Phố Trần Hữu Dực, Phường Cầu Diễn, District Nam Tu Liem, Ha Noi City</span>
-              </span>
+            <div className="mt-[10px] flex items-center gap-[20px]">
+              <div className="h-[120px] w-[115px] rounded-[5px] overflow-hidden shadow-border-full">
+                <div className="grid h-[35px] place-content-center bg-cs_purple py-2 text-[15px] text-cs_light">
+                  Tháng 10
+                </div>
+                <div className="flex h-[85px] flex-col items-center justify-center">
+                  <b className="text-[40px]">20</b>
+                  <span className="text-[14px]">Thứ 6</span>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-[15px]">
+                  <IonIcon name="timer-outline" className="w-[10%] text-xl" />
+                  <span className="w-[90%]">
+                    Friday, 10 November 2023&nbsp;<span className="text-[#ff0000]"> (07:00 PM - 11:00 PM)</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-[15px]">
+                  <IonIcon name="navigate-outline" className="w-[10%] text-xl" />
+                  <span className="w-[90%]">
+                    <b>Cung thể thao Điền Kinh - Mỹ Đình,</b> <br />
+                    <span>Phố Trần Hữu Dực, Phường Cầu Diễn, District Nam Tu Liem, Ha Noi City</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <Tabs className="my-[35px] w-[680px]" tabConent={tabContent} tabHeader={tabHeader} />
         </div>
-        <div className="w-[355px] sticky top-0">
+        <div className="sticky top-0 w-[355px]">
           <Button
             className="grid h-10 w-full place-content-center bg-cs_purple text-lg font-bold text-white"
             value="Đặt vé"
