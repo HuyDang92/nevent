@@ -137,7 +137,7 @@ function Home() {
 
   return (
     <>
-      <div className="p-5">
+      <div className="w-full p-5">
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
           {tempCateData.slice(0, visibleCates).map((data, index) => (
@@ -158,7 +158,9 @@ function Home() {
           ))}
         </div>
         {visibleProducts < tempProductData.length && (
-          <Button className="mx-auto mt-5" onClick={showMoreProducts} value="Xem thêm" />
+          <div className="mx-auto mt-5 text-center">
+            <Button className="" onClick={showMoreProducts} value="Xem thêm" />
+          </div>
         )}
       </div>
     </>
