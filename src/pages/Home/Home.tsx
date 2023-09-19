@@ -157,7 +157,7 @@ function Home() {
           ))}
         </div>
         {visibleProducts < tempProductData.length && (
-          <div className="mx-auto mt-5 text-center">
+          <div className="mt-5 flex justify-center">
             <Button className="" onClick={showMoreProducts} value="Xem thêm" />
           </div>
         )}
