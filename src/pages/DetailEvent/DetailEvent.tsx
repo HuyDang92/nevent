@@ -7,6 +7,8 @@ import SectionTitle from '~/components/customs/SectionTitle';
 import Tabs from '~/components/customs/Tabs';
 
 function DetailEvent() {
+
+  
   const [visibleProducts, setVisibleProducts] = useState(8); // Số lượng sản phẩm hiển thị ban đầu
   const tabHeader = ['Giới thiệu', 'Thông tin về', 'Ngày tổ chức', 'Lưu ý'];
   const tabContent = [
@@ -187,6 +189,7 @@ function DetailEvent() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {tempProductData.slice(0, visibleProducts).map((data, index) => (
             <ProductCard
+              key={index}
               id={index}
               image={data.image}
               name={data.title}
@@ -197,7 +200,7 @@ function DetailEvent() {
           ))}
         </div>
         {visibleProducts < tempProductData.length && (
-          <div className="mx-auto mt-5 text-center">
+          <div className="mt-5 flex justify-center">
             <Button className="" onClick={showMoreProducts} value="Xem thêm" />
           </div>
         )}

@@ -5,32 +5,20 @@ type TabsProp = {
   className?: string;
 };
 const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
+  console.log('render tab');
   const [tabIndex, setTabIndex] = useState(0); // Set index của nội dung cần show
   const [showSeeMoreBtn, setShowSeeMoreBtn] = useState(false); // Trạng thái của nút Xem thêm
   const [showHideBtn, setShowHideBtn] = useState(false); // Trạng thái của nút ẩn bớt
   useEffect(() => {
     const contentElement = document.getElementById('content') as HTMLDivElement;
-    // Tạo một observer để theo dõi thay đổi trong nội dung content
-    const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          // Khi nội dung thay đổi, kiểm tra chiều cao và hiển thị nút "Xem thêm" nếu cần
-          if (contentElement.scrollHeight > 1024) {
-            setShowSeeMoreBtn(true);
-          } else {
-            setShowSeeMoreBtn(false);
-          }
-        }
-      }
-    });
-
-    observer.observe(contentElement, { childList: true });
-
-    return () => {
-      // Ngừng theo dõi khi unmount component
-      observer.disconnect();
-    };
-  }, []);
+    console.log(contentElement.scrollHeight);
+    if (contentElement.scrollHeight > 500) {
+      setShowSeeMoreBtn(true);
+    } else {
+      setShowSeeMoreBtn(false);
+    }
+    return () => {};
+  }, [tabIndex]);
   const handleSeeMoreClick = () => {
     const contentElement = document.getElementById('content') as HTMLDivElement;
     contentElement.style.maxHeight = 'none';
