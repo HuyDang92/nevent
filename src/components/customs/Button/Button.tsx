@@ -14,7 +14,7 @@ const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProp
   return (
     <motion.button
       onClick={onClick}
-      className={`flex rounded-full border-2 border-cs_purple px-4 py-2 font-bold text-cs_purple ${className}`}
+      className={`flex border-2 border-cs_purple px-4 py-2 font-bold text-cs_purple ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
     >
