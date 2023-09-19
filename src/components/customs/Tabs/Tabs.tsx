@@ -1,11 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 type TabsProp = {
   tabHeader: string[];
   tabConent: string[];
   className?: string;
 };
 const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
-  const [tabIndex, setTabIndex] = useState(0);
+  console.log('render tab');
+  const [tabIndex, setTabIndex] = useState(0); // Set index của nội dung cần show
+  const [showSeeMoreBtn, setShowSeeMoreBtn] = useState(false); // Trạng thái của nút Xem thêm
+  const [showHideBtn, setShowHideBtn] = useState(false); // Trạng thái của nút ẩn bớt
+  useEffect(() => {
+    const contentElement = document.getElementById('content') as HTMLDivElement;
+    console.log(contentElement.scrollHeight);
+    if (contentElement.scrollHeight > 500) {
+      setShowSeeMoreBtn(true);
+    } else {
+      setShowSeeMoreBtn(false);
+    }
+    return () => {};
+  }, [tabIndex]);
+  const handleSeeMoreClick = () => {
+    const contentElement = document.getElementById('content') as HTMLDivElement;
+    contentElement.style.maxHeight = 'none';
+    setShowSeeMoreBtn(false);
+    setShowHideBtn(true);
+  };
+  const handleHideBtn = () => {
+    const contentElement = document.getElementById('content') as HTMLDivElement;
+    contentElement.style.maxHeight = '500px';
+    setShowSeeMoreBtn(true);
+    setShowHideBtn(false);
+  };
   return (
     <div className={`${className}`}>
       <div>
@@ -29,7 +54,21 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
           ></li>
         </ul>
       </div>
-      <div className="p-3">{tabConent.find((content, index) => index === tabIndex)}</div>
+      <div className="relative p-3">
+        <div id="content" className="max-h-[500px] overflow-hidden">
+          {tabConent.find((content, index) => index === tabIndex)}
+        </div>
+        {showSeeMoreBtn && (
+          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.8)] via-[rgba(182,182,182,0.8)] to-[rgba(182,182,182,0.8)] p-[10px] font-bold text-cs_purple">
+            <button onClick={handleSeeMoreClick}>Xem thêm</button>
+          </div>
+        )}
+        {showHideBtn && (
+          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.8)] via-[rgba(182,182,182,0.8)] to-[rgba(182,182,182,0.8)] p-[10px] font-bold text-cs_purple">
+            <button onClick={handleHideBtn}>Ẩn bớt</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
