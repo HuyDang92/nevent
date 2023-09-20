@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import SearchIcon from '@mui/icons-material/Search';
+import { Dialog } from '@material-tailwind/react';
 
 type HeaderProps = {
   className?: string;
@@ -16,6 +17,11 @@ const Header = ({ className }: HeaderProps) => {
   const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = useState(false);
+
+  //open SearchBar Mobile
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,7 +67,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="flex items-center justify-end gap-3 lg:w-1/3">
           <div className="hidden lg:block">{navList}</div>
           <Link to="/" className="cursor-pointer sm:hidden">
-            <SearchIcon />
+            <SearchIcon onClick={handleOpen} />
           </Link>
           <Link to="/" className="cursor-pointer sm:hidden">
             <QrCodeScannerIcon className="" />
@@ -115,6 +121,9 @@ const Header = ({ className }: HeaderProps) => {
           </Button> */}
         </div>
       </MobileNav>
+      <Dialog open={open} handler={handleOpen} className="inline-block bg-transparent">
+        <SearchBar className="w-full" />
+      </Dialog>
     </header>
   );
 };
