@@ -48,9 +48,9 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 mx-auto w-full  rounded-none bg-white p-1 px-[30px] shadow-border-light ${className}`}
+      className={`sticky top-0 z-20 mx-auto w-full rounded-none bg-white p-1 px-[30px] shadow-border-light ${className}`}
     >
-      <div className="mx-auto flex w-full max-w-[1728px] items-center justify-between">
+      <div className="mx-auto flex w-full max-w-[1728px] h-[70px] items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="/">
             <Typography className="cursor-pointer">
