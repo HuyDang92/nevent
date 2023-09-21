@@ -34,7 +34,7 @@ const SideBar = ({ className }: SideBarProp) => {
 
   return (
     <Card
-      className={`sticky top-[82px] mt-0 flex h-[calc(100vh-82px)] flex-col  justify-between bg-transparent py-4 pe-3 pt-0 shadow-none ${className}`}
+      className={`hidden sticky top-[82px] mt-0 md:flex h-[calc(100vh-82px)] flex-col  justify-between bg-transparent py-4 pe-3 pt-0 shadow-none ${className}`}
     >
       <List className="min-w-full pt-0 ">
         <Link to={'/'}>

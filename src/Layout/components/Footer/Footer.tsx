@@ -8,7 +8,7 @@ type FooterProp = {
 };
 function Footer({ className }: FooterProp) {
   return (
-    <footer className={`bg-cs_dark text-cs_light ${className}`}>
+    <footer className={`hidden md:block bg-cs_dark text-cs_light ${className}`}>
       <div className="grid grid-cols-1 gap-4 pb-10 pt-[70px] md:grid-cols-3">
         <div className="flex justify-center">
           <ul className="text-left">
