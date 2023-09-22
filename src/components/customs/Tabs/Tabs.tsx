@@ -5,13 +5,12 @@ type TabsProp = {
   className?: string;
 };
 const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
-  console.log('render tab');
   const [tabIndex, setTabIndex] = useState(0); // Set index của nội dung cần show
   const [showSeeMoreBtn, setShowSeeMoreBtn] = useState(false); // Trạng thái của nút Xem thêm
   const [showHideBtn, setShowHideBtn] = useState(false); // Trạng thái của nút ẩn bớt
+  const tabWidth = 100 / tabHeader.length
   useEffect(() => {
     const contentElement = document.getElementById('content') as HTMLDivElement;
-    console.log(contentElement.scrollHeight);
     if (contentElement.scrollHeight > 500) {
       setShowSeeMoreBtn(true);
     } else {
@@ -39,9 +38,9 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
             <li
               key={index}
               onClick={() => setTabIndex(index)}
-              className={`w-[${100 / tabHeader.length}%] text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
+              className={`w-[${tabWidth}%] text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
                 tabIndex === index ? 'text-white' : ''
-              } z-10`}
+              } z-10`}  
             >
               {header}
             </li>

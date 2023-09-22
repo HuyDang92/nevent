@@ -152,7 +152,7 @@ function Home() {
               name={data.title}
               date={data.date}
               category={data.category}
-              link=""
+              link="/event-detail/1"
             />
           ))}
         </div>
