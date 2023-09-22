@@ -137,7 +137,7 @@ function Home() {
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
           {tempCateData.slice(0, visibleCates).map((data, index) => (
-            <CategoryCard id={index} image={data.img} name={data.name} link="/about" />
+            <CategoryCard id={index} image={data.img} name={data.name} link="/about" key={index} />
           ))}
         </div>
         <ProductList data={tempProductData} />
