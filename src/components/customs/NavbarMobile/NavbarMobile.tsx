@@ -1,32 +1,65 @@
-import IonIcon from '@reacticons/ionicons';
-import { Link } from 'react-router-dom';
+import IonIcon from "@reacticons/ionicons";
+import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 type NavbarMobileProps = {
   className?: string;
 };
 
+type dataNavigationProps = {
+  link: string;
+  icon: 'home' | 'color-filter' | 'add-circle' | 'call' | 'person';
+}
+
+const dataNavigation: dataNavigationProps[] = [
+  {
+    link: '/',
+    icon: 'home',
+  },
+  {
+    link: '/test1',
+    icon: 'color-filter',
+  },
+  {
+    link: '/test2',
+    icon: 'add-circle',
+  },
+  {
+    link: '/test3',
+    icon: 'call',
+  },
+  {
+    link: '/test1',
+    icon: 'person',
+  },
+]
+
 const NavbarMobile = ({ className }: NavbarMobileProps) => {
   return (
     <>
       <div
-        className={`flex w-full items-center justify-around bg-white py-5 text-3xl shadow-border-full sm:hidden ${className}`}
+        className={`bg-white shadow-border-blur flex items-center w-full py-4 px-4 justify-around sm:hidden ${className}`}
       >
-        <Link to="/">
-          <IonIcon name="home-outline" className="transition hover:text-cs_purple" />
-        </Link>
-        <Link to="/">
-          <IonIcon name="color-filter-outline" className="transition hover:text-cs_purple" />
-        </Link>
-        <Link to="/">
-          <IonIcon name="add-circle-outline" className="transition hover:text-cs_purple" />
-        </Link>
-        <Link to="/">
-          <IonIcon name="call-outline" className="transition hover:text-cs_purple" />
-        </Link>
-        <Link to="/">
-          <IonIcon name="person-outline" className="transition hover:text-cs_purple" />
-        </Link>
-      </div>
+        {
+          dataNavigation.map((item, index) => (
+            <motion.button
+              key={index}
+              whileTap={{ scale: 0.9 }}
+            >
+              <NavLink
+                to={item.link}
+                className={(nav) =>
+                  nav.isActive
+                    ? 'flex justify-center  items-center text-cs_purple duration-100'
+                    : 'flex justify-center items-center'
+                }
+              >
+                <IonIcon name={`${item.icon}-outline`} className='text-2xl ' />
+              </NavLink>
+            </motion.button>
+          ))
+        }
+      </div >
     </>
   );
 };
