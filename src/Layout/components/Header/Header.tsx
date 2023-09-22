@@ -9,6 +9,7 @@ import Dropdown from '~/components/customs/Dropdown';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import SearchIcon from '@mui/icons-material/Search';
 import { Dialog } from '@material-tailwind/react';
+import logo from '~/assets/images/Logo-desktop.png'
 
 type HeaderProps = {
   className?: string;
@@ -20,8 +21,6 @@ const Header = ({ className }: HeaderProps) => {
 
   //open SearchBar Mobile
   const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,8 +57,8 @@ const Header = ({ className }: HeaderProps) => {
         <div className="flex w-1/2 items-center gap-32">
           <Link to="/">
             <Typography className="cursor-pointer">
-              <img src="./src/assets/svg/logo-desktop.svg" alt="123" className="hidden sm:block" />
-              <img src="./src/assets/svg/logo-mobile.svg" alt="logo" className="sm:hidden" />
+              <img src={logo} alt="123" className="hidden sm:block" />
+              <img src={logo} alt="logo" className="sm:hidden" />
             </Typography>
           </Link>
           <SearchBar className="hidden lg:inline-block" />
@@ -67,7 +66,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="flex items-center justify-end gap-3 lg:w-1/3">
           <div className="hidden lg:block">{navList}</div>
           <Link to="/" className="cursor-pointer sm:hidden">
-            <SearchIcon onClick={handleOpen} />
+            <SearchIcon onClick={() => setOpen(!open)} />
           </Link>
           <Link to="/" className="cursor-pointer sm:hidden">
             <QrCodeScannerIcon className="" />
@@ -121,7 +120,7 @@ const Header = ({ className }: HeaderProps) => {
           </Button> */}
         </div>
       </MobileNav>
-      <Dialog open={open} handler={handleOpen} className="inline-block bg-transparent">
+      <Dialog open={open} handler={() => setOpen(!open)} className="inline-block bg-transparent">
         <SearchBar className="w-full" />
       </Dialog>
     </header>
