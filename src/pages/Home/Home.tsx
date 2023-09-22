@@ -140,6 +140,7 @@ function Home() {
             <CategoryCard id={index} image={data.img} name={data.name} link="/about" />
           ))}
         </div>
+        <SectionTitle value="Sự kiện nổi bật" />
         <ProductList data={tempProductData} />
       </div>
     </>

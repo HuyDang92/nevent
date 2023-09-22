@@ -56,7 +56,6 @@ const ProductList = ({ visibleProduct = 12, showMore = 8, data, className }: Pro
 
   return (
     <div className={`${className}`}>
-      <SectionTitle value="Sự kiện nổi bật" />
       <div className="hidden sm:block">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{productUI}</div>
         {visibleProducts < data.length && (

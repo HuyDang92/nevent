@@ -15,7 +15,7 @@ type HeaderProps = {
   className?: string;
 };
 const Header = ({ className }: HeaderProps) => {
-  const checkUser = true; //change this when login
+  const checkUser = false; //change this when login
 
   const [openNav, setOpenNav] = useState(false);
 
@@ -75,7 +75,7 @@ const Header = ({ className }: HeaderProps) => {
             {checkUser ? (
               <Dropdown />
             ) : (
-              <Link to="/">
+              <Link to="/login">
                 <Typography className="cursor-pointer text-cs_purple sm:text-lg">Đăng nhập</Typography>
               </Link>
             )}

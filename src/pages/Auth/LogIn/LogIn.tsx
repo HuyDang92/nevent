@@ -8,9 +8,11 @@ import Logo from '~/assets/svg/logo-desktop.svg';
 import { Link } from 'react-router-dom';
 function LogIn() {
   return (
-    <div className="flex h-screen w-screen justify-between text-cs_dark relative">
-      <div className="left-[30px] top-[15px] absolute">
-        <Link to={"/"}><img src={Logo} alt="" /></Link>
+    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
+      <div className="absolute left-[30px] top-[15px]">
+        <Link to={'/'}>
+          <img src={Logo} alt="" />
+        </Link>
       </div>
       <div className="grid w-1/2 place-content-center">
         <div className="w-[580px] rounded-[25px] bg-white px-[70px] py-[50px] text-center shadow-border-full">
