@@ -34,12 +34,12 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
   return (
     <div className={`${className}`}>
       <div>
-        <ul className="relative flex h-12 rounded-[10px] shadow-border-full">
+        <ul className="relative flex h-10 md:h-12 rounded-[10px] shadow-border-full">
           {tabHeader.map((header: string, index: number) => (
             <li
               key={index}
               onClick={() => setTabIndex(index)}
-              className={`w-[${100 / tabHeader.length}%] flex items-center justify-center rounded-[10px] ${
+              className={`w-[${100 / tabHeader.length}%] text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
                 tabIndex === index ? 'text-white' : ''
               } z-10`}
             >
@@ -54,17 +54,17 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
           ></li>
         </ul>
       </div>
-      <div className="relative p-3">
+      <div className="relative md:p-3">
         <div id="content" className="max-h-[500px] overflow-hidden">
           {tabConent.find((content, index) => index === tabIndex)}
         </div>
         {showSeeMoreBtn && (
-          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.8)] via-[rgba(182,182,182,0.8)] to-[rgba(182,182,182,0.8)] p-[10px] font-bold text-cs_purple">
+          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.5)] via-[rgba(182,182,182,0.5)] to-[rgba(182,182,182,0.5)] p-[10px] font-bold text-cs_purple">
             <button onClick={handleSeeMoreClick}>Xem thêm</button>
           </div>
         )}
         {showHideBtn && (
-          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.8)] via-[rgba(182,182,182,0.8)] to-[rgba(182,182,182,0.8)] p-[10px] font-bold text-cs_purple">
+          <div className="bg absolute bottom-[-30px] flex h-[90px] w-full items-end justify-center bg-gradient-to-b from-[rgba(255,255,255,0.5)] via-[rgba(182,182,182,0.5)] to-[rgba(182,182,182,0.5)] p-[10px] font-bold text-cs_purple">
             <button onClick={handleHideBtn}>Ẩn bớt</button>
           </div>
         )}
