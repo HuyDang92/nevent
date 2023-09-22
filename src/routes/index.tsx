@@ -10,6 +10,7 @@ import About from '~/pages/About';
 import Categories from '~/pages/Categories';
 import SignUpEmail from '~/pages/Auth/SignUpEmail';
 import ForgotPassword from '~/pages/Auth/ForgotPassword';
+import Payment from '~/pages/Payment';
 
 export default function AppRoutes() {
   return (
@@ -20,6 +21,8 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/event-detail/:slug" element={<DetailEvent />} />
           <Route path="/event-categories/:slug" element={<Categories />} />
+          {/* Thanh toán */}
+          <Route path="/payment" element={<Payment />} />
         </Route>
 
         {/* Giới thiệu */}

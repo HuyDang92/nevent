@@ -2,8 +2,8 @@ import { Typography } from '@material-tailwind/react';
 import SectionTitle from '~/components/customs/SectionTitle';
 import Button from '~/components/customs/Button';
 import AuthImage from '~/assets/images/auth.png';
-import LogoGoogle from '~/assets/svg/logo_google.svg';
-import LogoFacebook from '~/assets/svg/logo_facebook.svg';
+import LogoGoogle from '~/assets/icon/logo_google.svg';
+import LogoFacebook from '~/assets/icon/logo_facebook.svg';
 import Logo from '~/assets/svg/logo-desktop.svg';
 import { Link } from 'react-router-dom';
 function LogIn() {
