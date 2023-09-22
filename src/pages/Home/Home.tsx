@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SectionTitle from '~/components/customs/SectionTitle';
 import CategoryCard from '~/components/customs/CategoryCard';
 import ProductList from '~/components/customs/ProductList';
+import Banner from './components/Banner';
 
 function Home() {
   const tempProductData = [
@@ -132,6 +133,7 @@ function Home() {
   return (
     <>
       <div className="w-full p-5">
+        <Banner />
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
           {tempCateData.slice(0, visibleCates).map((data, index) => (
