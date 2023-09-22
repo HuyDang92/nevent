@@ -21,6 +21,7 @@ type SideBarProp = {
 };
 const SideBar = ({ className }: SideBarProp) => {
   const [open, setOpen] = useState(0);
+  
   const cateList = [
     { id: '1', name: 'Âm nhạc' },
     { id: '2', name: 'Thể thao' },
@@ -28,13 +29,14 @@ const SideBar = ({ className }: SideBarProp) => {
     { id: '4', name: 'Hội họp và hội thảo' },
     { id: '5', name: 'Giải trí và vui chơi' },
   ];
+
   const handleOpen = (value: number) => {
     setOpen(open === value ? 0 : value);
   };
 
   return (
     <Card
-      className={`hidden sticky top-[82px] mt-0 md:flex h-[calc(100vh-82px)] flex-col  justify-between bg-transparent py-4 pe-3 pt-0 shadow-none ${className}`}
+      className={`sticky top-[86px] mt-0 flex h-[calc(100vh-86px)] overflow-y-scroll scrollbar-hide flex-col  justify-between bg-transparent py-4 pt-0 shadow-none ${className}`}
     >
       <List className="min-w-full pt-0 ">
         <Link to={'/'}>

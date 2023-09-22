@@ -1,5 +1,4 @@
 import { Typography } from '@material-tailwind/react';
-import IonIcon from '@reacticons/ionicons';
 import Button from '~/components/customs/Button';
 import SectionTitle from '~/components/customs/SectionTitle';
 import AuthImage from '~/assets/images/auth.png';
@@ -39,11 +38,13 @@ function SignUp() {
           </div>
           <SectionTitle size="!text-base" value="hoặc" />
           <div>
-            <Button
-              className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
-              icon="mail"
-              value="Đăng ký bằng email"
-            />
+            <Link to={'/signup-email'}>
+              <Button
+                className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
+                icon="mail"
+                value="Đăng ký bằng email"
+              />
+            </Link>
           </div>
         </div>
       </div>

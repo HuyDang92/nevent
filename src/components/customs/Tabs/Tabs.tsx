@@ -47,9 +47,7 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
           ))}
           <li
             style={{ transform: `translateX(${tabIndex * 100}%)` }}
-            className={`absolute h-full bg-cs_purple transition-all w-[${
-              100 / tabHeader.length
-            }%] flex items-center justify-center rounded-[10px]`}
+            className={`absolute h-full bg-cs_purple transition-all w-[${tabWidth}%] flex items-center justify-center rounded-[10px]`}
           ></li>
         </ul>
       </div>

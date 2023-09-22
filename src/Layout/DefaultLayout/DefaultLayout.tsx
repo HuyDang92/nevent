@@ -9,11 +9,11 @@ function DefaultLayout() {
   return (
     <div className="relative">
       <Header />
-      <div className="relative mx-auto my-5 flex md:max-w-[1728px]">
-        <aside className="md:w-[25%]">
+      <div className="relative mx-auto my-5 flex max-w-[1728px]">
+        <aside className="hidden  w-[20%] sm:block">
           <SideBar />
         </aside>
-        <main className="w-full md:w-[75%] rounded-[15px] bg-white shadow-border-light 2xl:container">
+        <main className="w-full ms-2 rounded-[15px] bg-white shadow-border-light sm:w-[80%]">
           <Outlet />
         </main>
       </div>
