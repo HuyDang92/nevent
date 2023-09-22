@@ -13,9 +13,9 @@ type ProductData = {
 };
 
 type ProductListProps = {
-  visibleProduct?: number;
-  showMore?: number;
-  data: ProductData[];
+  visibleProduct?: number; // số lượng sản phẩm hiện trên trang
+  showMore?: number; // số lượng sp hiện thêm khi bấm vào nút 'xem thêm'
+  data: ProductData[]; //dữ liệu
   className?: string;
 };
 
