@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
@@ -5,6 +6,9 @@ import Button from '~/components/customs/Button';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import SearchIcon from '@mui/icons-material/Search';
+import { Dialog } from '@material-tailwind/react';
 
 type HeaderProps = {
   className?: string;
@@ -13,6 +17,11 @@ const Header = ({ className }: HeaderProps) => {
   const checkUser = true; //change this when login
 
   const [openNav, setOpenNav] = useState(false);
+
+  //open SearchBar Mobile
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,19 +38,14 @@ const Header = ({ className }: HeaderProps) => {
 
   const navList = (
     <ul className="flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Link to="./" className="">
+      <Link to="/" className="">
         <Button value="Tạo sự kiện" type="button" className="hidden lg:block" />
-        <div className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:hidden">
-          <IonIcon name="add-circle-outline" className="text-2xl " />
-          <Typography className="cursor-pointer text-lg ">Tạo sự kiện</Typography>
-        </div>
       </Link>
       <Link
         to="./"
-        className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white"
+        className="hidden items-center rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:block"
       >
-        <IonIcon name="wallet-outline" className="text-2xl " />
-        <Typography className="cursor-pointer text-lg  lg:hidden">Ví của tôi</Typography>
+        <IonIcon name="wallet-outline" className="text-2xl" />
       </Link>
     </ul>
   );
@@ -50,18 +54,25 @@ const Header = ({ className }: HeaderProps) => {
     <header
       className={`sticky top-0 z-20 mx-auto w-full rounded-none bg-white p-1 px-[30px] shadow-border-light ${className}`}
     >
-      <div className="mx-auto flex w-full max-w-[1728px] h-[70px] items-center justify-between">
+      <div className="mx-auto flex h-[70px] w-full max-w-[1728px] items-center justify-between">
         <div className="flex w-1/2 items-center gap-5">
           <Link to="/">
             <Typography className="cursor-pointer">
-              <img src="./src/assets/svg/logo-desktop.svg" alt="" />
+              <img src="./src/assets/svg/logo-desktop.svg" alt="123" className="hidden sm:block" />
+              <img src="./src/assets/svg/logo-mobile.svg" alt="logo" className="sm:hidden" />
             </Typography>
           </Link>
           <SearchBar className="hidden lg:inline-block" />
         </div>
-        <div className="flex items-center justify-end gap-5 lg:w-1/3">
+        <div className="flex items-center justify-end gap-3 lg:w-1/3">
           <div className="hidden lg:block">{navList}</div>
-          <div className="">
+          <Link to="/" className="cursor-pointer sm:hidden">
+            <SearchIcon onClick={handleOpen} />
+          </Link>
+          <Link to="/" className="cursor-pointer sm:hidden">
+            <QrCodeScannerIcon className="" />
+          </Link>
+          <div className="hidden sm:block">
             {checkUser ? (
               <Dropdown />
             ) : (
@@ -80,7 +91,7 @@ const Header = ({ className }: HeaderProps) => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                className="h-6 w-6 text-cs_purple "
+                className="h-6 w-6  "
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -90,7 +101,7 @@ const Header = ({ className }: HeaderProps) => {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-cs_purple "
+                className="h-6 w-6  "
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -110,6 +121,9 @@ const Header = ({ className }: HeaderProps) => {
           </Button> */}
         </div>
       </MobileNav>
+      <Dialog open={open} handler={handleOpen} className="inline-block bg-transparent">
+        <SearchBar className="w-full" />
+      </Dialog>
     </header>
   );
 };

@@ -3,10 +3,11 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import Footer from '../components/Footer';
+import NavbarMobile from '~/components/customs/NavbarMobile';
 
 function DefaultLayout() {
   return (
-    <>
+    <div className="relative">
       <Header />
       <div className="relative mx-auto my-5 flex md:max-w-[1728px]">
         <aside className="md:w-[25%]">
@@ -17,7 +18,8 @@ function DefaultLayout() {
         </main>
       </div>
       <Footer />
-    </>
+      <NavbarMobile className="fixed bottom-0 sm:hidden" />
+    </div>
   );
 }
 
