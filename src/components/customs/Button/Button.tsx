@@ -23,7 +23,7 @@ const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProp
           {icon?.includes('assets') ? (
             <img src={icon} className="mr-[20px] h-[30px] w-[30px]" alt="" />
           ) : (
-            <IonIcon name={icon} className="mr-[20px] text-3xl" />
+            <IonIcon name={icon as any} className="mr-[20px] text-3xl" />
           )}
         </>
       )}
