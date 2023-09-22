@@ -43,7 +43,7 @@ const Header = ({ className }: HeaderProps) => {
       </Link>
       <Link
         to="./"
-        className="hidden items-center rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:block"
+        className="hidden items-center rounded-lg px-3 py-1 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:block"
       >
         <IonIcon name="wallet-outline" className="text-2xl" />
       </Link>
@@ -52,10 +52,10 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 mx-auto w-full rounded-none bg-white p-1 px-[30px] shadow-border-light ${className}`}
+      className={`sticky top-0 z-20 mx-auto w-full rounded-none bg-white p-1 py-1.5 px-[30px] shadow-border-light ${className}`}
     >
-      <div className="mx-auto flex h-[70px] w-full max-w-[1728px] items-center justify-between">
-        <div className="flex w-1/2 items-center gap-5">
+      <div className="mx-auto flex w-full max-w-[1728px] items-center justify-between">
+        <div className="flex w-1/2 items-center gap-32">
           <Link to="/">
             <Typography className="cursor-pointer">
               <img src="./src/assets/svg/logo-desktop.svg" alt="123" className="hidden sm:block" />
