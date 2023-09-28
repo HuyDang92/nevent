@@ -11,48 +11,102 @@ import {
 } from '@material-tailwind/react';
 import CategoryIcon from '@mui/icons-material/Category';
 import IonIcon from '@reacticons/ionicons';
-import { Link } from 'react-router-dom';
-type CateProp = {
-  id: string;
-  name: string;
-};
+import { Link, NavLink } from 'react-router-dom';
+import logo from '~/assets/images/logoDarkDesktop.png';
+
 type SideBarProp = {
   className?: string;
 };
 const SideBar = ({ className }: SideBarProp) => {
-  const [open, setOpen] = useState(0);
-  
-  const cateList = [
-    { id: '1', name: 'Âm nhạc' },
-    { id: '2', name: 'Thể thao' },
-    { id: '3', name: 'Nghệ thuật và biểu diễn' },
-    { id: '4', name: 'Hội họp và hội thảo' },
-    { id: '5', name: 'Giải trí và vui chơi' },
-  ];
-
-  const handleOpen = (value: number) => {
-    setOpen(open === value ? 0 : value);
-  };
-
   return (
-    <Card
-      className={`sticky top-[86px] mt-0 flex h-[calc(100vh-86px)] overflow-y-scroll scrollbar-hide flex-col  justify-between bg-transparent py-4 pt-0 shadow-none ${className}`}
-    >
-      <List className="min-w-full pt-0 ">
-        <Link to={'/'}>
-          <ListItem
-            onClick={() => handleOpen(0)}
-            className={`px-7 focus:bg-cs_light ${open === 0 ? 'bg-cs_light  shadow-border-light' : ''}`}
-          >
+    <Card className={`scrollbar-hide sticky  top-0 h-[100vh] rounded-none shadow-border-light ${className}`}>
+      <Link to="/" className="px-4 pt-2">
+        <Typography className="cursor-pointer">
+          <img src={logo} alt="logo" className="hidden sm:block" />
+          <img src={logo} alt="logo" className="sm:hidden" />
+        </Typography>
+      </Link>
+      <List className=" p-4 text-cs_dark">
+        <h2 className="py-2 font-medium text-cs_gray">MENU</h2>
+        <NavLink
+          to={'/'}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark  text-cs_light shadow-border-light' : ''}`}
+        >
+          <ListItem className="px-8">
             <ListItemPrefix>
-              <IonIcon name="home" className={`text-xl ${open === 0 ? 'text-cs_purple' : 'text-cs_dark'}`} />
+              <IonIcon name="home" className={`text-xl`} />
             </ListItemPrefix>
-            <Typography className={`mr-auto font-normal ${open === 0 ? 'text-cs_purple' : 'text-cs_dark'}`}>
-              Trang chủ
-            </Typography>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
           </ListItem>
-        </Link>
-        <Accordion
+        </NavLink>
+        <NavLink
+          to={'/category'}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+        >
+          <ListItem className="px-8">
+            <ListItemPrefix>
+              <IonIcon name="home" className={`text-xl`} />
+            </ListItemPrefix>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
+          </ListItem>
+        </NavLink>
+        <NavLink
+          to={'/about'}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+        >
+          <ListItem className="px-8">
+            <ListItemPrefix>
+              <IonIcon name="home" className={`text-xl`} />
+            </ListItemPrefix>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
+          </ListItem>
+        </NavLink>
+      </List>
+      <List className=" p-4 text-cs_dark">
+        <h2 className="py-2 font-medium text-cs_gray">SETTING</h2>
+        <NavLink
+          to={'/sdfdg '}
+          className={({ isActive }) =>
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'text-cs_dark'}`
+          }
+        >
+          <ListItem className="px-8">
+            <ListItemPrefix>
+              <IonIcon name="home" className={`text-xl`} />
+            </ListItemPrefix>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
+          </ListItem>
+        </NavLink>
+        <NavLink
+          to={'/category'}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+        >
+          <ListItem className="px-8">
+            <ListItemPrefix>
+              <IonIcon name="home" className={`text-xl`} />
+            </ListItemPrefix>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
+          </ListItem>
+        </NavLink>
+        <NavLink
+          to={'/about'}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+        >
+          <ListItem className="px-8">
+            <ListItemPrefix>
+              <IonIcon name="home" className={`text-xl`} />
+            </ListItemPrefix>
+            <Typography className={`font-semibold`}>Trang chủ</Typography>
+          </ListItem>
+        </NavLink>
+      </List>
+    </Card>
+  );
+};
+
+export default SideBar;
+{
+  /* <Accordion
           open={open === 1}
           icon={
             <IonIcon
@@ -66,10 +120,10 @@ const SideBar = ({ className }: SideBarProp) => {
               <ListItemPrefix>
                 <CategoryIcon
                   fontSize="small"
-                  className={`text-xl ${open === 1 ? 'text-cs_purple' : 'text-cs_dark'}`}
+                  className={`text-xl ${open === 1 ? 'text-cs_dark' : 'text-cs_dark'}`}
                 />
               </ListItemPrefix>
-              <Typography className={`mr-auto font-normal ${open === 1 ? 'text-cs_purple' : 'text-cs_dark'}`}>
+              <Typography className={`mr-auto font-normal ${open === 1 ? 'text-cs_dark' : 'text-cs_dark'}`}>
                 Danh mục
               </Typography>
             </AccordionHeader>
@@ -103,10 +157,10 @@ const SideBar = ({ className }: SideBarProp) => {
               <ListItemPrefix>
                 <IonIcon
                   name="location-sharp"
-                  className={`text-xl ${open === 2 ? 'text-cs_purple' : 'text-cs_dark'}`}
+                  className={`text-xl ${open === 2 ? 'text-cs_dark' : 'text-cs_dark'}`}
                 />
               </ListItemPrefix>
-              <Typography className={`mr-auto font-normal ${open === 2 ? 'text-cs_purple' : 'text-cs_dark'}`}>
+              <Typography className={`mr-auto font-normal ${open === 2 ? 'text-cs_dark' : 'text-cs_dark'}`}>
                 Địa điểm
               </Typography>
             </AccordionHeader>
@@ -131,49 +185,5 @@ const SideBar = ({ className }: SideBarProp) => {
               </Link>
             </List>
           </AccordionBody>
-        </Accordion>
-        <Link to={'/help'}>
-          <ListItem
-            onClick={() => handleOpen(3)}
-            className={`px-7 focus:bg-cs_light ${open === 3 ? 'bg-cs_light shadow-md' : ''}`}
-          >
-            <ListItemPrefix>
-              <IonIcon name="call-sharp" className={`text-xl ${open === 3 ? 'text-cs_purple' : 'text-cs_dark'}`} />
-            </ListItemPrefix>
-            <Typography className={`mr-auto font-normal ${open === 3 ? 'text-cs_purple' : 'text-cs_dark'}`}>
-              Hỗ trợ
-            </Typography>
-          </ListItem>
-        </Link>
-      </List>
-      <List>
-        <Link to={'/'}>
-          <ListItem className="px-7">
-            <ListItemPrefix>
-              <IonIcon name="people-circle" className="text-xl" />
-            </ListItemPrefix>
-            <Typography className="mr-auto font-normal">Người tổ chức</Typography>
-          </ListItem>
-        </Link>
-        <Link to={'/about'}>
-          <ListItem className="px-7">
-            <ListItemPrefix>
-              <IonIcon name="alert-circle-outline" className="text-xl" />
-            </ListItemPrefix>
-            <Typography className="mr-auto font-normal">Giới thiệu</Typography>
-          </ListItem>
-        </Link>
-        <Link to={'/'}>
-          <ListItem className="px-7">
-            <ListItemPrefix>
-              <IonIcon name="help-circle-outline" className="text-xl" />
-            </ListItemPrefix>
-            <Typography className="mr-auto font-normal">FAQs</Typography>
-          </ListItem>
-        </Link>
-      </List>
-    </Card>
-  );
-};
-
-export default SideBar;
+        </Accordion> */
+}

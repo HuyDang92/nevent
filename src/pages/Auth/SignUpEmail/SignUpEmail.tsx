@@ -1,13 +1,17 @@
 import { Typography } from '@material-tailwind/react';
 import Button from '~/components/customs/Button';
 import AuthImage from '~/assets/images/auth.png';
-import Logo from '~/assets/svg/logo-white-desktop.svg'
+// import Logo from '~/assets/svg/logo-white-desktop.svg'
 import { Link } from 'react-router-dom';
+import { LogoWhiteDesktop } from '~/assets/icon';
 function SignUpEmail() {
   return (
-    <div className="flex h-screen w-screen justify-between text-cs_dark relative">
+    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
-        <Link to={"/"}><img src={Logo} alt="" /></Link>
+        <Link to={'/'}>
+        <LogoWhiteDesktop />
+          {/* <img src={Logo} alt="" /> */}
+        </Link>
       </div>
       {/* <div className="w-1/2 h-full bg-[url('~/assets/images/auth.png')] bg-no-repeat object-fill">
         asda
@@ -21,7 +25,6 @@ function SignUpEmail() {
             <Typography className="text-[35px] font-bold">Đăng ký</Typography>
             <span className="text-[#989898]">Đăng ký tài khoản để sử dụng dịch vụ của chúng tôi</span>
           </div>
-
         </div>
       </div>
     </div>

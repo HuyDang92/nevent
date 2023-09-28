@@ -62,7 +62,7 @@ const Banner = () => {
     }, [page]);
 
     return (
-        <View className='bg-white lg:h-[400px] xl:h-[450px] h-[200px] md:h-[300px] rounded-[15px] relative lg:mb-16'>
+        <View className='bg-white lg:h-[320px] xl:h-[350px] h-[200px] md:h-[300px] rounded-[15px] relative lg:mb-16'>
             <AnimatePresence initial={false} custom={direction}>
                 <View className=' w-full absolute h-full overflow-x-hidden rounded-xl '>
                     <motion.img

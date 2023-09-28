@@ -4,13 +4,15 @@ import Button from '~/components/customs/Button';
 import AuthImage from '~/assets/images/auth.png';
 import LogoGoogle from '~/assets/icon/logo_google.svg';
 import LogoFacebook from '~/assets/icon/logo_facebook.svg';
-import Logo from '~/assets/svg/logo-desktop.svg';
+import Logo from '~/assets/icon/logo-desktop.svg';
 import { Link } from 'react-router-dom';
+import { LogoWhite } from '~/assets/icon';
 function LogIn() {
   return (
     <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
+          <LogoWhite />
           <img src={Logo} alt="" />
         </Link>
       </div>

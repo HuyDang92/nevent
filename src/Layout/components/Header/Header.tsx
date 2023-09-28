@@ -9,7 +9,6 @@ import Dropdown from '~/components/customs/Dropdown';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import SearchIcon from '@mui/icons-material/Search';
 import { Dialog } from '@material-tailwind/react';
-import logo from '~/assets/images/Logo-desktop.png'
 
 type HeaderProps = {
   className?: string;
@@ -36,33 +35,17 @@ const Header = ({ className }: HeaderProps) => {
   }, []);
 
   const navList = (
-    <ul className="flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="flex gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Link to="/" className="">
-        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" />
-      </Link>
-      <Link
-        to="./"
-        className="hidden items-center rounded-lg px-3 py-1 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:block"
-      >
-        <IonIcon name="wallet-outline" className="text-2xl" />
+        <Button value="Tạo sự kiện" type="button" className="hidden rounded-xl lg:block" />
       </Link>
     </ul>
   );
 
   return (
-    <header
-      className={`sticky top-0 z-20 mx-auto w-full rounded-none bg-white p-1 py-1.5 px-[30px] shadow-border-light ${className}`}
-    >
-      <div className="mx-auto flex w-full max-w-[1728px] items-center justify-between">
-        <div className="flex w-1/2 items-center gap-32">
-          <Link to="/">
-            <Typography className="cursor-pointer">
-              <img src={logo} alt="123" className="hidden sm:block" />
-              <img src={logo} alt="logo" className="sm:hidden" />
-            </Typography>
-          </Link>
-          <SearchBar className="hidden lg:inline-block" />
-        </div>
+    <header className={`rounded-none py-4 ${className} px-5`}>
+      <div className="flex items-center justify-between">
+        <SearchBar className="hidden rounded-xl shadow-border-light lg:inline-block" />
         <div className="flex items-center justify-end gap-3 lg:w-1/3">
           <div className="hidden lg:block">{navList}</div>
           <Link to="/" className="cursor-pointer sm:hidden">
@@ -76,7 +59,11 @@ const Header = ({ className }: HeaderProps) => {
               <Dropdown />
             ) : (
               <Link to="/login">
-                <Typography className="cursor-pointer text-cs_purple sm:text-lg">Đăng nhập</Typography>
+                <Button
+                  value="Đăng nhập"
+                  type="button"
+                  className="hidden rounded-xl bg-cs_dark text-cs_light lg:block"
+                />
               </Link>
             )}
           </div>

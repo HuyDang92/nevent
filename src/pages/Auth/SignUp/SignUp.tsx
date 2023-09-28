@@ -4,14 +4,16 @@ import SectionTitle from '~/components/customs/SectionTitle';
 import AuthImage from '~/assets/images/auth.png';
 import LogoGoogle from '~/assets/icon/logo_google.svg';
 import LogoFacebook from '~/assets/icon/logo_facebook.svg';
-import Logo from '~/assets/svg/logo-white-desktop.svg';
+// import Logo from '~/assets/svg/logo-white-desktop.svg';
 import { Link } from 'react-router-dom';
+import { LogoWhiteDesktop } from '~/assets/icon';
 function SignUp() {
   return (
     <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
-          <img src={Logo} alt="" />
+          <LogoWhiteDesktop />
+          {/* <img src={Logo} alt="" /> */}
         </Link>
       </div>
       {/* <div className="w-1/2 h-full bg-[url('~/assets/images/auth.png')] bg-no-repeat object-fill">
