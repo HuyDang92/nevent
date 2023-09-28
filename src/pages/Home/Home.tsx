@@ -148,7 +148,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-full p-5">
+      <div className="w-full">
         <Banner />
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
@@ -156,6 +156,7 @@ function Home() {
             <CategoryCard id={index} image={data.img} name={data.name} link="/about" key={index} />
           ))}
         </div>
+        <SectionTitle value="Sự kiện nổi bật" />
         <ProductList data={tempProductData} />
       </div>
     </>

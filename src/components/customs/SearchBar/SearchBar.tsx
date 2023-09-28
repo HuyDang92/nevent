@@ -17,7 +17,7 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
   };
   return (
     <>
-      <div className={`relative inline-block w-1/2 ${className}`}>
+      <div className={`relative inline-block w-[440px] `}>
         <input
           placeholder="Tìm kiếm..."
           className={`h-10 w-full rounded-xl px-5 py-3.5 text-sm font-medium shadow-border-btn focus:placeholder-cs_blur_black focus:outline-none `}

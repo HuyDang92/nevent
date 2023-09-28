@@ -1,17 +1,20 @@
 import { Typography } from '@material-tailwind/react';
-import IonIcon from '@reacticons/ionicons';
 import Button from '~/components/customs/Button';
 import SectionTitle from '~/components/customs/SectionTitle';
 import AuthImage from '~/assets/images/auth.png';
-import LogoGoogle from '~/assets/svg/logo_google.svg';
-import LogoFacebook from '~/assets/svg/logo_facebook.svg';
-import Logo from '~/assets/svg/logo-white-desktop.svg'
+import LogoGoogle from '~/assets/icon/logo_google.svg';
+import LogoFacebook from '~/assets/icon/logo_facebook.svg';
+// import Logo from '~/assets/svg/logo-white-desktop.svg';
 import { Link } from 'react-router-dom';
+import { LogoWhiteDesktop } from '~/assets/icon';
 function SignUp() {
   return (
-    <div className="flex h-screen w-screen justify-between text-cs_dark relative">
+    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
-        <Link to={"/"}><img src={Logo} alt="" /></Link>
+        <Link to={'/'}>
+          <LogoWhiteDesktop />
+          {/* <img src={Logo} alt="" /> */}
+        </Link>
       </div>
       {/* <div className="w-1/2 h-full bg-[url('~/assets/images/auth.png')] bg-no-repeat object-fill">
         asda
@@ -39,11 +42,13 @@ function SignUp() {
           </div>
           <SectionTitle size="!text-base" value="hoặc" />
           <div>
-            <Button
-              className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
-              icon="mail"
-              value="Đăng ký bằng email"
-            />
+            <Link to={'/signup-email'}>
+              <Button
+                className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
+                icon="mail"
+                value="Đăng ký bằng email"
+              />
+            </Link>
           </div>
         </div>
       </div>

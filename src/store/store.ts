@@ -27,7 +27,7 @@ const store = configureStore({
       serializableCheck: false,
     }).concat(authApi.middleware),
 
-  //   devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.MODE !== 'production',
 });
 
 setupListeners(store.dispatch);

@@ -1,7 +1,8 @@
 import { Typography } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
-import LogoWhite from '~/assets/svg/logo-white.svg';
+import { LogoWhite } from '~/assets/icon';
+// import LogoWhite from '~/assets/svg/logo-white.svg';
 import InputIcon from '~/components/customs/InputIcon';
 type FooterProp = {
   className?: string;
@@ -13,7 +14,8 @@ function Footer({ className }: FooterProp) {
         <div className="flex justify-center">
           <ul className="text-left">
             <Typography className="flex items-center font-medium">
-              <img src={LogoWhite} alt="Photo of NEVENT" className='w-[66px] h-[40px]'/>
+              <LogoWhite />
+              {/* <img src={LogoWhite} alt="Photo of NEVENT" className='w-[66px] h-[40px]'/> */}
               <span className="text-[22px]">NEVENT</span>
             </Typography>
             <li className='my-2 text-xl'>

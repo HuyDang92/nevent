@@ -7,19 +7,21 @@ import NavbarMobile from '~/components/customs/NavbarMobile';
 
 function DefaultLayout() {
   return (
-    <div className="relative">
-      <Header />
-      <div className="relative mx-auto my-5 flex max-w-[1728px]">
-        <aside className="hidden w-[20%] sm:block">
+    <>
+      <div className="relative flex">
+        <aside className="w-[17%]">
           <SideBar />
         </aside>
-        <main className="w-full rounded-[15px] bg-white shadow-border-light 2xl:container sm:w-[80%]">
-          <Outlet />
-        </main>
+        <div className="mx-auto w-[83%]">
+          <Header />
+          <main className="px-5">
+            <Outlet />
+          </main>
+        </div>
       </div>
       <Footer />
       <NavbarMobile className="fixed bottom-0 sm:hidden" />
-    </div>
+    </>
   );
 }
 
