@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import SectionTitle from '~/components/customs/SectionTitle';
 import ProductCard from '~/components/customs/ProductCard';
 import Button from '~/components/customs/Button';
 import Box from '@mui/joy/Box';
+import { motion } from 'framer-motion';
 
 type ProductData = {
   image: string;
@@ -40,9 +40,16 @@ const ProductList = ({ visibleProduct = 12, showMore = 8, data, className }: Pro
     };
   }, []);
 
-  const productUI = data
-    .slice(0, visibleProducts)
-    .map((item, index) => (
+  const productUI = data.slice(0, visibleProducts).map((item, index) => (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.3 * (index / 5),
+        ease: [0, 0.71, 0.2, 1.01],
+      }}
+    >
       <ProductCard
         key={index}
         id={index}
@@ -54,7 +61,8 @@ const ProductList = ({ visibleProduct = 12, showMore = 8, data, className }: Pro
         link="/event-detail/1"
         className="!min-w-[70%] sm:w-full"
       />
-    ));
+    </motion.div>
+  ));
 
   return (
     <div className={`${className}`}>

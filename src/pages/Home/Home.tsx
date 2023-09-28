@@ -148,7 +148,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-full">
+      <div className="mb-6 w-full">
         <Banner />
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">

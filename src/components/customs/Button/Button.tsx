@@ -8,7 +8,7 @@ type ButtonProps = {
   value: ReactNode | string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
-  mode: 'light' | 'dark';
+  mode?: 'light' | 'dark';
 };
 
 const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light' }: ButtonProps) => {

@@ -65,11 +65,7 @@ const Header = ({ className }: HeaderProps) => {
               <Dropdown />
             ) : (
               <Link to="/login">
-                <Button
-                  value="Đăng nhập"
-                  type="button"
-                  className="hidden rounded-xl bg-cs_dark text-cs_light lg:block"
-                />
+                <Button value="Đăng nhập" type="button" className="hidden lg:block" mode="light" />
               </Link>
             )}
           </div>
