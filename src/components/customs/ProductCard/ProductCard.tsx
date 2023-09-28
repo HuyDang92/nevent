@@ -18,7 +18,7 @@ const ProductCard = ({ id, place, image, link, name, date, category, className }
         <img src={image} alt="image" className="h-44 w-full rounded-xl object-cover" />
         <div className=" absolute bottom-0 z-10 mt-5 rounded-xl rounded-t-lg bg-white p-3 text-left font-bold text-cs_dark shadow-border-full">
           <span className="text-xs font-normal">{place}</span>
-          <p className="my-1.5 line-clamp-2 text-sm leading-tight">{name}</p>
+          <p className="my-1.5 line-clamp-2 text-sm leading-tight tracking-wide">{name}</p>
           <div className="mt-2 flex justify-between pr-1.5 text-xs font-normal text-cs_gray">
             <span className="flex items-center gap-1">
               <IonIcon name="time-outline" />
