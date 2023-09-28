@@ -10,6 +10,7 @@ type ProductData = {
   date: string;
   category: string;
   link?: string;
+  place: string;
 };
 
 type ProductListProps = {
@@ -45,6 +46,7 @@ const ProductList = ({ visibleProduct = 12, showMore = 8, data, className }: Pro
       <ProductCard
         key={index}
         id={index}
+        place={item.place}
         image={item.image}
         name={item.title}
         date={item.date}

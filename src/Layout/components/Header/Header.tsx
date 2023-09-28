@@ -39,7 +39,7 @@ const Header = ({ className }: HeaderProps) => {
   const navList = (
     <ul className="flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Link to="/" className="">
-        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" />
+        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" mode="dark" />
       </Link>
       <Link
         to="./"

@@ -4,7 +4,6 @@ import IonIcon from '@reacticons/ionicons';
 
 type InputProps = {
   icon: string; // require props icon
-  border?: 'rounded-md' | 'rounded-full';
   placeholder?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -12,15 +11,7 @@ type InputProps = {
   className?: string;
 };
 
-const InputIcon = ({
-  icon,
-  value,
-  onChange,
-  placeholder,
-  className,
-  type = 'text',
-  border = 'rounded-md',
-}: InputProps) => {
+const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text' }: InputProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = () => {
     setIsFocus(true);
@@ -30,18 +21,18 @@ const InputIcon = ({
   };
   return (
     <div className="relative inline-block">
-      <IonIcon
-        name={icon as any}
-        className={`absolute left-3 top-2 text-2xl text-cs_gray ${isFocus ? 'text-cs_purple' : ''}`}
-      />
       <input
         placeholder={placeholder}
-        className={`h-10 w-64 border-2 border-cs_gray bg-cs_light px-10 py-3.5 text-cs_purple focus:border-cs_purple focus:placeholder-cs_purple focus:outline-none ${border} ${className}`}
+        className={`h-10 w-64 rounded-lg bg-cs_light px-4 py-3.5 text-cs_blur_black focus:placeholder-cs_blur_black focus:outline-none ${className}`}
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
         value={value}
         onChange={onChange}
+      />
+      <IonIcon
+        name={icon as any}
+        className={`absolute right-3 top-2 text-2xl text-cs_gray ${isFocus ? 'text-cs_icon_black' : ''}`}
       />
     </div>
   );
