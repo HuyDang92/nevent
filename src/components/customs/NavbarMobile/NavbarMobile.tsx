@@ -38,11 +38,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
   return (
     <>
       <div
-<<<<<<< HEAD
-        className={`bg-white shadow-border-blur flex items-center w-full py-4 px-4 justify-around sm:hidden ${className}`}
-=======
         className={`flex w-full items-center justify-around bg-white px-4 py-4 shadow-border-blur sm:hidden ${className}`}
->>>>>>> 4d858432ca561ffbdbc6689f4781e03f8e907b4b
       >
         {dataNavigation.map((item, index) => (
           <motion.button key={index} whileTap={{ scale: 0.9 }}>
