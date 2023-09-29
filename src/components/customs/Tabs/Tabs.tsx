@@ -37,7 +37,8 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
             <li
               key={index}
               onClick={() => setTabIndex(index)}
-              className={`${'w-[' + (100 / tabHeader.length) + '%]'} text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
+              style={{width: `${100 / tabHeader.length}%`}}
+              className={`text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
                 tabIndex === index ? 'text-white' : ''
               } z-10`}  
             >
@@ -45,8 +46,8 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
             </li>
           ))}
           <li
-            style={{ transform: `translateX(${tabIndex * 100}%)` }}
-            className={`absolute h-full bg-cs_purple transition-all ${'w-[' + (100 / tabHeader.length) + '%]'} flex items-center justify-center rounded-[10px]`}
+            style={{width: `${100 / tabHeader.length}%`, transform: `translateX(${tabIndex * 100}%)` }}
+            className={`absolute h-full bg-cs_purple transition-all flex items-center justify-center rounded-[10px]`}
           ></li>
         </ul>
       </div>

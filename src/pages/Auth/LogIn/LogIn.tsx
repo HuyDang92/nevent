@@ -1,4 +1,6 @@
 import { Typography } from '@material-tailwind/react';
+import * as Yup from 'yup';
+import { Formik, Field } from 'formik';
 import SectionTitle from '~/components/customs/SectionTitle';
 import Button from '~/components/customs/Button';
 import AuthImage from '~/assets/images/auth.png';
@@ -6,11 +8,23 @@ import LogoGoogle from '~/assets/svg/logo_google.svg';
 import LogoFacebook from '~/assets/svg/logo_facebook.svg';
 import Logo from '~/assets/svg/logo-desktop.svg';
 import { Link } from 'react-router-dom';
+import Input from '~/components/customs/Input';
+interface SignInFormValues {
+  email: string;
+  password: string;
+}
 function LogIn() {
+  const initialValues: SignInFormValues = { email: '', password: '' };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+  });
   return (
-    <div className="flex h-screen w-screen justify-between text-cs_dark relative">
-      <div className="left-[30px] top-[15px] absolute">
-        <Link to={"/"}><img src={Logo} alt="" /></Link>
+    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
+      <div className="absolute left-[30px] top-[15px]">
+        <Link to={'/'}>
+          <img src={Logo} alt="" />
+        </Link>
       </div>
       <div className="grid w-1/2 place-content-center">
         <div className="w-[580px] rounded-[25px] bg-white px-[70px] py-[50px] text-center shadow-border-full">
@@ -31,7 +45,25 @@ function LogIn() {
             />
           </div>
           <SectionTitle size="!text-base" value="hoặc" />
-          <div>form đăng nhập</div>
+          <div className="mb-3">
+            <form action="" className="flex flex-col gap-4">
+              <Input
+                id="email"
+                label="Email"
+                placeholder="Vui lòng nhập email"
+                border="rounded-full"
+                classNameInput="w-full"
+              />
+              <Input
+                type="password"
+                id="email"
+                label="Mật khẩu"
+                placeholder="Vui lòng nhập mật khẩu"
+                border="rounded-full"
+                classNameInput="w-full"
+              />
+            </form>
+          </div>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="flex items-center">
@@ -49,7 +81,7 @@ function LogIn() {
               />
             </div>
             <div className="text-left">
-              Bạn chưa có tài khoản{' '}
+              Bạn chưa có tài khoản&nbsp;
               <Link className="font-semibold text-cs_purple" to={'/signup'}>
                 Đăng ký
               </Link>

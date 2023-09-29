@@ -10,10 +10,10 @@ function DefaultLayout() {
     <div className="relative">
       <Header />
       <div className="relative mx-auto my-5 flex max-w-[1728px]">
-        <aside className="hidden  w-[20%] sm:block">
+        <aside className="hidden w-[20%] sm:block">
           <SideBar />
         </aside>
-        <main className="w-full ms-2 rounded-[15px] bg-white shadow-border-light sm:w-[80%]">
+        <main className="w-full rounded-[15px] bg-white shadow-border-light 2xl:container sm:w-[80%]">
           <Outlet />
         </main>
       </div>
