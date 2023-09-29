@@ -8,7 +8,6 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
   const [tabIndex, setTabIndex] = useState(0); // Set index của nội dung cần show
   const [showSeeMoreBtn, setShowSeeMoreBtn] = useState(false); // Trạng thái của nút Xem thêm
   const [showHideBtn, setShowHideBtn] = useState(false); // Trạng thái của nút ẩn bớt
-  const tabWidth = 100 / tabHeader.length
   useEffect(() => {
     const contentElement = document.getElementById('content') as HTMLDivElement;
     if (contentElement.scrollHeight > 500) {
@@ -38,7 +37,8 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
             <li
               key={index}
               onClick={() => setTabIndex(index)}
-              className={`w-[${tabWidth}%] text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
+              style={{width: `${100 / tabHeader.length}%`}}
+              className={`text-[12px] md:text-[18px] flex items-center justify-center rounded-[10px] ${
                 tabIndex === index ? 'text-white' : ''
               } z-10`}  
             >
@@ -46,8 +46,8 @@ const Tabs = ({ tabHeader, tabConent, className }: TabsProp) => {
             </li>
           ))}
           <li
-            style={{ transform: `translateX(${tabIndex * 100}%)` }}
-            className={`absolute h-full bg-cs_purple transition-all w-[${tabWidth}%] flex items-center justify-center rounded-[10px]`}
+            style={{width: `${100 / tabHeader.length}%`, transform: `translateX(${tabIndex * 100}%)` }}
+            className={`absolute h-full bg-cs_purple transition-all flex items-center justify-center rounded-[10px]`}
           ></li>
         </ul>
       </div>

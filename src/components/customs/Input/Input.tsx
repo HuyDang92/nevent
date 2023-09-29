@@ -26,13 +26,13 @@ const Input = ({
   console.log(label);
 
   return (
-    <div className={`${className}`}>
+    <div className={`flex flex-col items-start ${className}`}>
       {label !== undefined ? (
         <>
-          <label htmlFor={id} className={`p-2 font-medium ${classNameLabel}`}>
-            {label}
+          <label htmlFor={id} className={`p-2 font-medium flex gap-1 ${classNameLabel}`}>
+            <span>{label}</span>
+            <span className="text-red-500 self-start h-2 grid place-content-center">&lowast;</span>
           </label>
-          <br />
         </>
       ) : (
         <></>
