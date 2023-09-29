@@ -37,7 +37,13 @@ const Header = ({ className }: HeaderProps) => {
   const navList = (
     <ul className="flex gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Link to="/" className="">
-        <Button value="Tạo sự kiện" type="button" className="hidden rounded-xl lg:block" />
+        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" mode="dark" />
+      </Link>
+      <Link
+        to="./"
+        className="hidden items-center rounded-lg px-3 py-1.5 text-cs_purple transition hover:bg-cs_purple hover:text-white lg:block"
+      >
+        <IonIcon name="wallet-outline" className="text-2xl" />
       </Link>
     </ul>
   );
@@ -59,11 +65,7 @@ const Header = ({ className }: HeaderProps) => {
               <Dropdown />
             ) : (
               <Link to="/login">
-                <Button
-                  value="Đăng nhập"
-                  type="button"
-                  className="hidden rounded-xl bg-cs_dark text-cs_light lg:block"
-                />
+                <Button value="Đăng nhập" type="button" className="hidden lg:block" mode="light" />
               </Link>
             )}
           </div>

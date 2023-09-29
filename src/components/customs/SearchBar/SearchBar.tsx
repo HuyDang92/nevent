@@ -17,10 +17,10 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
   };
   return (
     <>
-      <div className={`relative inline-block w-[440px] `}>
+      <div className={`relative inline-block w-[440px] ${className}`}>
         <input
-          placeholder="Tìm kiếm sự kiện"
-          className={`h-10 w-full ${className} bg-cs_light px-4 py-3.5 text-cs_dark focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none `}
+          placeholder="Tìm kiếm..."
+          className={`h-10 w-full rounded-xl px-5 py-3.5 text-sm font-medium shadow-border-btn focus:placeholder-cs_blur_black focus:outline-none `}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -29,7 +29,9 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
         />
         <IonIcon
           name="search-outline"
-          className={`absolute right-3 top-1.5 text-2xl text-cs_gray ${isFocus ? 'text-cs_dark' : ''}`}
+          className={`absolute right-4 top-2 cursor-pointer text-xl font-medium text-cs_gray ${
+            isFocus ? '!text-cs_icon_black' : ''
+          }`}
         />
       </div>
     </>

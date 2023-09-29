@@ -9,9 +9,9 @@ body {
   overflow-x: hidden;
 }
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
-/* width */
+
 ::-webkit-scrollbar {
   width: 5px;
 }
