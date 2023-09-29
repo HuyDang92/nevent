@@ -9,10 +9,10 @@ function DefaultLayout() {
   return (
     <>
       <div className="relative flex">
-        <aside className={`${isOpenSideBar ? 'w-[17%]' : 'w-[5%]'} transition-all`}>
+        <aside className={`${isOpenSideBar ? 'w-[5%]' : 'w-[17%]'} transition-all`}>
           <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
         </aside>
-        <div className={`mx-auto ${isOpenSideBar ? 'w-[83%]' : 'w-[95%]'}`}>
+        <div className={`mx-auto ${isOpenSideBar ? 'w-[95%]' : 'w-[83%]'}`}>
           <Header />
           <main className="px-5">
             <Outlet />

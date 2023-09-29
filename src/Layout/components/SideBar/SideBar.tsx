@@ -3,8 +3,10 @@ import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/images/logoDarkDesktop.png';
+import logoMobile from '~/assets/images/Logo.png';
 import { LogoMobie } from '~/assets/icon';
 import CategoryIcon from '@mui/icons-material/Category';
+import Icon from '~/components/customs/Icon';
 type SideBarProp = {
   className?: string;
   open: boolean;
@@ -17,94 +19,120 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
     >
       <Link to="/" className="px-4 pt-2">
         <Typography className="cursor-pointer">
-          <img src={logo} alt="logo" className="hidden sm:block" />
-          <img src={logo} alt="logo" className="sm:hidden" />
+          {open ? (
+            <img src={logoMobile} alt="logo" className="hidden sm:block" />
+          ) : (
+            <img src={logo} alt="logo" className="hidden sm:block" />
+          )}
+          <img src={logoMobile} alt="logo" className="sm:hidden" />
         </Typography>
       </Link>
-      <List className=" p-4 text-cs_dark">
+      <List className={`${!open ? 'p-4' : 'p-1'}  text-cs_dark`}>
         <h2 className="py-2 font-medium text-cs_gray dark:text-white">MENU</h2>
         <NavLink
           to={'/'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark dark:bg-cs_light dark:text-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark' : ''
+            }`
+          }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="home" className={`text-xl`} />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Trang chủ</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Trang chủ</Typography>}
           </ListItem>
         </NavLink>
         <NavLink
           to={'/category'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+            }`
+          }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <CategoryIcon />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Danh mục</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Danh mục</Typography>}
           </ListItem>
         </NavLink>
         <NavLink
           to={'/about'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+            }`
+          }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="alert-circle-outline" className={`text-xl`} />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
           </ListItem>
         </NavLink>
         <NavLink
           to={'/support'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+            }`
+          }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="call" className={`text-xl`} />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Hỗ trợ</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Hỗ trợ</Typography>}
           </ListItem>
         </NavLink>
       </List>
-      <List className=" p-4 text-cs_dark">
+      <List className={`${!open ? 'p-4' : 'p-1'}  text-cs_dark`}>
         <h2 className="py-2 font-medium text-cs_gray dark:text-white">SETTING</h2>
         <NavLink
           to={'/sdfdg '}
           className={({ isActive }) =>
-            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'text-cs_dark'}`
+            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'text-cs_dark'
+            }`
           }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="settings" className={`text-xl`} />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Cài đặt</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Cài đặt</Typography>}
           </ListItem>
         </NavLink>
         <NavLink
           to={'/category'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+            }`
+          }
         >
-          <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="log-out" className={`text-xl`} />
             </ListItemPrefix>
-            {open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
+            {!open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
           </ListItem>
         </NavLink>
       </List>
       <button onClick={() => setOpen((prev) => !prev)}>
-        {open ? (
-           <IonIcon
-           name="arrow-back-circle-outline"
-           className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[34px] text-cs_light shadow-border-full"
-         />
+        {!open ? (
+          <Icon
+            name="arrow-back-circle-outline"
+            className="absolute right-0 top-[80px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[30px] text-cs_light shadow-border-full"
+          />
         ) : (
-          <IonIcon
+          <Icon
             name="arrow-forward-circle-outline"
-            className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[34px] text-cs_light shadow-border-full"
+            className="absolute right-0 top-[80px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[30px] text-cs_light shadow-border-full"
           />
         )}
       </button>
