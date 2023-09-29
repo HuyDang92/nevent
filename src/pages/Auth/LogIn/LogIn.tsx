@@ -8,15 +8,12 @@ import LogoGoogle from '~/assets/icon/logo_google.svg';
 import LogoFacebook from '~/assets/icon/logo_facebook.svg';
 import Logo from '~/assets/icon/logo-desktop.svg';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import Input from '~/components/customs/Input';
 interface SignInFormValues {
   email: string;
   password: string;
 }
-=======
 import { LogoWhite } from '~/assets/icon';
->>>>>>> 8aabc77952ad82f429f312ffab6497dbfd1a5fc2
 function LogIn() {
   const initialValues: SignInFormValues = { email: '', password: '' };
   const validationSchema = Yup.object().shape({
@@ -27,11 +24,7 @@ function LogIn() {
     <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
-<<<<<<< HEAD
-=======
           <LogoWhite />
->>>>>>> 8aabc77952ad82f429f312ffab6497dbfd1a5fc2
-          <img src={Logo} alt="" />
         </Link>
       </div>
       <div className="grid w-1/2 place-content-center">

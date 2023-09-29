@@ -4,3 +4,5 @@ export { ReactComponent as LogoDarkDesktop } from './logo-desktop.svg';
 export { ReactComponent as LogoWhiteDesktop } from './logo-white-desktop.svg';
 export { ReactComponent as LogoDark } from './logo-desktop.svg';
 export { ReactComponent as LogoWhite } from './logo-white.svg';
+export { ReactComponent as LogoMobie } from './logo-mobile.svg';
+export { ReactComponent as LogoCategory } from './logo-category.svg';
