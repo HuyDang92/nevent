@@ -9,31 +9,24 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import SearchIcon from '@mui/icons-material/Search';
 import { Dialog } from '@material-tailwind/react';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
-import IonIcon from '@reacticons/ionicons';
 import Icon from '~/components/customs/Icon';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 
 type HeaderProps = {
   className?: string;
 };
 const Header = ({ className }: HeaderProps) => {
   const checkUser = false; //change this when login
-
+  const { width } = useCurrentViewportView();
   const [openNav, setOpenNav] = useState(false);
 
   //open SearchBar Mobile
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 960) {
-        setOpenNav(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      // Cleanup: remove the event listener when the component is unmounted
-      window.removeEventListener('resize', handleResize);
-    };
+    if (width >= 960) {
+      setOpenNav(false);
+    }
   }, []);
 
   const navList = (

@@ -48,19 +48,12 @@ function LogIn() {
           <SectionTitle size="!text-base" value="hoặc" />
           <div className="mb-3">
             <form action="" className="flex flex-col gap-4">
-              <Input
-                id="email"
-                label="Email"
-                placeholder="Vui lòng nhập email"
-                border="rounded-full"
-                classNameInput="w-full"
-              />
+              <Input id="email" label="Email" placeholder="Vui lòng nhập email" classNameInput="w-full" />
               <Input
                 type="password"
                 id="email"
                 label="Mật khẩu"
                 placeholder="Vui lòng nhập mật khẩu"
-                border="rounded-full"
                 classNameInput="w-full"
               />
             </form>
