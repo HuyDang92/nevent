@@ -14,7 +14,7 @@ const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProp
   return (
     <motion.button
       onClick={onClick}
-      className={`flex border-2 border-cs_purple px-4 py-2 font-bold text-cs_purple ${className}`}
+      className={`flex border-2 border-cs_dark px-4 py-2 font-semibold text-cs_dark ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
     >
@@ -23,7 +23,7 @@ const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProp
           {icon?.includes('assets') ? (
             <img src={icon} className="mr-[20px] h-[30px] w-[30px]" alt="" />
           ) : (
-            <IonIcon name={icon} className="mr-[20px] text-3xl" />
+            <IonIcon name={icon as any} className="mr-[20px] text-3xl" />
           )}
         </>
       )}

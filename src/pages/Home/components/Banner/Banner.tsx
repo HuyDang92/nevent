@@ -62,7 +62,7 @@ const Banner = () => {
     }, [page]);
 
     return (
-        <View className='bg-white lg:h-[400px] xl:h-[600px] h-[200px] md:h-[300px] rounded-[15px] relative lg:mb-16'>
+        <View className='bg-white lg:h-[320px] xl:h-[350px] h-[200px] md:h-[300px] rounded-[15px] relative lg:mb-16'>
             <AnimatePresence initial={false} custom={direction}>
                 <View className=' w-full absolute h-full overflow-x-hidden rounded-xl '>
                     <motion.img
@@ -119,7 +119,7 @@ const Banner = () => {
                 >
                     <IonIcon name='help-circle-outline' className='text-2xl text-cs_purple' />
                 </motion.button>
-                <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
+                {/* <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
                     whileTap={{ scale: 0.9 }}
                 >
                     <IonIcon name='person-outline' className='text-2xl text-cs_purple' />
@@ -128,7 +128,7 @@ const Banner = () => {
                     whileTap={{ scale: 0.9 }}
                 >
                     <IonIcon name='map-outline' className='text-2xl text-cs_purple' />
-                </motion.button>
+                </motion.button> */}
             </View>
         </View >
     )

@@ -5,15 +5,21 @@ import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumb
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import avtDefault from '~/assets/images/default-avatar.jpg';
 type DropdownProps = {
   avatar?: string;
   logOut?: () => void;
 };
-const Dropdown = ({ avatar = './src/assets/images/default-avatar.jpg', logOut }: DropdownProps) => {
+const Dropdown = ({ avatar, logOut }: DropdownProps) => {
   return (
     <Menu placement="bottom-end">
       <MenuHandler>
-        <Avatar variant="circular" alt="tania andrew" className="h-10 w-10 cursor-pointer object-cover" src={avatar} />
+        <Avatar
+          variant="circular"
+          alt="tania andrew"
+          className="h-10 w-10 cursor-pointer object-cover"
+          src={avtDefault}
+        />
       </MenuHandler>
       <MenuList className="w-64">
         {/* require route */}

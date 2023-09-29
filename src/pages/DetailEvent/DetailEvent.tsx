@@ -5,6 +5,7 @@ import Button from '~/components/customs/Button';
 import ProductCard from '~/components/customs/ProductCard';
 import SectionTitle from '~/components/customs/SectionTitle';
 import Tabs from '~/components/customs/Tabs';
+import Thumb from '~/assets/images/pro.png'
 
 function DetailEvent() {
 
@@ -19,61 +20,61 @@ function DetailEvent() {
   ];
   const tempProductData = [
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: Thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00:00 - 21/12/2023',
       category: 'Cuộc thi',
