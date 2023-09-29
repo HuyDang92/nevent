@@ -4,6 +4,7 @@ import IonIcon from '@reacticons/ionicons';
 
 type InputProps = {
   icon: string; // require props icon
+  iconClassName?: string;
   placeholder?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -11,7 +12,7 @@ type InputProps = {
   className?: string;
 };
 
-const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text' }: InputProps) => {
+const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text', iconClassName }: InputProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = () => {
     setIsFocus(true);
@@ -32,7 +33,9 @@ const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text
       />
       <IonIcon
         name={icon as any}
-        className={`absolute right-3 top-2 text-2xl text-cs_gray ${isFocus ? 'text-cs_icon_black' : ''}`}
+        className={`absolute right-3 top-2 text-2xl text-cs_gray ${iconClassName} ${
+          isFocus ? 'text-cs_icon_black' : ''
+        }`}
       />
     </div>
   );

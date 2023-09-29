@@ -2,8 +2,9 @@ import { Card, Typography, List, ListItem, ListItemPrefix } from '@material-tail
 import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '~/assets/images/logoDarkDesktop.png';
-import { LogoMobie } from '~/assets/icon';
+import logoDark from '~/assets/images/logoDarkDesktop.png';
+import logoLight from '~/assets/images/logoLightDesktop.png';
+import { LogoDarkMobile, LogoLightMobile } from '~/assets/icon';
 import CategoryIcon from '@mui/icons-material/Category';
 type SideBarProp = {
   className?: string;
@@ -12,22 +13,33 @@ type SideBarProp = {
 };
 const SideBar = ({ className, open, setOpen }: SideBarProp) => {
   return (
-    <Card className={`transition-all scrollbar-hide sticky top-0 h-[100vh] rounded-none text-center shadow-border-light ${className}`}>
+    <Card
+      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none text-center shadow-border-light dark:bg-cs_icon_black dark:text-cs_light ${className}`}
+    >
       <Link to="/" className="grid place-content-center px-4 pt-2">
         {open ? (
           <Typography className="cursor-pointer">
-            <img src={logo} alt="logo" className="hidden sm:block" />
-            <img src={logo} alt="logo" className="sm:hidden" />
+            <img src={logoDark} alt="logo" className="dark:hidden" />
+            <img src={logoLight} alt="logo" className="hidden dark:block" />
           </Typography>
         ) : (
-          <LogoMobie />
+          <>
+            <LogoDarkMobile className="dark:hidden" />
+            <LogoLightMobile className="hidden dark:block" />
+          </>
         )}
       </Link>
       <List className="min-w-0 p-4 text-cs_dark">
         <h2 className="py-2 text-left font-medium text-cs_gray">MENU</h2>
         <NavLink
           to={'/'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark  text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${
+              isActive
+                ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark'
+                : 'dark:text-cs_light'
+            }`
+          }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
             <ListItemPrefix className="mr-0">
@@ -38,7 +50,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         </NavLink>
         <NavLink
           to={'/category'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'}`
+          }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
             <ListItemPrefix className="mr-0">
@@ -49,7 +63,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         </NavLink>
         <NavLink
           to={'/about'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'}`
+          }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
             <ListItemPrefix className="mr-0">
@@ -60,7 +76,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         </NavLink>
         <NavLink
           to={'/support'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'}`
+          }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
             <ListItemPrefix className="mr-0">
@@ -75,7 +93,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         <NavLink
           to={'/sdfdg '}
           className={({ isActive }) =>
-            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'text-cs_dark'}`
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'}`
           }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
@@ -87,7 +105,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         </NavLink>
         <NavLink
           to={'/category'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) =>
+            `rounded-xl ${isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'}`
+          }
         >
           <ListItem className={`${open ? 'px-8' : 'justify-center'}`}>
             <ListItemPrefix className="mr-0">
@@ -99,14 +119,14 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
       </List>
       <button onClick={() => setOpen((prev) => !prev)}>
         {open ? (
-           <IonIcon
-           name="arrow-back-circle-outline"
-           className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[34px] text-cs_light shadow-border-full"
-         />
+          <IonIcon
+            name="arrow-back-circle-sharp"
+            className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-cs_light text-[34px] text-[#292D32] shadow-border-full"
+          />
         ) : (
           <IonIcon
-            name="arrow-forward-circle-outline"
-            className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[34px] text-cs_light shadow-border-full"
+            name="arrow-forward-circle-sharp"
+            className="absolute right-0 top-[93px] translate-x-1/2 overflow-hidden rounded-full border bg-cs_light text-[34px] text-[#292D32] shadow-border-full"
           />
         )}
       </button>

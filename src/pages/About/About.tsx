@@ -1,57 +1,70 @@
-import { Typography } from '@material-tailwind/react';
 import Footer from '~/Layout/components/Footer';
 import Header from '~/Layout/components/Header';
-import AboutImage from '~/assets/images/about_Image.png';
-import Logo from '~/assets/images/Logo.png';
-import IonIcon from '@reacticons/ionicons';
+import { IconDiamond, IconTrophy } from '~/assets/icon';
+import AboutImage1 from '~/assets/images/about_image1.png';
+import AboutImage2 from '~/assets/images/about_image2.png';
+import AboutImage3 from '~/assets/images/about_image3.png';
 function About() {
   return (
     <>
       <Header />
-      <main className="min-h-screen mt-[30rem] bg-cs_purple relative">
-        <div className='absolute w-full -translate-y-1/2'>
-          <Typography className="h-24 mx-auto w-[62%] text-left text-[40px] font-bold">Thông tin về NEVENT</Typography>
-          <div className="relative mx-auto w-[62%]">
-            <img className="absolute left-[10%]" src={Logo} alt="Logo of NEVENT" />
-            <img className="w-full" src={AboutImage} alt="About NEVENT image" />
+      <main className="min-h-screen dark:bg-cs_dark">
+        <div className="relative mx-5">
+          <h1 className="absolute left-1/2 top-10 -translate-x-1/2 text-5xl font-bold text-cs_light">NEVENT</h1>
+          <img src={AboutImage1} className="w-full" alt="Photo of Nevent" />
+          <div className="absolute left-1/2 top-36 w-[1000px] -translate-x-1/2 rounded-2xl bg-[rgba(255,255,255,0.2)] p-10 backdrop-blur-[100px]">
+            <h1 className="mb-2.5 text-center text-3xl font-bold text-cs_light">Một phong cách mới. Tại sao?</h1>
+            <p className="mb-10 text-center text-cs_light">
+              Đi kèm nhu cầu sử dụng và trải nghiệm theo một phong cách hoàn toàn mới
+            </p>
+            <div className="flex justify-between">
+              <div className="flex w-[440px] flex-col gap-5 rounded-2xl bg-cs_light p-5">
+                <IconTrophy className="h-[52px] w-[52px]" />
+                <h1 className="text-2xl font-bold">Linh hoạt trải nghiệm.</h1>
+                <p>
+                  Chúng tôi sẽ đem đến cho bạn một website đảm bảo được sự trải nghiệm của bạn luôn đạt ở mức tốt nhất.
+                  Cùng với hàng loạt sự hỗ trợ tù những tính năng độc đáo mà chúng tôi đem lại và cũng đặc biệt nhất là
+                  sự mới lạ từ giao diện sẽ cho bạn một trải nghiệm thoải mái trong việc lựa chọn vé để tham gia sự
+                  kiện. Chúng tôi luôn đồng hành cùng bạn trong mọi cuộc vui.
+                </p>
+              </div>
+              <div className="flex w-[440px] flex-col gap-5 rounded-2xl bg-cs_light p-5">
+                <IconDiamond className="h-[52px] w-[52px]" />
+                <h1 className="text-2xl font-bold">An toàn thông tin</h1>
+                <p>
+                  Chúng tôi sẽ đảm thông tin của khách hàng sử dụng dịch vụ của chúng tôi đồng thời. Nếu quý khách dụng
+                  dịch vụ Nevent, sẽ được bảo hành nên hãy đảm bảo với chúng tôi. Chắc vậy!
+                </p>
+              </div>
+            </div>
           </div>
-          <Typography className="h-24 text-2xl font-normal text-cs_light flex justify-center items-center">
-            NEVENT là hệ thống quản lý và phân phối vé giúp bạn dễ dàng mua bán vé sự kiện
-          </Typography>
         </div>
-        <div className="pt-[27rem] flex gap-16 pb-32 px-32 text-cs_light">
+        <div className="mx-auto mt-36 flex w-[1000px] justify-between gap-20 rounded-2xl bg-cs_light p-10 pr-0 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
           <div>
-            <div className="mb-7 text-center">
-              <IonIcon name="people" className="text-[80px]" />
-              <Typography className="text-2xl font-bold">GIỚI THIỆU</Typography>
-            </div>
-            <p className="leading-[30px]">
-              Được thành lập vào năm 2023, 2023 Nevent là nền tảng phân phối vé sự kiện trực tuyến. Chúng tôi đã hợp tác
-              với nhiều đơn vị tổ chức sự kiện và các chương trình quy mô lớn hàng đầu. Các sự kiện thành công được bán
-              qua Nevent bao gồm Super Show 9, Concert Hà Anh Tuấn, Idecaf Theater, TEDx, Tech In Asia, WeChoice Awards,
-              Forbes Vietnam, Hoa hậu Việt Nam, DJ Hardwell, v.v.
+            <h1 className="mb-5 text-2xl font-bold">Sự chú ý của bạn có thể bảo vệ túi tiền của bạn.</h1>
+            <p>
+              Nevent đảm bảo khi sử dụng dịch vụ của chúng tôi 100% bạn sẽ chẳng còn gì. Uy từ mọi khâu chuẩn bị đến sử
+              dụng. Tiền của bạn là tiền của chúng tôi.
             </p>
           </div>
-          <div>
-            <div className="mb-7 text-center">
-              <IonIcon name="infinite" className="text-[80px]" />
-              <Typography className="text-2xl font-bold">SỨ MỆNH</Typography>
+          <img src={AboutImage2} className="w-[455px]" alt="Photo of Nevent" />
+        </div>
+        <div className="mx-auto mt-10 flex w-[1000px] justify-between gap-10 pb-40">
+          <div className="flex w-2/3 gap-[30px] rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+            <div>
+              <h1 className="mb-5 text-2xl font-bold">Ai là người đứng sau Nevent?</h1>
+              <p>
+                Để xây dựng được một hệ thống vé điện tử Nevent thì một lập trình viên tài năng tên TOM MUSK đã xây dựng
+                nên. Từ một tiệm tạp hóa anh đã xây dựng lên một cơ đồ to lớn mang quy mô đa quốc gia đa chủng tộc. Có
+                thể nó thành tựu của Nevent trong hai từ. “Phá Sản”.
+              </p>
             </div>
-            <p className="leading-[30px]">
-              Nevent không ngừng hoàn thiện để khẳng định vị thế tiên phong trong ngành phân phối vé sự kiện tại Việt
-              Nam. Với sự hiểu biết về công nghệ và thị trường, chúng tôi mong muốn góp phần phát triển ngành tổ chức sự
-              kiện Việt Nam, sánh ngang với các nước trong khu vực và mang đến những trải nghiệm quốc tế cho khán giả.
-            </p>
+            <img src={AboutImage3} className="h-36 w-36" alt="Photo of Nevent" />
           </div>
-          <div>
-            <div className="mb-7 text-center">
-              <IonIcon name="diamond" className="text-[80px]" />
-              <Typography className="text-2xl font-bold">GIÁ TRỊ</Typography>
-            </div>
-            <p className="leading-[30px]">
-              Đối với chúng tôi, giá trị của một doanh nghiệp là sự đóng góp của nó vào việc làm cho xã hội tốt đẹp hơn.
-              Ticketbox được vận hành bởi những người trẻ đam mê và nhiệt huyết, mong muốn giúp việc mua bán vé trở nên
-              dễ dàng và thuận tiện hơn cho cả người tổ chức sự kiện và người tham dự.
+          <div className="w-1/3 rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+            <h1 className="mb-5 text-2xl font-bold">Tom Musk</h1>
+            <p className="text-lg font-semibold">
+              Lập trình viên đến từ cao đẳng FPT Polytechnic với hơn 97.5% có việc làm
             </p>
           </div>
         </div>
