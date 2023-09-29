@@ -1,5 +1,6 @@
 import { Select, Option } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 type FilterSelectorProp = {

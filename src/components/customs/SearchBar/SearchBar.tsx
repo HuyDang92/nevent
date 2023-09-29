@@ -1,4 +1,5 @@
 import IonIcon from '@reacticons/ionicons';
+
 import { useState, ChangeEvent } from 'react';
 
 type SearchBarProps = {
@@ -20,7 +21,7 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
       <div className={`relative inline-block w-[440px] ${className}`}>
         <input
           placeholder="Tìm kiếm..."
-          className={`h-10 w-full rounded-xl px-5 py-3.5 text-sm font-medium shadow-border-btn focus:placeholder-cs_blur_black focus:outline-none `}
+          className={`h-10 w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none `}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}

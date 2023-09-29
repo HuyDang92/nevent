@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 type ProductCardProps = {
   id: string | number;
   link: string;
-  place: string;
+  place?: string;
   image: string;
   name: string;
   date: string;
@@ -17,7 +18,7 @@ type ProductCardProps = {
 const ProductCard = ({ id, place, image, link, name, date, category, className }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className={`relative h-64 w-full rounded-xl shadow-lg ${className}`} key={id}>
+    <div className={`relative h-64 w-full overflow-hidden rounded-xl shadow-lg ${className}`} key={id}>
       <Link to={link}>
         <img src={image} alt="image" className="h-44 w-full rounded-xl object-cover" />
 

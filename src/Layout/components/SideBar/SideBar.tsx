@@ -19,7 +19,9 @@ type SideBarProp = {
 };
 const SideBar = ({ className }: SideBarProp) => {
   return (
-    <Card className={`scrollbar-hide sticky  top-0 h-[100vh] rounded-none shadow-border-light ${className}`}>
+    <Card
+      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-[#16181C] ${className}`}
+    >
       <Link to="/" className="px-4 pt-2">
         <Typography className="cursor-pointer">
           <img src={logo} alt="logo" className="hidden sm:block" />
@@ -27,10 +29,10 @@ const SideBar = ({ className }: SideBarProp) => {
         </Typography>
       </Link>
       <List className=" p-4 text-cs_dark">
-        <h2 className="py-2 font-medium text-cs_gray">MENU</h2>
+        <h2 className="py-2 font-medium text-cs_gray dark:text-white">MENU</h2>
         <NavLink
           to={'/'}
-          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark  text-cs_light shadow-border-light' : ''}`}
+          className={({ isActive }) => `rounded-xl ${isActive ? ' bg-cs_dark dark:bg-cs_light dark:text-cs_dark text-cs_light shadow-border-light' : ''}`}
         >
           <ListItem className="px-8">
             <ListItemPrefix>
@@ -63,7 +65,7 @@ const SideBar = ({ className }: SideBarProp) => {
         </NavLink>
       </List>
       <List className=" p-4 text-cs_dark">
-        <h2 className="py-2 font-medium text-cs_gray">SETTING</h2>
+        <h2 className="py-2 font-medium text-cs_gray dark:text-white">SETTING</h2>
         <NavLink
           to={'/sdfdg '}
           className={({ isActive }) =>
