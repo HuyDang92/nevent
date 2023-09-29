@@ -9,97 +9,113 @@ function Home() {
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      category: 'Cuộc thi',
+      place: 'Hồ Chí Minh',
+    },
+    {
+      image: './src/assets/images/pro.png',
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      category: 'Cuộc thi',
+      place: 'Hồ Chí Minh',
+    },
+    {
+      image: './src/assets/images/pro.png',
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      category: 'Cuộc thi',
+      place: 'Hồ Chí Minh',
+    },
+    {
+      image: './src/assets/images/pro.png',
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
       image: './src/assets/images/pro.png',
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
-      category: 'Cuộc thi',
-    },
-    {
-      image: './src/assets/images/pro.png',
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
-      category: 'Cuộc thi',
-    },
-    {
-      image: './src/assets/images/pro.png',
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
-      category: 'Cuộc thi',
-    },
-    {
-      image: './src/assets/images/pro.png',
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00:00 - 21/12/2023',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
   ]; //Thay đổi tempProductData bằng dữ liệu fetch ra từ database
@@ -132,7 +148,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-full">
+      <div className="mb-6 w-full">
         <Banner />
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">

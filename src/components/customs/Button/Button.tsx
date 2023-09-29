@@ -8,13 +8,16 @@ type ButtonProps = {
   value: ReactNode | string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
+  mode?: 'light' | 'dark';
 };
 
-const Button = ({ icon, onClick, className, value, type = 'button' }: ButtonProps) => {
+const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light' }: ButtonProps) => {
   return (
     <motion.button
       onClick={onClick}
-      className={`flex border-2 border-cs_dark px-4 py-2 font-semibold text-cs_dark ${className}`}
+      className={`flex rounded-xl px-4 py-2 font-medium shadow-border-btn ${
+        mode === 'light' ? 'text-dark bg-white' : 'bg-black text-white dark:border-2 border-cs_light'
+      }  ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
     >

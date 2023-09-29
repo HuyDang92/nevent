@@ -3,41 +3,52 @@ import { useState, useEffect } from 'react';
 import { Navbar, MobileNav, Typography, IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
-import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import SearchIcon from '@mui/icons-material/Search';
 import { Dialog } from '@material-tailwind/react';
+import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
+import Icon from '~/components/customs/Icon';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 
 type HeaderProps = {
   className?: string;
 };
 const Header = ({ className }: HeaderProps) => {
   const checkUser = false; //change this when login
-
+  const { width } = useCurrentViewportView();
   const [openNav, setOpenNav] = useState(false);
 
   //open SearchBar Mobile
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 960) {
-        setOpenNav(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      // Cleanup: remove the event listener when the component is unmounted
-      window.removeEventListener('resize', handleResize);
-    };
+    if (width >= 960) {
+      setOpenNav(false);
+    }
   }, []);
 
   const navList = (
-    <ul className="flex gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="flex gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">
+      <Link
+        to="./"
+        className="hidden items-center rounded-lg px-3 py-1 pt-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light lg:block"
+      >
+        <Icon name="notifications" className="text-2xl" />
+      </Link>
+      <Link
+        to="./"
+        className="hidden items-center rounded-lg px-3 py-1 pt-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light lg:block"
+      >
+        <Icon name="wallet" className="text-2xl" />
+      </Link>
+
+      <ToggleDarkMode>
+        <Icon name="moon" className="text-2xl" />
+      </ToggleDarkMode>
       <Link to="/" className="">
-        <Button value="Tạo sự kiện" type="button" className="hidden rounded-xl lg:block" />
+        <Button value="Tạo sự kiện" type="button" className="hidden lg:block" mode="light" />
       </Link>
     </ul>
   );
@@ -46,7 +57,7 @@ const Header = ({ className }: HeaderProps) => {
     <header className={`rounded-none py-4 ${className} px-5`}>
       <div className="flex items-center justify-between">
         <SearchBar className="hidden rounded-xl shadow-border-light lg:inline-block" />
-        <div className="flex items-center justify-end gap-3 lg:w-1/3">
+        <div className="flex items-center justify-end gap-3 ">
           <div className="hidden lg:block">{navList}</div>
           <Link to="/" className="cursor-pointer sm:hidden">
             <SearchIcon onClick={() => setOpen(!open)} />
@@ -59,11 +70,7 @@ const Header = ({ className }: HeaderProps) => {
               <Dropdown />
             ) : (
               <Link to="/login">
-                <Button
-                  value="Đăng nhập"
-                  type="button"
-                  className="hidden rounded-xl bg-cs_dark text-cs_light lg:block"
-                />
+                <Button value="Đăng nhập" type="button" className="hidden lg:block" mode="dark" />
               </Link>
             )}
           </div>

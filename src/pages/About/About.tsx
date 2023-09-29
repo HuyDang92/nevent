@@ -4,22 +4,23 @@ import Header from '~/Layout/components/Header';
 import AboutImage from '~/assets/images/about_Image.png';
 import Logo from '~/assets/images/Logo.png';
 import IonIcon from '@reacticons/ionicons';
+
 function About() {
   return (
     <>
       <Header />
-      <main className="min-h-screen mt-[30rem] bg-cs_purple relative">
-        <div className='absolute w-full -translate-y-1/2'>
-          <Typography className="h-24 mx-auto w-[62%] text-left text-[40px] font-bold">Thông tin về NEVENT</Typography>
+      <main className="relative mt-[30rem] min-h-screen bg-cs_purple">
+        <div className="absolute w-full -translate-y-1/2">
+          <Typography className="mx-auto h-24 w-[62%] text-left text-[40px] font-bold">Thông tin về NEVENT</Typography>
           <div className="relative mx-auto w-[62%]">
             <img className="absolute left-[10%]" src={Logo} alt="Logo of NEVENT" />
             <img className="w-full" src={AboutImage} alt="About NEVENT image" />
           </div>
-          <Typography className="h-24 text-2xl font-normal text-cs_light flex justify-center items-center">
+          <Typography className="flex h-24 items-center justify-center text-2xl font-normal text-cs_light">
             NEVENT là hệ thống quản lý và phân phối vé giúp bạn dễ dàng mua bán vé sự kiện
           </Typography>
         </div>
-        <div className="pt-[27rem] flex gap-16 pb-32 px-32 text-cs_light">
+        <div className="flex gap-16 px-32 pb-32 pt-[27rem] text-cs_light">
           <div>
             <div className="mb-7 text-center">
               <IonIcon name="people" className="text-[80px]" />
