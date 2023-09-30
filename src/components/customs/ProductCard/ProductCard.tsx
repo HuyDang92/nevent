@@ -1,40 +1,56 @@
+import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import IonIcon from '@reacticons/ionicons';
+import Icon from '../Icon';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-
-type ProductCardProps = {
-  id: string | number;
-  link: string;
-  place?: string;
+type ProductData = {
   image: string;
-  name: string;
+  title: string;
   date: string;
   category: string;
-  className?: string;
+  link?: string;
+  place: string;
 };
-// Nhớ thay link đến sản phẩm
-const ProductCard = ({ id, place, image, link, name, date, category, className }: ProductCardProps) => {
+
+type ProductListProps = {
+  data: ProductData; //dữ liệu
+  className?: string;
+  index : number;
+};
+
+const ProductCard = ({ data, className, index }: ProductListProps) => {
   const [isHovered, setIsHovered] = useState(false);
+
+
   return (
-    <div className={`relative h-64 w-full overflow-hidden rounded-xl shadow-lg ${className}`} key={id}>
-      <Link to={link}>
-        <img src={image} alt="image" className="h-44 w-full rounded-xl object-cover" />
+    <div className={`${className}`}>
+      {/* Mobile */}
+      <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.3 * (index / 5),
+        ease: [0, 0.71, 0.2, 1.01],
+      }}
+    >
+      <div className={`relative sm:h-64 h-[190px] w-full overflow-hidden rounded-xl shadow-lg ${className}`}>
+      <Link to={'/'}>
+        <img src={data.image} alt="image" className="sm:h-44 h-[110px] w-full rounded-xl object-cover" />
 
         <div
-          className=" absolute bottom-0 z-10 mt-5 rounded-xl rounded-t-lg bg-white p-3 text-left font-bold text-cs_dark shadow-lg"
+          className=" absolute bottom-0 z-5 mt-5 rounded-xl rounded-t-lg bg-white p-3 py-1 sm:py-3 text-left font-bold text-cs_dark shadow-lg"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <span className="text-xs font-normal">{place}</span>
-          <p className={`my-1.5 line-clamp-2 text-sm leading-tight tracking-wide `}>{name}</p>
+          <span className="text-xs font-normal">{data.place}</span>
+          <p className={`sm:my-1.5 line-clamp-2 text-sm leading-tight tracking-wide `}>{data.title}</p>
           <div className="mb-1 mt-2 flex justify-between pr-1.5 text-xs font-normal text-cs_gray">
             <span className="flex items-center gap-1">
-              <IonIcon name="time-outline" />
-              {date}
+              <Icon name="time-outline" />
+              {data.date}
             </span>
-            <span>{category}</span>
+            <span>{data.category}</span>
           </div>
           <AnimatePresence>
             {isHovered && (
@@ -51,6 +67,8 @@ const ProductCard = ({ id, place, image, link, name, date, category, className }
           </AnimatePresence>
         </div>
       </Link>
+    </div>
+    </motion.div>
     </div>
   );
 };

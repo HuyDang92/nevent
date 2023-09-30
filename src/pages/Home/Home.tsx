@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import SectionTitle from '~/components/customs/SectionTitle';
 import CategoryCard from '~/components/customs/CategoryCard';
-import ProductList from '~/components/customs/ProductList';
+import ProductList from '~/components/customs/ProductCard';
 import Banner from './components/Banner';
+import { Box } from '@mui/joy';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const tempProductData = [
@@ -157,7 +159,19 @@ function Home() {
           ))}
         </div>
         <SectionTitle value="Sự kiện nổi bật" />
-        <ProductList data={tempProductData} />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5">
+          {tempProductData.map((item, index) => (
+               <Link to={'/'} key={index}> <ProductList  data={item} index={index}/></Link>
+            ))}
+          {/* <div className="hidden sm:block">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{productUI}</div>
+        {visibleProducts < data.length && (
+          <div className="mt-5 flex justify-center">
+            <Button className="" onClick={showMoreProducts} value="Xem thêm" />
+          </div>
+        )}
+      </div> */}
+        </div>
       </div>
     </>
   );
