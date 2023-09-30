@@ -3,7 +3,6 @@ import IonIcon from '@reacticons/ionicons';
 
 import { useState } from 'react';
 import Button from '~/components/customs/Button';
-import ProductCard from '~/components/customs/ProductCard';
 import SectionTitle from '~/components/customs/SectionTitle';
 import Tabs from '~/components/customs/Tabs';
 import Thumb from '~/assets/images/pro.png';
@@ -187,7 +186,7 @@ function DetailEvent() {
       <div className="p-2">
         <SectionTitle value="Đề xuất cho bạn" />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {tempProductData.slice(0, visibleProducts).map((data, index) => (
+          {/* {tempProductData.slice(0, visibleProducts).map((data, index) => (
             <ProductCard
               key={index}
               id={index}
@@ -197,7 +196,7 @@ function DetailEvent() {
               category={data.category}
               link=""
             />
-          ))}
+          ))} */}
         </div>
         {visibleProducts < tempProductData.length && (
           <div className="mt-5 flex justify-center">
