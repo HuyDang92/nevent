@@ -3,7 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/Logo.png';
+import logoMobile from '~/assets/images/logo.svg';
 import { LogoMobie } from '~/assets/icon';
 import CategoryIcon from '@mui/icons-material/Category';
 import Icon from '~/components/customs/Icon';
@@ -27,13 +27,15 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           <img src={logoMobile} alt="logo" className="sm:hidden" />
         </Typography>
       </Link>
-      <List className={`${!open ? 'p-4' : 'p-1'}  text-cs_dark`}>
+      <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_dark`}>
         <h2 className="py-2 font-medium text-cs_gray dark:text-white">MENU</h2>
         <NavLink
           to={'/'}
           className={({ isActive }) =>
             `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark' : ''
+              isActive
+                ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark'
+                : 'dark:bg-cs_dark dark:text-cs_light'
             }`
           }
         >
@@ -48,13 +50,13 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           to={'/category'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
           <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
-              <CategoryIcon />
+              <IonIcon name="grid" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Danh mục</Typography>}
           </ListItem>
@@ -63,7 +65,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           to={'/about'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
@@ -78,7 +80,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           to={'/support'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
@@ -90,13 +92,13 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           </ListItem>
         </NavLink>
       </List>
-      <List className={`${!open ? 'p-4' : 'p-1'}  text-cs_dark`}>
+      <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_dark`}>
         <h2 className="py-2 font-medium text-cs_gray dark:text-white">SETTING</h2>
         <NavLink
           to={'/sdfdg '}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'text-cs_dark'
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
@@ -111,7 +113,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           to={'/category'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : ''
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >

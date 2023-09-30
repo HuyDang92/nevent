@@ -15,19 +15,19 @@ function DefaultLayout() {
   }, [width]);
   return (
     <>
-      <div className="relative flex">
-        <aside className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'} transition-all`}>
+      <div className="relative sm:flex">
+        <aside className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'} hidden sm:block transition-all `}>
           <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
         </aside>
         <div className={`mx-auto ${isOpenSideBar ? 'w-[95%]' : 'w-[83%]'}`}>
           <Header />
-          <main className="px-5">
+          <main className="sm:px-5">
             <Outlet />
           </main>
         </div>
       </div>
       <Footer />
-      <NavbarMobile className="fixed bottom-0 sm:hidden" />
+      <NavbarMobile className="fixed bottom-0 z-50 sm:hidden" />
     </>
   );
 }

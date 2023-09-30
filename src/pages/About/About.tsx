@@ -2,7 +2,7 @@ import { Typography } from '@material-tailwind/react';
 import Footer from '~/Layout/components/Footer';
 import Header from '~/Layout/components/Header';
 import AboutImage from '~/assets/images/about_Image.png';
-import Logo from '~/assets/images/Logo.png';
+// import logo from '~/assets/images/logo.svg';
 import IonIcon from '@reacticons/ionicons';
 
 function About() {
@@ -13,7 +13,7 @@ function About() {
         <div className="absolute w-full -translate-y-1/2">
           <Typography className="mx-auto h-24 w-[62%] text-left text-[40px] font-bold">Thông tin về NEVENT</Typography>
           <div className="relative mx-auto w-[62%]">
-            <img className="absolute left-[10%]" src={Logo} alt="Logo of NEVENT" />
+            {/* <img className="absolute left-[10%]" src={logo} alt="logo of NEVENT" /> */}
             <img className="w-full" src={AboutImage} alt="About NEVENT image" />
           </div>
           <Typography className="flex h-24 items-center justify-center text-2xl font-normal text-cs_light">
