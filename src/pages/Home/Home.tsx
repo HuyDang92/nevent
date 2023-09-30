@@ -3,143 +3,191 @@ import SectionTitle from '~/components/customs/SectionTitle';
 import CategoryCard from '~/components/customs/CategoryCard';
 import ProductList from '~/components/customs/ProductCard';
 import Banner from './components/Banner';
-import { Box } from '@mui/joy';
 import { Link } from 'react-router-dom';
-
+import thumb from '~/assets/images/pro.png';
+import poster from '~/assets/images/poster.jpg';
+import Button from '~/components/customs/Button';
+import { motion } from 'framer-motion';
+import Slide from './components/Slide';
 function Home() {
+  const dataPro = [
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+    {
+      image: poster,
+      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
+      date: '12:00 - 21/12/2023',
+      place: 'Hồ Chí Minh',
+      category: 'Cuộc thi',
+    },
+  ];
   const tempProductData = [
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       category: 'Cuộc thi',
       place: 'Hồ Chí Minh',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       category: 'Cuộc thi',
       place: 'Hồ Chí Minh',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       category: 'Cuộc thi',
       place: 'Hồ Chí Minh',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
     {
-      image: './src/assets/images/pro.png',
+      image: thumb,
       title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
       date: '12:00 - 21/12/2023',
       place: 'Hồ Chí Minh',
       category: 'Cuộc thi',
     },
-  ]; //Thay đổi tempProductData bằng dữ liệu fetch ra từ database
+  ];
+
   const tempCateData = [
     {
-      img: './src/assets/images/pro.png',
+      img: thumb,
       name: 'Thể thao',
     },
     {
-      img: './src/assets/images/pro.png',
+      img: thumb,
       name: 'Âm nhạc',
     },
     {
-      img: './src/assets/images/pro.png',
+      img: thumb,
       name: 'Âm nhạc',
     },
     {
-      img: './src/assets/images/pro.png',
+      img: thumb,
       name: 'Âm nhạc',
     },
     {
-      img: './src/assets/images/pro.png',
+      img: thumb,
       name: 'Âm nhạc',
     },
   ]; //Thay đổi tempCateData bằng dữ liệu fetch ra từ database
@@ -159,18 +207,18 @@ function Home() {
           ))}
         </div>
         <SectionTitle value="Sự kiện nổi bật" />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5">
+        <Slide data={dataPro} />
+        <SectionTitle value="Sự kiện sắp diễn ra" />
+        <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-4">
           {tempProductData.map((item, index) => (
-               <Link to={'/'} key={index}> <ProductList  data={item} index={index}/></Link>
-            ))}
-          {/* <div className="hidden sm:block">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{productUI}</div>
-        {visibleProducts < data.length && (
-          <div className="mt-5 flex justify-center">
-            <Button className="" onClick={showMoreProducts} value="Xem thêm" />
-          </div>
-        )}
-      </div> */}
+            <Link to={'/'} key={index}>
+              {' '}
+              <ProductList data={item} index={index} />
+            </Link>
+          ))}
+        </div>
+        <div className="mt-5 flex justify-center">
+          <Button className="" value="Xem thêm" />
         </div>
       </div>
     </>

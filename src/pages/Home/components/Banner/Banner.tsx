@@ -40,8 +40,6 @@ const swipePower = (offset: number, velocity: number) => {
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
 
-  const [isShowBanner, setIsShowBanner] = React.useState(0);
-
   const wrapValue = (value: number, min: number, max: number) => {
     const range = max - min + 1;
     const offsetValue = (((value - min) % range) + range) % range;

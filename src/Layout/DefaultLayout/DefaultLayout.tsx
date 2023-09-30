@@ -5,6 +5,8 @@ import SideBar from '../components/SideBar';
 import Footer from '../components/Footer';
 import NavbarMobile from '~/components/customs/NavbarMobile';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
+import { motion } from 'framer-motion';
+
 function DefaultLayout() {
   const { width } = useCurrentViewportView();
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
@@ -16,9 +18,13 @@ function DefaultLayout() {
   return (
     <>
       <div className="relative sm:flex">
-        <aside className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'} hidden sm:block transition-all `}>
+        <motion.aside
+          className={`${
+            isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'
+          } hidden transition-all sm:block `}
+        >
           <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
-        </aside>
+        </motion.aside>
         <div className={`mx-auto ${isOpenSideBar ? 'w-[95%]' : 'w-[83%]'}`}>
           <Header />
           <main className="sm:px-5">
