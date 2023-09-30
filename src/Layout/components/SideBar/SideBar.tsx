@@ -3,7 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/logo.png';
+import logoMobile from '~/assets/images/logo.svg';
 import { LogoMobie } from '~/assets/icon';
 import CategoryIcon from '@mui/icons-material/Category';
 import Icon from '~/components/customs/Icon';

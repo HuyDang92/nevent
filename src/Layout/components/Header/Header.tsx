@@ -10,7 +10,7 @@ import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
 
-import logo from '~/assets/images/logo.png';
+import logo from '~/assets/images/logo.svg';
 
 type HeaderProps = {
   className?: string;
