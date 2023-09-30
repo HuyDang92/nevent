@@ -2,7 +2,7 @@ import { Typography } from '@material-tailwind/react';
 import Footer from '~/Layout/components/Footer';
 import Header from '~/Layout/components/Header';
 import AboutImage from '~/assets/images/about_Image.png';
-import Logo from '~/assets/images/Logo.png';
+import Logo from '~/assets/images/logo.png';
 import IonIcon from '@reacticons/ionicons';
 
 function About() {

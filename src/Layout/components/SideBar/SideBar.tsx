@@ -3,7 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/Logo.png';
+import logoMobile from '~/assets/images/logo.png';
 import { LogoMobie } from '~/assets/icon';
 import CategoryIcon from '@mui/icons-material/Category';
 import Icon from '~/components/customs/Icon';
@@ -33,7 +33,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           to={'/'}
           className={({ isActive }) =>
             `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark' : 'dark:bg-cs_dark dark:text-cs_light'
+              isActive
+                ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_dark'
+                : 'dark:bg-cs_dark dark:text-cs_light'
             }`
           }
         >

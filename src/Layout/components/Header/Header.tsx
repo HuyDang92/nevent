@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
-import {  IconButton } from '@material-tailwind/react';
+import { IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-import SearchIcon from '@mui/icons-material/Search';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
@@ -16,7 +15,6 @@ import logo from '~/assets/images/logo.png';
 type HeaderProps = {
   className?: string;
 };
-
 
 const Header = ({ className }: HeaderProps) => {
   const checkUser = false; //change this when login
@@ -30,12 +28,12 @@ const Header = ({ className }: HeaderProps) => {
   }, [width]);
 
   const navList = (
-    <ul className="flex gap-2 items-center">
-       {/* <Link to="/" className="cursor-pointer lg:hidden">
+    <ul className="flex items-center gap-2">
+      {/* <Link to="/" className="cursor-pointer lg:hidden">
             <SearchIcon onClick={() => setOpen(!open)} />
           </Link>
            */}
-      <Link to="/" className="cursor-pointer lg:hidden px-2">
+      <Link to="/" className="cursor-pointer px-2 lg:hidden">
         <QrCodeScannerIcon />
       </Link>
       <Link
@@ -46,7 +44,7 @@ const Header = ({ className }: HeaderProps) => {
       </Link>
       <Link
         to="./"
-        className="hidden sm:inline-block items-center rounded-lg px-2 pt-1 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light"
+        className="hidden items-center rounded-lg px-2 pt-1 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light sm:inline-block"
       >
         <Icon name="wallet" className="text-2xl" />
       </Link>
@@ -61,19 +59,17 @@ const Header = ({ className }: HeaderProps) => {
   );
 
   return (
-    <header className={`rounded-none py-4 flex items-center justify-between sm:block ${className} sm:px-5`}>
-      <img src={logo} alt="logo" className='sm:hidden'/>
-      <div className="flex items-center lg:justify-between justify-end">
-        <SearchBar className="rounded-xl shadow-border-light hidden lg:block" />
+    <header className={`flex items-center justify-between rounded-none py-4 sm:block ${className} sm:px-5`}>
+      <img src={logo} alt="logo" className="sm:hidden" />
+      <div className="flex items-center justify-end lg:justify-between">
+        <SearchBar className="hidden rounded-xl shadow-border-light lg:block" />
         <div className="flex items-center justify-end gap-3 ">
-         
           <div className="">{navList}</div>
           <div className="">
-            
             {checkUser ? (
               <Dropdown />
             ) : (
-              <Link to="/login" className='hidden sm:inline-block'>
+              <Link to="/login" className="hidden sm:inline-block">
                 <Button value="Đăng nhập" type="button" className="" mode="dark" />
               </Link>
             )}
