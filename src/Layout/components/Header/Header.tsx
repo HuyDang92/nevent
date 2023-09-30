@@ -32,13 +32,13 @@ const Header = ({ className }: HeaderProps) => {
   const navList = (
     <ul className="flex gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">
       <Link
-        to="./"
+        to="/"
         className="hidden items-center rounded-lg px-3 py-1 pt-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light lg:block"
       >
         <Icon name="notifications" className="text-2xl" />
       </Link>
       <Link
-        to="./"
+        to="/"
         className="hidden items-center rounded-lg px-3 py-1 pt-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light lg:block"
       >
         <Icon name="wallet" className="text-2xl" />
