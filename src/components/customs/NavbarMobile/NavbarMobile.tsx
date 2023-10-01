@@ -1,32 +1,25 @@
 import IonIcon from '@reacticons/ionicons';
-import { NavLink } from 'react-router-dom';
+
+import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Icon from '../Icon';
 
 type NavbarMobileProps = {
   className?: string;
 };
 
-type dataNavigationProps = {
-  link: string;
-  icon: 'home' | 'color-filter' | 'add-circle' | 'call' | 'person';
-};
-
-const dataNavigation: dataNavigationProps[] = [
+const dataNavigation = [
   {
     link: '/',
     icon: 'home',
   },
   {
     link: '/test1',
-    icon: 'color-filter',
+    icon: 'grid',
   },
   {
     link: '/test2',
-    icon: 'add-circle',
-  },
-  {
-    link: '/test3',
-    icon: 'call',
+    icon: 'search',
   },
   {
     link: '/test1',
@@ -35,22 +28,15 @@ const dataNavigation: dataNavigationProps[] = [
 ];
 
 const NavbarMobile = ({ className }: NavbarMobileProps) => {
+  const location = useLocation();
+
   return (
     <>
-      <div
-        className={`flex w-full items-center justify-around bg-white px-4 py-4 shadow-border-blur sm:hidden ${className}`}
-      >
+      <div className={`flex w-full items-center justify-around bg-white p-3 shadow-border-blur sm:hidden ${className}`}>
         {dataNavigation.map((item, index) => (
           <motion.button key={index} whileTap={{ scale: 0.9 }}>
-            <NavLink
-              to={item.link}
-              className={(nav) =>
-                nav.isActive
-                  ? 'flex items-center  justify-center text-cs_purple duration-100'
-                  : 'flex items-center justify-center'
-              }
-            >
-              <IonIcon name={`${item.icon}-outline`} className="text-2xl " />
+            <NavLink to={item.link} className={(nav) => `flex items-center justify-between`}>
+              <Icon name={location.pathname === item.link ? item.icon : `${item.icon}-outline`} className="text-2xl" />{' '}
             </NavLink>
           </motion.button>
         ))}

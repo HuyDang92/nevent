@@ -1,15 +1,13 @@
 import { Typography } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
+
 import { useState } from 'react';
 import Button from '~/components/customs/Button';
-import ProductCard from '~/components/customs/ProductCard';
 import SectionTitle from '~/components/customs/SectionTitle';
 import Tabs from '~/components/customs/Tabs';
-import Thumb from '~/assets/images/pro.png'
+import Thumb from '~/assets/images/pro.png';
 
 function DetailEvent() {
-
-  
   const [visibleProducts, setVisibleProducts] = useState(8); // Số lượng sản phẩm hiển thị ban đầu
   const tabHeader = ['Giới thiệu', 'Thông tin về', 'Ngày tổ chức', 'Lưu ý'];
   const tabContent = [
@@ -121,19 +119,19 @@ function DetailEvent() {
   };
   return (
     <div className="md:px-[30px] md:py-[54px]">
-      <div className="p-2 md:flex items-start justify-between gap-[40px]">
+      <div className="items-start justify-between gap-[40px] p-2 md:flex">
         <div className="md:w-[calc(100%-355px)]">
           <div className="flex flex-col justify-between text-[12px] md:text-[18px]">
-            <Typography className="text-[18px] md:text-[2rem] font-bold text-cs_dark">
+            <Typography className="text-[18px] font-bold text-cs_dark md:text-[2rem]">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
             <div className="mt-[10px] flex items-center gap-[10px] md:gap-[20px]">
-              <div className="h-[70px] md:h-[120px] w-[120px] md:w-[115px] overflow-hidden rounded-[5px] shadow-border-full">
-                <div className="grid h-[10px] md:h-[35px] place-content-center bg-cs_purple py-2 text-[8px] md:text-[15px] text-cs_light">
+              <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full md:h-[120px] md:w-[115px]">
+                <div className="grid h-[10px] place-content-center bg-cs_purple py-2 text-[8px] text-cs_light md:h-[35px] md:text-[15px]">
                   Tháng 10
                 </div>
-                <div className="flex h-[60px] md:h-[85px] flex-col items-center justify-center">
-                  <b className="text-xl md:text-[40px] md:mb-2">20</b>
+                <div className="flex h-[60px] flex-col items-center justify-center md:h-[85px]">
+                  <b className="text-xl md:mb-2 md:text-[40px]">20</b>
                   <span className="text-[8px] md:text-[14px]">Thứ 6</span>
                 </div>
               </div>
@@ -158,10 +156,10 @@ function DetailEvent() {
         </div>
         <div className="md:sticky md:top-[88px] md:w-[355px]">
           <Button
-            className="grid rounded-[5px] h-10 w-full place-content-center bg-cs_purple text-lg font-bold text-white"
+            className="grid h-10 w-full place-content-center rounded-[5px] bg-cs_purple text-lg font-bold text-white"
             value="Đặt vé"
           />
-          <div className="mt-3 p-5 text-[14px] shadow-border-blur rounded-[5px]">
+          <div className="mt-3 rounded-[5px] p-5 text-[14px] shadow-border-blur">
             <Typography className="text-[20px] font-bold text-cs_dark">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
@@ -185,10 +183,10 @@ function DetailEvent() {
           </div>
         </div>
       </div>
-      <div className='p-2'>
+      <div className="p-2">
         <SectionTitle value="Đề xuất cho bạn" />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {tempProductData.slice(0, visibleProducts).map((data, index) => (
+          {/* {tempProductData.slice(0, visibleProducts).map((data, index) => (
             <ProductCard
               key={index}
               id={index}
@@ -198,7 +196,7 @@ function DetailEvent() {
               category={data.category}
               link=""
             />
-          ))}
+          ))} */}
         </div>
         {visibleProducts < tempProductData.length && (
           <div className="mt-5 flex justify-center">

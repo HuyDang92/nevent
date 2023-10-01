@@ -1,13 +1,21 @@
 import Footer from '~/Layout/components/Footer';
 import Header from '~/Layout/components/Header';
+<<<<<<< HEAD
 import { IconDiamond, IconTrophy } from '~/assets/icon';
 import AboutImage1 from '~/assets/images/about_image1.png';
 import AboutImage2 from '~/assets/images/about_image2.png';
 import AboutImage3 from '~/assets/images/about_image3.png';
+=======
+import AboutImage from '~/assets/images/about_Image.png';
+// import logo from '~/assets/images/logo.svg';
+import IonIcon from '@reacticons/ionicons';
+
+>>>>>>> 4c7658a70ab13303ec5781baacb66990ff45c338
 function About() {
   return (
     <>
       <Header />
+<<<<<<< HEAD
       <main className="min-h-screen dark:bg-cs_dark">
         <div className="relative mx-5">
           <h1 className="absolute left-1/2 top-10 -translate-x-1/2 text-5xl font-bold text-cs_light">NEVENT</h1>
@@ -40,6 +48,20 @@ function About() {
           </div>
         </div>
         <div className="mx-auto mt-36 flex w-[1000px] justify-between gap-20 rounded-2xl bg-cs_light p-10 pr-0 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+=======
+      <main className="relative mt-[30rem] min-h-screen bg-cs_purple">
+        <div className="absolute w-full -translate-y-1/2">
+          <Typography className="mx-auto h-24 w-[62%] text-left text-[40px] font-bold">Thông tin về NEVENT</Typography>
+          <div className="relative mx-auto w-[62%]">
+            {/* <img className="absolute left-[10%]" src={logo} alt="logo of NEVENT" /> */}
+            <img className="w-full" src={AboutImage} alt="About NEVENT image" />
+          </div>
+          <Typography className="flex h-24 items-center justify-center text-2xl font-normal text-cs_light">
+            NEVENT là hệ thống quản lý và phân phối vé giúp bạn dễ dàng mua bán vé sự kiện
+          </Typography>
+        </div>
+        <div className="flex gap-16 px-32 pb-32 pt-[27rem] text-cs_light">
+>>>>>>> 4c7658a70ab13303ec5781baacb66990ff45c338
           <div>
             <h1 className="mb-5 text-2xl font-bold">Sự chú ý của bạn có thể bảo vệ túi tiền của bạn.</h1>
             <p>

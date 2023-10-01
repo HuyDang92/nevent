@@ -5,9 +5,9 @@ import AppRoutes from './routes';
 
 function App() {
   return (
-    <>
+    <div className="bg-[#f5f7fc] dark:bg-cs_dark">
       <AppRoutes />
-    </>
+    </div>
   );
 }
 
