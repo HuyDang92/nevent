@@ -17,13 +17,6 @@ function DefaultLayout() {
   }, [width]);
   return (
     <>
-<<<<<<< HEAD
-      <div className="relative flex">
-        <aside className={`hidden transition-all md:block ${isOpenSideBar ? 'md:w-[17%]' : 'md:w-[5%]'}`}>
-          <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
-        </aside>
-        <div className={`mx-auto w-full ${isOpenSideBar ? 'md:w-[83%]' : 'md:w-[95%]'}`}>
-=======
       <div className="relative sm:flex">
         <motion.aside
           className={`${
@@ -33,7 +26,6 @@ function DefaultLayout() {
           <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
         </motion.aside>
         <div className={`mx-auto ${isOpenSideBar ? 'w-[95%]' : 'w-[83%]'}`}>
->>>>>>> 4c7658a70ab13303ec5781baacb66990ff45c338
           <Header />
           <main className="sm:px-5">
             <Outlet />
@@ -41,12 +33,7 @@ function DefaultLayout() {
           <Footer />
         </div>
       </div>
-<<<<<<< HEAD
       <NavbarMobile className="fixed bottom-0 sm:hidden" />
-=======
-      <Footer />
-      <NavbarMobile className="fixed bottom-0 z-50 sm:hidden" />
->>>>>>> 4c7658a70ab13303ec5781baacb66990ff45c338
     </>
   );
 }
