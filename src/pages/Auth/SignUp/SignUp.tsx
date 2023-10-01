@@ -1,59 +1,96 @@
-import { Typography } from '@material-tailwind/react';
-import Button from '~/components/customs/Button';
-import SectionTitle from '~/components/customs/SectionTitle';
-import AuthImage from '~/assets/images/auth.png';
-import LogoGoogle from '~/assets/icon/logo_google.svg';
-import LogoFacebook from '~/assets/icon/logo_facebook.svg';
-// import Logo from '~/assets/svg/logo-white-desktop.svg';
+import * as Yup from 'yup';
+import { Formik, Field } from 'formik';
+import AuthImage from '~/assets/images/bgLogin.png';
 import { Link } from 'react-router-dom';
-import { LogoWhiteDesktop } from '~/assets/icon';
-function SignUp() {
+import logo from '~/assets/images/logoDarkDesktop.png';
+import logoMobile from '~/assets/images/logo.svg';
+import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
+import Button from '~/components/customs/Button';
+import Input from '~/components/customs/Input';
+import { Checkbox } from '@material-tailwind/react';
+import { motion } from 'framer-motion';
+interface SignInFormValues {
+  email: string;
+  password: string;
+}
+function LogIn() {
+  const initialValues: SignInFormValues = { email: '', password: '' };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+  });
   return (
-    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
+    <div className="relative flex h-screen w-screen flex-row justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
           <LogoWhiteDesktop />
-          {/* <img src={Logo} alt="" /> */}
         </Link>
       </div>
-      {/* <div className="w-1/2 h-full bg-[url('~/assets/images/auth.png')] bg-no-repeat object-fill">
-        asda
-      </div> */}
-      <div className="h-full w-1/2">
-        <img className="h-full w-full object-cover" src={AuthImage} alt="" />
-      </div>
-      <div className="grid w-1/2 place-content-center">
-        <div className="w-[580px] rounded-[25px] bg-white px-[70px] py-[50px] text-center shadow-border-full">
-          <div className="mb-[40px]">
-            <Typography className="text-[35px] font-bold">Đăng ký</Typography>
-            <span className="text-[#989898]">Đăng ký tài khoản để sử dụng dịch vụ của chúng tôi</span>
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <Button
-              className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
-              icon={LogoGoogle}
-              value="Đăng nhập bằng Google"
-            />
-            <Button
-              className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
-              icon={LogoFacebook}
-              value="Đăng nhập bằng Facebook"
-            />
-          </div>
-          <SectionTitle size="!text-base" value="hoặc" />
+      <motion.div
+        initial={{ x: 400 }} // Chuyển từ bên trái vào
+        animate={{ x: 0 }} // Chạy đến vị trí ban đầu
+        transition={{
+          duration: 0.5,
+          type: 'spring', // Loại hiệu ứng rung lắc
+          damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+          stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+        }}
+        className="grid w-1/2  place-content-center text-center"
+      >
+        <div className="w-[400px] space-y-5">
           <div>
-            <Link to={'/signup-email'}>
-              <Button
-                className="flex w-full justify-center rounded-full border-[#BAB1B1] text-lg !text-cs_dark"
-                icon="mail"
-                value="Đăng ký bằng email"
+            <h1 className="text-2xl font-extrabold dark:text-cs_light">ĐĂNG KÝ TÀI KHOẢN!</h1>
+            <p className=" py-2 text-center text-cs_blur_black">
+              Đăng ký tài khoản miễn phí để sử dụng dịch vụ của Nevent một cách nhanh chóng nào!
+            </p>
+          </div>
+          <form className="space-y-2">
+            <Input placeholder="Họ và tên" classNameInput="w-full" />
+            <Input placeholder="Email" classNameInput="w-full" />
+            <Input placeholder="Mật khẩu" classNameInput="w-full" />
+            <div className="flex items-center text-sm">
+              <Checkbox
+                label="Tôi đồng ý với điều khoản dịch vụ của của Nevent."
+                crossOrigin={{}}
+                className="h-4 w-4"
               />
+              <p></p>
+            </div>
+            <Button className="w-full font-normal dark:bg-cs_lightDark" mode="dark" value="Đăng ký" />
+          </form>
+          <div className="relative flex items-center justify-center gap-4">
+            <span className="h-[1px] w-32 rounded-full bg-black "></span>
+            <span className="">hoặc</span>
+            <span className="h-[1px] w-32 rounded-full bg-black "></span>
+          </div>
+          <div className="flex justify-center gap-1">
+            <Button className="font-semibold " value="Google" icon="logo-google" />
+            <Button className="" value="Facebook" icon="logo-facebook" />
+          </div>
+          <div className="pt-5">
+            <span className="dark:text-cs_light">Bạn đã có tài khoản? </span>
+            <Link to="/login" className="font-bold hover:underline dark:text-cs_light">
+              Đăng nhập
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ x: -400 }} // Chuyển từ bên trái vào
+        animate={{ x: 0 }} // Chạy đến vị trí ban đầu
+        transition={{
+          duration: 0.5,
+          type: 'spring', // Loại hiệu ứng rung lắc
+          damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+          stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+        }}
+        className="h-full w-1/2 p-3"
+      >
+        <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
+      </motion.div>
     </div>
   );
 }
 
-export default SignUp;
+export default LogIn;

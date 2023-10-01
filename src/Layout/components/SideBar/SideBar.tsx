@@ -4,8 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/images/logoDarkDesktop.png';
 import logoMobile from '~/assets/images/logo.svg';
-import { LogoMobie } from '~/assets/icon';
-import CategoryIcon from '@mui/icons-material/Category';
+import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
 import Icon from '~/components/customs/Icon';
 type SideBarProp = {
   className?: string;
@@ -13,18 +12,29 @@ type SideBarProp = {
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 const SideBar = ({ className, open, setOpen }: SideBarProp) => {
+  const auth = false;
   return (
     <Card
-      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-[#16181C] ${className}`}
+      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-cs_lightDark ${className}`}
     >
       <Link to="/" className="px-4 pt-2">
         <Typography className="cursor-pointer">
           {open ? (
-            <img src={logoMobile} alt="logo" className="hidden sm:block" />
+            <>
+              <img src={logoMobile} alt="logo" className="hidden dark:hidden sm:block" />
+              <span className="hidden py-2 dark:block">
+                <LogoWhite />
+              </span>
+            </>
           ) : (
-            <img src={logo} alt="logo" className="hidden sm:block" />
+            <>
+              <img src={logo} alt="logo" className="hidden dark:hidden sm:block" />
+              <span className="hidden dark:block">
+                <LogoWhiteDesktop />
+              </span>
+            </>
           )}
-          <img src={logoMobile} alt="logo" className="sm:hidden" />
+          {/* <img src={logoMobile} alt="logo" className="sm:hidden" /> */}
         </Typography>
       </Link>
       <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_dark`}>
@@ -109,21 +119,23 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             {!open && <Typography className={`ml-4 font-semibold`}>Cài đặt</Typography>}
           </ListItem>
         </NavLink>
-        <NavLink
-          to={'/category'}
-          className={({ isActive }) =>
-            `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
-            }`
-          }
-        >
-          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
-            <ListItemPrefix className="mr-0">
-              <IonIcon name="log-out" className={`text-xl`} />
-            </ListItemPrefix>
-            {!open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
-          </ListItem>
-        </NavLink>
+        {auth && (
+          <NavLink
+            to={'/category'}
+            className={({ isActive }) =>
+              `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
+                isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
+              }`
+            }
+          >
+            <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
+              <ListItemPrefix className="mr-0">
+                <IonIcon name="log-out" className={`text-xl`} />
+              </ListItemPrefix>
+              {!open && <Typography className={`ml-4 font-semibold`}>Đăng xuất</Typography>}
+            </ListItem>
+          </NavLink>
+        )}
       </List>
       <button onClick={() => setOpen((prev) => !prev)}>
         {!open ? (

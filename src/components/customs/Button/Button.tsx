@@ -5,32 +5,35 @@ import IonIcon from '@reacticons/ionicons';
 type ButtonProps = {
   icon?: string;
   className?: string;
-  value: ReactNode | string;
+  value?: ReactNode | string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   mode?: 'light' | 'dark';
+  rounded_full?: boolean;
 };
 
-const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light' }: ButtonProps) => {
+const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light', rounded_full }: ButtonProps) => {
   return (
     <motion.button
       onClick={onClick}
-      className={`flex rounded-xl px-4 py-2 font-medium shadow-border-btn ${
-        mode === 'light' ? 'text-dark bg-white' : 'bg-black text-white dark:border-2 border-cs_light'
+      className={`${value && icon && 'flex'} gap-2 ${
+        rounded_full ? 'rounded-full' : 'rounded-xl'
+      } border px-4 py-2 font-medium shadow-border-light transition-all ${
+        mode === 'light' ? 'text-dark bg-white' : 'border-cs_light bg-black text-white'
       }  ${className}`}
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 0.8 }}
       type={type}
     >
       {icon && (
         <>
           {icon?.includes('assets') ? (
-            <img src={icon} className="mr-[20px] h-[30px] w-[30px]" alt="" />
+            <img src={icon} className="h-[30px] w-[30px]" alt="" />
           ) : (
-            <IonIcon name={icon as any} className="mr-[20px] text-3xl" />
+            <IonIcon name={icon as any} className="text-2xl" />
           )}
         </>
       )}
-      {value}
+      <span>{value}</span>
     </motion.button>
   );
 };

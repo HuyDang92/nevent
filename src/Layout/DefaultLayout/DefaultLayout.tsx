@@ -33,7 +33,7 @@ function DefaultLayout() {
         </div>
       </div>
       <Footer />
-      <NavbarMobile className="fixed bottom-0 z-50 sm:hidden" />
+      <NavbarMobile className="fixed bottom-0 sm:hidden" />
     </>
   );
 }
