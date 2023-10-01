@@ -57,7 +57,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           </ListItem>
         </NavLink>
         <NavLink
-          to={'/category'}
+          to={'/event-categories/1'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
               isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
