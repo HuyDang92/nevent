@@ -179,7 +179,7 @@ function Categories() {
             ))}
           </div>
           {/* Filter */}
-          <div className="flex gap-3">
+          <div className="hidden gap-3 sm:flex">
             <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="calendar" />
             </div>
