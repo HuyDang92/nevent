@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import bg from 'assets/images/background.png';
+import symbol from 'assets/images/symbol.png';
 // import logo from 'assets/logo/logo-fpt.png';
 
 function NotFound() {
@@ -8,21 +9,19 @@ function NotFound() {
 
   return (
     <>
-      <section className="dark:bg-gray-900 flex min-h-screen items-center justify-center bg-white">
-        <div className="mx-auto max-w-screen-xl -translate-y-20 px-4 py-20 lg:px-6 lg:py-32">
+      <img src={bg} alt="" className="fixed  w-[100vw]" />
+      <section className="flex min-h-screen items-center justify-center dark:bg-gray-900">
+        <div className="relative">
           <div className="mx-auto max-w-screen-sm text-center">
-            <h1 className="dark:text-primary-500 mb-8 text-6xl font-extrabold  tracking-tight text-orange-400">
-              404
-            </h1>
-            <p className="text-gray-900 mb-2 text-2xl font-bold tracking-tight  dark:text-white">
+            <h1 className="dark:text-primary-500 mb-8 text-6xl font-black  tracking-widest text-cs_dark">404</h1>
+            <img src={symbol} alt="" />
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900  dark:text-white">
               Trang bạn truy cập không tồn tại.
             </p>
-            <p className="text-md text-gray-500 dark:text-gray-400 mb-4 font-light">
-              Vui lòng kiểm tra lại.
-            </p>
+            <p className="text-md mb-4 font-light text-gray-500 dark:text-gray-400">Vui lòng kiểm tra lại.</p>
             <Link
               to={'/'}
-              className="focus:ring-primary-300 dark:focus:ring-primary-900 my-4 inline-flex rounded-lg bg-gradient-to-br from-blue-400 to-cyan-400 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+              className="focus:ring-primary-300 dark:focus:ring-primary-900 my-4 inline-flex rounded-lg bg-cs_dark px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
             >
               Quay lại trang chủ
             </Link>

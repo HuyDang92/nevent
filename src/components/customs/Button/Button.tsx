@@ -9,28 +9,37 @@ type ButtonProps = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   mode?: 'light' | 'dark';
+  border?: string;
 };
 
-const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light' }: ButtonProps) => {
+const Button = ({
+  icon,
+  onClick,
+  className,
+  value,
+  type = 'button',
+  mode = 'light',
+  border = 'rounded-xl',
+}: ButtonProps) => {
   return (
     <motion.button
       onClick={onClick}
-      className={`flex rounded-xl px-4 py-2 font-medium shadow-border-btn ${
-        mode === 'light' ? 'text-dark bg-white' : 'bg-black text-white dark:border-2 border-cs_light'
+      className={`flex gap-2 ${border} px-4 py-2 font-medium shadow-border-btn ${
+        mode === 'light' ? 'text-dark bg-white' : 'border-cs_light bg-black text-white dark:border-2'
       }  ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
     >
+      <span>{value}</span>
       {icon && (
         <>
           {icon?.includes('assets') ? (
-            <img src={icon} className="mr-[20px] h-[30px] w-[30px]" alt="" />
+            <img src={icon} className="h-[30px] w-[30px]" alt="" />
           ) : (
-            <IonIcon name={icon as any} className="mr-[20px] text-3xl" />
+            <IonIcon name={icon as any} className="text-2xl" />
           )}
         </>
       )}
-      {value}
     </motion.button>
   );
 };
