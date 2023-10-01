@@ -24,13 +24,12 @@ const Button = ({
   return (
     <motion.button
       onClick={onClick}
-      className={`flex gap-2 ${border} px-4 py-2 font-medium shadow-border-btn ${
+      className={`flex gap-2 ${border} border px-4 py-2 font-medium shadow-border-btn transition-all hover:scale-105 ${
         mode === 'light' ? 'text-dark bg-white' : 'border-cs_light bg-black text-white dark:border-2'
       }  ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
     >
-      <span>{value}</span>
       {icon && (
         <>
           {icon?.includes('assets') ? (
@@ -40,6 +39,7 @@ const Button = ({
           )}
         </>
       )}
+      <span>{value}</span>
     </motion.button>
   );
 };

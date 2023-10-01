@@ -35,26 +35,23 @@ const Header = ({ className }: HeaderProps) => {
            */}
 
       <Link to="/" className="cursor-pointer px-2 lg:hidden">
-        <Icon name="search" className="text-2xl" />
+        <Icon name="search" className="text-2xl hover:scale-110" />
       </Link>
       <Link to="/" className="cursor-pointer px-2 lg:hidden">
-        <Icon name="qr-code-outline" className="text-2xl" />
+        <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
+      </Link>
+      <Link to="./" className=" items-center rounded-lg px-2 text-cs_dark transition hover:scale-110">
+        <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link>
       <Link
         to="./"
-        className=" items-center rounded-lg px-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light"
-      >
-        <Icon name="notifications" className="text-2xl" />
-      </Link>
-      <Link
-        to="./"
-        className="hidden items-center rounded-lg px-2 text-cs_dark transition hover:bg-cs_dark hover:text-white hover:shadow-border-light sm:inline-block"
+        className="hidden items-center rounded-lg px-2 text-cs_dark transition hover:scale-110 sm:inline-block"
       >
         <Icon name="wallet" className="text-2xl" />
       </Link>
 
       <ToggleDarkMode>
-        <Icon name="moon" className="text-2xl" />
+        <Icon name="moon" className="text-2xl hover:scale-110" />
       </ToggleDarkMode>
       <Link to="/" className="hidden sm:inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
@@ -63,7 +60,7 @@ const Header = ({ className }: HeaderProps) => {
   );
 
   return (
-    <header className={`flex items-center justify-between rounded-none py-1 sm:py-4 sm:block ${className} sm:px-5`}>
+    <header className={`flex items-center justify-between rounded-none py-1 sm:block sm:py-4 ${className} sm:px-5`}>
       <img src={logo} alt="logo" className="sm:hidden" />
       <div className="flex items-center justify-end lg:justify-between">
         <SearchBar className="hidden rounded-xl shadow-border-light lg:block" />

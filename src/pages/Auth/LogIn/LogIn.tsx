@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { Formik, Field } from 'formik';
-import AuthImage from '~/assets/images/backgroundLogin2.webp';
+import AuthImage from '~/assets/images/bgLogin.png';
 import LogoGoogle from '~/assets/icon/logo_google.svg';
 import LogoFacebook from '~/assets/icon/logo_facebook.svg';
 import { Link } from 'react-router-dom';
@@ -31,9 +31,9 @@ function LogIn() {
         <p className="w-[335px] py-2 text-center text-cs_blur_black">
           Đăng nhập nhanh để có thể sử dụng dịch vụ của Nevent một cách hoàn toàn miễn phí.
         </p>
-        <div className="flex gap-1 justify-center">
-          <Button className="text-cs_blur_black font-semibold" value="Google" icon="logo-google" />
-          <Button className="text-cs_blur_black" value="Facebook" icon='logo-facebook'/>
+        <div className="flex justify-center gap-1">
+          <Button className="font-semibold text-cs_blur_black" value="Google" icon="logo-google" />
+          <Button className="text-cs_blur_black" value="Facebook" icon="logo-facebook" />
         </div>
       </div>
 
