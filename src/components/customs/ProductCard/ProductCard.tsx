@@ -35,14 +35,14 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
       >
         <div className={`relative h-[190px] w-full overflow-hidden rounded-xl shadow-lg sm:h-64 ${className}`}>
           <Link to={'/'}>
-            <img src={data.image} alt="image" className="h-[110px] w-full hover:scale-110 transition-all rounded-xl object-cover sm:h-44" />
+            <img src={data.image} alt="image" className="h-[110px] w-full rounded-xl object-cover sm:h-44" />
 
             <div
               className=" z-5 absolute bottom-0 mt-5 rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg sm:py-3"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <span className="text-[10px] sm:text-xs font-normal">{data.place}</span>
+              <span className="text-[10px] font-normal sm:text-xs">{data.place}</span>
               <p className={`line-clamp-2 text-xs leading-tight tracking-wide sm:my-1.5 sm:text-sm `}>{data.title}</p>
               <div className="mb-1 mt-2 justify-between pr-1.5 text-xs font-normal text-cs_gray sm:flex">
                 <span className="flex items-center gap-1">
