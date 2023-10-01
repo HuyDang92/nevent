@@ -9,16 +9,16 @@ function About() {
     <>
       <Header />
       <main className="min-h-screen dark:bg-cs_dark">
-        <div className="relative mx-5">
-          <h1 className="absolute left-1/2 top-10 -translate-x-1/2 text-5xl font-bold text-cs_light">NEVENT</h1>
-          <img src={AboutImage1} className="w-full" alt="Photo of Nevent" />
-          <div className="absolute left-1/2 top-36 w-[1000px] -translate-x-1/2 rounded-2xl bg-[rgba(255,255,255,0.2)] p-10 backdrop-blur-[100px]">
+        <div className="relative grid place-items-center">
+          <h1 className="z-10 my-20 text-5xl font-bold text-cs_light">NEVENT</h1>
+          <img src={AboutImage1} className="absolute top-0 px-5" alt="Photo of Nevent" />
+          <div className="rounded-2xl bg-[rgba(255,255,255,0.2)] p-3 backdrop-blur-[100px] md:w-[70%] md:p-10">
             <h1 className="mb-2.5 text-center text-3xl font-bold text-cs_light">Một phong cách mới. Tại sao?</h1>
             <p className="mb-10 text-center text-cs_light">
               Đi kèm nhu cầu sử dụng và trải nghiệm theo một phong cách hoàn toàn mới
             </p>
-            <div className="flex justify-between">
-              <div className="flex w-[440px] flex-col gap-5 rounded-2xl bg-cs_light p-5">
+            <div className="flex flex-wrap justify-between gap-10 md:flex-nowrap">
+              <div className="flex  flex-col gap-5 rounded-2xl bg-cs_light p-5 md:w-1/2">
                 <IconTrophy className="h-[52px] w-[52px]" />
                 <h1 className="text-2xl font-bold">Linh hoạt trải nghiệm.</h1>
                 <p>
@@ -28,7 +28,7 @@ function About() {
                   kiện. Chúng tôi luôn đồng hành cùng bạn trong mọi cuộc vui.
                 </p>
               </div>
-              <div className="flex w-[440px] flex-col gap-5 rounded-2xl bg-cs_light p-5">
+              <div className="flex flex-col gap-5 rounded-2xl bg-cs_light p-5 md:w-1/2">
                 <IconDiamond className="h-[52px] w-[52px]" />
                 <h1 className="text-2xl font-bold">An toàn thông tin</h1>
                 <p>
@@ -39,7 +39,7 @@ function About() {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-36 flex w-[1000px] justify-between gap-20 rounded-2xl bg-cs_light p-10 pr-0 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+        <div className="mx-auto mt-10 flex flex-col justify-between gap-3 md:gap-20 rounded-2xl bg-cs_light p-3 md:p-10 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light md:w-[70%] md:flex-row">
           <div>
             <h1 className="mb-5 text-2xl font-bold">Sự chú ý của bạn có thể bảo vệ túi tiền của bạn.</h1>
             <p>
@@ -49,8 +49,8 @@ function About() {
           </div>
           <img src={AboutImage2} className="w-[455px]" alt="Photo of Nevent" />
         </div>
-        <div className="mx-auto mt-10 flex w-[1000px] justify-between gap-10 pb-40">
-          <div className="flex w-2/3 gap-[30px] rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+        <div className="mx-auto mt-10 flex flex-col md:flex-row justify-between gap-10 pb-10 md:pb-20 md:w-[70%]">
+          <div className="flex md:w-2/3 gap-[30px] rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
             <div>
               <h1 className="mb-5 text-2xl font-bold">Ai là người đứng sau Nevent?</h1>
               <p>
@@ -59,13 +59,16 @@ function About() {
                 thể nó thành tựu của Nevent trong hai từ. “Phá Sản”.
               </p>
             </div>
-            <img src={AboutImage3} className="h-36 w-36" alt="Photo of Nevent" />
+            <img src={AboutImage3} className="hidden md:block h-36 w-36" alt="Photo of Nevent" />
           </div>
-          <div className="w-1/3 rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
-            <h1 className="mb-5 text-2xl font-bold">Tom Musk</h1>
-            <p className="text-lg font-semibold">
-              Lập trình viên đến từ cao đẳng FPT Polytechnic với hơn 97.5% có việc làm
-            </p>
+          <div className="flex gap-3 md:w-1/3 rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light">
+            <div>
+              <h1 className="mb-5 text-2xl font-bold">Tom Musk</h1>
+              <p className="text-lg font-semibold">
+                Lập trình viên đến từ cao đẳng FPT Polytechnic với hơn 97.5% có việc làm
+              </p>
+            </div>
+            <img src={AboutImage3} className="md:hidden h-36 w-36" alt="Photo of Nevent" />
           </div>
         </div>
       </main>
