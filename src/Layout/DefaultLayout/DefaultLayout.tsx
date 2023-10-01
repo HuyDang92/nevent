@@ -30,10 +30,10 @@ function DefaultLayout() {
           <main className="sm:px-5">
             <Outlet />
           </main>
+          <Footer />
         </div>
       </div>
-      <Footer />
-      <NavbarMobile className="fixed bottom-0 z-50 sm:hidden" />
+      <NavbarMobile className="fixed bottom-0 sm:hidden" />
     </>
   );
 }

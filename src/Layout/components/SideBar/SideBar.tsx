@@ -22,7 +22,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           {open ? (
             <>
               <img src={logoMobile} alt="logo" className="hidden dark:hidden sm:block" />
-              <span className="hidden dark:block py-2">
+              <span className="hidden py-2 dark:block">
                 <LogoWhite />
               </span>
             </>
