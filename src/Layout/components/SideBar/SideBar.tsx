@@ -15,7 +15,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
   const auth = false;
   return (
     <Card
-      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-[#16181C] ${className}`}
+      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-cs_lightDark ${className}`}
     >
       <Link to="/" className="px-4 pt-2">
         <Typography className="cursor-pointer">

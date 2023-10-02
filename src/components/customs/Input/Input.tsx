@@ -8,8 +8,9 @@ type InputProps = {
   className?: string;
   classNameLabel?: string;
   classNameInput?: string;
-  id: string;
+  id?: string;
   label?: string;
+  rounded_full?: boolean;
 };
 
 const Input = ({
@@ -18,10 +19,11 @@ const Input = ({
   placeholder,
   className,
   classNameLabel,
-  classNameInput,
+  classNameInput = 'w-96',
   type = 'text',
   id,
   label,
+  rounded_full = false,
 }: InputProps) => {
   console.log(label);
 
@@ -29,9 +31,9 @@ const Input = ({
     <div className={`flex flex-col items-start ${className}`}>
       {label !== undefined ? (
         <>
-          <label htmlFor={id} className={`p-2 font-medium flex gap-1 ${classNameLabel}`}>
+          <label htmlFor={id} className={`flex gap-1 p-2 font-medium ${classNameLabel}`}>
             <span>{label}</span>
-            <span className="text-red-500 self-start h-2 grid place-content-center">&lowast;</span>
+            <span className="grid h-2 place-content-center self-start text-red-500">&lowast;</span>
           </label>
         </>
       ) : (
@@ -39,7 +41,9 @@ const Input = ({
       )}
       <input
         placeholder={placeholder}
-        className={`h-10 w-96 rounded-md border-2 border-cs_gray bg-cs_light px-4 py-3.5 text-cs_purple focus:border-cs_purple focus:placeholder-cs_purple focus:outline-none ${classNameInput}`}
+        className={`shadow-2 h-10 shadow-border-light ${
+          rounded_full ? 'rounded-full' : 'rounded-xl'
+        } bg-cs_light px-4 py-3.5 text-cs_dark focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
         type={type}
         value={value}
         onChange={onChange}
