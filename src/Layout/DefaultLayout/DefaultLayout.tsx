@@ -17,7 +17,7 @@ function DefaultLayout() {
   }, [width]);
   return (
     <>
-      <div className="relative sm:flex">
+      <div className="relative sm:flex ">
         <motion.aside
           className={`${
             isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'

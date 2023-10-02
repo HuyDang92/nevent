@@ -5,11 +5,10 @@ import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
-
+import { motion } from 'framer-motion';
 import logo from '~/assets/images/logo.svg';
 import { LogoWhite } from '~/assets/icon';
 
@@ -47,7 +46,12 @@ const Header = ({ className }: HeaderProps) => {
       </Link>
 
       <ToggleDarkMode>
-        <Icon name="moon" className="text-2xl hover:scale-110" />
+        <p className="hidden dark:block">
+          <Icon name="sunny" className="text-2xl hover:scale-110" />
+        </p>
+        <p className="dark:hidden">
+          <Icon name="moon" className="text-2xl hover:scale-110 dark:hidden" />
+        </p>
       </ToggleDarkMode>
       <Link to="/" className="hidden sm:inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
