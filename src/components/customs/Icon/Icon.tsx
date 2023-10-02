@@ -1,5 +1,3 @@
-import { ReactNode, MouseEvent } from 'react';
-import { motion } from 'framer-motion';
 import IonIcon from '@reacticons/ionicons';
 
 type IconProps = {
