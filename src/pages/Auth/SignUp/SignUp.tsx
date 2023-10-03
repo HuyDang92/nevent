@@ -22,9 +22,12 @@ function LogIn() {
   return (
     <div className="relative flex h-screen w-screen flex-row justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
-        <Link to={'/'}>
+        <Link to={'/'} className="hidden dark:block">
           <LogoWhiteDesktop />
         </Link>
+        <Link to="/" className="dark:hidden">
+          <img src={logo} alt="" />
+        </Link>{' '}
       </div>
       <motion.div
         initial={{ x: 400 }} // Chuyển từ bên trái vào

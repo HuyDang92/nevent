@@ -38,7 +38,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
             <img src={data.image} alt="image" className="h-[110px] w-full rounded-xl object-cover sm:h-44" />
 
             <div
-              className=" z-5 absolute bottom-0 mt-5 rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg sm:py-3"
+              className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg sm:py-3"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
