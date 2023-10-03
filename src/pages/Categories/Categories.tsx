@@ -180,13 +180,13 @@ function Categories() {
           </div>
           {/* Filter */}
           <div className="hidden gap-3 sm:flex">
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="calendar" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="cash" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="filter" />
             </div>
           </div>

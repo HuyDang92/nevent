@@ -2,9 +2,8 @@ import { Card, Typography, List, ListItem, ListItemPrefix } from '@material-tail
 import IonIcon from '@reacticons/ionicons';
 import { Dispatch, SetStateAction } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/logo.svg';
-import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
+import logoDark from '~/assets/images/logoDark.png';
+import logoWhite from '~/assets/images/logoWhite.png';
 import Icon from '~/components/customs/Icon';
 type SideBarProp = {
   className?: string;
@@ -21,23 +20,23 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         <Typography className="cursor-pointer">
           {open ? (
             <>
-              <img src={logoMobile} alt="logo" className="hidden dark:hidden sm:block" />
-              <span className="hidden py-2 dark:block">
-                <LogoWhite />
-              </span>
+              <div className="flex items-center gap-2 py-3">
+                <img src={logoDark} alt="logo" className="hidden h-[20px] w-[40px] dark:hidden sm:block" />
+                <img src={logoWhite} alt="logo" className="hidden h-[20px] w-[40px] dark:block" />
+              </div>
             </>
           ) : (
             <>
-              <img src={logo} alt="logo" className="hidden dark:hidden sm:block" />
-              <span className="hidden dark:block">
-                <LogoWhiteDesktop />
-              </span>
+              <div className="flex items-center gap-2 py-3">
+                <img src={logoDark} alt="logo" className="hidden h-[20px] w-[40px] dark:hidden sm:block" />
+                <img src={logoWhite} alt="logo" className="hidden h-[20px] w-[40px] dark:block" />
+                <span className="text-xl font-black text-cs_dark dark:text-cs_light">NEVENT</span>
+              </div>
             </>
           )}
-          {/* <img src={logoMobile} alt="logo" className="sm:hidden" /> */}
         </Typography>
       </Link>
-      <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_dark`}>
+      <List className={`${!open ? 'p-4 pt-0' : 'p-2 pt-0'}  text-cs_dark`}>
         <h2 className="py-2 font-medium text-cs_gray dark:text-white">MENU</h2>
         <NavLink
           to={'/'}

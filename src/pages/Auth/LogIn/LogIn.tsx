@@ -2,13 +2,10 @@ import * as Yup from 'yup';
 import { Formik, Field } from 'formik';
 import AuthImage from '~/assets/images/bgLogin.png';
 import { Link } from 'react-router-dom';
-import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/logo.svg';
-import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
-import { motion } from 'framer-motion';
+import logoWhite from '~/assets/images/logoWhite.png';
 
 interface SignInFormValues {
   email: string;
@@ -24,18 +21,21 @@ function LogIn() {
     <div className="relative flex h-screen w-screen flex-row-reverse justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
-          <LogoWhiteDesktop />
+          <div className="flex items-center gap-2 py-3">
+            <img src={logoWhite} alt="logo" className="h-[20px] w-[40px]" />
+            <span className="text-xl font-black text-cs_light">NEVENT</span>
+          </div>
         </Link>
       </div>
-      <motion.div
-        initial={{ x: -400 }} // Chuyển từ bên trái vào
-        animate={{ x: 0 }} // Chạy đến vị trí ban đầu
-        transition={{
-          duration: 0.5,
-          type: 'spring', // Loại hiệu ứng rung lắc
-          damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
-          stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
-        }}
+      <div
+        // initial={{ x: -400 }} // Chuyển từ bên trái vào
+        // animate={{ x: 0 }} // Chạy đến vị trí ban đầu
+        // transition={{
+        //   duration: 0.5,
+        //   type: 'spring', // Loại hiệu ứng rung lắc
+        //   damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+        //   stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
+        // }}
         className="grid w-1/2  place-content-center text-center"
       >
         <div className="w-[400px] space-y-5">
@@ -72,16 +72,16 @@ function LogIn() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ x: 400 }} // Chuyển từ bên phải vào
-        animate={{ x: 0 }} // Chạy đến vị trí ban đầu
-        transition={{ duration: 0.5 }}
+      <div
+        // initial={{ x: 400 }} // Chuyển từ bên phải vào
+        // animate={{ x: 0 }} // Chạy đến vị trí ban đầu
+        // transition={{ duration: 0.5 }}
         className="h-full w-1/2 p-3"
       >
-        <motion.img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
-      </motion.div>
+        <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
+      </div>
     </div>
   );
 }

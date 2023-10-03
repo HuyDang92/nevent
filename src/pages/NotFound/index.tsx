@@ -15,9 +15,7 @@ function NotFound() {
           <div className="mx-auto max-w-screen-sm text-center">
             <h1 className="dark:text-primary-500 mb-8 text-6xl font-black  tracking-widest text-cs_dark">404</h1>
             <img src={symbol} alt="" />
-            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900  dark:text-white">
-              Trang bạn truy cập không tồn tại.
-            </p>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-cs_dark ">Trang bạn truy cập không tồn tại.</p>
             <p className="text-md mb-4 font-light text-gray-500 dark:text-gray-400">Vui lòng kiểm tra lại.</p>
             <Link
               to={'/'}

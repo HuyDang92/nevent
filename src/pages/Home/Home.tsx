@@ -4,10 +4,9 @@ import CategoryCard from '~/components/customs/CategoryCard';
 import ProductList from '~/components/customs/ProductCard';
 import Banner from './components/Banner';
 import { Link } from 'react-router-dom';
-import thumb from '~/assets/images/pro.png';
+import thumb from '~/assets/images/pro.webp';
 import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
-import { motion } from 'framer-motion';
 import Slide from './components/Slide';
 function Home() {
   const dataPro = [
