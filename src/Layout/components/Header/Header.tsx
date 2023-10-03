@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
-import { IconButton } from '@material-tailwind/react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/customs/Dropdown';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
-
-import logo from '~/assets/images/logo.svg';
-import { LogoWhite } from '~/assets/icon';
-
+import logoDark from '~/assets/images/logoDark.png';
+import logoWhite from '~/assets/images/logoWhite.png';
 type HeaderProps = {
   className?: string;
 };
@@ -36,18 +32,23 @@ const Header = ({ className }: HeaderProps) => {
       <Link to="/" className="cursor-pointer px-2 lg:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
-      <Link to="./" className=" items-center rounded-lg px-2 text-cs_dark transition hover:scale-110">
+      <Link to="/" className=" items-center rounded-lg px-2 text-cs_dark transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link>
       <Link
-        to="./"
+        to="/"
         className="hidden items-center rounded-lg px-2 text-cs_dark transition hover:scale-110 sm:inline-block"
       >
         <Icon name="wallet" className="text-2xl" />
       </Link>
 
       <ToggleDarkMode>
-        <Icon name="moon" className="text-2xl hover:scale-110" />
+        <p className="hidden dark:block">
+          <Icon name="sunny" className="text-2xl hover:scale-110" />
+        </p>
+        <p className="dark:hidden">
+          <Icon name="moon" className="text-2xl hover:scale-110 dark:hidden" />
+        </p>
       </ToggleDarkMode>
       <Link to="/" className="hidden sm:inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
@@ -57,13 +58,13 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-[#f5f7fc] py-1 dark:bg-cs_dark sm:block sm:py-4 ${className} sm:px-5`}
+      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-[#f5f7fc] py-2 dark:bg-cs_dark sm:block sm:py-4 ${className} sm:px-5`}
     >
-      <img src={logo} alt="logo" className="sm:hidden" />
+      <div className="flex items-center gap-2 sm:hidden">
+        <img src={logoDark} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
+        <img src={logoWhite} alt="logo" className=" hidden h-[20px] w-[40px] dark:block" />
+      </div>
       <div className="flex items-center justify-end lg:justify-between">
-        {/* <Link to="/" className="hidden 2xl:block">
-          <LogoWhite />
-        </Link> */}
         <SearchBar className="hidden rounded-xl shadow-border-light lg:block" />
         <div className="flex items-center justify-end gap-3">
           <div className="">{navList}</div>

@@ -3,14 +3,15 @@ import Button from '~/components/customs/Button';
 import AuthImage from '~/assets/images/auth.png';
 // import Logo from '~/assets/svg/logo-white-desktop.svg'
 import { Link } from 'react-router-dom';
-import { LogoWhiteDesktop } from '~/assets/icon';
 function SignUpEmail() {
   return (
     <div className="relative flex h-screen w-screen justify-between text-cs_dark">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
-        <LogoWhiteDesktop />
-          {/* <img src={Logo} alt="" /> */}
+          <div className="flex items-center gap-2 py-3">
+            {/* <img src={Logo} alt="logo" className="h-[20px] w-[40px]" /> */}
+            <span className="text-xl font-black text-cs_light">NEVENT</span>
+          </div>
         </Link>
       </div>
       {/* <div className="w-1/2 h-full bg-[url('~/assets/images/auth.png')] bg-no-repeat object-fill">
