@@ -36,7 +36,7 @@ const Header = ({ className }: HeaderProps) => {
       <Link to="/" className="cursor-pointer px-2 lg:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
-      <Link to="./" className=" items-center rounded-lg px-2 text-cs_dark transition hover:scale-110">
+      <Link to="/" className=" items-center rounded-lg px-2 text-cs_dark transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link>
       <Link
