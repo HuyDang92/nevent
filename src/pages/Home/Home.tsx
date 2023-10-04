@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import SectionTitle from '~/components/customs/SectionTitle';
 import CategoryCard from '~/components/customs/CategoryCard';
-import ProductList from '~/components/customs/ProductCard';
 import Banner from './components/Banner';
 import { Link } from 'react-router-dom';
 import thumb from '~/assets/images/pro.webp';
 import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
+import ProductCard from '~/components/customs/ProductCard';
 function Home() {
   const dataPro = [
     {
@@ -222,11 +222,10 @@ function Home() {
         <SectionTitle value="Sự kiện nổi bật" />
         <Slide data={dataPro} />
         <SectionTitle value="Sự kiện sắp diễn ra" />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div className="grid gap-3 grid-cols-2 sm:gap-5 xl:grid-cols-4">
           {tempProductData.map((item, index) => (
             <Link to={'/'} key={index}>
-              {' '}
-              <ProductList data={item} index={index} />
+              <ProductCard data={item} index={index} />
             </Link>
           ))}
         </div>

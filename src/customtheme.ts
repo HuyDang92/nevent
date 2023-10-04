@@ -149,15 +149,15 @@ export const theme = {
           },
           amber: {
             backgroud: 'bg-amber-500',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           yellow: {
             backgroud: 'bg-yellow-500',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           lime: {
             backgroud: 'bg-lime-500',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           'light-green': {
             backgroud: 'bg-light-green-500',
@@ -236,15 +236,15 @@ export const theme = {
           },
           amber: {
             backgroud: 'bg-gradient-to-tr from-amber-600 to-amber-400',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           yellow: {
             backgroud: 'bg-gradient-to-tr from-yellow-600 to-yellow-400',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           lime: {
             backgroud: 'bg-gradient-to-tr from-lime-600 to-lime-400',
-            color: 'text-black',
+            color: 'text-cs_dark',
           },
           'light-green': {
             backgroud: 'bg-gradient-to-tr from-light-green-600 to-light-green-400',

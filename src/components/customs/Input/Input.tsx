@@ -43,7 +43,7 @@ const Input = ({
         placeholder={placeholder}
         className={`shadow-2 h-10 shadow-border-light ${
           rounded_full ? 'rounded-full' : 'rounded-xl'
-        } bg-cs_light px-4 py-3.5 text-cs_dark focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
+        } bg-cs_light px-4 py-3.5 text-cs_semi_green focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
         type={type}
         value={value}
         onChange={onChange}

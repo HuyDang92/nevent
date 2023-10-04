@@ -17,21 +17,17 @@ function DefaultLayout() {
   }, [width]);
   return (
     <>
-      <div className="relative">
-        <Header />
-        <div className={`mx-auto  flex`}>
-          <motion.aside
-            className={`${
-              isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'
-            } hidden transition-all sm:block `}
-          >
-            <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
-          </motion.aside>
-          <main
-            className={`mx-1 my-4 rounded-2xl bg-cs_light dark:bg-cs_lightDark px-2 py-2 shadow-border-light sm:mx-0 sm:px-4 sm:py-4 ${
-              isOpenSideBar ? 'w-full sm:w-[95%]' : 'w-[83%]'
-            }`}
-          >
+      <div className="relative sm:flex ">
+        <motion.aside
+          className={`${
+            isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%] min-w-[255px]'
+          } hidden transition-all sm:block `}
+        >
+          <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
+        </motion.aside>
+        <div className={`mx-auto ${isOpenSideBar ? 'w-[95%]' : 'w-[83%]'}`}>
+          <Header />
+          <main className="sm:px-5">
             <Outlet />
           </main>
         </div>

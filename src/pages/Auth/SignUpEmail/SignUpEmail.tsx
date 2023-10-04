@@ -5,7 +5,7 @@ import AuthImage from '~/assets/images/auth.png';
 import { Link } from 'react-router-dom';
 function SignUpEmail() {
   return (
-    <div className="relative flex h-screen w-screen justify-between text-cs_dark">
+    <div className="relative flex h-screen w-screen justify-between text-cs_semi_green">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
           <div className="flex items-center gap-2 py-3">

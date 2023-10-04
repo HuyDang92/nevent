@@ -8,7 +8,7 @@ function About() {
   return (
     <>
       <Header />
-      <main className="min-h-screen dark:bg-cs_dark">
+      <main className="min-h-screen dark:bg-cs_dark pt-5">
         <div className="relative grid place-items-center">
           <h1 className="z-10 my-20 text-5xl font-bold text-cs_light">NEVENT</h1>
           <img src={AboutImage1} className="absolute top-0 px-5" alt="Photo of Nevent" />

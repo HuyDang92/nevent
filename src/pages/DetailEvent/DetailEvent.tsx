@@ -122,7 +122,7 @@ function DetailEvent() {
       <div className="items-start justify-between gap-[40px] p-2 md:flex">
         <div className="md:w-[calc(100%-355px)]">
           <div className="flex flex-col justify-between text-[12px] md:text-[18px]">
-            <Typography className="text-[18px] font-bold text-cs_dark md:text-[2rem]">
+            <Typography className="text-[18px] font-bold text-cs_semi_green md:text-[2rem]">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
             <div className="mt-[10px] flex items-center gap-[10px] md:gap-[20px]">
@@ -160,7 +160,7 @@ function DetailEvent() {
             value="Đặt vé"
           />
           <div className="mt-3 rounded-[5px] p-5 text-[14px] shadow-border-blur">
-            <Typography className="text-[20px] font-bold text-cs_dark">
+            <Typography className="text-[20px] font-bold text-cs_semi_green">
               PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
             </Typography>
             <div className="flex items-center gap-[15px] py-[10px]">
