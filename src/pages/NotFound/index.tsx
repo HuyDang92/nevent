@@ -9,7 +9,7 @@ function NotFound() {
 
   return (
     <>
-      <img src={bg} alt="" className="fixed  w-[100vw]" />
+      <img src={bg} alt="" className="fixed  h-[100vh] w-[100vw] object-cover" />
       <section className="flex min-h-screen items-center justify-center dark:bg-gray-900">
         <div className="relative">
           <div className="mx-auto max-w-screen-sm text-center">

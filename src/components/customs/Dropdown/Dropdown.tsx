@@ -1,10 +1,4 @@
 import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Typography } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import avtDefault from '~/assets/images/default-avatar.jpg';
 import { motion, Variants } from 'framer-motion';
 import { useState } from 'react';

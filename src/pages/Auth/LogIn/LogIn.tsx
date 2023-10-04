@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { Formik, Field } from 'formik';
-import AuthImage from '~/assets/images/bgLogin.png';
+import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link } from 'react-router-dom';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';

@@ -91,7 +91,7 @@ const Banner = () => {
           />
         </View>
       </AnimatePresence>
-      {/* <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
+      <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
         <View className=" flex gap-[20px]">
           {data.map((item, index) => {
             return (
@@ -109,7 +109,7 @@ const Banner = () => {
             );
           })}
         </View>
-      </View> */}
+      </View>
 
       <View className="absolute right-[10px] top-[10px] z-10 flex items-center gap-[20px] lg:right-[30px] lg:top-[30px]">
         <motion.button
