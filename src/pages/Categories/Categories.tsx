@@ -155,7 +155,7 @@ function Categories() {
   };
 
   const pageClassNames = {
-    page: 'mx-2 px-4 py-2 text-cs_icon_black border rounded-lg shadow-lg font-bold',
+    page: 'mx-2 px-4 py-2 text-cs_icon_black border rounded-lg shadow-border-full font-bold',
     active: 'bg-cs_icon_black text-white',
   };
 
@@ -180,13 +180,13 @@ function Categories() {
           </div>
           {/* Filter */}
           <div className="hidden gap-3 sm:flex">
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-full transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="calendar" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-full transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="cash" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-lg transition hover:bg-cs_icon_black hover:text-white">
+            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-full transition hover:bg-cs_icon_black hover:text-white">
               <Icon name="filter" />
             </div>
           </div>
