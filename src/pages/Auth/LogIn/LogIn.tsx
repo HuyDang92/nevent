@@ -1,15 +1,12 @@
 import * as Yup from 'yup';
 import { Formik, Field } from 'formik';
-import AuthImage from '~/assets/images/bgLogin.png';
+import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link } from 'react-router-dom';
-import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/logo.svg';
-import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
+import logoWhite from '~/assets/images/logoWhite.png';
 import { motion } from 'framer-motion';
-
 interface SignInFormValues {
   email: string;
   password: string;
@@ -21,10 +18,13 @@ function LogIn() {
     password: Yup.string().required(),
   });
   return (
-    <div className="relative flex h-screen w-screen flex-row-reverse justify-between text-cs_dark">
+    <div className="relative flex h-screen w-screen flex-row-reverse justify-between ">
       <div className="absolute left-[30px] top-[15px]">
         <Link to={'/'}>
-          <LogoWhiteDesktop />
+          <div className="flex items-center gap-2 py-3">
+            <img src={logoWhite} alt="logo" className="h-[20px] w-[40px]" />
+            <span className="text-xl font-black text-cs_light">NEVENT</span>
+          </div>
         </Link>
       </div>
       <motion.div
@@ -40,7 +40,7 @@ function LogIn() {
       >
         <div className="w-[400px] space-y-5">
           <div>
-            <h1 className="text-2xl font-extrabold dark:text-cs_light">CHÀO MỪNG ĐẾN NEVENT!</h1>
+            <h1 className="text-2xl font-extrabold text-cs_semi_green dark:text-cs_light">CHÀO MỪNG ĐẾN NEVENT!</h1>
             <p className=" py-2 text-center text-cs_blur_black">
               Đăng nhập nhanh để có thể sử dụng dịch vụ của Nevent một cách hoàn toàn miễn phí.
             </p>
@@ -57,16 +57,16 @@ function LogIn() {
             <Button className="w-full font-normal dark:bg-cs_lightDark" mode="dark" value="Đăng nhập" />
           </form>
           <div className="relative flex items-center justify-center gap-4">
-            <span className="h-[1px] w-32 rounded-full bg-black "></span>
-            <span className="">hoặc</span>
-            <span className="h-[1px] w-32 rounded-full bg-black "></span>
+            <span className="h-[1px] w-32 rounded-full bg-cs_dark "></span>
+            <span className="text-cs_dark">hoặc</span>
+            <span className="h-[1px] w-32 rounded-full bg-cs_dark "></span>
           </div>
           <div className="flex justify-center gap-1">
             <Button className="font-semibold " value="Google" icon="logo-google" />
             <Button className="" value="Facebook" icon="logo-facebook" />
           </div>
           <div className="pt-5">
-            <span className="dark:text-cs_light">Bạn chưa có tài khoản? </span>
+            <span className="dark:text-cs_light text-cs_dark">Bạn chưa có tài khoản? </span>
             <Link to="/signup" className="font-bold hover:underline dark:text-cs_light">
               Đăng ký
             </Link>
@@ -80,7 +80,7 @@ function LogIn() {
         transition={{ duration: 0.5 }}
         className="h-full w-1/2 p-3"
       >
-        <motion.img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
+        <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
       </motion.div>
     </div>
   );

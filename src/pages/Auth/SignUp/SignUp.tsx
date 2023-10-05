@@ -1,14 +1,14 @@
 import * as Yup from 'yup';
 import { Formik, Field } from 'formik';
-import AuthImage from '~/assets/images/bgLogin.png';
+import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link } from 'react-router-dom';
-import logo from '~/assets/images/logoDarkDesktop.png';
-import logoMobile from '~/assets/images/logo.svg';
-import { LogoWhite, LogoWhiteDesktop, LogoDarkDesktop } from '~/assets/icon';
+import logoDark from '~/assets/images/logoDark.png';
+import logoWhite from '~/assets/images/logoWhite.png';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
 import { motion } from 'framer-motion';
+
 interface SignInFormValues {
   email: string;
   password: string;
@@ -20,14 +20,15 @@ function LogIn() {
     password: Yup.string().required(),
   });
   return (
-    <div className="relative flex h-screen w-screen flex-row justify-between text-cs_dark">
+    <div className="relative flex h-screen w-screen flex-row justify-between text-cs_semi_green">
       <div className="absolute left-[30px] top-[15px]">
-        <Link to={'/'} className="hidden dark:block">
-          <LogoWhiteDesktop />
+        <Link to="/">
+          <div className="flex items-center gap-2 py-3">
+            <img src={logoDark} alt="logo" className="hidden h-[20px] w-[40px] dark:hidden sm:block" />
+            <img src={logoWhite} alt="logo" className="hidden h-[20px] w-[40px] dark:block" />
+            <span className="text-xl font-black text-cs_semi_green dark:text-cs_light">NEVENT</span>
+          </div>
         </Link>
-        <Link to="/" className="dark:hidden">
-          <img src={logo} alt="" />
-        </Link>{' '}
       </div>
       <motion.div
         initial={{ x: 400 }} // Chuyển từ bên trái vào
@@ -62,16 +63,16 @@ function LogIn() {
             <Button className="w-full font-normal dark:bg-cs_lightDark" mode="dark" value="Đăng ký" />
           </form>
           <div className="relative flex items-center justify-center gap-4">
-            <span className="h-[1px] w-32 rounded-full bg-black "></span>
-            <span className="">hoặc</span>
-            <span className="h-[1px] w-32 rounded-full bg-black "></span>
+            <span className="h-[1px] w-32 rounded-full bg-cs_dark "></span>
+            <span className="text-cs_dark">hoặc</span>
+            <span className="h-[1px] w-32 rounded-full bg-cs_dark "></span>
           </div>
           <div className="flex justify-center gap-1">
             <Button className="font-semibold " value="Google" icon="logo-google" />
             <Button className="" value="Facebook" icon="logo-facebook" />
           </div>
           <div className="pt-5">
-            <span className="dark:text-cs_light">Bạn đã có tài khoản? </span>
+            <span className="dark:text-cs_light text-cs_dark">Bạn đã có tài khoản? </span>
             <Link to="/login" className="font-bold hover:underline dark:text-cs_light">
               Đăng nhập
             </Link>

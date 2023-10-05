@@ -36,7 +36,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
         {dataNavigation.map((item, index) => (
           <motion.button key={index} whileTap={{ scale: 0.9 }}>
             <NavLink to={item.link} className={(nav) => `flex items-center justify-between`}>
-              <Icon name={location.pathname === item.link ? item.icon : `${item.icon}-outline`} className="text-2xl" />{' '}
+              <Icon name={location.pathname === item.link ? item.icon : `${item.icon}-outline`} className="text-2xl text-cs_semi_green" />{' '}
             </NavLink>
           </motion.button>
         ))}

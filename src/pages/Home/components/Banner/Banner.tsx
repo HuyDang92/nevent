@@ -1,5 +1,4 @@
 import IonIcon from '@reacticons/ionicons';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import View from '~/motion/View';
@@ -40,6 +39,8 @@ const swipePower = (offset: number, velocity: number) => {
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
 
+  const [isShowBanner, setIsShowBanner] = React.useState(0);
+
   const wrapValue = (value: number, min: number, max: number) => {
     const range = max - min + 1;
     const offsetValue = (((value - min) % range) + range) % range;
@@ -60,7 +61,7 @@ const Banner = () => {
   }, [page]);
 
   return (
-    <View className="relative h-[200px] rounded-[15px] bg-white md:h-[300px] lg:mb-10 lg:h-[320px] xl:h-[350px]">
+    <View className="relative h-[230px] rounded-[15px] bg-white md:h-[350px] lg:mb-16 lg:h-[350px] xl:h-[400px]">
       <AnimatePresence initial={false} custom={direction}>
         <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
           <motion.img
@@ -91,13 +92,13 @@ const Banner = () => {
           />
         </View>
       </AnimatePresence>
-      {/* <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
+      <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
         <View className=" flex gap-[20px]">
           {data.map((item, index) => {
             return (
               <img
                 className={`h-[100px] w-[200px] cursor-pointer rounded-[10px] shadow-border-full duration-100 ${
-                  index === imageIndex ? 'border-[4px] border-cs_purple' : ''
+                  index === imageIndex ? 'border-[4px] border-cs_semi_green' : ''
                 }`}
                 key={index}
                 onClick={() => {
@@ -109,24 +110,24 @@ const Banner = () => {
             );
           })}
         </View>
-      </View> */}
+      </View>
 
       <View className="absolute right-[10px] top-[10px] z-10 flex items-center gap-[20px] lg:right-[30px] lg:top-[30px]">
         <motion.button
           className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-[#ffffff90]"
           whileTap={{ scale: 0.9 }}
         >
-          <IonIcon name="help-circle-outline" className="text-2xl text-cs_purple" />
+          <IonIcon name="help-circle-outline" className="text-2xl text-cs_semiborder-cs_semi_green" />
         </motion.button>
         {/* <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
                     whileTap={{ scale: 0.9 }}
                 >
-                    <IonIcon name='person-outline' className='text-2xl text-cs_purple' />
+                    <IonIcon name='person-outline' className='text-2xl text-cs_semiborder-cs_semi_green' />
                 </motion.button>
                 <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
                     whileTap={{ scale: 0.9 }}
                 >
-                    <IonIcon name='map-outline' className='text-2xl text-cs_purple' />
+                    <IonIcon name='map-outline' className='text-2xl text-cs_semiborder-cs_semi_green' />
                 </motion.button> */}
       </View>
     </View>
