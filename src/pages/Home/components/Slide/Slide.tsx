@@ -13,9 +13,9 @@ function Slide({ data }: Props) {
   return (
     <>
       <motion.div ref={ref} className="cursor-grab overflow-hidden ">
-        <motion.div drag="x" dragConstraints={{ right: 0, left: -width }} className="flex gap-2 sm:gap-5">
+        <motion.div drag="x" dragConstraints={{ right: 0, left: -width }} className="flex w-[80vw] gap-2 sm:gap-5">
           {data.map((item: any, index: number) => (
-            <Link to={'/'} key={index} className="pointer-events-none">
+            <Link to={'/'} key={index} className="">
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -29,7 +29,7 @@ function Slide({ data }: Props) {
                 <img
                   src={item.image}
                   alt=""
-                  className="pointer-events-none h-[280px] w-full rounded-[15px] object-cover"
+                  className="h-[280px] w-full rounded-[15px] object-cover"
                 />
               </motion.div>
             </Link>

@@ -14,9 +14,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
   const auth = false;
   return (
     <Card
-      className={`scrollbar-hide sticky top-[66px] h-[100vh] rounded-none bg-transparent pt-2 shadow-none ${className}`}
+      className={`scrollbar-hide sticky top-0 h-[100vh] rounded-none shadow-border-light dark:bg-cs_lightDark ${className}`}
     >
-      {/* <Link to="/" className="px-4 pt-2">
+      <Link to="/" className="px-4 pt-2">
         <Typography className="cursor-pointer">
           {open ? (
             <>
@@ -35,124 +35,117 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             </>
           )}
         </Typography>
-      </Link> */}
-      <List className={`${!open ? 'p-4 pt-2' : 'p-2'}  text-cs_semi_green`}>
+      </Link>
+      <List className={`${!open ? 'p-4 pt-0' : 'p-2 pt-0'}  text-cs_semi_green`}>
+        <h2 className="py-2 font-medium text-cs_gray dark:text-white">MENU</h2>
         <NavLink
           to={'/'}
           className={({ isActive }) =>
             `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
               isActive
-                ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark  '
-                : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light'
+                ? ' bg-cs_dark text-cs_light shadow-border-light dark:bg-cs_light dark:text-cs_semi_green'
+                : 'dark:bg-cs_dark dark:text-cs_light'
             }`
           }
         >
-          <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+          <ListItem className={`hover:bg-transparent ${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="home" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Trang chủ</Typography>}
-          </div>
+          </ListItem>
         </NavLink>
         <NavLink
           to={'/event-categories/1'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive
-                ? ' bg-cs_light text-cs_semi_green  shadow-border-light dark:bg-cs_lightDark'
-                : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light '
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
-          <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="grid" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Danh mục</Typography>}
-          </div>
+          </ListItem>
         </NavLink>
         <NavLink
           to={'/about'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive
-                ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark'
-                : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light'
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
-          <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="alert-circle-outline" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Giới thiệu</Typography>}
-          </div>
+          </ListItem>
         </NavLink>
         <NavLink
           to={'/support'}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive
-                ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark'
-                : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light'
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
-          <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="call" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Hỗ trợ</Typography>}
-          </div>
+          </ListItem>
         </NavLink>
+      </List>
+      <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_semi_green`}>
+        <h2 className="py-2 font-medium text-cs_gray dark:text-white">SETTING</h2>
         <NavLink
           to={'/sdfdg '}
           className={({ isActive }) =>
             `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-              isActive
-                ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark'
-                : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light'
+              isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
             }`
           }
         >
-          <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+          <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
             <ListItemPrefix className="mr-0">
               <IonIcon name="settings" className={`text-xl`} />
             </ListItemPrefix>
             {!open && <Typography className={`ml-4 font-semibold`}>Cài đặt</Typography>}
-          </div>
+          </ListItem>
         </NavLink>
         {auth && (
           <NavLink
             to={'/category'}
             className={({ isActive }) =>
               `rounded-xl ${!open ? 'w-full' : 'w-fit'} ${
-                isActive
-                  ? ' bg-cs_light text-cs_semi_green shadow-border-full dark:bg-cs_lightDark'
-                  : 'dark:bg-cs_dark text-cs_dark dark:text-cs_light'
+                isActive ? ' bg-cs_dark text-cs_light shadow-border-light' : 'dark:text-cs_light'
               }`
             }
           >
-            <div className={`hover:bg-transparent flex items-center py-3 ${!open ? 'px-8' : 'px-5'}`}>
+            <ListItem className={`${!open ? 'px-8' : 'px-5'}`}>
               <ListItemPrefix className="mr-0">
                 <IonIcon name="log-out" className={`text-xl`} />
               </ListItemPrefix>
               {!open && <Typography className={`ml-4 font-semibold`}>Đăng xuất</Typography>}
-            </div>
+            </ListItem>
           </NavLink>
         )}
       </List>
-
-      <button onClick={() => setOpen((prev) => !prev)} className="hidden xl:block">
+      <button onClick={() => setOpen((prev) => !prev)}>
         {!open ? (
           <Icon
             name="arrow-back-circle-outline"
-            className="absolute right-0 top-[40px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[25px] text-cs_light shadow-border-full"
+            className="absolute right-0 top-[80px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[30px] text-cs_light shadow-border-full"
           />
         ) : (
           <Icon
             name="arrow-forward-circle-outline"
-            className="absolute right-0 top-[40px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[25px] text-cs_light shadow-border-full"
+            className="absolute right-0 top-[80px] translate-x-1/2 overflow-hidden rounded-full border bg-[#292D32] text-[30px] text-cs_light shadow-border-full"
           />
         )}
       </button>

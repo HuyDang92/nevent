@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import ProductList from '~/components/customs/ProductCard';
-import thumb from '~/assets/images/pro.png';
+import ProductList from '~/components/ProductCard';
+import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 const cate = [
@@ -155,8 +155,8 @@ function Categories() {
   };
 
   const pageClassNames = {
-    page: 'mx-2 px-4 py-2 text-cs_icon_black border rounded-lg shadow-lg font-bold',
-    active: 'bg-cs_icon_black text-white',
+    page: 'mx-2 px-4 py-2 text-cs_semi_green border rounded-lg shadow-lg font-bold',
+    active: 'bg-cs_semi_green text-white',
   };
 
   return (
@@ -170,8 +170,8 @@ function Categories() {
               <button
                 key={index}
                 onClick={() => setIsActive(item.id)}
-                className={`z-10 rounded-full border border-cs_icon_black bg-white px-4 py-1 text-xs text-cs_icon_black transition-all ${
-                  isActive === item.id ? '!bg-cs_icon_black text-white' : ''
+                className={`z-10 rounded-full border border-cs_semi_green bg-white px-4 py-1 text-xs text-cs_semi_green transition-all ${
+                  isActive === item.id ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
                 {item.name}
@@ -180,14 +180,14 @@ function Categories() {
           </div>
           {/* Filter */}
           <div className="hidden gap-3 sm:flex">
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon name="calendar" />
+            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
+              <Icon className="text-cs_semi_green" name="calendar" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon name="cash" />
+            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
+              <Icon className="text-cs_semi_green" name="cash" />
             </div>
-            <div className="flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon name="filter" />
+            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
+              <Icon className="text-cs_semi_green" name="filter" />
             </div>
           </div>
         </div>

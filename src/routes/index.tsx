@@ -4,7 +4,6 @@ import Home from '~/pages/Home';
 import LogIn from '~/pages/Auth/LogIn';
 import NotFound from '~/pages/NotFound';
 import SignUp from '~/pages/Auth/SignUp';
-import PrivateRoute from './PrivateRoute';
 import DetailEvent from '~/pages/DetailEvent';
 import About from '~/pages/About';
 import Categories from '~/pages/Categories';
