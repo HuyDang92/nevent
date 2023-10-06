@@ -3,18 +3,20 @@ import { useState, useEffect } from 'react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
-import Dropdown from '~/components/customs/Dropdown';
+import Dropdown from '~/components/Dropdown';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
 import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
+import { RootState } from '~/store/store';
+import { useSelector } from 'react-redux';
 type HeaderProps = {
   className?: string;
 };
 
 const Header = ({ className }: HeaderProps) => {
-  const checkUser = false; //change this when login
+  const auth = useSelector((state: RootState) => state.auth);
   const { width } = useCurrentViewportView();
   const [openNav, setOpenNav] = useState(false);
 
@@ -26,10 +28,10 @@ const Header = ({ className }: HeaderProps) => {
 
   const navList = (
     <ul className="flex items-center gap-2">
-      <Link to="/" className="cursor-pointer text-cs_semi_green px-2 xl:hidden">
+      <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="search" className="text-2xl hover:scale-110" />
       </Link>
-      <Link to="/" className="cursor-pointer text-cs_semi_green px-2 xl:hidden">
+      <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
       <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
@@ -71,8 +73,8 @@ const Header = ({ className }: HeaderProps) => {
       <div className="flex items-center justify-end gap-3">
         <div className="">{navList}</div>
         <div className="">
-          {checkUser ? (
-            <Dropdown />
+          {auth.loggedIn ? (
+            <Dropdown auth={auth} />
           ) : (
             <Link to="/login" className="hidden sm:inline-block">
               <Button value="Đăng nhập" type="button" className="" mode="dark" />

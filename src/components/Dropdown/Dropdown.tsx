@@ -2,6 +2,10 @@ import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Typography } from '@mate
 import avtDefault from '~/assets/images/default-avatar.jpg';
 import { motion, Variants } from 'framer-motion';
 import { useState } from 'react';
+import Button from '../customs/Button';
+import { useDispatch } from 'react-redux';
+import { logout } from '~/features/Auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const itemVariants: Variants = {
   open: {
@@ -12,11 +16,17 @@ const itemVariants: Variants = {
   closed: { opacity: 0, y: 20, transition: { duration: 0.1 } },
 };
 type DropdownProps = {
-  avatar?: string;
-  logOut?: () => void;
+  auth?: Object;
 };
-const Dropdown = ({ avatar, logOut }: DropdownProps) => {
+const Dropdown = ({ auth }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
       <motion.button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
@@ -28,7 +38,7 @@ const Dropdown = ({ avatar, logOut }: DropdownProps) => {
         />
       </motion.button>
       <motion.ul
-        className="absolute right-0 top-[120%] z-20 w-20 bg-white p-3"
+        className="absolute right-0 top-[140%] z-20 w-44 bg-white p-2 shadow-border-btn"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -51,9 +61,9 @@ const Dropdown = ({ avatar, logOut }: DropdownProps) => {
         }}
         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
-        <motion.li variants={itemVariants}>Item 1 </motion.li>
-        <motion.li variants={itemVariants}>Item 2 </motion.li>
-        <motion.li variants={itemVariants}>Item 3 </motion.li>
+        <motion.li variants={itemVariants} className="">
+          <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />
+        </motion.li>
       </motion.ul>
     </motion.nav>
     // <Menu placement="bottom-end">

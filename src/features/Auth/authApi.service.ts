@@ -4,38 +4,47 @@ import { RootState } from 'store/store';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '',
-    // prepareHeaders: (headers, { getState }) => {
-    //   const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken.token;
-    //   if (token) {
-    //     headers.set('Authorization', `Bearer ${token}`);
-    //   }
-    //   return headers;
-    // },
+    baseUrl: import.meta.env.VITE_API_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken.token;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
-    LoginGoogle: builder.mutation({
-      query: ({ code, base }) => ({
-        url: 'auth/google/verify',
+    signUpWithEmail: builder.mutation({
+      query: (body) => ({
+        url: '/api/auth/register',
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: { code: code, baseId: base },
+        body: body,
       }),
     }),
-    getTokenFromRefreshToken: builder.mutation({
-      query: ({ token }) => ({
-        url: 'auth/refresh',
+    logInWithEmail: builder.mutation({
+      query: (body) => ({
+        url: '/api/auth/login',
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: { token: token },
+        body: body,
       }),
+    }),
+    getTokenFromRefreshToken: builder.query<any, string>({
+      query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
+    }),
+    getProfile: builder.query<any, void>({
+      query: () => `/api/auth/profile`,
+    }),
+    logInGoogle: builder.query<any, void>({
+      query: () => `/api/auth/profile`,
     }),
   }),
 });
 
-export const { useLoginGoogleMutation, useGetTokenFromRefreshTokenMutation } = authApi;
+export const {
+  useSignUpWithEmailMutation,
+  useLogInWithEmailMutation,
+  useGetTokenFromRefreshTokenQuery,
+  useGetProfileQuery,
+  useLogInGoogleQuery,
+} = authApi;

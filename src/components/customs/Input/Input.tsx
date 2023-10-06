@@ -1,4 +1,6 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
+import Icon from '../Icon';
+import IonIcon from '@reacticons/ionicons';
 
 type InputProps = {
   placeholder?: string;
@@ -9,6 +11,7 @@ type InputProps = {
   classNameLabel?: string;
   classNameInput?: string;
   id?: string;
+  name?: string;
   label?: string;
   rounded_full?: boolean;
 };
@@ -22,13 +25,18 @@ const Input = ({
   classNameInput = 'w-96',
   type = 'text',
   id,
+  name,
   label,
   rounded_full = false,
 }: InputProps) => {
-  console.log(label);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const handleClick = () => {
+    setShowPassword(!showPassword);
+    setIsFocused(true);
+  };
   return (
-    <div className={`flex flex-col items-start ${className}`}>
+    <div className={`relative flex flex-col items-start ${className}`}>
       {label !== undefined ? (
         <>
           <label htmlFor={id} className={`flex gap-1 p-2 font-medium ${classNameLabel}`}>
@@ -41,14 +49,24 @@ const Input = ({
       )}
       <input
         placeholder={placeholder}
-        className={`shadow-2 h-10 shadow-border-light ${
+        className={`h-10 shadow-border-light ${
           rounded_full ? 'rounded-full' : 'rounded-xl'
-        } bg-cs_light px-4 py-3.5 text-cs_semi_green focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
-        type={type}
+        }  px-4 py-3.5  focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
+        type={showPassword ? 'text' : type}
         value={value}
         onChange={onChange}
         id={id}
+        name={name}
+        onFocus={() => setIsFocused(true)}
+        // onBlur={() => setIsFocused(false)}
       />
+      {type === 'password' && isFocused && (
+        <IonIcon
+          onClick={handleClick}
+          name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-cs_semi_green"
+        />
+      )}
     </div>
   );
 };

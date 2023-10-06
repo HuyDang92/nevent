@@ -5,6 +5,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authApi } from '~/features/Auth/authApi.service';
+import { rtkQueryErrorLogger } from './middleware';
 
 const persistConfig = {
   key: 'root',
@@ -25,7 +26,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware),
+    }).concat(authApi.middleware, rtkQueryErrorLogger),
 
   devTools: import.meta.env.MODE !== 'production',
 });

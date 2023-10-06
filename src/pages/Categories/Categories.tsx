@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import ProductList from '~/components/customs/ProductCard';
+import ProductList from '~/components/ProductCard';
 import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
@@ -181,13 +181,13 @@ function Categories() {
           {/* Filter */}
           <div className="hidden gap-3 sm:flex">
             <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className='text-cs_semi_green' name="calendar" />
+              <Icon className="text-cs_semi_green" name="calendar" />
             </div>
             <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className='text-cs_semi_green' name="cash" />
+              <Icon className="text-cs_semi_green" name="cash" />
             </div>
             <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className='text-cs_semi_green' name="filter" />
+              <Icon className="text-cs_semi_green" name="filter" />
             </div>
           </div>
         </div>

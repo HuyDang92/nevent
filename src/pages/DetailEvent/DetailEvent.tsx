@@ -3,9 +3,9 @@ import IonIcon from '@reacticons/ionicons';
 
 import { useState } from 'react';
 import Button from '~/components/customs/Button';
-import SectionTitle from '~/components/customs/SectionTitle';
-import Tabs from '~/components/customs/Tabs';
-import Thumb from '~/assets/images/pro.png';
+import SectionTitle from '~/components/SectionTitle';
+import Tabs from '~/components/Tabs';
+import Thumb from '~/assets/images/pro.webp';
 
 function DetailEvent() {
   const [visibleProducts, setVisibleProducts] = useState(8); // Số lượng sản phẩm hiển thị ban đầu

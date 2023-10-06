@@ -3,6 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 type IconProps = {
   className?: string;
   name: string;
+  
 };
 
 const Icon = ({ className, name }: IconProps) => {
