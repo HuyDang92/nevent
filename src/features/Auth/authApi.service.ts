@@ -45,6 +45,7 @@ export const {
   useSignUpWithEmailMutation,
   useLogInWithEmailMutation,
   useGetTokenFromRefreshTokenQuery,
+  useLazyGetTokenFromRefreshTokenQuery,
   useGetProfileQuery,
   useLogInGoogleQuery,
 } = authApi;

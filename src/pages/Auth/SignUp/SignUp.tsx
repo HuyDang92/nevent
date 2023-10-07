@@ -8,7 +8,7 @@ import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
 import { motion } from 'framer-motion';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { errorNotify } from '~/components/customs/Toast';
@@ -58,20 +58,20 @@ function LogIn() {
     }),
     onSubmit: async (value: ISignUp, { resetForm }) => {
       await signUp({ email: value.email, password: value.password, fullName: value.name });
-      if (isSuccess) {
-        console.log(data.data);
-        dispatch(setAuthCurrentUser(data.data.user));
-        dispatch(assignNewToken(data.data.token.accessToken));
-        dispatch(assignNewRefreshToken(data.data.token.refreshToken));
-        navigate('/');
-        // resetForm();
-      }
-      if (isError) {
-        errorNotify('Đăng ký thất bại');
-      }
     },
   });
-
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data.data);
+      dispatch(setAuthCurrentUser(data.data.user));
+      dispatch(assignNewToken(data.data.token.accessToken));
+      dispatch(assignNewRefreshToken(data.data.token.refreshToken));
+      navigate('/');
+    }
+    if (isError) {
+      errorNotify('Đăng ký thất bại');
+    }
+  }, [isSuccess, isError]);
   return (
     <>
       {isLoading && <Loading />}

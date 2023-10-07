@@ -34,7 +34,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
         }}
       >
         <div className={`relative h-[190px] w-full overflow-hidden rounded-xl shadow-lg sm:h-64 ${className}`}>
-          <Link to={'/'}>
+          <Link to={'/event-detail/1"'}>
             <img src={data.image} alt="image" className="h-[110px] w-full rounded-xl object-cover sm:h-44" />
 
             <div
