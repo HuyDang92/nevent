@@ -7,6 +7,7 @@ import Dropdown from '~/components/Dropdown';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
+import logo from '~/assets/images/logo.png';
 import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { RootState } from '~/store/store';
@@ -64,9 +65,9 @@ const Header = ({ className }: HeaderProps) => {
     >
       <Link to="/">
         <div className="flex items-center gap-2">
-          <img src={logoDark} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
+          <img src={logo} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
           <img src={logoWhite} alt="logo" className=" hidden h-[20px] w-[40px] dark:block" />
-          <span className="text-xl font-black text-cs_semi_green">NEVENT</span>
+          <span className="text-xl font-black text-cs_semi_green dark:text-cs_light">NEVENT</span>
           <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
         </div>
       </Link>
