@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { Formik, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/customs/Button';
@@ -7,7 +7,7 @@ import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLogInWithEmailMutation } from '~/features/Auth/authApi.service';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify } from '~/components/customs/Toast';
@@ -44,19 +44,20 @@ function LogIn() {
     }),
     onSubmit: async (value: ILogin) => {
       await login({ username: value.email, password: value.password });
-      if (isSuccess) {
-        console.log(data.data);
-        dispatch(setAuthCurrentUser(data.data.user));
-        dispatch(assignNewToken(data.data.token.accessToken));
-        dispatch(assignNewRefreshToken(data.data.token.refreshToken));
-        navigate('/');
-        // resetForm();
-      }
-      if (isError) {
-        errorNotify('Đăng nhập thất bại');
-      }
     },
   });
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data.data);
+      dispatch(setAuthCurrentUser(data.data.user));
+      dispatch(assignNewToken(data.data.token.accessToken));
+      dispatch(assignNewRefreshToken(data.data.token.refreshToken));
+      navigate('/');
+    }
+    if (isError) {
+      errorNotify('Đăng nhập thất bại');
+    }
+  }, [isSuccess, isError]);
   return (
     <>
       {isLoading && <Loading />}
@@ -91,9 +92,7 @@ function LogIn() {
             </div>
             <form onSubmit={formik.handleSubmit} className="space-y-2">
               {errorForm && (
-                <small className="px-2 text-center text-[12px] text-red-600">
-                  {(errorForm.data as any).message === 'Unauthorized' ? 'Sai tài khoản hoặc mật khẩu' : ''}
-                </small>
+                <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
               )}
               <div className="space-y-1">
                 {isSubmitted && formik.errors.email && (

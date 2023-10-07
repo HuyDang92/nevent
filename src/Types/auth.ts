@@ -6,7 +6,10 @@ interface IUserField {
   phone: string;
   address: string;
   avatar: string;
-  role: Object;
+  role: {
+    id: string;
+    name: string;
+  };
   coverImage: string;
   createdAt: string;
   updatedAt: string;

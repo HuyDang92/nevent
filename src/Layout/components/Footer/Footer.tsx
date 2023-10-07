@@ -6,8 +6,8 @@ type FooterProp = {
 };
 function Footer({ className }: FooterProp) {
   return (
-    <footer className={`pb-[75px] md:pb-0 min-h-[342px] bg-cs_icon_black text-cs_light md:block ${className}`}>
-      <div className="flex min-h-[342px] flex-col md:flex-row-reverse md:justify-between md:gap-5">
+    <footer className={`pb-[75px] md:pb-0 bg-cs_icon_black text-cs_light md:block ${className}`}>
+      <div className="flex min-h-[300px] flex-col md:flex-row-reverse md:justify-between md:gap-5">
         <div className="mx-auto w-[324px] md:border-l-[1px] border-[#44425A] px-10 pt-10">
           <Typography className="mb-5 flex items-center font-semibold">Đăng ký nhận email</Typography>
           <div className='my-5'>
