@@ -14,6 +14,7 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const location = useLocation();
   const auth = useSelector((state: RootState) => state.auth);
   const [getTokenFromRefreshToken, result] = useLazyGetTokenFromRefreshTokenQuery();
+  console.log(auth.accessToken.exp);
 
   useEffect(() => {
     if (auth.loggedIn && auth.accessToken.exp < Date.now()) {

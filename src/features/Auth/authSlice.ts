@@ -22,7 +22,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'authApi',
+  name: 'auth',
   initialState,
   reducers: {
     logout: () => initialState,

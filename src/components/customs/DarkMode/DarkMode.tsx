@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 const ToggleDarkMode = ({ children }: any) => {
   const [checked, setChecked] = useState(false);
-
-  console.log(checked);
   
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');

@@ -78,8 +78,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             />
           )}
         </button>
-        {cateList.map((item) => (
+        {cateList.map((item, index) => (
           <NavLink
+            key={index}
             to={item.link}
             className={({ isActive }) =>
               `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
@@ -112,9 +113,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
         )}
       </List>
       <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_gray`}>
-        {cateListNoLayout.map((item) => (
-          <NavLink to={item.link}>
-            <div className={`flex items-center py-3 hover:bg-cs_lightDark rounded-xl ${!open ? 'px-8' : 'px-5'}`}>
+        {cateListNoLayout.map((item, index) => (
+          <NavLink key={index} to={item.link}>
+            <div className={`flex items-center rounded-xl py-3 hover:bg-cs_lightDark ${!open ? 'px-8' : 'px-5'}`}>
               <ListItemPrefix className="mr-0">
                 <Icon name={item.icon as any} className={`text-xl`} />
               </ListItemPrefix>

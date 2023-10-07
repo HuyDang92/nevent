@@ -8,7 +8,7 @@ import { Checkbox } from '@material-tailwind/react';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
-import { useLogInWithEmailMutation } from '~/features/Auth/authApi.service';
+import { useLogInGoogleQuery, useLogInWithEmailMutation } from '~/features/Auth/authApi.service';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
@@ -46,9 +46,9 @@ function LogIn() {
       await login({ username: value.email, password: value.password });
     },
   });
+
   useEffect(() => {
     if (isSuccess) {
-      console.log(data.data);
       dispatch(setAuthCurrentUser(data.data.user));
       dispatch(assignNewToken(data.data.token.accessToken));
       dispatch(assignNewRefreshToken(data.data.token.refreshToken));
@@ -58,6 +58,7 @@ function LogIn() {
       errorNotify('Đăng nhập thất bại');
     }
   }, [isSuccess, isError]);
+
   return (
     <>
       {isLoading && <Loading />}
