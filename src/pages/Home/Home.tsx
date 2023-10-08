@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import SectionTitle from '~/components/customs/SectionTitle';
-import CategoryCard from '~/components/customs/CategoryCard';
+import SectionTitle from '~/components/SectionTitle';
+import CategoryCard from '~/components/CategoryCard';
 import Banner from './components/Banner';
 import { Link } from 'react-router-dom';
 import thumb from '~/assets/images/pro.webp';
 import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
-import ProductCard from '~/components/customs/ProductCard';
+import ProductCard from '~/components/EventCard';
+
 function Home() {
   const dataPro = [
     {
@@ -189,15 +190,7 @@ function Home() {
     },
     {
       img: thumb,
-      name: 'Âm nhạc',
-    },
-    {
-      img: thumb,
-      name: 'Âm nhạc',
-    },
-    {
-      img: thumb,
-      name: 'Âm nhạc',
+      name: 'Concert',
     },
     {
       img: thumb,
@@ -205,8 +198,6 @@ function Home() {
     },
   ]; //Thay đổi tempCateData bằng dữ liệu fetch ra từ database
 
-  //Nút xem thêm cho sản phẩm nổi bật
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [visibleCates, setVisibleCates] = useState(3); // Số lượng danh mục hiển thị ban đầu
 
   return (
@@ -222,7 +213,7 @@ function Home() {
         <SectionTitle value="Sự kiện nổi bật" />
         <Slide data={dataPro} />
         <SectionTitle value="Sự kiện sắp diễn ra" />
-        <div className="grid gap-3 grid-cols-2 sm:gap-5 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-4">
           {tempProductData.map((item, index) => (
             <Link to={'/'} key={index}>
               <ProductCard data={item} index={index} />
@@ -230,7 +221,7 @@ function Home() {
           ))}
         </div>
         <div className="mt-5 flex justify-center">
-          <Button className="" value="Xem thêm" />
+          <Button className="" value="Xem thêm" mode="dark" />
         </div>
       </div>
     </>

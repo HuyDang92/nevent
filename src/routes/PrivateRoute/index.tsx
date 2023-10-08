@@ -1,67 +1,67 @@
-import { Outlet, useLocation, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { logout, assignNewToken } from 'features/Auth/authSlice';
-import { useGetTokenFromRefreshTokenMutation } from 'features/Auth/authApi.service';
+import { logout, assignNewToken, assignNewRefreshToken } from 'features/Auth/authSlice';
+import { useLazyGetTokenFromRefreshTokenQuery } from '~/features/Auth/authApi.service';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import jwt_decode from 'jwt-decode';
 
 interface PrivateRouteProps {
   allowedRoles?: string[];
 }
-
+interface IJwtDecode {
+  exp: number;
+}
 function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const auth = useSelector((state: any) => state.auth);
-  const [getTokenFromRefreshToken, result] =
-    useGetTokenFromRefreshTokenMutation();
+  const auth = useAppSelector((state) => state.auth);
+  const [getTokenFromRefreshToken, result] = useLazyGetTokenFromRefreshTokenQuery();
+  const jwtDecodeAccess: IJwtDecode = jwt_decode(auth.accessToken ? auth.accessToken : '');
+  const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth.refreshToken ? auth.refreshToken : '');
+  const currentTime = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
-    if (auth.loggedIn && auth.accessToken.exp < Date.now()) {
-      if (auth.refreshToken.exp > Date.now()) {
-        getTokenFromRefreshToken({ token: auth.refreshToken.token });
-      } else if (auth.refreshToken.exp < Date.now()) {
+    if (auth.loggedIn && jwtDecodeAccess.exp < currentTime) {
+      if (jwtDecodeRefresh.exp > currentTime) {
+        getTokenFromRefreshToken(auth.refreshToken ? auth.refreshToken : '');
+      } else {
         dispatch(logout());
       }
     }
-  }, [location.pathname, auth.loggedIn, auth.accessToken, dispatch]);
+  }, [location.pathname, auth.loggedIn]);
+
+  // useEffect(() => {
+  //   const refreshInterval = setInterval(() => {
+  //     if (auth.loggedIn && jwtDecodeRefresh.exp > currentTime) {
+  //       getTokenFromRefreshToken(auth.refreshToken ? auth.refreshToken : '');
+  //     }
+  //   }, 1000 * 60 * 1);
+
+  //   // Xóa interval khi component unmount hoặc khi dependency thay đổi
+  //   return () => clearInterval(refreshInterval);
+  // }, [auth.loggedIn, auth.refreshToken, getTokenFromRefreshToken]);
 
   useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      if (auth.loggedIn && auth.refreshToken.exp > Date.now()) {
-        getTokenFromRefreshToken({ token: auth.refreshToken.token });
-      }
-    }, 1000 * 60 * 5);
-
-    // Xóa interval khi component unmount hoặc khi dependency thay đổi
-    return () => clearInterval(refreshInterval);
-  }, [auth.loggedIn, auth.refreshToken, getTokenFromRefreshToken]);
-
-  useEffect(() => {
-    if (result.data?.statusCode) {
-      dispatch(assignNewToken(result?.data?.data?.accessToken));
+    if (result.isSuccess) {
+      dispatch(assignNewToken(result?.data?.data?.token?.accessToken));
+      dispatch(assignNewRefreshToken(result?.data?.data?.token?.refreshToken));
     }
-  }, [result.data?.statusCode, dispatch]);
+  }, [result.isSuccess, dispatch]);
 
   const authorized: boolean =
-    allowedRoles.length > 0
-      ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name)
-      : true;
+    allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
 
-  if (auth.loggedIn && !!auth.newUser) {
-    return <Navigate to="/update-info" replace />;
-  } else {
-    return auth.loggedIn && auth.accessToken ? (
-      authorized ? (
-        <Outlet />
-      ) : (
-        <div className="text-slate-500 flex min-h-screen items-center justify-center">
-          <p>403 | Forbidden</p>
-        </div>
-      )
+  return auth.loggedIn && auth.accessToken ? (
+    authorized ? (
+      <Outlet />
     ) : (
-      <Navigate to="/login" state={{ from: location }} replace />
-    );
-  }
+      <div className="text-slate-500 flex min-h-screen items-center justify-center bg-cs_light">
+        <p>403 | Forbidden</p>
+      </div>
+    )
+  ) : (
+    <Navigate to="/login" state={{ from: location }} replace />
+  );
 }
 
 export default PrivateRoute;

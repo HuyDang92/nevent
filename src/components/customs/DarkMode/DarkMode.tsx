@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 const ToggleDarkMode = ({ children }: any) => {
   const [checked, setChecked] = useState(false);
-
+  
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

@@ -1,35 +1,46 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from 'react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
-import Dropdown from '~/components/customs/Dropdown';
+import Dropdown from '~/components/Dropdown';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
-import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
+import logo from '~/assets/images/logo.png';
 import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
+import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useAppSelector } from '~/hooks/useActionRedux';
+
 type HeaderProps = {
   className?: string;
 };
 
 const Header = ({ className }: HeaderProps) => {
-  const checkUser = false; //change this when login
-  const { width } = useCurrentViewportView();
-  const [openNav, setOpenNav] = useState(false);
-
-  useEffect(() => {
-    if (width < 540) {
-      setOpenNav(true);
-    }
-  }, [width]);
+  const auth = useAppSelector((state) => state.auth);
+  const [loginGoogle] = useLogInGoogleMutation();
 
   const navList = (
     <ul className="flex items-center gap-2">
-      <Link to="/" className="cursor-pointer text-cs_semi_green px-2 xl:hidden">
+      {!auth.loggedIn && (
+        <div className="hidden">
+          <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+                loginGoogle({ accessToken: credentialResponse.credential });
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+              useOneTap
+            />
+          </GoogleOAuthProvider>
+        </div>
+      )}
+      <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="search" className="text-2xl hover:scale-110" />
       </Link>
-      <Link to="/" className="cursor-pointer text-cs_semi_green px-2 xl:hidden">
+      <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
       <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
@@ -62,17 +73,17 @@ const Header = ({ className }: HeaderProps) => {
     >
       <Link to="/">
         <div className="flex items-center gap-2">
-          <img src={logoDark} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
+          <img src={logo} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
           <img src={logoWhite} alt="logo" className=" hidden h-[20px] w-[40px] dark:block" />
-          <span className="text-xl font-black text-cs_semi_green">NEVENT</span>
+          <span className="text-xl font-black text-cs_semi_green dark:text-cs_light">NEVENT</span>
           <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
         </div>
       </Link>
       <div className="flex items-center justify-end gap-3">
         <div className="">{navList}</div>
         <div className="">
-          {checkUser ? (
-            <Dropdown />
+          {auth.loggedIn ? (
+            <Dropdown auth={auth} />
           ) : (
             <Link to="/login" className="hidden sm:inline-block">
               <Button value="Đăng nhập" type="button" className="" mode="dark" />
