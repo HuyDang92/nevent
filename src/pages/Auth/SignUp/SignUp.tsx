@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { Formik, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link, useNavigate } from 'react-router-dom';
 import logoDark from '~/assets/images/logoDark.png';
@@ -13,8 +13,8 @@ import { useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { errorNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
-import { useDispatch } from 'react-redux';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 
 interface ISignUp {
   name: string;
@@ -25,7 +25,7 @@ interface ISignUp {
 
 function LogIn() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [signUp, { data, isError, isLoading, error, isSuccess }] = useSignUpWithEmailMutation();

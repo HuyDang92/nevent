@@ -12,21 +12,20 @@ import { useLogInGoogleMutation, useLogInWithEmailMutation } from '~/features/Au
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
-import { useDispatch } from 'react-redux';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 
 interface ILogin {
   email: string;
   password: string;
 }
 function LogIn() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [login, { data, isError, isLoading, error, isSuccess }] = useLogInWithEmailMutation();
-  const [loginGoogle, result] = useLogInGoogleMutation();
-  console.log(result);
+  const [loginGoogle] = useLogInGoogleMutation();
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -52,9 +51,9 @@ function LogIn() {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setAuthCurrentUser(data.data.user));
-      dispatch(assignNewToken(data.data.token.accessToken));
-      dispatch(assignNewRefreshToken(data.data.token.refreshToken));
+      dispatch(assignNewToken(data?.data?.token?.accessToken));
+      dispatch(assignNewRefreshToken(data?.data?.token?.refreshToken));
+      dispatch(setAuthCurrentUser(data?.data?.user));
       navigate('/');
     }
     if (isError) {

@@ -1,35 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from 'react';
 import SearchBar from '~/components/customs/SearchBar';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
-import { useCurrentViewportView } from '~/hooks/useViewPort';
 import Icon from '~/components/customs/Icon';
 import logo from '~/assets/images/logo.png';
 import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
-import { RootState } from '~/store/store';
-import { useSelector } from 'react-redux';
 import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useAppSelector } from '~/hooks/useActionRedux';
 
 type HeaderProps = {
   className?: string;
 };
 
 const Header = ({ className }: HeaderProps) => {
-  const auth = useSelector((state: RootState) => state.auth);
-  const { width } = useCurrentViewportView();
-  const [openNav, setOpenNav] = useState(false);
+  const auth = useAppSelector((state) => state.auth);
   const [loginGoogle] = useLogInGoogleMutation();
-
-  useEffect(() => {
-    if (width < 540) {
-      setOpenNav(true);
-    }
-  }, [width]);
 
   const navList = (
     <ul className="flex items-center gap-2">

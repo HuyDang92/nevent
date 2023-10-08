@@ -1,10 +1,10 @@
-import { Card, Typography, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
+import { Card, Typography, List, ListItemPrefix } from '@material-tailwind/react';
 import { Dispatch, SetStateAction } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { logout } from '~/features/Auth/authSlice';
-import { RootState } from '~/store/store';
+import { useAppSelector } from '~/hooks/useActionRedux';
 type SideBarProp = {
   className?: string;
   open: boolean;
@@ -52,7 +52,7 @@ const cateListNoLayout = [
 ];
 
 const SideBar = ({ className, open, setOpen }: SideBarProp) => {
-  const auth = useSelector((state: RootState) => state.auth.loggedIn);
+  const auth = useAppSelector((state) => state.auth.loggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,7 +105,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             onClick={handleLogOut}
             className={`rounded-xl ${!open ? 'w-full' : 'w-fit'} cursor-pointer text-cs_dark`}
           >
-            <div className={`flex items-center py-3 hover:bg-transparent ${!open ? 'px-8' : 'px-5'}`}>
+            <div className={`flex items-center px-4 py-3 hover:bg-transparent`}>
               <ListItemPrefix className="mr-0">
                 <Icon name="log-out" className={`text-xl`} />
               </ListItemPrefix>
