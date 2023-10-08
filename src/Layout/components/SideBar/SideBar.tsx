@@ -62,9 +62,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
   };
   return (
     <Card
-      className={`scrollbar-hide sticky top-[66px] flex h-[calc(100vh-66px)] flex-col justify-between rounded-none bg-transparent pt-2 shadow-none ${className}`}
+      className={`scrollbar-hide sticky top-[66px] flex h-[calc(100vh-66px)] flex-col justify-between rounded-none bg-transparent pt-1 shadow-none ${className}`}
     >
-      <List className={`${!open ? 'p-4 pt-2' : 'p-2'}  text-cs_semi_green`}>
+      <List className={`px-4 pe-7 text-cs_semi_green`}>
         <button onClick={() => setOpen((prev) => !prev)} className="hidden xl:block">
           {!open ? (
             <Icon
@@ -83,14 +83,16 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             key={index}
             to={item.link}
             className={({ isActive }) =>
-              `rounded-xl  ${!open ? 'w-full' : 'w-fit'} ${
+              `rounded-xl transition-all hover:bg-cs_light hover:text-cs_semi_green hover:shadow-border-light dark:hover:bg-cs_lightDark dark:hover:text-cs_semi_green  ${
+                !open ? 'w-full' : 'w-fit'
+              } ${
                 isActive
                   ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark  '
                   : 'text-cs_dark dark:bg-cs_dark dark:text-cs_light'
               }`
             }
           >
-            <div className={`flex items-center py-3 hover:bg-transparent ${!open ? 'px-8' : 'px-5'}`}>
+            <div className={`flex items-center px-4 py-3 hover:bg-transparent`}>
               <ListItemPrefix className="mr-0">
                 <Icon name={item.icon as any} className={`text-xl`} />
               </ListItemPrefix>
@@ -112,10 +114,14 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           </div>
         )}
       </List>
-      <List className={`${!open ? 'p-4' : 'p-2'}  text-cs_gray`}>
+      <List className={`pe-7  ps-4  text-cs_gray`}>
         {cateListNoLayout.map((item, index) => (
           <NavLink key={index} to={item.link}>
-            <div className={`flex items-center rounded-xl py-3 hover:bg-cs_lightDark ${!open ? 'px-8' : 'px-5'}`}>
+            <div
+              className={`hover:text-cs_dark ${
+                !open ? 'w-full' : 'w-fit'
+              } hover:shadow-border-light flex items-center rounded-xl px-4 py-3 transition-all hover:bg-cs_light dark:hover:bg-cs_lightDark dark:hover:text-cs_light`}
+            >
               <ListItemPrefix className="mr-0">
                 <Icon name={item.icon as any} className={`text-xl`} />
               </ListItemPrefix>

@@ -8,6 +8,7 @@ import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
 import ProductCard from '~/components/ProductCard';
+
 function Home() {
   const dataPro = [
     {
@@ -189,15 +190,7 @@ function Home() {
     },
     {
       img: thumb,
-      name: 'Âm nhạc',
-    },
-    {
-      img: thumb,
-      name: 'Âm nhạc',
-    },
-    {
-      img: thumb,
-      name: 'Âm nhạc',
+      name: 'Concert',
     },
     {
       img: thumb,
@@ -205,8 +198,6 @@ function Home() {
     },
   ]; //Thay đổi tempCateData bằng dữ liệu fetch ra từ database
 
-  //Nút xem thêm cho sản phẩm nổi bật
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [visibleCates, setVisibleCates] = useState(3); // Số lượng danh mục hiển thị ban đầu
 
   return (
@@ -230,7 +221,7 @@ function Home() {
           ))}
         </div>
         <div className="mt-5 flex justify-center">
-          <Button className="" value="Xem thêm" />
+          <Button className="" value="Xem thêm" mode="dark" />
         </div>
       </div>
     </>

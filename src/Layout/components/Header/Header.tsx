@@ -12,6 +12,9 @@ import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { RootState } from '~/store/store';
 import { useSelector } from 'react-redux';
+import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
 type HeaderProps = {
   className?: string;
 };
@@ -20,6 +23,7 @@ const Header = ({ className }: HeaderProps) => {
   const auth = useSelector((state: RootState) => state.auth);
   const { width } = useCurrentViewportView();
   const [openNav, setOpenNav] = useState(false);
+  const [loginGoogle] = useLogInGoogleMutation();
 
   useEffect(() => {
     if (width < 540) {
@@ -29,6 +33,22 @@ const Header = ({ className }: HeaderProps) => {
 
   const navList = (
     <ul className="flex items-center gap-2">
+      {!auth.loggedIn && (
+        <div className="hidden">
+          <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+                loginGoogle({ accessToken: credentialResponse.credential });
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+              useOneTap
+            />
+          </GoogleOAuthProvider>
+        </div>
+      )}
       <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="search" className="text-2xl hover:scale-110" />
       </Link>
