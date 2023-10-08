@@ -8,12 +8,14 @@ import { Checkbox } from '@material-tailwind/react';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
-import { useLogInGoogleQuery, useLogInWithEmailMutation } from '~/features/Auth/authApi.service';
+import { useLogInGoogleMutation, useLogInWithEmailMutation } from '~/features/Auth/authApi.service';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
 import { useDispatch } from 'react-redux';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
 interface ILogin {
   email: string;
   password: string;
@@ -23,7 +25,8 @@ function LogIn() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [login, { data, isError, isLoading, error, isSuccess }] = useLogInWithEmailMutation();
-
+  const [loginGoogle, result] = useLogInGoogleMutation();
+  console.log(result);
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -143,7 +146,18 @@ function LogIn() {
               <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_light "></span>
             </div>
             <div className="flex justify-center gap-1">
-              <Button className="font-semibold " value="Google" icon="logo-google" />
+              <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    loginGoogle({ accessToken: credentialResponse.credential });
+                  }}
+                  onError={() => {
+                    console.log('Login Failed');
+                  }}
+                  // useOneTap
+                />
+              </GoogleOAuthProvider>
+              {/* <Button className="font-semibold " value="Google" icon="logo-google" /> */}
               <Button className="" value="Facebook" icon="logo-facebook" />
             </div>
             <div className="text-center">

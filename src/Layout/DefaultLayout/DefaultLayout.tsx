@@ -22,14 +22,14 @@ function DefaultLayout() {
         <div className={`mx-auto  flex`}>
           <motion.aside
             className={`${
-              isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[17%]'
+              isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[15%]'
             } hidden transition-all sm:block `}
           >
             <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
           </motion.aside>
           <main
-            className={`mx-1  my-4 rounded-2xl bg-cs_light px-2 py-2 shadow-border-light dark:bg-cs_lightDark sm:mx-0 sm:px-4 sm:py-4 ${
-              isOpenSideBar ? 'w-full sm:w-[95%]' : 'w-[83%]'
+            className={`mx-1 my-4 rounded-2xl bg-cs_light px-2 py-2 shadow-border-light dark:bg-cs_lightDark sm:mx-0 sm:px-4 sm:py-4 ${
+              isOpenSideBar ? 'w-full sm:w-[95%]' : 'w-[85%]'
             }`}
           >
             <Outlet />

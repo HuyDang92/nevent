@@ -1,5 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { authApi } from './authApi.service';
+import { log } from 'console';
 
 interface AuthState {
   loggedIn: boolean;
@@ -46,16 +47,18 @@ const authSlice = createSlice({
     builder.addMatcher(isAnyOf(authApi.endpoints.logInGoogle.matchFulfilled), (state, action) => {
       // Lưu thông tin user vào state khi login
       const response = action.payload;
-      // if (response?.statusCode === 200) {
-      //   state.loggedIn = true;
-      //   state.accessToken = response?.data.accessToken;
-      //   state.refreshToken = response?.data.refreshToken;
-      //   state.currentUser = response?.data.userData;
-      // } else {
-      //   state.loggedIn = false;
-      //   state.currentUser = null;
-      //   state.accessToken = Object.freeze({ token: null, exp: null });
-      // }
+      console.log(response);
+      if (response?.statusCode === 201) {
+        state.loggedIn = true;
+        state.accessToken = response?.data.token.accessToken;
+        state.refreshToken = response?.data.token.refreshToken;
+        state.currentUser = response?.data.user;
+      } else {
+        state.loggedIn = false;
+        state.currentUser = null;
+        state.accessToken = Object.freeze({ token: null, exp: null });
+        state.refreshToken = Object.freeze({ token: null, exp: null });
+      }
     });
   },
 });

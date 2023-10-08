@@ -29,13 +29,17 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    logInGoogle: builder.mutation({
+      query: (body) => ({
+        url: '/api/auth/google/login',
+        method: 'POST',
+        body: body,
+      }),
+    }),
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
     getProfile: builder.query<any, void>({
-      query: () => `/api/auth/profile`,
-    }),
-    logInGoogle: builder.query<any, void>({
       query: () => `/api/auth/profile`,
     }),
   }),
@@ -47,6 +51,5 @@ export const {
   useGetTokenFromRefreshTokenQuery,
   useLazyGetTokenFromRefreshTokenQuery,
   useGetProfileQuery,
-  useLogInGoogleQuery,
-
+  useLogInGoogleMutation,
 } = authApi;

@@ -1,24 +1,26 @@
 import { NavLink } from 'react-router-dom';
 import { useRive } from 'rive-react';
 import { notFound } from '~/assets/rivs';
+import Button from '~/components/customs/Button';
 import View from '~/motion/View';
 
 function NotFound() {
-
   const { rive, RiveComponent } = useRive({
     src: notFound,
     autoplay: true,
-    stateMachines: "State Machine 1",
-  })
+    stateMachines: 'State Machine 1',
+  });
 
   return (
-    <View className='h-screen bg-[#0f0f0f] flex  flex-col justify-center items-center relative' >
-      <View className='flex flex-col items-center text-white mt-8'>
-        <h1 className='font-bold text-[6rem]'>404</h1>
+    <View className="relative flex h-screen flex-col items-center justify-center bg-[#0f0f0f] py-16">
+      <View className="mt-8 flex flex-col items-center text-white">
+        <h1 className="text-[6rem] font-bold">404</h1>
         <p>Opp! Có vẻ như trang này không tồn tại.</p>
       </View>
       <RiveComponent width={'100%'} height={'100%'} />
-      <NavLink to='/' className=' mb-4 py-4 px-8 rounded-lg bg-white text-black lg:bottom-10'>Cút về trang chủ</NavLink>
+      <NavLink to="/" className=" mb-4 rounded-lg lg:bottom-10">
+        <Button value="Về trang chủ" type="button" className="" mode="dark" />
+      </NavLink>
     </View>
   );
 }
