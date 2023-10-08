@@ -25,6 +25,7 @@ export default function AppRoutes() {
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/event-detail/:slug" element={<DetailEvent />} />
+          <Route path="/event-categories" element={<Categories />} />
           <Route path="/event-categories/:slug" element={<Categories />} />
         </Route>
 
@@ -47,7 +48,7 @@ export default function AppRoutes() {
         {/* user */}
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
-            <Route index path="detail" element={<DetailEvent />} />
+            <Route index path="profile" element={<DetailEvent />} />
           </Route>
         </Route>
 

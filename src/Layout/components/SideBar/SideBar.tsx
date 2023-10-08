@@ -19,7 +19,7 @@ const cateList = [
   },
   {
     name: 'Danh mục',
-    link: '/event-categories/1',
+    link: '/event-categories',
     icon: 'grid',
   },
   {
@@ -120,7 +120,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
             <div
               className={`hover:text-cs_dark ${
                 !open ? 'w-full' : 'w-fit'
-              } hover:shadow-border-light flex items-center rounded-xl px-4 py-3 transition-all hover:bg-cs_light dark:hover:bg-cs_lightDark dark:hover:text-cs_light`}
+              } flex items-center rounded-xl px-4 py-3 transition-all hover:bg-cs_light hover:shadow-border-light dark:hover:bg-cs_lightDark dark:hover:text-cs_light`}
             >
               <ListItemPrefix className="mr-0">
                 <Icon name={item.icon as any} className={`text-xl`} />
