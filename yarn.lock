@@ -707,6 +707,16 @@
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.9.0.tgz"
   integrity sha512-bV63itrKBC0zdT27qYm6SDZHlkXwFL1xMBuhkn+X7l0+IIhNaH5wuuvZKp6eKhCD4KFhujhfhCT1YxXW6esUIA==
 
+"@rive-app/canvas@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/@rive-app/canvas/-/canvas-2.5.0.tgz#c460496bca90b97244844afe3abd93cf5d92540c"
+  integrity sha512-J2RMJ6+ZiuVTEOKdQJEAkOV0oPulaPQ47a2KrHERDGE9Ahk9eP1VgEXlxJKgOeXPs+ZctGjEej3B2Zjx141IUQ==
+
+"@rive-app/webgl@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/@rive-app/webgl/-/webgl-2.5.0.tgz#9a1a2a3b756efffa13a87ed03587159ae0e2374a"
+  integrity sha512-RNb9Dh6R1L8pPgjAqUTHNvvi9Eem5ks2ar68PHyZlHr2i6Fq4PQsAs4A9aARB2mHo3BScn9y1urNkF5dyguR7g==
+
 "@rollup/pluginutils@^5.0.4":
   version "5.0.4"
   resolved "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-5.0.4.tgz"
@@ -2506,6 +2516,14 @@ rimraf@^3.0.2:
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   dependencies:
     glob "^7.1.3"
+
+rive-react@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/rive-react/-/rive-react-4.4.0.tgz#05d9dc9488ee51f6bb24534b7619282c636f3d25"
+  integrity sha512-kT4scIIB/SdFMK43Rny5FSzLXKTSCsGM5zKd+cHD9j6MD3jKjxGsrt+bOQKCCCzhcFEprb/ilK4clZ92q84QiA==
+  dependencies:
+    "@rive-app/canvas" "2.5.0"
+    "@rive-app/webgl" "2.5.0"
 
 rollup@^3.27.1:
   version "3.28.0"

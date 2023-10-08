@@ -27,6 +27,7 @@
     "react-slick": "^0.29.0",
     "react-spinners-kit": "^1.9.1",
     "redux-persist": "^6.0.0",
+    "rive-react": "^4.4.0",
     "slick-carousel": "^1.8.1",
     "yup": "^1.2.0"
   },
