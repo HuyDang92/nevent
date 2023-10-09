@@ -16,16 +16,16 @@ const BreadcrumbsComponent: React.FC<IProps> = ({ baseLink, linkBack, link }) =>
 
   return link ? (
     <Breadcrumbs {...breadcrumbsCommonProps}>
-      <Link to={linkBack} className=" text-[0.9375rem] font-medium leading-normal text-[#5B5B5B]">
+      <Link to={linkBack} className=" text-[0.9375rem] font-medium leading-normal text-cs_gray">
         {baseLink}
       </Link>
-      <Link to={`#`} className="text-[0.9375rem] font-medium leading-normal text-[#5B5B5B]">
+      <Link to={`#`} className="text-[0.9375rem] font-medium leading-normal text-cs_gray">
         {link}
       </Link>
     </Breadcrumbs>
   ) : (
     <Breadcrumbs {...breadcrumbsCommonProps}>
-      <Link to={linkBack} className="text-[0.9375rem] font-medium leading-normal text-[#5B5B5B]">
+      <Link to={linkBack} className="text-[0.9375rem] font-medium leading-normal text-cs_gray">
         {baseLink}
       </Link>
     </Breadcrumbs>

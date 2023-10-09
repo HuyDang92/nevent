@@ -1,24 +1,17 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { authApi } from './authApi.service';
-import { log } from 'console';
 
 interface AuthState {
   loggedIn: boolean;
-  accessToken: {
-    token: string | null;
-    exp: any | null;
-  };
-  refreshToken: {
-    token: string | null;
-    exp: any | null;
-  };
+  accessToken: string | null;
+  refreshToken: string | null;
   currentUser: IUserField | null;
 }
 
 const initialState: AuthState = {
   loggedIn: false,
-  accessToken: Object.freeze({ token: null, exp: null }),
-  refreshToken: Object.freeze({ token: null, exp: null }),
+  accessToken: null,
+  refreshToken: null,
   currentUser: null,
 };
 
@@ -47,8 +40,9 @@ const authSlice = createSlice({
     builder.addMatcher(isAnyOf(authApi.endpoints.logInGoogle.matchFulfilled), (state, action) => {
       // Lưu thông tin user vào state khi login
       const response = action.payload;
-      console.log(response);
       if (response?.statusCode === 201) {
+        console.log('response', response);
+        
         state.loggedIn = true;
         state.accessToken = response?.data.token.accessToken;
         state.refreshToken = response?.data.token.refreshToken;
@@ -56,8 +50,8 @@ const authSlice = createSlice({
       } else {
         state.loggedIn = false;
         state.currentUser = null;
-        state.accessToken = Object.freeze({ token: null, exp: null });
-        state.refreshToken = Object.freeze({ token: null, exp: null });
+        state.accessToken = null;
+        state.refreshToken = null;
       }
     });
   },

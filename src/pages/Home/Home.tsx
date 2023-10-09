@@ -7,7 +7,7 @@ import thumb from '~/assets/images/pro.webp';
 import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
-import ProductCard from '~/components/ProductCard';
+import ProductCard from '~/components/EventCard';
 
 function Home() {
   const dataPro = [

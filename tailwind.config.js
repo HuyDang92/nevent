@@ -11,7 +11,8 @@ module.exports = withMT({
       colors: {
         cs_light: '#fff',
         // cs_dark: '#32313D',
-        // cs_lightDark: '#393944',
+        cs_semiDark: '#2B2B2B',
+        cs_formDark: '#424242',
         cs_dark: '#1E1F23',
         cs_lightDark: '#292A2C',
         cs_semi_purple: '#BC9FEF',

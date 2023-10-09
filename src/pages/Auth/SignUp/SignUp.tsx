@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { Formik, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link, useNavigate } from 'react-router-dom';
 import logoDark from '~/assets/images/logoDark.png';
@@ -13,8 +13,8 @@ import { useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { errorNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
-import { useDispatch } from 'react-redux';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 
 interface ISignUp {
   name: string;
@@ -25,7 +25,7 @@ interface ISignUp {
 
 function LogIn() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [signUp, { data, isError, isLoading, error, isSuccess }] = useSignUpWithEmailMutation();
@@ -75,13 +75,13 @@ function LogIn() {
   return (
     <>
       {isLoading && <Loading />}
-      <div className="relative flex h-screen w-screen flex-row justify-between text-cs_semi_green">
-        <div className="absolute left-[30px] top-[15px]">
+      <div className="relative block h-screen w-screen flex-row items-center justify-between text-cs_semi_green lg:flex ">
+        <div className="absolute left-[30px] top-[15px] z-10">
           <Link to="/">
             <div className="flex items-center gap-2 py-3">
               <img src={logoDark} alt="logo" className="hidden h-[20px] w-[40px] dark:hidden sm:block" />
               <img src={logoWhite} alt="logo" className="hidden h-[20px] w-[40px] dark:block" />
-              <span className="text-xl font-black text-cs_semi_green dark:text-cs_light">NEVENT</span>
+              <span className="text-xl font-black text-cs_light dark:text-cs_light lg:text-cs_semi_green">NEVENT</span>
             </div>
           </Link>
         </div>
@@ -94,12 +94,12 @@ function LogIn() {
             damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
             stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
           }}
-          className="grid w-1/2  place-content-center "
+          className="absolute left-5 top-[15%] z-10 grid w-[90%] place-content-center rounded-xl bg-white p-5 dark:bg-cs_semiDark sm:left-1/4 sm:top-[25%] sm:w-1/2 lg:static lg:bg-transparent lg:dark:bg-transparent"
         >
-          <div className="w-[400px] space-y-4">
+          <div className="w-full space-y-4 lg:w-[400px]">
             <div>
-              <h1 className="text-center text-2xl font-extrabold">ĐĂNG KÝ TÀI KHOẢN!</h1>
-              <p className=" py-2 text-center text-cs_blur_black">
+              <h1 className="text-center text-lg font-extrabold md:text-2xl">ĐĂNG KÝ TÀI KHOẢN!</h1>
+              <p className="py-2 text-center text-xs text-cs_blur_black dark:text-cs_gray sm:text-xs lg:text-base">
                 Đăng ký tài khoản miễn phí để sử dụng dịch vụ của Nevent một cách nhanh chóng nào!
               </p>
             </div>
@@ -116,7 +116,7 @@ function LogIn() {
                   name="name"
                   type="text"
                   placeholder="Họ và tên"
-                  classNameInput={`w-full ${isSubmitted && formik.errors.name && 'border border-red-400'}`}
+                  classNameInput={`w-full  ${isSubmitted && formik.errors.name && 'border border-red-400'}`}
                   onChange={formik.handleChange}
                   value={formik.values.name}
                 />
@@ -168,7 +168,7 @@ function LogIn() {
                 <Checkbox
                   label="Tôi đồng ý với điều khoản dịch vụ của của Nevent."
                   crossOrigin={{}}
-                  className="h-4 w-4"
+                  className="h-4 w-4 dark:text-cs_gray"
                 />
                 <p></p>
               </div>
@@ -181,16 +181,16 @@ function LogIn() {
               />
             </form>
             <div className="relative flex items-center justify-center gap-4">
-              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_light "></span>
-              <span className="text-cs_dark dark:text-cs_light">hoặc</span>
-              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_light "></span>
+              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
+              <span className="text-cs_dark dark:text-cs_gray">hoặc</span>
+              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
             </div>
             <div className="flex justify-center gap-1">
-              <Button className="font-semibold " value="Google" icon="logo-google" />
-              <Button className="" value="Facebook" icon="logo-facebook" />
+              <Button className="font-semibold dark:bg-cs_formDark" value="Google" icon="logo-google" />
+              <Button className="dark:bg-cs_formDark" value="Facebook" icon="logo-facebook" />
             </div>
             <div className="text-center">
-              <span className="text-cs_dark dark:text-cs_light ">Bạn đã có tài khoản? </span>
+              <span className="text-cs_dark dark:text-cs_gray ">Bạn đã có tài khoản? </span>
               <Link to="/login" className="font-bold hover:underline">
                 Đăng nhập
               </Link>
@@ -207,7 +207,7 @@ function LogIn() {
             damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
             stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
           }}
-          className="h-full w-1/2 p-3"
+          className="h-full w-full p-3 lg:w-1/2"
         >
           <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
         </motion.div>

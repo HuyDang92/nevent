@@ -21,9 +21,7 @@ function DefaultLayout() {
         <Header />
         <div className={`mx-auto  flex`}>
           <motion.aside
-            className={`${
-              isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[15%]'
-            } hidden transition-all sm:block `}
+            className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[15%]'} hidden transition-all sm:block `}
           >
             <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
           </motion.aside>
@@ -36,8 +34,8 @@ function DefaultLayout() {
           </main>
         </div>
       </div>
-      <Footer />
       <NavbarMobile className="fixed bottom-0 sm:hidden" />
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import ProductList from '~/components/ProductCard';
+import ProductList from '~/components/EventCard';
 import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
@@ -192,10 +192,9 @@ function Categories() {
           </div>
         </div>
         {/* Product */}
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {currentData.map((item, index) => (
             <Link to={'/'} key={index}>
-              {' '}
               <ProductList data={item} index={index} />
             </Link>
           ))}

@@ -7,7 +7,7 @@ import des2 from '~/assets/images/detail2.png';
 import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 import { Link } from 'react-router-dom';
-import ProductCard from '~/components/ProductCard';
+import ProductCard from '~/components/EventCard';
 
 function DetailEvent() {
   const [visibleProducts, setVisibleProducts] = useState(8); // Số lượng sản phẩm hiển thị ban đầu
@@ -87,36 +87,77 @@ function DetailEvent() {
   return (
     <div className="relative">
       <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link="Name product" />
-      <div className="flex gap-4">
-        <div className="w-[80%]">
-          <div className="">
-            <img src={Thumb} alt="" className="h-[450px] w-full rounded-xl object-cover" />
+      <div className="flex-row-reverse gap-4 xl:flex">
+        <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
+          <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
+            <img src={Thumb} alt="" className="h-[180px] w-full rounded-xl object-cover sm:h-[300px] xl:h-[180px]" />
+            <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
+              <h1 className="text-[20px] font-bold text-cs_dark dark:text-cs_light">
+                PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
+              </h1>
+              <div className="flex items-center gap-[15px]">
+                <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
+                <span className="w-[90%] dark:text-cs_light">Friday, 10 November 2023 (07:00 PM - 11:00 PM)</span>
+              </div>
+              <div className="flex items-center gap-[15px]">
+                <Icon name="navigate-outline" className="w-[10%] text-xl dark:text-cs_light" />
+                <span className="w-[90%] dark:text-cs_light">
+                  <b>Cung thể thao Điền Kinh - Mỹ Đình,</b> <br />
+                  <span>Phố Trần Hữu Dực, Phường Cầu Diễn, District Nam Tu Liem, Ha Noi City</span>
+                </span>
+              </div>
+              <div className="">
+                <span className="w-[90%] dark:text-cs_light">Giá vé:</span>
+                <div className="py-2">
+                  <ul className="grid grid-cols-2 gap-2">
+                    <li className="rounded-lg  bg-[#FF3232] p-2 text-cs_light">
+                      <span className="">VIP: 3.800.000 VNĐ</span>
+                    </li>
+                    <li className="rounded-lg bg-[#FF6F32] p-2 text-cs_light">
+                      <span className="">VIP: 3.800.000 VNĐ</span>
+                    </li>
+                    <li className="rounded-lg bg-[#D7C524] p-2 text-cs_light">
+                      <span className="">VIP: 3.800.000 VNĐ</span>
+                    </li>
+                    <li className="rounded-lg bg-[#3FD827] p-2 text-cs_light">
+                      <span className="">VIP: 3.800.000 VNĐ</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <Button className="w-full" value="Đặt vé ngay" mode="dark" />
+            </div>
           </div>
-          <div className="space-y-10 py-5">
-            <div className="flex flex-col justify-between text-[12px] md:text-[18px]">
+        </div>
+        <div className="xl:w-[80%]">
+          <div className="hidden xl:block">
+            <img src={Thumb} alt="" className="w-full rounded-xl object-cover sm:h-[350px] xl:h-[450px]" />
+          </div>
+          <div className="space-y-10 xl:py-5 ">
+            <div className=" hidden flex-col justify-between text-[12px] md:text-[18px] xl:flex">
               <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">
                 PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
               </h1>
-              <div className="mt-[10px] flex items-center gap-[10px] md:gap-[20px]">
-                <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full md:h-[120px] md:w-[115px]">
+              <div className="mt-[10px] flex items-center gap-[10px] md:gap-[20px] ">
+                <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full dark:border md:h-[120px] md:w-[115px]">
                   <div className="grid h-[10px] place-content-center bg-cs_semi_green py-2 text-[8px] text-cs_light md:h-[35px] md:text-[15px]">
                     Tháng 10
                   </div>
                   <div className="flex h-[60px] flex-col items-center justify-center md:h-[85px]">
-                    <b className="text-xl md:mb-2 md:text-[40px]">20</b>
-                    <span className="text-[8px] md:text-[14px]">Thứ 6</span>
+                    <span className="text-xl font-bold dark:text-cs_light md:mb-2 md:text-[40px]">20</span>
+                    <span className="text-[8px] dark:text-cs_light md:text-[14px]">Thứ 6</span>
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center gap-[15px]">
-                    <Icon name="timer-outline" className="w-[10%] text-[15px] md:text-xl" />
-                    <span className="w-[90%]">
-                      Friday, 10 November 2023&nbsp;<span className="text-[#ff0000]"> (07:00 PM - 11:00 PM)</span>
+                    <Icon name="timer-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+                    <span className="w-[90%] dark:text-cs_light">
+                      Friday, 10 November 2023&nbsp;<span className="text-[#ff0000] "> (07:00 PM - 11:00 PM)</span>
                     </span>
                   </div>
                   <div className="flex items-center gap-[15px]">
-                    <Icon name="navigate-outline" className="w-[10%] text-[15px] md:text-xl" />
-                    <span className="w-[90%]">
+                    <Icon name="navigate-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+                    <span className="w-[90%] dark:text-cs_light">
                       <b>Cung thể thao Điền Kinh - Mỹ Đình,</b> <br />
                       <span>Phố Trần Hữu Dực, Phường Cầu Diễn, District Nam Tu Liem, Ha Noi City</span>
                     </span>
@@ -124,7 +165,8 @@ function DetailEvent() {
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
+            {/* description  */}
+            <div className="space-y-4 px-2 dark:text-cs_light sm:px-0">
               <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
               <div className=" leading-8">
                 <h3>
@@ -179,15 +221,16 @@ function DetailEvent() {
                 </ul>
               </div>
             </div>
-            <div className="space-y-4 rounded-xl p-4 shadow-border-blur">
+            {/* Info bussiness */}
+            <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">
               <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                 Thông tin nhà tổ chức
               </h1>
-              <div className="flex gap-4">
+              <div className="gap-4 sm:flex">
                 <Link to="/" className="w-1/4">
-                  <img src={Thumb} alt="" className="h-[150px] w-full rounded-lg object-cover" />
+                  <img src={Thumb} alt="" className="h-[250px] w-full rounded-lg object-cover sm:h-[150px]" />
                 </Link>
-                <div className="w-3/4">
+                <div className="w-3/4 pt-3 sm:pt-0">
                   <h3 className="font-bold ">BOM ENTERTAINMENT</h3>
                   <p className="line-clamp-5">
                     Được thành lập từ năm 2016, Công ty TNHH Bôm Hà Nội là công ty đa ngành nghề với các lĩnh vực như
@@ -212,47 +255,6 @@ function DetailEvent() {
             </div>
             <div className="mt-5 flex justify-center">
               <Button className="" value="Xem thêm" mode="dark" />
-            </div>
-          </div>
-        </div>
-        <div className="h-fit w-[380px] md:sticky md:top-[80px]">
-          <div className="rounded-xl p-3 text-[14px] shadow-border-blur">
-            <img src={Thumb} alt="" className="h-[180px] w-full rounded-xl object-cover" />
-            <div className="space-y-3 p-1 pt-2">
-              <h1 className="text-[20px] font-bold text-cs_dark dark:text-cs_light">
-                PARTY NIGHT - WE ARE GAYS | EVENT SUPER MUSIC NIGHT
-              </h1>
-              <div className="flex items-center gap-[15px]">
-                <Icon name="timer-outline" className="w-[10%] text-xl" />
-                <span className="w-[90%]">Friday, 10 November 2023 (07:00 PM - 11:00 PM)</span>
-              </div>
-              <div className="flex items-center gap-[15px]">
-                <Icon name="navigate-outline" className="w-[10%] text-xl" />
-                <span className="w-[90%]">
-                  <b>Cung thể thao Điền Kinh - Mỹ Đình,</b> <br />
-                  <span>Phố Trần Hữu Dực, Phường Cầu Diễn, District Nam Tu Liem, Ha Noi City</span>
-                </span>
-              </div>
-              <div className="">
-                <span className="w-[90%]">Giá vé:</span>
-                <div className="py-2">
-                  <ul className="grid grid-cols-2 gap-2">
-                    <li className="rounded-lg  bg-[#FF3232] p-2 text-cs_light">
-                      <span className="">VIP: 3.800.000 VNĐ</span>
-                    </li>
-                    <li className="rounded-lg bg-[#FF6F32] p-2 text-cs_light">
-                      <span className="">VIP: 3.800.000 VNĐ</span>
-                    </li>
-                    <li className="rounded-lg bg-[#D7C524] p-2 text-cs_light">
-                      <span className="">VIP: 3.800.000 VNĐ</span>
-                    </li>
-                    <li className="rounded-lg bg-[#3FD827] p-2 text-cs_light">
-                      <span className="">VIP: 3.800.000 VNĐ</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <Button className="w-full" value="Đặt vé ngay" mode="dark" />
             </div>
           </div>
         </div>
