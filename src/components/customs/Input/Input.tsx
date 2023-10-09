@@ -49,9 +49,9 @@ const Input = ({
       )}
       <input
         placeholder={placeholder}
-        className={`h-10 shadow-border-light ${
+        className={`h-10 shadow-border-light dark:bg-cs_formDark ${
           rounded_full ? 'rounded-full' : 'rounded-xl'
-        }  px-4 py-3.5  focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none ${classNameInput}`}
+        }  px-4 py-3.5  focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
         type={showPassword ? 'text' : type}
         value={value}
         onChange={onChange}

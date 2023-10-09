@@ -16,7 +16,7 @@ const Button = ({ icon, onClick, className, value, type = 'button', mode = 'ligh
   return (
     <motion.button
       onClick={onClick}
-      className={`${value && icon && 'flex'} gap-2 ${
+      className={`${value && icon && 'flex justify-center'} gap-2 ${
         rounded_full ? 'rounded-full' : 'rounded-xl'
       } px-4 py-2 font-medium shadow-border-light transition-all ${
         mode === 'light' ? 'bg-white text-cs_semi_green' : ' bg-cs_semi_green text-white'
