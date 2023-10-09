@@ -6,6 +6,7 @@ import Button from '../customs/Button';
 import { logout } from '~/features/Auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
+import Icon from '../customs/Icon';
 
 const itemVariants: Variants = {
   open: {
@@ -16,7 +17,7 @@ const itemVariants: Variants = {
   closed: { opacity: 0, y: 20, transition: { duration: 0.1 } },
 };
 type DropdownProps = {
-  auth?: Object;
+  auth?: any;
 };
 const Dropdown = ({ auth }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,16 +30,20 @@ const Dropdown = ({ auth }: DropdownProps) => {
   };
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
-      <motion.button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className="rounded-full border-2 border-cs_semi_green "
+      >
         <Avatar
           variant="circular"
           alt="tania andrew"
-          className="h-10 w-10 cursor-pointer object-cover"
+          className="h-10 w-10 cursor-pointer object-cover shadow-border-light"
           src={avtDefault}
         />
       </motion.button>
       <motion.ul
-        className="absolute right-0 top-[140%] z-20 w-44 bg-white p-2 shadow-border-btn"
+        className="absolute right-0 top-[140%] z-20 w-[240px] space-y-2 rounded-xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -61,6 +66,24 @@ const Dropdown = ({ auth }: DropdownProps) => {
         }}
         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
+        <motion.li variants={itemVariants} className="space-y-2 py-4 text-center">
+          <Avatar
+            variant="circular"
+            alt="tania andrew"
+            size="xl"
+            className="cursor-pointer border-2 border-cs_semi_green object-cover shadow-border-light"
+            src={auth?.currentUser?.avatar ?? avtDefault}
+          />
+          <h5 className="font-semibold dark:text-cs_light">{auth?.currentUser?.fullName}</h5>
+          <span className="text-xs text-cs_gray">{auth?.currentUser?.email} </span>
+        </motion.li>
+        <motion.li
+          variants={itemVariants}
+          className="flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+        >
+          <Icon name="person" className="text-cs_lightDark dark:text-cs_light" />
+          <span>Thông tin cá nhân</span>
+        </motion.li>
         <motion.li variants={itemVariants} className="">
           <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />
         </motion.li>

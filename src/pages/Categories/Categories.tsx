@@ -170,7 +170,7 @@ function Categories() {
               <button
                 key={index}
                 onClick={() => setIsActive(item.id)}
-                className={`z-10 rounded-full border border-cs_semi_green bg-white px-4 py-1 text-xs text-cs_semi_green transition-all ${
+                className={`z-10 rounded-full border border-cs_semi_green bg-white px-4 font-medium py-1.5 text-[13px] text-cs_semi_green transition-all ${
                   isActive === item.id ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
@@ -179,16 +179,19 @@ function Categories() {
             ))}
           </div>
           {/* Filter */}
-          <div className="hidden gap-3 sm:flex">
-            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className="text-cs_semi_green" name="calendar" />
-            </div>
-            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className="text-cs_semi_green" name="cash" />
-            </div>
-            <div className=" flex cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-xl shadow-border-btn transition hover:bg-cs_icon_black hover:text-white">
-              <Icon className="text-cs_semi_green" name="filter" />
-            </div>
+          <div className="hidden gap-4 transition-all sm:flex">
+            <Icon
+              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              name="calendar"
+            />
+            <Icon
+              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              name="cash"
+            />
+            <Icon
+              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              name="filter"
+            />
           </div>
         </div>
         {/* Product */}
