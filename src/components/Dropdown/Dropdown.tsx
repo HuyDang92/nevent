@@ -43,7 +43,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
         />
       </motion.button>
       <motion.ul
-        className="absolute right-0 top-[140%] z-20 w-[240px] space-y-2 rounded-xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+        className="absolute right-0 top-[140%] z-20 w-[240px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',

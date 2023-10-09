@@ -170,7 +170,7 @@ function Categories() {
               <button
                 key={index}
                 onClick={() => setIsActive(item.id)}
-                className={`z-10 rounded-full border border-cs_semi_green bg-white px-4 font-medium py-1.5 text-[13px] text-cs_semi_green transition-all ${
+                className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 font-medium py-1 text-[13px] text-cs_semi_green transition-all ${
                   isActive === item.id ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >

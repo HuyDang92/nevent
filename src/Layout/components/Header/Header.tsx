@@ -69,7 +69,7 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 flex  items-center justify-between rounded-none bg-cs_light py-3 shadow-border-light  dark:bg-cs_lightDark  ${className} sm:px-5`}
+      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-light  dark:bg-cs_lightDark  ${className} sm:px-5`}
     >
       <Link to="/">
         <div className="flex items-center gap-2">
