@@ -32,7 +32,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
 
   return (
     <>
-      <div className={`flex w-full items-center justify-around bg-white dark:bg-cs_lightDark dark:border p-3 shadow-border-blur sm:hidden ${className}`}>
+      <div className={`flex w-full items-center justify-around bg-white dark:bg-cs_lightDark dark:border-t p-3 shadow-border-blur sm:hidden ${className}`}>
         {dataNavigation.map((item, index) => (
           <motion.button key={index} whileTap={{ scale: 0.9 }}>
             <NavLink to={item.link} className={(nav) => `flex items-center justify-between`}>
