@@ -18,8 +18,8 @@ const Button = ({ icon, onClick, className, value, type = 'button', mode = 'ligh
       onClick={onClick}
       className={`${value && icon && 'flex justify-center'} gap-2 ${
         rounded_full ? 'rounded-full' : 'rounded-xl'
-      } border-none px-4 py-2 font-medium shadow-border-light transition-all ${
-        mode === 'light' ? 'bg-white text-cs_semi_green' : 'border-cs_light bg-cs_semi_green text-white'
+      } px-4 py-2 font-medium shadow-border-light transition-all ${
+        mode === 'light' ? 'bg-white text-cs_semi_green' : ' bg-cs_semi_green text-white'
       }  ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
