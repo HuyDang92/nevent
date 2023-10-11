@@ -3,15 +3,23 @@ import { authApi } from './authApi.service';
 
 interface AuthState {
   loggedIn: boolean;
-  accessToken: string | null;
-  refreshToken: string | null;
+  accessToken: {
+    token: string | null;
+  };
+  refreshToken: {
+    token: string | null;
+  };
   currentUser: IUserField | null;
 }
 
 const initialState: AuthState = {
   loggedIn: false,
-  accessToken: null,
-  refreshToken: null,
+  accessToken: {
+    token: null,
+  },
+  refreshToken: {
+    token: null,
+  },
   currentUser: null,
 };
 
@@ -42,7 +50,7 @@ const authSlice = createSlice({
       const response = action.payload;
       if (response?.statusCode === 201) {
         console.log('response', response);
-        
+
         state.loggedIn = true;
         state.accessToken = response?.data.token.accessToken;
         state.refreshToken = response?.data.token.refreshToken;
@@ -50,8 +58,8 @@ const authSlice = createSlice({
       } else {
         state.loggedIn = false;
         state.currentUser = null;
-        state.accessToken = null;
-        state.refreshToken = null;
+        state.accessToken.token = null;
+        state.refreshToken.token = null;
       }
     });
   },

@@ -61,7 +61,7 @@ const Header = ({ className }: HeaderProps) => {
           <Icon name="moon" className="text-2xl hover:scale-110 dark:hidden" />
         </p>
       </ToggleDarkMode>
-      <Link to="/" className="hidden sm:inline-block">
+      <Link to="/user/profile" className="hidden sm:inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
       </Link>
     </ul>
