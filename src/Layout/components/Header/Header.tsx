@@ -71,14 +71,16 @@ const Header = ({ className }: HeaderProps) => {
     <header
       className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-light  dark:bg-cs_lightDark  ${className} sm:px-5`}
     >
-      <Link to="/">
-        <div className="flex items-center gap-2">
-          <img src={logo} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
-          <img src={logoWhite} alt="logo" className=" hidden h-[20px] w-[40px] dark:block" />
-          <span className="text-xl font-black text-cs_semi_green dark:text-cs_light">NEVENT</span>
-          <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
-        </div>
-      </Link>
+      <div className="flex items-center">
+        <Link to="/">
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
+            <img src={logoWhite} alt="logo" className=" hidden h-[20px] w-[40px] dark:block" />
+            <span className="text-xl font-extrabold text-cs_semi_green dark:text-cs_light">NEVENT</span>
+          </div>
+        </Link>
+        <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
+      </div>
       <div className="flex items-center justify-end gap-3">
         <div className="">{navList}</div>
         <div className="">

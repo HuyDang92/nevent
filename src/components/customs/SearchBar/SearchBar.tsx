@@ -6,9 +6,10 @@ type SearchBarProps = {
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  size?: 'md' | 'lg';
 };
 
-const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
+const SearchBar = ({ value, onChange, className, size = 'md' }: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = () => {
     setIsFocus(true);
@@ -18,10 +19,17 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
   };
   return (
     <>
-      <div className={`relative inline-block w-[440px] ${className}`}>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${
+          size === 'lg' && 'w-[640px]'
+        }  ${className}`}
+      >
         <input
           placeholder="Tìm kiếm..."
-          className={`h-10 w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none `}
+          className={` ${size === 'md' && 'h-10'} ${
+            size === 'lg' && 'h-14'
+          }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none `}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -30,11 +38,11 @@ const SearchBar = ({ value, onChange, className }: SearchBarProps) => {
         />
         <IonIcon
           name="search-outline"
-          className={`absolute right-4 top-2 cursor-pointer text-xl font-medium text-cs_gray ${
+          className={`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl font-medium text-cs_gray ${
             isFocus ? '!text-cs_icon_black' : ''
           }`}
         />
-      </div>
+      </form>
     </>
   );
 };

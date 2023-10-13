@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
+import FAQ from '~/pages/FAQ';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -33,6 +34,8 @@ export default function AppRoutes() {
         <Route path="/about" element={<About />} />
         {/* Cho người tổ chức */}
         <Route path="/organizer-about" element={<About />} />
+        {/* FAQ */}
+        <Route path="/help-center" element={<FAQ />} />
 
         <Route element={<NotLoggedMiddleware />}>
           {/* đăng nhập */}

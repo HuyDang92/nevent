@@ -41,12 +41,12 @@ const cateListNoLayout = [
   },
   {
     name: 'FAQ',
-    link: '/faq',
+    link: '/help-center',
     icon: 'help-circle-outline',
   },
   {
-    name: 'Doanh nghiệp',
-    link: '/business',
+    name: 'Nhà tổ chức',
+    link: '/organizer-about',
     icon: 'people-circle-outline',
   },
 ];
