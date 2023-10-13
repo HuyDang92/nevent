@@ -66,7 +66,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
         }}
         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
-        <motion.li variants={itemVariants} className="space-y-2 py-4 text-center">
+        <motion.li variants={itemVariants} className="space-y-2 py-2 pb-0 text-center">
           <Avatar
             variant="circular"
             alt="tania andrew"
@@ -79,10 +79,24 @@ const Dropdown = ({ auth }: DropdownProps) => {
         </motion.li>
         <motion.li
           variants={itemVariants}
-          className="flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
         >
-          <Icon name="person" className="text-cs_lightDark dark:text-cs_light" />
-          <span>Thông tin cá nhân</span>
+          <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+          <span className="group-hover:text-cs_light">Vé đã đặt</span>
+        </motion.li>
+        <motion.li
+          variants={itemVariants}
+          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+        >
+          <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+          <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
+        </motion.li>
+        <motion.li
+          variants={itemVariants}
+          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+        >
+          <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+          <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
         </motion.li>
         <motion.li variants={itemVariants} className="">
           <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />
