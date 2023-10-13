@@ -16,14 +16,14 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const location = useLocation();
   const auth = useAppSelector((state) => state.auth);
   const [getTokenFromRefreshToken, result] = useLazyGetTokenFromRefreshTokenQuery();
-  const jwtDecodeAccess: IJwtDecode = jwt_decode(auth.accessToken ? auth.accessToken : '');
-  const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth.refreshToken ? auth.refreshToken : '');
+  const jwtDecodeAccess: IJwtDecode = jwt_decode(auth.accessToken.token ? auth?.accessToken.token : '');
+  const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth.refreshToken.token ? auth?.refreshToken.token : '');
   const currentTime = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
     if (auth.loggedIn && jwtDecodeAccess.exp < currentTime) {
       if (jwtDecodeRefresh.exp > currentTime) {
-        getTokenFromRefreshToken(auth.refreshToken ? auth.refreshToken : '');
+        getTokenFromRefreshToken(auth?.refreshToken.token ? auth?.refreshToken.token : '');
       } else {
         dispatch(logout());
       }
