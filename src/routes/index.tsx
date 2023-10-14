@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
+import Profile from '~/pages/Auth/Profile';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -48,7 +49,7 @@ export default function AppRoutes() {
         {/* user */}
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
-            <Route index path="profile" element={<DetailEvent />} />
+            <Route index path="profile" element={<Profile />} />
           </Route>
         </Route>
 
