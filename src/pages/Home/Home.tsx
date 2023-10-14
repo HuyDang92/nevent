@@ -213,7 +213,7 @@ function Home() {
         <SectionTitle value="Sự kiện nổi bật" />
         <Slide data={dataPro} />
         <SectionTitle value="Sự kiện sắp diễn ra" />
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-4 3xl:grid-cols-5">
           {tempProductData.map((item, index) => (
             <Link to={'/'} key={index}>
               <ProductCard data={item} index={index} />

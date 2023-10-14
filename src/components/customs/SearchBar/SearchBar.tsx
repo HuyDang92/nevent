@@ -29,7 +29,7 @@ const SearchBar = ({ value, onChange, className, size = 'md' }: SearchBarProps) 
           placeholder="Tìm kiếm..."
           className={` ${size === 'md' && 'h-10'} ${
             size === 'lg' && 'h-14'
-          }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none `}
+          }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light`}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -39,7 +39,7 @@ const SearchBar = ({ value, onChange, className, size = 'md' }: SearchBarProps) 
         <IonIcon
           name="search-outline"
           className={`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl font-medium text-cs_gray ${
-            isFocus ? '!text-cs_icon_black' : ''
+            isFocus ? 'dark:text-cs_light' : ''
           }`}
         />
       </form>

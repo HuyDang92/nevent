@@ -10,12 +10,37 @@ import logoWhite from '~/assets/images/logoWhite.png';
 import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useAppSelector } from '~/hooks/useActionRedux';
+import Notifications from '~/components/Notifications';
 
 type HeaderProps = {
   className?: string;
 };
 
 const Header = ({ className }: HeaderProps) => {
+  const notificationData = [
+    {
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+    {
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+    {
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+  ];
+
   const auth = useAppSelector((state) => state.auth);
   const [loginGoogle] = useLogInGoogleMutation();
 
@@ -43,9 +68,10 @@ const Header = ({ className }: HeaderProps) => {
       <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
-      <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
+      {/* <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
-      </Link>
+      </Link> */}
+      <Notifications data={notificationData} />
       <Link
         to="/"
         className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
