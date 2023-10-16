@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 
 interface UserInfoProp {
   className?: string;
-  data: IUserField | null;
+  data: IUserField;
 }
 
 interface IUserInfo {
@@ -43,7 +43,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             name="fullName"
             value={formik.values.fullName}
             onChange={formik.handleChange}
-            label="Họ và tên"
+            label="Họ và tên"
             classNameInput="w-full"
           />
         </div>
@@ -74,7 +74,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
         <div className="w-full">
           <Radios label="Giới tính" classNameInput="flex gap-4">
             <Radio className="flex gap-2" name="gender" label="Nam" id="nam" />
-            <Radio className="flex gap-2" name="gender" label="Nữ" id="nu" />
+            <Radio className="flex gap-2" name="gender" label="Nữ" id="nu" />
           </Radios>
         </div>
         <div className="w-full text-right">
