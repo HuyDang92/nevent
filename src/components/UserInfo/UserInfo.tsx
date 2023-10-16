@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 
 interface UserInfoProp {
   className?: string;
-  data: IUserField;
+  data: IUserField | null;
 }
 
 interface IUserInfo {
