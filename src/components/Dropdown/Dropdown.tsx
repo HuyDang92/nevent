@@ -81,12 +81,6 @@ const Dropdown = ({ auth }: DropdownProps) => {
           variants={itemVariants}
           className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
         >
-<<<<<<< HEAD
-          <Link to={`/user/profile`}>
-            <Icon name="person" className="text-cs_lightDark dark:text-cs_light" />
-            <span>Thông tin cá nhân</span>
-          </Link>
-=======
           <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
           <span className="group-hover:text-cs_light">Vé đã đặt</span>
         </motion.li>
@@ -101,9 +95,10 @@ const Dropdown = ({ auth }: DropdownProps) => {
           variants={itemVariants}
           className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
         >
-          <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-          <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
->>>>>>> 8861a0611605032205f03626c2a65c2519db725b
+          <Link to={'/user/profile'}>
+            <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+            <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
+          </Link>
         </motion.li>
         <motion.li variants={itemVariants} className="">
           <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />

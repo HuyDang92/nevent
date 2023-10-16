@@ -14,11 +14,8 @@ import PrivateRoute from './PrivateRoute';
 import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
-<<<<<<< HEAD
-import Profile from '~/pages/Auth/Profile';
-=======
 import FAQ from '~/pages/FAQ';
->>>>>>> 8861a0611605032205f03626c2a65c2519db725b
+import Profile from '~/pages/Auth/Profile';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);

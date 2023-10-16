@@ -1,8 +1,10 @@
 import DefaultCoverImage from '~/assets/images/default-coverImage.png';
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 import { useAppSelector } from '~/hooks/useActionRedux';
-import Tabs from '~/components/Tabs';
+import { Tab, Tabs, TabsContent, TabsBody, TabsHeader } from '~/components/Tabs';
 import Icon from '~/components/customs/Icon';
+import UserInfo from '~/components/UserInfo';
+import ChangePassword from '~/components/ChangePassword';
 interface ProfileProps {
   className?: string;
 }
@@ -14,31 +16,6 @@ interface ProfileProps {
  */
 const Profile: React.FC<ProfileProps> = () => {
   const auth = useAppSelector((state) => state.auth);
-  console.log(auth);
-  const tabHeaders = [
-    <>
-      <span>Thông tin tài khoản</span>
-      <Icon name="newspaper-outline" />
-    </>,
-    <>
-      <span>Lịch sử giao dịch</span>
-      <Icon name="time-outline" />
-    </>,
-    <>
-      <span>Vé của bạn</span>
-      <Icon name="wallet-outline" />
-    </>,
-    <>
-      <span>Đổi mật khẩu</span>
-      <Icon name="key-outline" />
-    </>,
-  ];
-  const tabContent = [
-    <div>Thông tin tài khoản</div>,
-    <div>Lịch sử giao dịch</div>,
-    <div>Vé của bạn</div>,
-    <div>Đổi mật khẩu </div>,
-  ];
   return (
     <div>
       <div className="relative">
@@ -58,11 +35,45 @@ const Profile: React.FC<ProfileProps> = () => {
           </div>
         </div>
         <button className="absolute bottom-[130px] right-[10px] grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light">
-          <Icon name="pencil-outline" />
+          <Icon name="camera-reverse-outline" />
         </button>
       </div>
-      <div className="h-[1000px]">
-        <Tabs className="h-full" tabHeaders={tabHeaders} tabContent={tabContent} />
+      <div>
+        <Tabs orientation="horizontal">
+          <TabsHeader className="w-[25%]">
+            <Tab className="flex items-center justify-between" index={0}>
+              <span>Thông tin tài khoản</span>
+              <Icon name="newspaper"></Icon>
+            </Tab>
+            <Tab className="flex items-center justify-between" index={1}>
+              <span>Lịch sử giao dịch</span>
+              <Icon name="time"></Icon>
+            </Tab>
+            <Tab className="flex items-center justify-between" index={2}>
+              <span>Vé của bạn</span>
+              <Icon name="wallet"></Icon>
+            </Tab>
+            <Tab className="flex items-center justify-between" index={3}>
+              <span>Thông báo</span>
+              <Icon name="notifications"></Icon>
+            </Tab>
+            <Tab className="flex items-center justify-between" index={4}>
+              <span>Đổi mật khẩu</span>
+              <Icon name="key"></Icon>
+            </Tab>
+          </TabsHeader>
+          <TabsBody className="w-[75%] rounded-[25px] p-6">
+            <TabsContent index={0}>
+              <UserInfo data={auth?.currentUser} />
+            </TabsContent>
+            <TabsContent index={1}>Lịch sử giao dịch</TabsContent>
+            <TabsContent index={2}>Vé của bạn</TabsContent>
+            <TabsContent index={3}>Thông báo</TabsContent>
+            <TabsContent index={4}>
+              <ChangePassword />
+            </TabsContent>
+          </TabsBody>
+        </Tabs>
       </div>
     </div>
   );
