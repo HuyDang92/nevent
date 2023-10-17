@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 
 interface UserInfoProp {
   className?: string;
-  data: IUserField;
+  data?: IUserField | null;
 }
 
 interface IUserInfo {
@@ -18,9 +18,9 @@ interface IUserInfo {
 const UserInfo = ({ data, className }: UserInfoProp) => {
   const formik = useFormik({
     initialValues: {
-      fullName: data.fullName,
-      phone: data.phone,
-      createdAt: data.createdAt,
+      fullName: data?.fullName ?? '',
+      phone: data?.phone ?? '',
+      createdAt: data?.createdAt ?? '',
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Họ và tên không được bỏ trống'),
@@ -37,7 +37,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
     <div className={`${className}`}>
       <h1 className="text-2xl font-bold">Thông tin tài khoản</h1>
       <form onSubmit={formik.handleSubmit} className="flex flex-wrap gap-10">
-        <div className="w-[calc(50%-20px)]">
+        <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="fullName"
             name="fullName"
@@ -47,10 +47,10 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             classNameInput="w-full"
           />
         </div>
-        <div className="w-[calc(50%-20px)]">
-          <Input readonly={true} value={data.email} classNameInput="w-full" label="Email" />
+        <div className="w-full md:w-[calc(50%-20px)]">
+          <Input readonly={true} value={data?.email} classNameInput="w-full" label="Email" />
         </div>
-        <div className="w-[calc(50%-20px)]">
+        <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="phone"
             name="phone"
@@ -60,7 +60,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             label="Số điện thoại"
           />
         </div>
-        <div className="w-[calc(50%-20px)]">
+        <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="createdAt"
             name="createdAt"
