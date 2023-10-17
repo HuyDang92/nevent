@@ -30,6 +30,8 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
     }
   }, [location.pathname, auth.loggedIn]);
 
+  // use useEffect
+
   // useEffect(() => {
   //   const refreshInterval = setInterval(() => {
   //     if (auth.loggedIn && jwtDecodeRefresh.exp > currentTime) {

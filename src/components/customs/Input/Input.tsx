@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
-import Icon from '../Icon';
 import IonIcon from '@reacticons/ionicons';
 
 type InputProps = {
+  readonly?: boolean;
   placeholder?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -17,6 +17,7 @@ type InputProps = {
 };
 
 const Input = ({
+  readonly = false,
   value,
   onChange,
   placeholder,
@@ -49,7 +50,7 @@ const Input = ({
       )}
       <input
         placeholder={placeholder}
-        className={`h-10 shadow-border-light dark:bg-cs_formDark ${
+        className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_formDark ${
           rounded_full ? 'rounded-full' : 'rounded-xl'
         }  px-4 py-3.5  focus:border-cs_dark focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
         type={showPassword ? 'text' : type}
@@ -58,6 +59,7 @@ const Input = ({
         id={id}
         name={name}
         onFocus={() => setIsFocused(true)}
+        readOnly={readonly}
         // onBlur={() => setIsFocused(false)}
       />
       {type === 'password' && isFocused && (

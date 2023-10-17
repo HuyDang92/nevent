@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion';
 import { useState } from 'react';
 import Button from '../customs/Button';
 import { logout } from '~/features/Auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import Icon from '../customs/Icon';
 
@@ -95,8 +95,10 @@ const Dropdown = ({ auth }: DropdownProps) => {
           variants={itemVariants}
           className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
         >
-          <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-          <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
+          <Link to={'/user/profile'}>
+            <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+            <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
+          </Link>
         </motion.li>
         <motion.li variants={itemVariants} className="">
           <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />
