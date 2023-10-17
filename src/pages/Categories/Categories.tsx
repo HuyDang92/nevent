@@ -170,7 +170,7 @@ function Categories() {
               <button
                 key={index}
                 onClick={() => setIsActive(item.id)}
-                className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 font-medium py-1 text-[13px] text-cs_semi_green transition-all ${
+                className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all ${
                   isActive === item.id ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
@@ -195,7 +195,7 @@ function Categories() {
           </div>
         </div>
         {/* Product */}
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 3xl:grid-cols-5">
           {currentData.map((item, index) => (
             <Link to={'/'} key={index}>
               <ProductList data={item} index={index} />

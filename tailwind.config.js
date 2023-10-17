@@ -5,6 +5,9 @@ module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1538px',
+      },
       fontSize: {
         '2xs': '0.5rem',
       },

@@ -38,12 +38,14 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
             <img src={data.image} alt="image" className="h-[110px] w-full rounded-xl object-cover sm:h-44" />
 
             <div
-              className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg sm:py-3"
+              className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <span className="text-[10px] font-normal sm:text-xs">{data.place}</span>
-              <p className={`line-clamp-2 text-xs leading-tight tracking-wide sm:my-1.5 sm:text-sm `}>{data.title}</p>
+              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data.place}</span>
+              <p className={`line-clamp-2 text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm`}>
+                {data.title}
+              </p>
               <div className="mb-1 mt-2 justify-between pr-1.5 text-xs font-normal text-cs_gray sm:flex">
                 <span className="flex items-center gap-1">
                   <Icon name="time-outline" />
@@ -57,7 +59,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                     initial={{ opacity: 0, y: -5, height: 0 }}
                     animate={{ opacity: 1, y: 0, height: 10 }}
                     exit={{ opacity: 0, y: -5, height: 0 }}
-                    className="flex justify-between text-[13px] font-normal"
+                    className="flex justify-between text-[13px] font-normal dark:text-cs_light"
                   >
                     <span className="cursor-pointer">Chi tiết</span>
                     <span className="cursor-pointer">Đặt vé</span>
