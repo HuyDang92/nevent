@@ -129,7 +129,7 @@ function DetailEvent() {
             </div>
           </div>
         </div>
-        <div className="xl:w-[80%]">
+        <div className="xl:w-[78%]">
           <div className="hidden xl:block">
             <img src={Thumb} alt="" className="w-full rounded-xl object-cover sm:h-[350px] xl:h-[450px]" />
           </div>
