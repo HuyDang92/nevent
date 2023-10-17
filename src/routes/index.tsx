@@ -15,6 +15,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import FAQ from '~/pages/FAQ';
+import CreateEventLayout from '~/Layout/CreateEventLayout';
+//Trang tạo sự kiện
+import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -28,6 +31,13 @@ export default function AppRoutes() {
           <Route path="/event-detail/:slug" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
           <Route path="/event-categories/:slug" element={<Categories />} />
+        </Route>
+        {/* Tạo sự kiện */}
+        <Route element={<CreateEventLayout />}>
+          <Route path="/create-event/" element={<OrganizationProfile />} />
+          <Route path="/create-event1/" element={<DetailEvent />} />
+          <Route path="/create-event2/" element={<Categories />} />
+          <Route path="/create-event3/" element={<Categories />} />
         </Route>
 
         {/* Giới thiệu */}
