@@ -1,19 +1,28 @@
-import { motion } from 'framer-motion';
+import { Carousel } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 type Props = {
   data: any; //dữ liệu
 };
 function Slide({ data }: Props) {
-  const [width, setWidth] = useState<number>(0);
-  const ref = useRef<any>();
+  const [newArray, setNewArray] = useState<any>([]);
+
   useEffect(() => {
-    setWidth(ref.current.scrollWidth - ref.current.offsetWidth);
-  }, []);
+    const splitArray = [];
+    for (let i = 0; i < data.length; i += 5) {
+      const subArray = data.slice(i, i + 5);
+      splitArray.push(subArray);
+    }
+    setNewArray(splitArray);
+  }, [data]);
   return (
     <>
-      <motion.div ref={ref} className="cursor-grab overflow-hidden ">
-        <motion.div drag="x" dragConstraints={{ right: 0, left: -width }} className="flex w-[80vw] gap-2 sm:gap-5">
+      {/* <motion.div className="cursor-grab overflow-hidden ">
+        <motion.div
+          drag="x"
+          dragConstraints={{ right: 0, left: -200 }}
+          className="flex w-[80vw] translate-x-5 gap-2 sm:gap-5"
+        >
           {data.map((item: any, index: number) => (
             <Link to={'/'} key={index} className="">
               <motion.div
@@ -26,16 +35,38 @@ function Slide({ data }: Props) {
                 }}
                 className="w-[230px]"
               >
-                <img
-                  src={item.image}
-                  alt=""
-                  className="h-[280px] w-full rounded-[15px] object-cover"
-                />
+                <img src={item.image} alt="" className="h-[280px] w-full rounded-[15px] object-cover" />
               </motion.div>
             </Link>
           ))}
         </motion.div>
-      </motion.div>
+      </motion.div> */}
+      <Carousel
+        className="h-[280px] overflow-hidden rounded-xl"
+        navigation={({ setActiveIndex, activeIndex, length }) => (
+          <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+            {new Array(length).fill('').map((_, i) => (
+              <span
+                key={i}
+                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                  activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
+                }`}
+                onClick={() => setActiveIndex(i)}
+              />
+            ))}
+          </div>
+        )}
+      >
+        {newArray.map((item: any, index: number) => (
+          <div key={index} className="grid grid-cols-5 gap-4">
+            {item.map((item: any, index: number) => (
+              <Link key={index} to="">
+                <img src={item.image} alt="image 1" className="h-[280px] w-full rounded-xl object-cover" />
+              </Link>
+            ))}
+          </div>
+        ))}
+      </Carousel>
     </>
   );
 }

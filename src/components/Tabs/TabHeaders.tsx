@@ -6,7 +6,7 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
   return (
     <ul
-      className={`relative flex h-fit gap-1 rounded-[25px] p-4 shadow-border-full ${
+      className={`relative flex h-fit dark:border-2 gap-1 rounded-[25px] p-4 shadow-border-full ${
         orientation == 'horizontal' ? 'flex-col' : 'flex-row'
       } ${className}`}
     >
