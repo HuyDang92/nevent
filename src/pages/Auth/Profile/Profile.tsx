@@ -4,7 +4,7 @@ import { useAppSelector } from '~/hooks/useActionRedux';
 import { Tab, Tabs, TabsContent, TabsBody, TabsHeader } from '~/components/Tabs';
 import Icon from '~/components/customs/Icon';
 import UserInfo from '~/pages/Auth/Profile/components/UserInfo';
-import ChangePassword from '~/components/ChangePassword';
+import ChangePassword from '~/pages/Auth/Profile/components/ChangePassword';
 interface ProfileProps {
   className?: string;
 }
@@ -16,86 +16,54 @@ interface ProfileProps {
  */
 const Profile: React.FC<ProfileProps> = () => {
   const auth = useAppSelector((state) => state.auth);
-  // const data = [
-  //   {
-  //     label: 'Thông tin tài khoản',
-  //     value: 'info',
-  //     icon: 'newspaper',
-  //     Component: UserInfo,
-  //   },
-  //   {
-  //     label: 'Lịch sử giao dịch',
-  //     value: 'history',
-  //     icon: 'time',
-  //     Component: UserInfo,
-  //   },
-  //   {
-  //     label: 'Vé của bạn',
-  //     value: 'ticket',
-  //     icon: 'wallet',
-  //     Component: UserInfo,
-  //   },
-  //   {
-  //     label: 'Thông báo',
-  //     value: 'notification',
-  //     icon: 'notifications',
-  //     Component: UserInfo,
-  //   },
-  //   {
-  //     label: 'Đổi mật khẩu',
-  //     value: 'change-password',
-  //     icon: 'key',
-  //     Component: UserInfo,
-  //   },
-  // ];
+  const isMdBreakpoint = window.innerWidth >= 768;
   return (
     <div>
       <div className="relative">
-        <img className="h-[170px] w-full rounded-xl" src={auth?.currentUser?.coverImage ?? DefaultCoverImage} alt="" />
-        <div className="absolute ml-[40px] flex -translate-y-[75%] items-start gap-4">
+        <img className="w-full" src={auth?.currentUser?.coverImage || DefaultCoverImage} alt="" />
+        <div className="flex -translate-y-1/2 items-end gap-4 md:ml-[30px]">
           <div className="relative">
             <div className="h-[120px] w-[120px] overflow-hidden rounded-full border-[2px] border-cs_semi_green">
-              <img src={auth?.currentUser?.avatar ?? DefaultAvatar} alt="" />
+              <img src={auth?.currentUser?.avatar || DefaultAvatar} alt="" />
             </div>
             <button className="absolute left-[calc(100%/6*5)] top-[calc(100%/6*5)] grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light">
               <Icon name="pencil-outline" />
             </button>
           </div>
-          <div className="mt-5">
-            <h1 className="text-2xl font-bold text-cs_light">{auth?.currentUser?.fullName} Huy </h1>
-            <span className="text-cs_light">{auth?.currentUser?.email}</span>
+          <div className="mb-2">
+            <h1 className="text-2xl font-bold dark:text-cs_light">{auth?.currentUser?.fullName}</h1>
+            <span className="text-cs_gray">{auth?.currentUser?.email}</span>
           </div>
         </div>
-        <button className="absolute bottom-[130px] right-[10px] grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light">
+        <button className="absolute bottom-[130px] right-[10px] grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light">
           <Icon name="camera-reverse-outline" />
         </button>
       </div>
-      <div className="mt-10">
-        
-        <Tabs orientation="horizontal">
-          <TabsHeader className="w-[25%]">
-            <Tab className="flex items-center justify-between" index={0}>
-              <span>Thông tin tài khoản</span>
-              <Icon name="newspaper"></Icon>
+      <div className="dark:text-cs_light">
+        <Tabs orientation={isMdBreakpoint ? 'horizontal' : 'vertical'}>
+          <TabsHeader className="w-full md:w-[25%]">
+            <Tab className="flex items-center justify-center md:justify-between" index={0}>
+              <span className="!hidden md:!block">Thông tin tài khoản</span>
+              <Icon name="newspaper" className="text-2xl md:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-between" index={1}>
-              <span>Lịch sử giao dịch</span>
-              <Icon name="time"></Icon>
+            <Tab className="flex items-center justify-center md:justify-between" index={1}>
+              <span className="!hidden md:!block">Lịch sử giao dịch</span>
+              <Icon name="time" className="text-2xl md:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-between" index={2}>
-              <span>Vé của bạn</span>
-              <Icon name="wallet"></Icon>
+            <Tab className="flex items-center justify-center md:justify-between" index={2}>
+              <span className="!hidden md:!block">Vé của bạn</span>
+              <Icon name="wallet" className="text-2xl md:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-between" index={3}>
-              <span>Thông báo</span>
-              <Icon name="notifications"></Icon>
+            <Tab className="flex items-center justify-center md:justify-between" index={3}>
+              <span className="!hidden md:!block">Thông báo</span>
+              <Icon name="notifications" className="text-2xl md:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-between" index={4}>
-              <span>Đổi mật khẩu</span>
-              <Icon name="key"></Icon>
+            <Tab className="flex items-center justify-center md:justify-between" index={4}>
+              <span className="!hidden md:!block">Đổi mật khẩu</span>
+              <Icon name="key" className="text-2xl md:text-base"></Icon>
             </Tab>
           </TabsHeader>
-          <TabsBody className="w-[75%] rounded-[25px] p-4 px-5">
+          <TabsBody className="w-full rounded-[25px] p-6 md:w-[75%]">
             <TabsContent index={0}>
               <UserInfo data={auth?.currentUser} />
             </TabsContent>

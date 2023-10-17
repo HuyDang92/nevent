@@ -1,12 +1,18 @@
-import { Radios, Radio } from '../../../../../components/customs/Radio';
-import Input from '../../../../../components/customs/Input';
+import { Radios, Radio } from '~/components/customs/Radio';
+import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
-import Button from '../../../../../components/customs/Button';
+import Button from '~/components/customs/Button';
 import { useFormik } from 'formik';
 
 interface UserInfoProp {
   className?: string;
-  data: IUserField | null;
+  data?: IUserField | null;
+}
+
+interface IUserInfo {
+  fullName: string;
+  phone: string;
+  createdAt: string;
 }
 
 const UserInfo = ({ data, className }: UserInfoProp) => {
@@ -44,7 +50,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
         <div className="w-[calc(50%-20px)]">
           <Input readonly={true} value={data?.email} classNameInput="w-full border" label="Email" />
         </div>
-        <div className="w-[calc(50%-20px)]">
+        <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="phone"
             name="phone"
@@ -54,7 +60,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             label="Số điện thoại"
           />
         </div>
-        <div className="w-[calc(50%-20px)]">
+        <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="createdAt"
             name="createdAt"

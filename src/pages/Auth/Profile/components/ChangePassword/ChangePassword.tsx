@@ -1,5 +1,5 @@
-import Button from '../customs/Button';
-import Input from '../customs/Input';
+import Button from '~/components/customs/Button';
+import Input from '~/components/customs/Input';
 
 const ChangePassword = () => {
   return (
