@@ -6,6 +6,8 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authApi } from '~/features/Auth/authApi.service';
 import { rtkQueryErrorLogger } from './middleware';
+import { eventApi } from '~/features/Event/eventApi.service';
+import { categoryApi } from '~/features/Category/categoryApi.service';
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +17,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
+  [categoryApi.reducerPath]: categoryApi.reducer,
+  [eventApi.reducerPath]: eventApi.reducer,
   auth: authSlice,
 });
 
@@ -26,7 +30,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware, rtkQueryErrorLogger),
+    }).concat(authApi.middleware, categoryApi.middleware, eventApi.middleware, rtkQueryErrorLogger),
 
   devTools: import.meta.env.MODE !== 'production',
 });

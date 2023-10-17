@@ -33,9 +33,9 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
           ease: [0, 0.71, 0.2, 1.01],
         }}
       >
-        <div className={`relative h-[190px] w-full overflow-hidden rounded-xl shadow-lg sm:h-64 ${className}`}>
+        <div className={`relative h-[260px] w-full overflow-hidden rounded-xl shadow-lg sm:h-[270px] ${className}`}>
           <Link to={'/event-detail/1"'}>
-            <img src={data.image} alt="image" className="h-[110px] w-full rounded-xl object-cover sm:h-44" />
+            <img src={data.image} alt="image" className="h-[170px] w-full rounded-xl object-cover sm:h-[180px]" />
 
             <div
               className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3"
@@ -57,12 +57,12 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                 {isHovered && (
                   <motion.div
                     initial={{ opacity: 0, y: -5, height: 0 }}
-                    animate={{ opacity: 1, y: 0, height: 10 }}
+                    animate={{ opacity: 1, y: 0, height: 15 }}
                     exit={{ opacity: 0, y: -5, height: 0 }}
-                    className="flex justify-between text-[13px] font-normal dark:text-cs_light"
+                    className="flex justify-between text-[14px] font-normal dark:text-cs_light"
                   >
-                    <span className="cursor-pointer">Chi tiết</span>
-                    <span className="cursor-pointer">Đặt vé</span>
+                    <span className="cursor-pointer font-semibold">Chi tiết</span>
+                    <span className="cursor-pointer font-semibold">Đặt vé</span>
                   </motion.div>
                 )}
               </AnimatePresence>

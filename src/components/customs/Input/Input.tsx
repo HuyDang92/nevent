@@ -37,7 +37,7 @@ const Input = ({
     setIsFocused(true);
   };
   return (
-    <div className={`relative flex flex-col items-start ${className}`}>
+    <div className={`relative ${className}`}>
       {label !== undefined ? (
         <>
           <label htmlFor={id} className={`flex gap-1 p-2 font-medium ${classNameLabel}`}>
@@ -48,27 +48,29 @@ const Input = ({
       ) : (
         <></>
       )}
-      <input
-        placeholder={placeholder}
-        className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_formDark ${
-          rounded_full ? 'rounded-full' : 'rounded-xl'
-        }  px-4 py-3.5  focus:border-cs_semi_green focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
-        type={showPassword ? 'text' : type}
-        value={value}
-        onChange={onChange}
-        id={id}
-        name={name}
-        onFocus={() => setIsFocused(true)}
-        readOnly={readonly}
-        // onBlur={() => setIsFocused(false)}
-      />
-      {type === 'password' && isFocused && (
-        <IonIcon
-          onClick={handleClick}
-          name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-cs_semi_green"
+      <p className="relative">
+        <input
+          placeholder={placeholder}
+          className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_formDark ${
+            rounded_full ? 'rounded-full' : 'rounded-xl'
+          }  px-4 py-3.5  focus:border-cs_semi_green focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
+          type={showPassword ? 'text' : type}
+          value={value}
+          onChange={onChange}
+          id={id}
+          name={name}
+          onFocus={() => setIsFocused(true)}
+          readOnly={readonly}
+          // onBlur={() => setIsFocused(false)}
         />
-      )}
+        {type === 'password' && isFocused && (
+          <IonIcon
+            onClick={handleClick}
+            name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+            className={`absolute right-3 top-1/2 -translate-y-1/2 text-cs_semi_green`}
+          />
+        )}
+      </p>
     </div>
   );
 };

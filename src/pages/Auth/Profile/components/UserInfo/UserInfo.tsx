@@ -36,8 +36,8 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
   return (
     <div className={`${className}`}>
       <h1 className="text-2xl font-bold">Thông tin tài khoản</h1>
-      <form onSubmit={formik.handleSubmit} className="flex flex-wrap gap-5">
-        <div className="w-[calc(50%-20px)]">
+      <form onSubmit={formik.handleSubmit} className="sm:flex flex-wrap gap-5">
+        <div className="sm:w-[calc(50%-20px)]">
           <Input
             id="fullName"
             name="fullName"
@@ -47,7 +47,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             classNameInput="w-full border"
           />
         </div>
-        <div className="w-[calc(50%-20px)]">
+        <div className="sm:w-[calc(50%-20px)]">
           <Input readonly={true} value={data?.email} classNameInput="w-full border" label="Email" />
         </div>
         <div className="w-full md:w-[calc(50%-20px)]">
@@ -77,7 +77,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             <Radio className="flex gap-2" name="gender" label="Nữ" id="nu" />
           </Radios>
         </div>
-        <div className="w-full text-right">
+        <div className="w-full text-right mt-5 sm:mt-0">
           <Button type="submit" className="w-[230px]" value="Lưu thông tin" mode="dark" />
         </div>
       </form>

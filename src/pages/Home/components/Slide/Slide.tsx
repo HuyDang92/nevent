@@ -1,17 +1,31 @@
 import { Carousel } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 type Props = {
   data: any; //dữ liệu
 };
 function Slide({ data }: Props) {
   const [newArray, setNewArray] = useState<any>([]);
+  const { width } = useCurrentViewportView();
 
   useEffect(() => {
     const splitArray = [];
-    for (let i = 0; i < data.length; i += 5) {
-      const subArray = data.slice(i, i + 5);
-      splitArray.push(subArray);
+    if (width < 768) {
+      for (let i = 0; i < data.length; i += 2) {
+        const subArray = data.slice(i, i + 2);
+        splitArray.push(subArray);
+      }
+    } else if (width < 1024) {
+      for (let i = 0; i < data.length; i += 3) {
+        const subArray = data.slice(i, i + 3);
+        splitArray.push(subArray);
+      }
+    } else {
+      for (let i = 0; i < data.length; i += 5) {
+        const subArray = data.slice(i, i + 5);
+        splitArray.push(subArray);
+      }
     }
     setNewArray(splitArray);
   }, [data]);
@@ -58,7 +72,7 @@ function Slide({ data }: Props) {
         )}
       >
         {newArray.map((item: any, index: number) => (
-          <div key={index} className="grid grid-cols-5 gap-4">
+          <div key={index} className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-5">
             {item.map((item: any, index: number) => (
               <Link key={index} to="">
                 <img src={item.image} alt="image 1" className="h-[280px] w-full rounded-xl object-cover" />

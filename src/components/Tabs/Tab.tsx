@@ -4,7 +4,7 @@ const Tab = ({ className, index, children, activeTab, setActiveTab, width }: Tab
     <li
       onClick={() => setActiveTab && setActiveTab(index)}
       style={{ width: `${width}%` }}
-      className={`h-10 rounded-[15px] border cursor-pointer px-6 text-[12px] md:h-12 md:text-[18px] ${
+      className={`h-10 rounded-[15px] md:border cursor-pointer md:px-6 text-[12px] md:h-12 md:text-[18px] ${
         activeTab === index ? 'text-white' : ''
       } z-10 ${className}`}
     >

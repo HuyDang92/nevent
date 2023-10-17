@@ -8,8 +8,11 @@ import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
 import ProductCard from '~/components/EventCard';
+import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 
 function Home() {
+  const categories = useGetAllCategoryQuery();
+
   const dataPro = [
     {
       image: poster,
@@ -206,14 +209,13 @@ function Home() {
         <Banner />
         <SectionTitle value="Danh mục yêu thích" className="hidden lg:flex" />
         <div className="hidden w-full lg:grid lg:grid-cols-3 lg:gap-6">
-          {tempCateData.slice(0, visibleCates).map((data, index) => (
-            <CategoryCard id={index} image={data.img} name={data.name} link="/about" key={index} />
-          ))}
+          {!categories.isFetching &&
+            categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
         <SectionTitle value="Sự kiện nổi bật" />
         <Slide data={dataPro} />
         <SectionTitle value="Sự kiện sắp diễn ra" />
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {tempProductData.map((item, index) => (
             <Link to={'/'} key={index}>
               <ProductCard data={item} index={index} />
