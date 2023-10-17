@@ -1,6 +1,7 @@
 import IonIcon from '@reacticons/ionicons';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import View from '~/motion/View';
 
 const data = [
@@ -63,34 +64,36 @@ const Banner = () => {
   return (
     <View className="relative h-[180px] rounded-[15px] bg-white md:h-[300px] lg:mb-16 lg:h-[350px] xl:h-[450px]">
       <AnimatePresence initial={false} custom={direction}>
-        <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
-          <motion.img
-            className=" h-full w-full cursor-move rounded-xl object-cover "
-            key={page}
-            src={`${data[imageIndex]}`}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
-            onDragEnd={(e, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x);
+        <Link to="/about">
+          <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
+            <motion.img
+              className=" h-full w-full cursor-move rounded-xl object-cover "
+              key={page}
+              src={`${data[imageIndex]}`}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
 
-              if (swipe < -swipeConfidenceThreshold) {
-                paginate(1);
-              } else if (swipe > swipeConfidenceThreshold) {
-                paginate(-1);
-              }
-            }}
-          />
-        </View>
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+            />
+          </View>
+        </Link>
       </AnimatePresence>
       <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
         <View className=" flex gap-[20px]">
@@ -117,7 +120,7 @@ const Banner = () => {
           className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-[#ffffff90]"
           whileTap={{ scale: 0.9 }}
         >
-          <IonIcon name="help-circle-outline" className="text-2xl text-cs_semiborder-cs_semi_green" />
+          <IonIcon name="help-circle-outline" className="text-cs_semiborder-cs_semi_green text-2xl" />
         </motion.button>
         {/* <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
                     whileTap={{ scale: 0.9 }}
