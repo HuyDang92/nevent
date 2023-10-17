@@ -1,7 +1,7 @@
-import { Radios, Radio } from '../customs/Radio';
-import Input from '../customs/Input';
+import { Radios, Radio } from '~/components/customs/Radio';
+import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
-import Button from '../customs/Button';
+import Button from '~/components/customs/Button';
 import { useFormik } from 'formik';
 
 interface UserInfoProp {

@@ -3,8 +3,8 @@ import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { Tab, Tabs, TabsContent, TabsBody, TabsHeader } from '~/components/Tabs';
 import Icon from '~/components/customs/Icon';
-import UserInfo from '~/components/UserInfo';
-import ChangePassword from '~/components/ChangePassword';
+import UserInfo from '~/pages/Auth/Profile/components/UserInfo';
+import ChangePassword from '~/pages/Auth/Profile/components/ChangePassword';
 import { Navigate } from 'react-router-dom';
 interface ProfileProps {
   className?: string;
@@ -79,8 +79,8 @@ const Profile: React.FC<ProfileProps> = () => {
         </div>
       </div>
     );
-  }else{
-    return <Navigate to="/login"/>
+  } else {
+    return <Navigate to="/login" />;
   }
 };
 
