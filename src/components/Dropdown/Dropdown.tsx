@@ -77,25 +77,29 @@ const Dropdown = ({ auth }: DropdownProps) => {
           <h5 className="font-semibold dark:text-cs_light">{auth?.currentUser?.fullName}</h5>
           <span className="text-xs text-cs_gray">{auth?.currentUser?.email} </span>
         </motion.li>
-        <motion.li
-          variants={itemVariants}
-          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
-        >
-          <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-          <span className="group-hover:text-cs_light">Vé đã đặt</span>
+        <motion.li variants={itemVariants}>
+          <Link
+            to={'/user/profile'}
+            className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+          >
+            <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+            <span className="group-hover:text-cs_light">Vé đã đặt</span>
+          </Link>
         </motion.li>
-        <motion.li
-          variants={itemVariants}
-          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
-        >
-          <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-          <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
+        <motion.li variants={itemVariants}>
+          <Link
+            to={'/user/profile'}
+            className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+          >
+            <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+            <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
+          </Link>
         </motion.li>
-        <motion.li
-          variants={itemVariants}
-          className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
-        >
-          <Link to={'/user/profile'}>
+        <motion.li variants={itemVariants}>
+          <Link
+            to={'/user/profile'}
+            className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+          >
             <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
             <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
           </Link>

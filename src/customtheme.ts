@@ -338,7 +338,7 @@ export const theme = {
             cursor: 'cursor-pointer',
             userSelect: 'select-none',
             transition: 'transition-all',
-            bg: 'hover:bg-cs_purple hover:bg-opacity-80 focus:bg-cs_purple focus:bg-opacity-80 active:bg-cs_purple active:bg-opacity-80',
+            bg: 'hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80',
             color: 'hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900',
             outline: 'outline-none',
           },
