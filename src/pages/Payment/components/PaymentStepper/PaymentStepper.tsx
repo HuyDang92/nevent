@@ -10,6 +10,7 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
     <div className={`w-full px-24 py-4 ${className}`}>
       <Stepper activeStep={activeStep} activeLineClassName="bg-cs_semi_green">
         <Step
+          // onClick={() => setActiveStep(activeStep >= 1 ? 0 : activeStep)}
           onClick={() => setActiveStep(0)}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
@@ -22,6 +23,7 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
+          // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
           onClick={() => setActiveStep(1)}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
@@ -34,6 +36,7 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
+          // onClick={() => setActiveStep(activeStep >= 1 ? 2 : activeStep)}
           onClick={() => setActiveStep(2)}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
@@ -46,6 +49,7 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
+          //  onClick={() => setActiveStep(activeStep >= 1 ? 3 : activeStep)}
           onClick={() => setActiveStep(3)}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
