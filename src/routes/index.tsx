@@ -16,6 +16,7 @@ import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import FAQ from '~/pages/FAQ';
 import CreateEventLayout from '~/Layout/CreateEventLayout';
+import Profile from '~/pages/Auth/Profile';
 //Trang tạo sự kiện
 import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
 import EventManage from '~/pages/CreateEvent/EventManage';
