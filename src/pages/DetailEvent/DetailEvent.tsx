@@ -8,81 +8,11 @@ import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import ProductCard from '~/components/EventCard';
+import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
+import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 
 function DetailEvent() {
-  const [visibleProducts, setVisibleProducts] = useState(8); // Số lượng sản phẩm hiển thị ban đầu
-  const tabHeader = ['Giới thiệu', 'Thông tin về', 'Ngày tổ chức', 'Lưu ý'];
-  const tabContent = [
-    'content 1',
-    'content 2',
-    'content 3',
-    'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using "Content here, content here", making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for "lorem ipsum" will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).',
-  ];
-  const tempProductData = [
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: Thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-  ];
+  const event = useGetAllEventQuery({ page: 1, limit: 9 });
 
   return (
     <div className="relative">
@@ -246,12 +176,15 @@ function DetailEvent() {
               </div>
             </div>
             <SectionTitle value="Sự kiện sắp diễn ra" />
-            <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
-              {tempProductData.map((item, index) => (
-                <Link to={'/'} key={index}>
-                  <ProductCard data={item} index={index} />
-                </Link>
-              ))}
+            {event.isFetching && <SkeletonEventList />}
+
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 3xl:grid-cols-4">
+              {!event.isFetching &&
+                event.data?.data?.docs.map((item: IEvent, index: number) => (
+                  <Link to={'/'} key={index}>
+                    <ProductCard data={item} index={index} />
+                  </Link>
+                ))}
             </div>
             <div className="mt-5 flex justify-center">
               <Button className="" value="Xem thêm" mode="dark" />
