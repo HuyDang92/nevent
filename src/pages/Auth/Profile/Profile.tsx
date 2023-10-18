@@ -5,6 +5,7 @@ import { Tab, Tabs, TabsContent, TabsBody, TabsHeader } from '~/components/Tabs'
 import Icon from '~/components/customs/Icon';
 import UserInfo from '~/pages/Auth/Profile/components/UserInfo';
 import ChangePassword from '~/pages/Auth/Profile/components/ChangePassword';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 interface ProfileProps {
   className?: string;
 }
@@ -16,7 +17,7 @@ interface ProfileProps {
  */
 const Profile: React.FC<ProfileProps> = () => {
   const auth = useAppSelector((state) => state.auth);
-  const isMdBreakpoint = window.innerWidth >= 768;
+  const isMdBreakpoint = useCurrentViewportView();
   return (
     <div>
       <div className="relative">
@@ -40,7 +41,7 @@ const Profile: React.FC<ProfileProps> = () => {
         </button>
       </div>
       <div className="dark:text-cs_light">
-        <Tabs orientation={isMdBreakpoint ? 'horizontal' : 'vertical'}>
+        <Tabs orientation={isMdBreakpoint.width >= 700 ? 'horizontal' : 'vertical'}>
           <TabsHeader className="w-full md:w-[25%]">
             <Tab className="flex items-center justify-center md:justify-between" index={0}>
               <span className="!hidden md:!block">Thông tin tài khoản</span>

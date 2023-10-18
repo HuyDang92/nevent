@@ -53,6 +53,7 @@ export default function AppRoutes() {
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile" element={<Profile />} />
+            <Route index path="payment" element={<Payment />} />
           </Route>
         </Route>
 
