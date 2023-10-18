@@ -7,9 +7,10 @@ type SearchBarProps = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   size?: 'md' | 'lg';
+  classNameInput?: string;
 };
 
-const SearchBar = ({ value, onChange, className, size = 'md' }: SearchBarProps) => {
+const SearchBar = ({ value, onChange, className, size = 'md', classNameInput }: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = () => {
     setIsFocus(true);
@@ -29,7 +30,7 @@ const SearchBar = ({ value, onChange, className, size = 'md' }: SearchBarProps) 
           placeholder="Tìm kiếm..."
           className={` ${size === 'md' && 'h-10'} ${
             size === 'lg' && 'h-14'
-          }  w-full rounded-xl px-5 py-3.5 text-sm font-medium   focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light`}
+          }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light ${classNameInput}`}
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}

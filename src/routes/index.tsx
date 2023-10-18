@@ -15,7 +15,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import FAQ from '~/pages/FAQ';
+import CreateEventLayout from '~/Layout/CreateEventLayout';
 import Profile from '~/pages/Auth/Profile';
+//Trang tạo sự kiện
+import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
+import EventManage from '~/pages/CreateEvent/EventManage';
+import CreateEvent from '~/pages/CreateEvent/CreateEvent';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -53,6 +58,17 @@ export default function AppRoutes() {
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile" element={<Profile />} />
+            <Route index path="payment" element={<Payment />} />
+          </Route>
+        </Route>
+        {/* Tạo sự kiện */}
+        <Route element={<PrivateRoute allowedRoles={['user']} />}>
+          <Route element={<CreateEventLayout />}>
+            <Route path="/organization-profile" element={<OrganizationProfile />} />
+            <Route path="/event-manage" element={<EventManage />} />
+            <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/create-event2/" element={<Categories />} />
+            <Route path="/create-event3/" element={<Categories />} />
           </Route>
         </Route>
 

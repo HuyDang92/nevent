@@ -75,120 +75,6 @@ function Home() {
       category: 'Cuộc thi',
     },
   ];
-  const tempProductData = [
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      category: 'Cuộc thi',
-      place: 'Hồ Chí Minh',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      category: 'Cuộc thi',
-      place: 'Hồ Chí Minh',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      category: 'Cuộc thi',
-      place: 'Hồ Chí Minh',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: thumb,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-  ];
 
   return (
     <>
@@ -201,16 +87,17 @@ function Home() {
             categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
         <SectionTitle value="Sự kiện nổi bật" />
-        {event.isFetching ? <SkeletonEventHot /> : <Slide data={dataPro} />}
+        {event.isFetching ? <SkeletonEventHot /> : <Slide data={event.data?.data?.docs} />}
         <SectionTitle value="Sự kiện sắp diễn ra" />
         {event.isFetching && <SkeletonEventList />}
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
-          {tempProductData.map((item, index) => (
-            <Link to={'/'} key={index}>
-              <ProductCard data={item} index={index} />
-            </Link>
-          ))}
+          {!event.isFetching &&
+            event.data?.data?.docs.map((item: IEvent, index: number) => (
+              <Link to={'/'} key={index}>
+                <ProductCard data={item} index={index} />
+              </Link>
+            ))}
         </div>
         <div className="mt-5 flex justify-center">
           <Button className="" value="Xem thêm" mode="dark" />

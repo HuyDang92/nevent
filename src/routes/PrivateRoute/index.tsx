@@ -16,11 +16,12 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const location = useLocation();
   const auth = useAppSelector((state) => state.auth);
   const [getTokenFromRefreshToken, result] = useLazyGetTokenFromRefreshTokenQuery();
-  const jwtDecodeAccess: IJwtDecode = jwt_decode(auth.accessToken.token ? auth?.accessToken.token : '');
-  const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth.refreshToken.token ? auth?.refreshToken.token : '');
   const currentTime = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
+    if (!auth.loggedIn) return;
+    const jwtDecodeAccess: IJwtDecode = jwt_decode(auth?.accessToken?.token ?? '');
+    const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth?.refreshToken?.token ?? '');
     if (auth.loggedIn && jwtDecodeAccess.exp < currentTime) {
       if (jwtDecodeRefresh.exp > currentTime) {
         getTokenFromRefreshToken(auth?.refreshToken.token ? auth?.refreshToken.token : '');
@@ -53,7 +54,7 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const authorized: boolean =
     allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
 
-  return auth.loggedIn && auth.accessToken ? (
+  return auth.loggedIn ? (
     authorized ? (
       <Outlet />
     ) : (
@@ -62,7 +63,7 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
       </div>
     )
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <Navigate to="/login" />
   );
 }
 

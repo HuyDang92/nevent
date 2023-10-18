@@ -1,140 +1,19 @@
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import ProductList from '~/components/EventCard';
 import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
-
-const tempProductData = [
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    category: 'Cuộc thi',
-    place: 'Hồ Chí Minh',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    category: 'Cuộc thi',
-    place: 'Hồ Chí Minh',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    category: 'Cuộc thi',
-    place: 'Hồ Chí Minh',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-  {
-    image: thumb,
-    title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-    date: '12:00 - 21/12/2023',
-    place: 'Hồ Chí Minh',
-    category: 'Cuộc thi',
-  },
-];
+import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
+import ProductCard from '~/components/EventCard/EventCard';
+import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 
 function Categories() {
-  const categories = useGetAllCategoryQuery();
-
   const [isActive, setIsActive] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 12; // Số sản phẩm trên mỗi trang
 
-  // Tính toán dữ liệu cho trang hiện tại
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = tempProductData.slice(startIndex, endIndex);
-
-  // Tính tổng số trang
-  const totalPages = Math.ceil(tempProductData.length / itemsPerPage);
+  const categories = useGetAllCategoryQuery();
+  const event = useGetAllEventQuery({ page: currentPage, limit: 16 });
 
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
@@ -181,12 +60,15 @@ function Categories() {
           </div>
         </div>
         {/* Product */}
+        {event.isFetching && <SkeletonEventList />}
+
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 3xl:grid-cols-5">
-          {currentData.map((item, index) => (
-            <Link to={'/'} key={index}>
-              <ProductList data={item} index={index} />
-            </Link>
-          ))}
+          {!event.isFetching &&
+            event.data?.data?.docs.map((item: IEvent, index: number) => (
+              <Link to={'/'} key={index}>
+                <ProductCard data={item} index={index} />
+              </Link>
+            ))}
         </div>
 
         {/* Phân trang */}
@@ -194,7 +76,7 @@ function Categories() {
           <ReactPaginate
             className="flex"
             breakLabel="..."
-            pageCount={totalPages}
+            pageCount={2}
             onPageChange={handlePageChange}
             previousLabel={''}
             nextLabel={''}
