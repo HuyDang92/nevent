@@ -6,10 +6,10 @@ import Icon from '~/components/customs/Icon';
 import View from '~/motion/View';
 
 const data = [
-  'https://images.pexels.com/photos/821225/pexels-photo-821225.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  'https://images.pexels.com/photos/302123/pexels-photo-302123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  'https://images.pexels.com/photos/13169859/pexels-photo-13169859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  'https://images.pexels.com/photos/6436385/pexels-photo-6436385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  'https://img.freepik.com/free-photo/colorful-3d-shapes-vaporwave-style_23-2148981126.jpg?size=626&ext=jpg',
+  'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg',
+  'https://img.freepik.com/free-photo/digital-illustration-multiplying-bacterial-cells_181624-22996.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+  'https://img.freepik.com/free-photo/3d-aesthetics-with-shapes-vaporwave-style_23-2148981116.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
 ];
 
 const variants = {
@@ -80,7 +80,7 @@ const Banner = () => {
         <Link to="/about">
           <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
             <motion.img
-              className=" h-full w-full cursor-move rounded-xl object-cover "
+              className=" h-full w-full cursor-pointer rounded-xl object-cover "
               key={page}
               src={`${data[imageIndex]}`}
               custom={direction}
@@ -113,8 +113,8 @@ const Banner = () => {
           {data.map((item, index) => {
             return (
               <img
-                className={`h-[100px] w-[200px] cursor-pointer rounded-[10px] shadow-border-full duration-100 ${
-                  index === currentImageIndex ? 'border-[4px] border-cs_semi_green' : ''
+                className={`h-[100px] w-[200px] object-cover hover:scale-105 cursor-pointer rounded-[10px] shadow-border-full duration-100 ${
+                  index === imageIndex ? 'border-[4px] border-cs_semi_green' : ''
                 }`}
                 key={index}
                 onClick={() => {

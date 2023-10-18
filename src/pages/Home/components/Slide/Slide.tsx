@@ -72,10 +72,14 @@ function Slide({ data }: Props) {
         )}
       >
         {newArray.map((item: any, index: number) => (
-          <div key={index} className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-5">
+          <div key={index} className="grid grid-cols-2 gap-4 overflow-hidden sm:grid-cols-3 xl:grid-cols-5">
             {item.map((item: any, index: number) => (
               <Link key={index} to="">
-                <img src={item.image} alt="image 1" className="h-[280px] w-full rounded-xl object-cover" />
+                <img
+                  src={item.image}
+                  alt="image 1"
+                  className="h-[280px] w-full rounded-xl object-cover hover:scale-95 transition-all"
+                />
               </Link>
             ))}
           </div>
