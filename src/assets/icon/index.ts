@@ -8,3 +8,4 @@ export { ReactComponent as IconDiamond } from './icon-diamond.svg';
 export { ReactComponent as IconCommunity } from './community.svg';
 export { ReactComponent as IconGuide } from './guide.svg';
 export { ReactComponent as IconFAQ } from './faq.svg';
+export { ReactComponent as IconInfo } from './info.svg';
