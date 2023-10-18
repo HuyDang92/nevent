@@ -1,7 +1,6 @@
 import { Card, List, Typography } from '@material-tailwind/react';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import logo from '~/assets/images/logo.png';
 import logoWhite from '~/assets/images/logoWhite.png';
 type CreateEventSidebarProps = {
   className?: string;
@@ -10,11 +9,11 @@ type CreateEventSidebarProps = {
 const cateList = [
   {
     name: 'Hồ sơ tổ chức',
-    link: 'create-event',
+    link: 'organization-profile',
   },
   {
     name: 'Tạo sự kiện',
-    link: '/',
+    link: '/event-manage',
   },
   {
     name: 'Tài khoản ví của tôi',

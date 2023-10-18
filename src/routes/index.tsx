@@ -18,6 +18,8 @@ import FAQ from '~/pages/FAQ';
 import CreateEventLayout from '~/Layout/CreateEventLayout';
 //Trang tạo sự kiện
 import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
+import EventManage from '~/pages/CreateEvent/EventManage';
+import CreateEvent from '~/pages/CreateEvent/CreateEvent';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -34,8 +36,9 @@ export default function AppRoutes() {
         </Route>
         {/* Tạo sự kiện */}
         <Route element={<CreateEventLayout />}>
-          <Route path="/create-event/" element={<OrganizationProfile />} />
-          <Route path="/create-event1/" element={<DetailEvent />} />
+          <Route path="/organization-profile" element={<OrganizationProfile />} />
+          <Route path="/event-manage" element={<EventManage />} />
+          <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/create-event2/" element={<Categories />} />
           <Route path="/create-event3/" element={<Categories />} />
         </Route>
