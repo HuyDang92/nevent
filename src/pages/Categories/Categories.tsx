@@ -4,24 +4,8 @@ import ProductList from '~/components/EventCard';
 import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
-const cate = [
-  {
-    id: 1,
-    name: 'Live Show',
-  },
-  {
-    id: 2,
-    name: 'Live Show',
-  },
-  {
-    id: 3,
-    name: 'Live Show',
-  },
-  {
-    id: 4,
-    name: 'Live Show',
-  },
-];
+import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
+
 const tempProductData = [
   {
     image: thumb,
@@ -138,8 +122,10 @@ const tempProductData = [
 ];
 
 function Categories() {
-  const [isActive, setIsActive] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const categories = useGetAllCategoryQuery();
+
+  const [isActive, setIsActive] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 12; // Số sản phẩm trên mỗi trang
 
   // Tính toán dữ liệu cho trang hiện tại
@@ -166,12 +152,12 @@ function Categories() {
         <div className="mt-5 flex items-center justify-between">
           {/* Cate tabs */}
           <div className="flex gap-2">
-            {cate.map((item, index) => (
+            {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
-                onClick={() => setIsActive(item.id)}
+                onClick={() => setIsActive(item._id)}
                 className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all ${
-                  isActive === item.id ? '!bg-cs_semi_green text-white' : ''
+                  isActive === item._id ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
                 {item.name}
@@ -181,15 +167,15 @@ function Categories() {
           {/* Filter */}
           <div className="hidden gap-4 transition-all sm:flex">
             <Icon
-              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
               name="calendar"
             />
             <Icon
-              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
               name="cash"
             />
             <Icon
-              className="rounded-lg border  p-2.5 text-xl text-cs_semi_green shadow-border-full hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
+              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
               name="filter"
             />
           </div>

@@ -105,7 +105,7 @@ const Header = ({ className }: HeaderProps) => {
             <span className="text-xl font-extrabold text-cs_semi_green dark:text-cs_light">NEVENT</span>
           </div>
         </Link>
-        <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
+        <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block border" />
       </div>
       <div className="flex items-center justify-end gap-3">
         <div className="">{navList}</div>

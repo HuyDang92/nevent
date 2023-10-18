@@ -64,7 +64,7 @@ export default function AppRoutes() {
         {/* user */}
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
-            <Route index path="profile" element={<DetailEvent />} />
+            <Route index path="profile" element={<Profile />} />
           </Route>
         </Route>
 
