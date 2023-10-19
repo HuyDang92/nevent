@@ -1,33 +1,4 @@
-import { useState } from 'react';
-import Button from '~/components/customs/Button';
-import SectionTitle from '~/components/SectionTitle';
-import Thumb from '~/assets/images/pro.webp';
-import des from '~/assets/images/detail.png';
-import des2 from '~/assets/images/detail2.png';
-import Icon from '~/components/customs/Icon';
-import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
-import { Link, useParams } from 'react-router-dom';
-import ProductCard from '~/components/EventCard';
-import { useGetEventByIdQuery, useGetAllEventQuery } from '~/features/Event/eventApi.service';
-import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
-import moment from 'moment';
-import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
-
-function DetailEvent() {
-  const event = useGetAllEventQuery({ page: 1, limit: 9 });
-  const { slug } = useParams();
-
-  const detailEventQuery = useGetEventByIdQuery(slug);
-  let eventData: IEvent;
-
-  if (detailEventQuery.isSuccess) {
-    eventData = detailEventQuery.data.data;
-  }
-
-  return (
-    <div className="relative">
-      {detailEventQuery.isFetching && <SkeletonDetailEvent />}
-      {!detailEventQuery.isFetching && eventData !== undefined && (
+{!detailEventQuery.isFetching && eventData !== undefined && (
         <>
           <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={eventData.title} />
           <div className="flex-row-reverse gap-4 xl:flex">
@@ -222,8 +193,3 @@ function DetailEvent() {
           </div>
         </>
       )}
-    </div>
-  );
-}
-
-export default DetailEvent;
