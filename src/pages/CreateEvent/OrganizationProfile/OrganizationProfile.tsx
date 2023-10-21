@@ -71,7 +71,7 @@ const OrganizationProfile = () => {
                 id="name"
                 label="Tên người tổ chức"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
@@ -80,7 +80,7 @@ const OrganizationProfile = () => {
                 id="CRN"
                 label="Số đăng ký công ty (CRN)"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.CRN}
                 onChange={formik.handleChange}
               />
@@ -89,7 +89,7 @@ const OrganizationProfile = () => {
                 id="releasePlace"
                 label="Nơi phát hành"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.releasePlace}
                 onChange={formik.handleChange}
               />
@@ -99,7 +99,7 @@ const OrganizationProfile = () => {
                 label="Ngày phát hành"
                 type="date"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.releaseDate}
                 onChange={formik.handleChange}
               />
@@ -111,7 +111,7 @@ const OrganizationProfile = () => {
                 id="tel"
                 label="Số điện thoại"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.tel}
                 onChange={formik.handleChange}
               />
@@ -120,7 +120,7 @@ const OrganizationProfile = () => {
                 id="email"
                 label="Email"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
@@ -129,7 +129,7 @@ const OrganizationProfile = () => {
                 id="city"
                 label="Thành phố/Tỉnh"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.city}
                 onChange={formik.handleChange}
               />
@@ -138,7 +138,7 @@ const OrganizationProfile = () => {
                 id="district"
                 label="Huyện"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.district}
                 onChange={formik.handleChange}
               />
@@ -147,7 +147,7 @@ const OrganizationProfile = () => {
                 id="road"
                 label="Phường"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.road}
                 onChange={formik.handleChange}
               />
@@ -156,7 +156,7 @@ const OrganizationProfile = () => {
                 id="address"
                 label="Địa chỉ"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.address}
                 onChange={formik.handleChange}
               />

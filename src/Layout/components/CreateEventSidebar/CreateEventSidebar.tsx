@@ -28,7 +28,7 @@ const cateList = [
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
   return (
     <Card
-      className={`scrollbar-hide sticky flex h-[100vh] flex-col rounded-none bg-cs_leaf-400 pt-1 shadow-none ${className}`}
+      className={`scrollbar-hide sticky flex h-[100vh] top-0 flex-col rounded-none bg-cs_leaf-400 pt-1 shadow-none ${className}`}
     >
       <Link to="/" className="flex items-center p-6">
         <div className="flex items-center gap-2">
