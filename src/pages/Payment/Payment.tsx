@@ -5,10 +5,10 @@ import TicketInfor from './components/TicketInfor';
 import Purchase from './components/Purchase/Purchase';
 import Complete from './components/Complete';
 import Icon from '~/components/customs/Icon';
-import momo from '~/assets/images/momo.svg';
-import { Tooltip, Typography } from '@material-tailwind/react';
+import { Icon as Iconify } from '@iconify/react';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
+import TicketCard from './components/TicketCard';
 const Payment = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const renderContent = (activeStep: number) => {
@@ -37,10 +37,10 @@ const Payment = () => {
         <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
       </div>
       <div className="mt-5 flex gap-10">
-        <div className="w-[70%] rounded-[12px] shadow-border-full">{renderContent(activeStep)}</div>
+        <div className="w-[70%] rounded-[12px] shadow-border-full  dark:text-cs_light">{renderContent(activeStep)}</div>
 
         {/* Phần thông tin đặt vé */}
-        <div className="w-[30%] rounded-[12px] bg-cs_light p-4 shadow-border-full">
+        <div className="w-[30%] rounded-[12px] p-4  shadow-border-full dark:text-cs_light">
           <div className="flex items-center border-b-[0.5px]">
             <h2 className="mb-4 text-sm font-bold uppercase">Thông tin đặt vé</h2>
           </div>
@@ -67,84 +67,24 @@ const Payment = () => {
             {/* item */}
             <div className="flex items-center justify-between">
               <div className="flex w-[28%] items-center gap-3">
-                <div className="flex items-center justify-between gap-1 rounded-xl bg-cs_semi_green px-4 py-2 text-center font-semibold text-white">
-                  VVip{' '}
-                  <Tooltip
-                    className="bg-white shadow-lg"
-                    content={
-                      <div className="w-80 ">
-                        <Typography color="black" className="font-medium">
-                          Material Tailwind
-                        </Typography>
-                        <Typography variant="small" color="black" className="font-normal opacity-80">
-                          Material Tailwind is an easy to use components library for Tailwind CSS and Material Design.
-                        </Typography>
-                      </div>
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      className="h-5 w-5 cursor-pointer text-white"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                      />
-                    </svg>
-                  </Tooltip>
-                </div>
+                <TicketCard title="VVip" tooltip="Tooltip here" />
                 <span className="font-bold text-cs_gray"> x2 </span>
               </div>
-              <span className="text-lg font-bold text-cs_icon_black">9.200.000đ</span>
+              <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">9.200.000đ</span>
             </div>
             {/* item */}
             <div className="flex items-center justify-between">
               <div className="flex w-[28%] items-center gap-3">
-                <div className="flex items-center justify-between gap-1 rounded-xl bg-cs_semi_green px-4 py-2 text-center font-semibold text-white">
-                  VVip{' '}
-                  <Tooltip
-                    className="bg-white shadow-lg"
-                    content={
-                      <div className="w-80 ">
-                        <Typography color="black" className="font-medium">
-                          Material Tailwind
-                        </Typography>
-                        <Typography variant="small" color="black" className="font-normal opacity-80">
-                          Material Tailwind is an easy to use components library for Tailwind CSS and Material Design.
-                        </Typography>
-                      </div>
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      className="h-5 w-5 cursor-pointer text-white"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                      />
-                    </svg>
-                  </Tooltip>
-                </div>
+                <TicketCard title="VVip" tooltip="Tooltip here" />
                 <span className="font-bold text-cs_gray"> x2 </span>
               </div>
-              <span className="text-lg font-bold text-cs_icon_black">9.200.000đ</span>
+              <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">9.200.000đ</span>
             </div>
           </div>
           {/* /// */}
           <div className="border-b-[0.5px] py-4">
             <div className="flex w-1/3 items-center gap-2 rounded-xl border p-2 font-semibold shadow-lg">
-              <img src={momo} alt="momo" className="w-[25px]" />
+              <Iconify icon="arcticons:momo" className="text-2xl dark:text-cs_light" />
               <span>MoMo</span>
             </div>
           </div>

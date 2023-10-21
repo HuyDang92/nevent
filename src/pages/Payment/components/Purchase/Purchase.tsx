@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
-import momo from '~/assets/images/momo.svg';
-import zalopay from '~/assets/images/zalopay.svg';
 import Icon from '~/components/customs/Icon';
-
+import { Icon as Iconify } from '@iconify/react';
 const Purchase = () => {
   const [method, setMethod] = useState(0);
   const bankList = [
@@ -128,7 +126,7 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <img src={momo} alt="momo" className="w-[25px]" />
+                <Iconify icon="arcticons:momo" className="text-2xl dark:text-cs_light" />
                 <span>MoMo</span>
               </div>
             </Tab>
@@ -140,13 +138,13 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <img src={zalopay} alt="zlpay" className="w-[25px]" />
+                <Iconify icon="arcticons:zalopay" className="text-2xl dark:text-cs_light" />
                 <span>ZaloPay</span>
               </div>
             </Tab>
           </TabsHeader>
           <TabsBody>
-            <TabsContent index={0}>
+            <TabsContent index={0} className="p-5">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas, reiciendis. Exercitationem quasi quod et?
               Expedita molestias, dolore, velit dolores ab amet quia debitis soluta consequatur rem qui voluptatem nobis
               delectus!
