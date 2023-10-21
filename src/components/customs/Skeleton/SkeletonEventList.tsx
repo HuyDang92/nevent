@@ -11,7 +11,6 @@ const SkeletonEventList = () => {
       </div>
       <div className="">
         <Skeleton height={'150px'} width={'100%'} borderRadius={'15px'} className="animate-pulse" />
-
         <Skeleton height={'12px'} width={'30%'} borderRadius={'15px'} className="animate-pulse" />
         <Skeleton height={'12px'} width={'100%'} borderRadius={'15px'} className="animate-pulse" />
       </div>
