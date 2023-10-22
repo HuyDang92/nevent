@@ -67,7 +67,7 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Button className="w-full" value="Đặt vé ngay" mode="dark" />
+                  <Link to={'/user/payment'}><Button className="w-full" value="Đặt vé ngay" mode="dark" /></Link>
                 </div>
               </div>
             </div>

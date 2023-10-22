@@ -90,16 +90,16 @@ function Home() {
         {event.isFetching ? <SkeletonEventHot /> : <Slide data={event.data?.data?.docs} />}
         <SectionTitle value="Sự kiện sắp diễn ra" />
         {event.isFetching && <SkeletonEventList />}
-        {!event.isFetching && <SkeletonEventList />}
+        {/* {!event.isFetching && <SkeletonEventList />} */}
 
-        {/* <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
             event.data?.data?.docs.map((item: IEvent, index: number) => (
               <Link to={'/'} key={index}>
                 <ProductCard data={item} index={index} />
               </Link>
             ))}
-        </div> */}
+        </div>
         <div className="mt-5 flex justify-center">
           <Button className="" value="Xem thêm" mode="dark" />
         </div>

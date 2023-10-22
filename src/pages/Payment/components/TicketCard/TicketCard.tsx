@@ -2,10 +2,13 @@ import { Tooltip } from '@material-tailwind/react';
 interface TicketCardProps {
   title: string;
   tooltip: string;
+  className?: string;
 }
-const TicketCard = ({ title, tooltip }: TicketCardProps) => {
+const TicketCard = ({ title, tooltip, className }: TicketCardProps) => {
   return (
-    <div className="flex w-fit items-center justify-between gap-1 rounded-xl bg-cs_semi_green px-4 py-2 text-center font-semibold text-white">
+    <div
+      className={`flex w-fit items-center justify-between gap-1 rounded-xl bg-cs_semi_green px-4 py-2 text-center font-semibold text-white ${className}`}
+    >
       {title}{' '}
       <Tooltip className="bg-white shadow-lg" content={<div className="w-fit text-black">{tooltip}</div>}>
         <svg
