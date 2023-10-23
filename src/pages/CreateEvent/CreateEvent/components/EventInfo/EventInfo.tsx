@@ -1,5 +1,5 @@
 import Icon from '~/components/customs/Icon';
-
+import Button from '~/components/customs/Button';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,7 +23,15 @@ const EventInfo = ({ setActiveStep }: Prop) => {
           </div>
         </div>
         {/* //// */}
-        ádasd
+        <div className="w-full text-right">
+          <Button
+            onClick={() => setActiveStep(1)}
+            className="md:w mt-5 w-full"
+            type="submit"
+            mode="dark"
+            value="Xác nhận"
+          />
+        </div>
       </div>
     </>
   );
