@@ -2,11 +2,39 @@ import Dropdown from '~/components/Dropdown';
 import { useState } from 'react';
 import { Dialog, DialogBody, DialogFooter } from '@material-tailwind/react';
 import Button from '~/components/customs/Button';
+import CreateEventStepper from './components/CreateEventStepper';
+import EventInfo from './components/EventInfo';
+import EventTime from './components/EventTime';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
 
   const handleOpen = () => setOpen(!open);
+
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const renderContent = (activeStep: number) => {
+    //Switch case
+    switch (activeStep) {
+      case 0: {
+        return <EventInfo setActiveStep={setActiveStep} />;
+      }
+      case 1: {
+        return <EventTime setActiveStep={setActiveStep} />;
+      }
+      // case 2: {
+      //   return <Purchase setActiveStep={setActiveStep} />;
+      // }
+      // case 3: {
+      //   return <Complete />;
+      // }
+      // case 4: {
+      //   return <PaymentInfor setActiveStep={setActiveStep} />;
+      // }
+      default: {
+        return <h1>Not found</h1>;
+      }
+    }
+  };
   return (
     <>
       <Dialog
@@ -50,6 +78,12 @@ const CreateEvent = () => {
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Tạo sự kiện</h1>
           <Dropdown />
+        </div>
+        <div className="w-[80%]">
+          <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
+            <CreateEventStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+          </div>
+          <div className="w-full">{renderContent(activeStep)}</div>
         </div>
       </div>
     </>
