@@ -45,7 +45,10 @@ const OrganizationProfile = () => {
       road: Yup.string().required('Phường không được bỏ trống'),
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
     }),
-    onSubmit: async (value: IOrganizationInfo) => {},
+    onSubmit: async (value: IOrganizationInfo) => {
+      console.log(value);
+      
+    },
   });
   return (
     <>
