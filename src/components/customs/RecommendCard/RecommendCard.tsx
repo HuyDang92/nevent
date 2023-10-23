@@ -14,7 +14,7 @@ const RecommendCard = ({ className, theme_color = 'green', title, sale, price }:
     <>
       <div
         className={`relative w-full rounded-xl p-4 ${className} ${
-          theme_color === 'green' ? 'bg-cs_leaf-400' : 'bg-cs_yellow-300'
+          theme_color === 'green' ? 'bg-cs_semi_green' : 'bg-cs_yellow-300'
         }`}
       >
         <div className="flex w-full justify-between">
@@ -26,8 +26,8 @@ const RecommendCard = ({ className, theme_color = 'green', title, sale, price }:
           <Button
             value="Mua ngay"
             className={`w-[70%] ${
-              theme_color === 'green' ? '!bg-cs_leaf-500' : '!bg-cs_yellow-500'
-            } text-white shadow-none`}
+              theme_color === 'green' ? '!bg-white text-cs_semi_green' : '!bg-cs_yellow-500 text-white'
+            } text-cs_semi_green shadow-none`}
             rounded_full={false}
           />
         </Link>

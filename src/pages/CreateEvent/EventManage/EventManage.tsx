@@ -14,7 +14,7 @@ const EventManage = () => {
         <div className="mt-2 flex justify-between">
           <div className="w-[60%]">
             <Link to="/create-event" className="">
-              <Button type="button" className="mt-3 !bg-cs_leaf-500 font-semibold text-white" value="Tạo sự kiện" />
+              <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
             <SearchBar className="mt-4 w-full" classNameInput="!bg-cs_input_gray !rounded-full" />
