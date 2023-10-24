@@ -35,6 +35,7 @@ module.exports = withMT({
           300: '#F4CF7E',
           500: '#DCA837',
         },
+        cs_green: '#5FD236',
       },
       boxShadow: {
         'border-full': '0px 0px 20px 2px rgba(0,0,0,0.1)',

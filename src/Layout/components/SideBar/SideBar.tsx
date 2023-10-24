@@ -62,7 +62,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
   };
   return (
     <Card
-      className={`scrollbar-hide sticky top-[66px] flex h-[calc(100vh-66px)] flex-col justify-between rounded-none bg-transparent pt-1 shadow-none ${className}`}
+      className={`scrollbar-hide sticky top-[70px] flex h-[calc(100vh-70px)] flex-col justify-between rounded-none bg-transparent pt-1 shadow-none ${className}`}
     >
       <List className={`px-4 pe-7 text-cs_semi_green`}>
         <button onClick={() => setOpen((prev) => !prev)} className="hidden xl:block">
@@ -87,7 +87,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
                 !open ? 'w-full' : 'w-fit'
               } ${
                 isActive
-                  ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark  '
+                  ? ' bg-cs_light text-cs_semi_green shadow-border-full dark:bg-cs_lightDark  '
                   : 'text-cs_dark dark:bg-cs_dark dark:text-cs_light'
               }`
             }
