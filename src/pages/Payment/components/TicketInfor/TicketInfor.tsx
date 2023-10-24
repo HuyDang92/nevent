@@ -31,7 +31,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
         <button
           onClick={() => setActiveStep(0)}
-          className="z-10 flex cursor-pointer items-center md:hidden"
+          className="z-10 flex cursor-pointer items-center"
         >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>

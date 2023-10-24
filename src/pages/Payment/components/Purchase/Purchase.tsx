@@ -93,10 +93,13 @@ const Purchase = ({ setActiveStep }: Prop) => {
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button onClick={() => setActiveStep(2)} className="z-10 flex cursor-pointer items-center md:hidden">
+      <button
+          onClick={() => setActiveStep(1)}
+          className="z-10 flex cursor-pointer items-center"
+        >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
-        <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase">Thanh toán</h1>
+        <h1 className="absolute w-[calc(100%-40px)] md:text-left md:static text-center font-bold uppercase">Thanh toán</h1>
       </div>
       <div className="m-4">
         <Tabs>
