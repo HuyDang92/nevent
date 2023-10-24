@@ -35,19 +35,21 @@ const Payment = () => {
   return (
     <>
       <Header />
-      <div className="mx-auto max-w-6xl py-5">
+      <div className="mx-auto max-w-6xl py-5 ">
         <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={'Name event'} />
 
-        <div className="hidden h-[135px] items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
-          <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
-        </div>
-        <div className="flex gap-5 md:mt-5 ">
-          <div className="w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[70%]">
-            {renderContent(activeStep)}
+        <div className="mx-2 xl:mx-0 ">
+          <div className="items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
+            <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
           </div>
+          <div className="mt-2 flex gap-5 xl:mt-5">
+            <div className="w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light xl:w-[70%]">
+              {renderContent(activeStep)}
+            </div>
 
-          {/* Phần thông tin đặt vé */}
-          <PaymentInfor className="hidden md:block" />
+            {/* Phần thông tin đặt vé */}
+            <PaymentInfor className="hidden xl:block" />
+          </div>
         </div>
       </div>
     </>

@@ -96,7 +96,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
         <button onClick={() => setActiveStep(2)} className="z-10 flex cursor-pointer items-center md:hidden">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
-        <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase">Thanh toán</h1>
+        <h1 className="absolute w-[calc(100%-40px)] font-bold uppercase">Thanh toán</h1>
       </div>
       <div className="m-4">
         <Tabs>
@@ -114,7 +114,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                   name="payment"
                 />
                 <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Thẻ tín dụng</span>
+                <span className="hidden md:block text-sm">Thẻ tín dụng</span>
               </div>
             </Tab>
             <Tab className="flex items-center" index={1}>
@@ -130,7 +130,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                   name="payment"
                 />
                 <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Internet Banking</span>
+                <span className="hidden md:block text-sm">Internet Banking</span>
               </div>
             </Tab>
             <Tab className="flex items-center" index={2}>
@@ -199,7 +199,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
           </TabsBody>
         </Tabs>
       </div>
-      <div className="w-full text-right">
+      <div className="w-full text-right px-5">
         <Button
           onClick={() => setActiveStep(4)}
           className="md:w mt-5 w-full"
