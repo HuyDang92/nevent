@@ -36,6 +36,16 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/update',
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
@@ -52,4 +62,5 @@ export const {
   useLazyGetTokenFromRefreshTokenQuery,
   useGetProfileQuery,
   useLogInGoogleMutation,
+  useUpdateProfileMutation,
 } = authApi;
