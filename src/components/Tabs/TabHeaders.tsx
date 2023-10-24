@@ -5,7 +5,7 @@ import { useCurrentViewportView } from '~/hooks/useViewPort';
 
 const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab }: TabsHeaderProp) => {
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
-  const { width } = useCurrentViewportView();
+  // const { width } = useCurrentViewportView();
 
   return (
     <ul
@@ -25,16 +25,17 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
       })}
       <li
         style={{
-          width:
-            orientation == 'horizontal'
-              ? 'calc(100% - 32px)'
-              : `${width < 550 ? 93 / React.Children.count(children) : 95 / React.Children.count(children)}%`,
+          // width:
+          //   orientation == 'horizontal'
+          //     ? 'calc(100% - 32px)'
+          //     : `${width < 550 ? 93 / React.Children.count(children) : 95 / React.Children.count(children)}%`,
+          width: orientation == 'horizontal' ? 'calc(100% - 32px)' : `calc((100% - 32px) / ${React.Children.count(children)} - 4px)`,
           transform:
             orientation == 'horizontal'
               ? `translateY(${activeTab && activeTab * 108}%)`
-              : `translateX(${activeTab && activeTab * 100}%)`,
+              : `translateX(calc(${activeTab && activeTab * 100}% + ${activeTab && activeTab * 5}px))`,
         }}
-        className={`absolute flex h-10 w-fit items-center justify-center rounded-[15px] bg-cs_semi_green transition-all md:h-12`}
+        className={`absolute border flex h-10 w-fit items-center justify-center rounded-[15px] bg-cs_semi_green transition-all md:h-12`}
       ></li>
     </ul>
   );

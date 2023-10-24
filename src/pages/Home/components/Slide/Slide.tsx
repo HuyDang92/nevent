@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
 type Props = {
-  data: any; //dữ liệu
+  data: IEvent[]; //dữ liệu
 };
 function Slide({ data }: Props) {
-  const [newArray, setNewArray] = useState<any>([]);
+  const [formatArray, setFormatArray] = useState<any>([]);
   const { width } = useCurrentViewportView();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function Slide({ data }: Props) {
         splitArray.push(subArray);
       }
     }
-    setNewArray(splitArray);
+    setFormatArray(splitArray);
   }, [data]);
   return (
     <>
@@ -71,14 +71,14 @@ function Slide({ data }: Props) {
           </div>
         )}
       >
-        {newArray.map((item: any, index: number) => (
+        {formatArray.map((item: any, index: number) => (
           <div key={index} className="grid grid-cols-2 gap-4 overflow-hidden sm:grid-cols-3 xl:grid-cols-5">
-            {item.map((item: any, index: number) => (
+            {item.map((item: IEvent, index: number) => (
               <Link key={index} to="">
                 <img
-                  src={item.image}
+                  src={item?.banner[0]?.url}
                   alt="image 1"
-                  className="h-[280px] w-full rounded-xl object-cover hover:scale-95 transition-all"
+                  className="h-[280px] w-full rounded-xl object-cover transition-all hover:scale-95"
                 />
               </Link>
             ))}

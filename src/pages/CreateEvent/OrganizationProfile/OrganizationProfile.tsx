@@ -67,14 +67,14 @@ const OrganizationProfile = () => {
               <option value="">Doanh nghiệp/Nhà tổ chức</option>
               <option value="">Cá nhân</option>
             </select>
-            <h2 className="mb-2 mt-4 text-lg">Thông tin nhà tổ chức</h2>
+            <h2 className="mb-2 mt-4 text-lg font-semibold">Thông tin nhà tổ chức</h2>
             <div className="grid w-full grid-cols-2 gap-2">
               <Input
                 name="name"
                 id="name"
                 label="Tên người tổ chức"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
@@ -83,7 +83,7 @@ const OrganizationProfile = () => {
                 id="CRN"
                 label="Số đăng ký công ty (CRN)"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.CRN}
                 onChange={formik.handleChange}
               />
@@ -92,7 +92,7 @@ const OrganizationProfile = () => {
                 id="releasePlace"
                 label="Nơi phát hành"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.releasePlace}
                 onChange={formik.handleChange}
               />
@@ -102,19 +102,19 @@ const OrganizationProfile = () => {
                 label="Ngày phát hành"
                 type="date"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.releaseDate}
                 onChange={formik.handleChange}
               />
             </div>
-            <h2 className="mb-2 mt-4 text-lg">Thông tin liên lạc</h2>
+            <h2 className="mb-2 mt-4 text-lg font-semibold">Thông tin liên lạc</h2>
             <div className="grid w-full grid-cols-2 gap-2">
               <Input
                 name="tel"
                 id="tel"
                 label="Số điện thoại"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.tel}
                 onChange={formik.handleChange}
               />
@@ -123,7 +123,7 @@ const OrganizationProfile = () => {
                 id="email"
                 label="Email"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
@@ -132,7 +132,7 @@ const OrganizationProfile = () => {
                 id="city"
                 label="Thành phố/Tỉnh"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.city}
                 onChange={formik.handleChange}
               />
@@ -141,7 +141,7 @@ const OrganizationProfile = () => {
                 id="district"
                 label="Huyện"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.district}
                 onChange={formik.handleChange}
               />
@@ -150,7 +150,7 @@ const OrganizationProfile = () => {
                 id="road"
                 label="Phường"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.road}
                 onChange={formik.handleChange}
               />
@@ -159,7 +159,7 @@ const OrganizationProfile = () => {
                 id="address"
                 label="Địa chỉ"
                 classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!bg-cs_input_gray !shadow-none !w-full"
+                classNameInput="border !w-full"
                 value={formik.values.address}
                 onChange={formik.handleChange}
               />
@@ -167,7 +167,7 @@ const OrganizationProfile = () => {
             <div className="flex w-full justify-end">
               <Button
                 type="submit"
-                className="mt-3 w-1/5 !bg-cs_leaf-500 font-semibold text-white"
+                className="mt-3 w-1/5 !bg-cs_semi_green font-semibold text-white"
                 value="Lưu thông tin"
               />
             </div>

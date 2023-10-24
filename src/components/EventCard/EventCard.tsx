@@ -2,18 +2,10 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Icon from '../customs/Icon';
-
-type ProductData = {
-  image: string;
-  title: string;
-  date: string;
-  category: string;
-  link?: string;
-  place: string;
-};
+import moment from 'moment';
 
 type ProductListProps = {
-  data: ProductData; //dữ liệu
+  data: IEvent; //dữ liệu
   className?: string;
   index: number;
 };
@@ -36,22 +28,26 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`group relative h-[260px] w-full overflow-hidden rounded-xl shadow-lg sm:h-[270px] ${className}`}
+          className={`group relative h-[260px] w-full overflow-hidden rounded-xl shadow-border-full sm:h-[270px] ${className}`}
         >
-          <Link to={'/event-detail/1"'}>
-            <img src={data.image} alt="image" className="h-[170px] group-hover:scale-105 transition-all w-full rounded-xl object-cover sm:h-[180px]" />
+          <Link to={`/event-detail/${data?._id}`}>
+            <img
+              src={data?.banner[0]?.url}
+              alt="image"
+              className="h-[170px] w-full rounded-xl object-cover transition-all group-hover:scale-105 sm:h-[180px]"
+            />
 
             <div className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3">
-              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data.place}</span>
+              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data.location}</span>
               <p className={`line-clamp-2 text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm`}>
                 {data.title}
               </p>
               <div className="mb-1 mt-2 justify-between pr-1.5 text-xs font-normal text-cs_gray sm:flex">
                 <span className="flex items-center gap-1">
                   <Icon name="time-outline" />
-                  {data.date}
+                  {moment(data?.start_date).format('DD/MM/YYYY')}
                 </span>
-                <span>{data.category}</span>
+                <span>{data?.categories[0]?.name}</span>
               </div>
               <AnimatePresence>
                 {isHovered && (

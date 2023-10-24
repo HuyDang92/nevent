@@ -4,7 +4,7 @@ import IonIcon from '@reacticons/ionicons';
 type InputProps = {
   readonly?: boolean;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;

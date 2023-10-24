@@ -31,17 +31,9 @@ export default function AppRoutes() {
         {/* public */}
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/event-detail/:slug" element={<DetailEvent />} />
+          <Route path="/event-detail/:idEvent" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
           <Route path="/event-categories/:slug" element={<Categories />} />
-        </Route>
-        {/* Tạo sự kiện */}
-        <Route element={<CreateEventLayout />}>
-          <Route path="/organization-profile" element={<OrganizationProfile />} />
-          <Route path="/event-manage" element={<EventManage />} />
-          <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/create-event2/" element={<Categories />} />
-          <Route path="/create-event3/" element={<Categories />} />
         </Route>
 
         {/* Giới thiệu */}
@@ -66,6 +58,17 @@ export default function AppRoutes() {
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile" element={<Profile />} />
+            <Route index path="payment" element={<Payment />} />
+          </Route>
+        </Route>
+        {/* Tạo sự kiện */}
+        <Route element={<PrivateRoute allowedRoles={['user']} />}>
+          <Route element={<CreateEventLayout />}>
+            <Route path="/organization-profile" element={<OrganizationProfile />} />
+            <Route path="/event-manage" element={<EventManage />} />
+            <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/create-event2/" element={<Categories />} />
+            <Route path="/create-event3/" element={<Categories />} />
           </Route>
         </Route>
 
