@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import Button from '~/components/customs/Button';
 import SectionTitle from '~/components/SectionTitle';
-import Thumb from '~/assets/images/pro.webp';
 import des from '~/assets/images/detail.png';
 import des2 from '~/assets/images/detail2.png';
 import Icon from '~/components/customs/Icon';
@@ -20,7 +18,8 @@ function DetailEvent() {
 
   return (
     <div className="relative">
-      {!detailEventQuery?.isFetching !== undefined && (
+      {detailEventQuery.isFetching && <SkeletonDetailEvent />}
+      {!detailEventQuery.isFetching && (
         <>
           <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={detailEventQuery?.data?.data?.title} />
           <div className="flex-row-reverse gap-4 xl:flex">
