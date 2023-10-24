@@ -5,6 +5,8 @@ import TicketInfor from './components/TicketInfor';
 import Purchase from './components/Purchase/Purchase';
 import Complete from './components/Complete';
 import PaymentInfor from './components/PaymentInfor';
+import Header from '~/Layout/components/Header';
+import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 const Payment = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const renderContent = (activeStep: number) => {
@@ -31,19 +33,24 @@ const Payment = () => {
     }
   };
   return (
-    <div className="">
-      <div className="hidden h-[135px] items-center justify-center rounded-[15px] shadow-border-full md:flex">
-        <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
-      </div>
-      <div className="flex gap-10 md:mt-5">
-        <div className="w-full rounded-[12px] shadow-border-full dark:text-cs_light md:w-[70%]">
-          {renderContent(activeStep)}
-        </div>
+    <>
+      <Header />
+      <div className="mx-auto max-w-6xl py-5">
+        <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={'Name event'} />
 
-        {/* Phần thông tin đặt vé */}
-        <PaymentInfor className='hidden md:block' />
+        <div className="hidden h-[135px] items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
+          <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+        </div>
+        <div className="flex gap-5 md:mt-5 ">
+          <div className="w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[70%]">
+            {renderContent(activeStep)}
+          </div>
+
+          {/* Phần thông tin đặt vé */}
+          <PaymentInfor className="hidden md:block" />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Payment;

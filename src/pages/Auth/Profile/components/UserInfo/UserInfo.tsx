@@ -44,11 +44,11 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             value={formik.values.fullName}
             onChange={formik.handleChange}
             label="Họ và tên"
-            classNameInput="w-full border"
+            classNameInput="w-full"
           />
         </div>
         <div className="sm:w-[calc(50%-20px)]">
-          <Input readonly={true} value={data?.email} classNameInput="w-full border" label="Email" />
+          <Input readonly={true} value={data?.email} classNameInput="w-full" label="Email" />
         </div>
         <div className="w-full md:w-[calc(50%-20px)]">
           <Input
@@ -56,7 +56,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             name="phone"
             value={formik.values.phone}
             onChange={formik.handleChange}
-            classNameInput="w-full border"
+            classNameInput="w-full"
             label="Số điện thoại"
           />
         </div>
@@ -67,7 +67,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             value={undefined}
             onChange={formik.handleChange}
             type="date"
-            classNameInput="w-full border"
+            classNameInput="w-full"
             label="Ngày sinh"
           />
         </div>
