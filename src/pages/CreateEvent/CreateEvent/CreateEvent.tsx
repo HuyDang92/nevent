@@ -5,6 +5,7 @@ import Button from '~/components/customs/Button';
 import CreateEventStepper from './components/CreateEventStepper';
 import EventInfo from './components/EventInfo';
 import EventTime from './components/EventTime';
+import EventSettings from './components/EventSettings';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
@@ -21,9 +22,9 @@ const CreateEvent = () => {
       case 1: {
         return <EventTime setActiveStep={setActiveStep} />;
       }
-      // case 2: {
-      //   return <Purchase setActiveStep={setActiveStep} />;
-      // }
+      case 2: {
+        return <EventSettings setActiveStep={setActiveStep} />;
+      }
       // case 3: {
       //   return <Complete />;
       // }
@@ -40,6 +41,7 @@ const CreateEvent = () => {
       <Dialog
         open={open}
         handler={handleOpen}
+        className="dark:bg-cs_lightDark"
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
@@ -74,16 +76,16 @@ const CreateEvent = () => {
           <Button value="Đã hiểu" className="!bg-cs_semi_green !text-white" onClick={handleOpen} />
         </DialogFooter>
       </Dialog>
-      <div className="h-full w-full rounded-2xl bg-cs_light p-7">
+      <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-bold">Tạo sự kiện</h1>
+          <h1 className="text-2xl font-bold dark:text-cs_light">Tạo sự kiện</h1>
           <Dropdown />
         </div>
         <div className="w-[80%]">
           <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
             <CreateEventStepper activeStep={activeStep} setActiveStep={setActiveStep} />
           </div>
-          <div className="w-full">{renderContent(activeStep)}</div>
+          <div className="w-full dark:bg-cs_lightDark">{renderContent(activeStep)}</div>
         </div>
       </div>
     </>

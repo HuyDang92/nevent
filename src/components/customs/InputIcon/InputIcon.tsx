@@ -10,9 +10,19 @@ type InputProps = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;
+  position?: string;
 };
 
-const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text', iconClassName }: InputProps) => {
+const InputIcon = ({
+  icon,
+  value,
+  onChange,
+  placeholder,
+  className,
+  type = 'text',
+  iconClassName,
+  position = 'right',
+}: InputProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = () => {
     setIsFocus(true);
@@ -24,7 +34,9 @@ const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text
     <div className="relative inline-block">
       <input
         placeholder={placeholder}
-        className={`h-10 w-64 rounded-lg bg-cs_light px-4 py-3.5 text-cs_blur_black focus:placeholder-cs_blur_black focus:outline-none ${className}`}
+        className={`h-10 ${
+          position === 'right' ? '' : 'pl-10'
+        }  w-64 rounded-lg bg-cs_light px-4 py-3.5 text-cs_blur_black focus:placeholder-cs_blur_black focus:outline-none ${className}`}
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -33,9 +45,9 @@ const InputIcon = ({ icon, value, onChange, placeholder, className, type = 'text
       />
       <IonIcon
         name={icon as any}
-        className={`absolute right-3 top-2 text-2xl text-cs_gray ${iconClassName} ${
-          isFocus ? 'text-cs_icon_black' : ''
-        }`}
+        className={`absolute ${
+          position === 'right' ? 'right-3' : 'left-3'
+        } top-2 text-2xl text-cs_gray ${iconClassName} ${isFocus ? 'text-cs_icon_black' : ''}`}
       />
     </div>
   );
