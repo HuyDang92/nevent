@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
 import { useState } from 'react';
+import banner3 from '~/assets/images/banner3.jpg';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,7 +24,9 @@ interface IEventInfo {
   organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
-  // const [selectedFile, setSelectedFile] = useState<File | null>(File)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
     initialValues: {
       banner: '',
@@ -63,27 +66,35 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       <div className="">
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
-          <div className=" relative h-[250px] w-full">
-            <img
-              src="https://img.freepik.com/free-vector/hand-drawn-japanese-illustration-cherry-tree-petals_23-2149601832.jpg?w=1060&t=st=1698044776~exp=1698045376~hmac=1f7473d50dc44b63c902367920bec46f7ec41bad300ce5510c2f8cde7e022d68"
-              alt="banner"
-              className="h-full w-full rounded-xl object-cover "
-            />
-            <div className="absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition"></div>
+          <div className="group relative h-[250px] w-full">
+            {imagePreviewUrl ? (
+              <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            ) : (
+              <img src={banner3} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            )}
+            <div
+              className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${
+                imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
+              }`}
+            ></div>
             <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
-              <div className="relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ">
+              <div
+                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
+                  imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
+                }`}
+              >
                 <input
                   type="file"
                   name="banner"
                   id="banner"
                   className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
-                  // onChange={(event) => {
-                  //   const selectedFile = event.target.files?.[0];
-                  //   if (selectedFile) {
-                  //     setSelectedFile(selectedFile);
-                  //     setImagePreviewUrl(URL.createObjectURL(selectedFile));
-                  //   }
-                  // }}
+                  onChange={(event) => {
+                    const selectedFile = event.target.files?.[0];
+                    if (selectedFile) {
+                      setSelectedFile(selectedFile);
+                      setImagePreviewUrl(URL.createObjectURL(selectedFile));
+                    }
+                  }}
                 />
                 <Icon name="image" className="text-3xl" />
                 <p>Kích thước ảnh 1500 x 600 (Ảnh không quá 1MB) </p>
@@ -105,15 +116,20 @@ const EventInfo = ({ setActiveStep }: Prop) => {
           </div>
           {/* //// */}
           <div className="mt-3 grid w-full grid-cols-2 gap-2">
-            <Input
-              name="name"
-              id="name"
-              label="Tên sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-            />
+            <div className="">
+              {isSubmitted && formik.errors.name && (
+                <small className="px-2 text-[12px] text-red-600">{formik.errors.name}</small>
+              )}
+              <Input
+                name="name"
+                id="name"
+                label="Tên sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
+            </div>
             <Input
               name="address"
               id="address"
@@ -255,7 +271,10 @@ const EventInfo = ({ setActiveStep }: Prop) => {
           {/* //// */}
           <div className="w-full text-right">
             <Button
-              onClick={() => setActiveStep(1)}
+              onClick={() => {
+                setIsSubmitted(true);
+                // setActiveStep(1);
+              }}
               className="md:w mt-5 w-full"
               type="submit"
               mode="dark"
