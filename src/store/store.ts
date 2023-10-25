@@ -8,6 +8,7 @@ import { authApi } from '~/features/Auth/authApi.service';
 import { rtkQueryErrorLogger } from './middleware';
 import { eventApi } from '~/features/Event/eventApi.service';
 import { categoryApi } from '~/features/Category/categoryApi.service';
+import { uploadApi } from '~/features/Upload/uploadApi.service';
 
 const persistConfig = {
   key: 'root',
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
+  [uploadApi.reducerPath]: uploadApi.reducer,
   auth: authSlice,
 });
 
@@ -30,7 +32,13 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware, categoryApi.middleware, eventApi.middleware, rtkQueryErrorLogger),
+    }).concat(
+      authApi.middleware,
+      categoryApi.middleware,
+      eventApi.middleware,
+      uploadApi.middleware,
+      rtkQueryErrorLogger,
+    ),
 
   devTools: import.meta.env.MODE !== 'production',
 });

@@ -6,7 +6,7 @@ export const categoryApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken;
+      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken?.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

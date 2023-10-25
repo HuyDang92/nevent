@@ -25,13 +25,13 @@ const Profile: React.FC<ProfileProps> = () => {
   const auth = useAppSelector((state) => state.auth);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const { upLoad, url, loading } = useUploadFile();
+  const { upLoad, loading } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
-    await upLoad(selectedFile!);
-    await updateProfile({ avatar: url });
+    const id = await upLoad(selectedFile!);
+    await updateProfile({ avatar: id });
   };
   useEffect(() => {
     if (result.isSuccess) {
