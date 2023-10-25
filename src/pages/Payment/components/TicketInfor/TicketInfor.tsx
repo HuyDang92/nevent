@@ -45,12 +45,12 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             <div key={index} className={`my-[15px] flex`}>
               <div className="flex w-full items-center justify-between">
                 <TicketCard
-                  className={`!px-1 ${conVe ? '' : '!bg-cs_gray'}`}
+                  className={`!px-1 ${conVe ? '' : '!bg-[#eeeeee]'}`}
                   title={ticket.title}
                   tooltip="Tooltip here"
                 />
                 <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
-                <div className="flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full md:mx-auto">
+                <div className="flex border w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full md:mx-auto">
                   <button>-</button>
                   <span>1</span>
                   <button>+</button>
@@ -66,7 +66,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </div>
           ))}
         </Card>
-        <Card className="hidden bg-transparent p-4 md:block">
+        <Card className="hidden bg-transparent md:block">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -86,24 +86,24 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
               {ticketList.map((ticket, index) => {
                 return (
                   <tr key={index}>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eeeeee] p-4">
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eeeeee] p-4">
                       {conVe ? (
                         <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
                       ) : (
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
                       )}
                     </td>
-                    <td className="border-t border-cs_gray p-4">
-                      <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
+                    <td className="border-t border-[#eeeeee] p-4">
+                      <div className="mx-auto border flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button>-</button>
                         <span>1</span>
                         <button>+</button>
                       </div>
                     </td>
-                    <td className="border-t border-cs_gray p-4 text-right font-bold dark:text-cs_light">
+                    <td className="border-t border-[#eeeeee] p-4 text-right font-bold dark:text-cs_light">
                       {ticket.price?.toLocaleString('vi')} VNĐ
                     </td>
                   </tr>

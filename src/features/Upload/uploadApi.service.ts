@@ -23,12 +23,18 @@ export const uploadApi = createApi({
       query: (body) => ({
         url: '/api/files/upload',
         method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
         body: body,
       }),
     }),
     deleteFile: builder.mutation({
       query: ({ fileId, publicId }) => ({
         url: `/api/files/${fileId}/${publicId}`,
+        headers: {
+          Accept: 'application/json',
+        },
         method: 'DELETE',
       }),
     }),

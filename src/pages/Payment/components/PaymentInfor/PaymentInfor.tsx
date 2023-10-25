@@ -9,9 +9,14 @@ interface Prop {
 }
 const PaymentInfor = ({ className, setActiveStep }: Prop) => {
   return (
-    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light md:w-[30%] ${className}`}>
-      <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button onClick={() => setActiveStep && setActiveStep(2)} className="z-10 flex cursor-pointer items-center md:hidden">
+    <div
+      className={`rounded-[12px] bg-cs_light p-4 pt-2 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[30%] ${className}`}
+    >
+      <div className="relative flex h-[50px] items-center border-b-[0.5px] px-5">
+        <button
+          onClick={() => setActiveStep && setActiveStep(2)}
+          className="z-10 flex cursor-pointer items-center md:hidden"
+        >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
         <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase">Thông tin đặt vé</h1>
@@ -74,7 +79,11 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
         <p className="my-2 flex items-center justify-between text-lg font-bold">
           Thành tiền <span className="text-base text-cs_semi_green">12.000.000 VND</span>
         </p>
-        <Button onClick={() => setActiveStep && setActiveStep(3)} value="Thanh toán" className="w-full !bg-cs_semi_green text-white !shadow-none" />
+        <Button
+          onClick={() => setActiveStep && setActiveStep(3)}
+          value="Thanh toán"
+          className="w-full !bg-cs_semi_green text-white !shadow-none"
+        />
       </div>
       {/* /// */}
     </div>
