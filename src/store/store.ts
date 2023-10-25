@@ -8,6 +8,7 @@ import { authApi } from '~/features/Auth/authApi.service';
 import { rtkQueryErrorLogger } from './middleware';
 import { eventApi } from '~/features/Event/eventApi.service';
 import { categoryApi } from '~/features/Category/categoryApi.service';
+import paymentSlice from '~/features/Payment/paymentSlice';
 
 const persistConfig = {
   key: 'root',
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   [categoryApi.reducerPath]: categoryApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
   auth: authSlice,
+  payment: paymentSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
