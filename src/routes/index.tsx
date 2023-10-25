@@ -7,7 +7,6 @@ import SignUp from '~/pages/Auth/SignUp';
 import DetailEvent from '~/pages/DetailEvent';
 import About from '~/pages/About';
 import Categories from '~/pages/Categories';
-import SignUpEmail from '~/pages/Auth/SignUpEmail';
 import ForgotPassword from '~/pages/Auth/ForgotPassword';
 import Payment from '~/pages/Payment';
 import PrivateRoute from './PrivateRoute';
@@ -21,6 +20,7 @@ import Profile from '~/pages/Auth/Profile';
 import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
 import EventManage from '~/pages/CreateEvent/EventManage';
 import CreateEvent from '~/pages/CreateEvent/CreateEvent';
+import Organizer from '~/pages/Organizer';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -39,7 +39,7 @@ export default function AppRoutes() {
         {/* Giới thiệu */}
         <Route path="/about" element={<About />} />
         {/* Cho người tổ chức */}
-        <Route path="/organizer-about" element={<About />} />
+        <Route path="/organizer-about" element={<Organizer />} />
         {/* FAQ */}
         <Route path="/help-center" element={<FAQ />} />
 
@@ -48,8 +48,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<LogIn />} />
           {/* đăng ký */}
           <Route path="/signup" element={<SignUp />} />
-          {/* đăng ký email */}
-          <Route path="/signup-email" element={<SignUpEmail />} />
+
           {/* đăng quên mật khẩu */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Route>

@@ -19,7 +19,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
   const dispatch = useAppDispatch();
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [updateProfile, { isError, isLoading, error, isSuccess }] = useUpdateProfileMutation();
+  const [updateProfile, result] = useUpdateProfileMutation();
   const formik = useFormik({
     initialValues: {
       username: data?.username ?? '',
@@ -36,18 +36,18 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
     },
   });
   useEffect(() => {
-    if (isSuccess) {
+    if (result.isSuccess) {
       successNotify('Cập nhật thông tin thành công');
-      // dispatch(setAuthCurrentUser(data?.data?.user));
+      dispatch(setAuthCurrentUser(result?.data?.data?.userUpdated));
     }
-    if (isError) {
+    if (result.isError) {
       errorNotify('Cập nhật thông tin thất bại');
     }
-  }, [isSuccess, isError]);
+  }, [result.isSuccess, result.isError]);
 
   return (
     <div className={`${className}`}>
-      {isLoading && <Loading />}
+      {result.isLoading && <Loading />}
       <h1 className="text-2xl font-bold">Thông tin tài khoản</h1>
       <form onSubmit={formik.handleSubmit} className="flex-wrap gap-5 sm:flex">
         <div className="w-full md:w-[calc(50%-20px)]">

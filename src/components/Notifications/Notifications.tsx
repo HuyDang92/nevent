@@ -20,7 +20,7 @@ const Notifications = ({ data, className }: NotificationProps) => {
         <MenuHandler>
           <IconButton
             variant="text"
-            className="hidden items-center rounded-lg px-3 py-1 pt-2 text-cs_semi_green transition hover:scale-110 hover:bg-transparent lg:block"
+            className="hidden items-center rounded-lg  text-cs_semi_green transition hover:scale-110 hover:bg-transparent lg:block"
           >
             <IonIcon name="notifications" className="text-2xl" />
           </IconButton>

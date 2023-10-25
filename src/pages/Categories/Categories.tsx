@@ -14,14 +14,27 @@ function Categories() {
 
   const categories = useGetAllCategoryQuery();
   const event = useGetAllEventQuery({ page: currentPage, limit: 16 });
+  const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
 
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
   };
 
+  const handleCategoryClick = (categoryId: string) => {
+    // Kiểm tra xem categoryId đã tồn tại trong mảng filterNameCate chưa
+    if (filterNameCate.includes(categoryId)) {
+      // Nếu có, loại bỏ nó khỏi mảng
+      setFilterNameCate(filterNameCate.filter((id) => id !== categoryId));
+    } else {
+      // Nếu chưa có, thêm nó vào mảng
+      setFilterNameCate([...filterNameCate, categoryId]);
+    }
+  };
   const pageClassNames = {
-    page: 'mx-2 px-4 py-2 text-cs_semi_green border rounded-lg shadow-lg font-bold',
+    page: 'mx-2 px-4 py-1.5 text-cs_semi_green border text-xl hover:scale-105 transition-all rounded-xl shadow-border-full font-bold',
     active: 'bg-cs_semi_green text-white',
+    previous: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Previous"
+    next: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Next"
   };
 
   return (
@@ -34,9 +47,9 @@ function Categories() {
             {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
-                onClick={() => setIsActive(item._id)}
+                onClick={() => handleCategoryClick(item._id)}
                 className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all ${
-                  isActive === item._id ? '!bg-cs_semi_green text-white' : ''
+                  filterNameCate.includes(item._id) ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
                 {item.name}
@@ -45,24 +58,41 @@ function Categories() {
           </div>
           {/* Filter */}
           <div className="hidden gap-4 transition-all sm:flex">
-            <Icon
-              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
-              name="calendar"
-            />
-            <Icon
-              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
-              name="cash"
-            />
-            <Icon
-              className="rounded-lg border p-2.5 text-xl text-cs_semi_green shadow-border-full transition-all hover:bg-cs_semi_green hover:text-white dark:border-cs_light"
-              name="filter"
-            />
+            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+              <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
+              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
+                <option value="p-2">Tất cả địa điểm</option>
+                <option value="p-2">Hồ chí minh</option>
+                <option value="p-2">Hà nội</option>
+              </select>
+            </div>
+            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+              <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
+              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
+                <option value="p-2">Tất cả giá vé</option>
+                <option value="p-2">Miễn phí</option>
+                <option value="p-2">Có phí</option>
+              </select>
+            </div>
+            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+              <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
+              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
+                <option value="p-2">Tất cả ngày sắp tới</option>
+                <option value="p-2">Hôm nay</option>
+                <option value="p-2">Ngày mai</option>
+                <option value="p-2">Tuần này</option>
+                <option value="p-2">Tháng này</option>
+              </select>
+            </div>
           </div>
+        </div>
+        <div className="px-1 pt-2 text-[#ccc]">
+          Đang hiển thị: <span className="font-semibold text-cs_semi_green">{event.data?.data?.docs?.length}</span>
         </div>
         {/* Product */}
         {event.isFetching && <SkeletonEventList />}
 
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 3xl:grid-cols-5">
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
             event.data?.data?.docs.map((item: IEvent, index: number) => (
               <Link to={'/'} key={index}>
@@ -74,12 +104,14 @@ function Categories() {
         {/* Phân trang */}
         <div className="my-4 flex justify-center">
           <ReactPaginate
-            className="flex"
+            className="flex items-center"
             breakLabel="..."
-            pageCount={2}
+            pageCount={event.data?.data?.totalPages}
             onPageChange={handlePageChange}
-            previousLabel={''}
-            nextLabel={''}
+            previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-xl" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+            nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-xl" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+            previousClassName={pageClassNames.previous}
+            nextClassName={pageClassNames.next}
             activeClassName={pageClassNames.active}
             pageClassName={pageClassNames.page}
           />

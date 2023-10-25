@@ -39,7 +39,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
           variant="circular"
           alt="tania andrew"
           className="h-10 w-10 cursor-pointer object-cover shadow-border-light"
-          src={avtDefault}
+          src={auth?.currentUser?.avatar?.url ?? avtDefault}
         />
       </motion.button>
       <motion.ul
@@ -72,7 +72,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             alt="tania andrew"
             size="xl"
             className="cursor-pointer border-2 border-cs_semi_green object-cover shadow-border-light"
-            src={auth?.currentUser?.avatar ?? avtDefault}
+            src={auth?.currentUser?.avatar?.url ?? avtDefault}
           />
           <h5 className="font-semibold dark:text-cs_light">{auth?.currentUser?.fullName}</h5>
           <span className="text-xs text-cs_gray">{auth?.currentUser?.email} </span>

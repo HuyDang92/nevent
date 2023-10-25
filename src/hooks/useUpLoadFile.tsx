@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { useUploadSingleFileMutation } from '~/features/Upload/uploadApi.service';
 
 export const useUploadFile = () => {
-  const [url, setUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [upLoadFile, resultUpload] = useUploadSingleFileMutation();
+  const [upLoadFile] = useUploadSingleFileMutation();
   const upLoad = async (selectedFile: File) => {
     if (selectedFile) {
       setLoading(true);
@@ -12,10 +11,9 @@ export const useUploadFile = () => {
       formDataFormat.append('file', selectedFile);
       const res = await upLoadFile(formDataFormat).unwrap();
       if (res?.statusCode === 201) {
-        setUrl(res?.data?.url);
         setLoading(false);
+        return res?.data?._id;
       } else {
-        setUrl(null);
         setLoading(false);
       }
     } else {
@@ -24,5 +22,5 @@ export const useUploadFile = () => {
     }
   };
 
-  return { upLoad, url, loading };
+  return { upLoad, loading };
 };

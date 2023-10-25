@@ -29,7 +29,7 @@ const cateList = [
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
   return (
     <Card
-      className={`scrollbar-hide sticky top-0 flex h-[100vh] flex-col rounded-none bg-cs_semi_green pt-1 shadow-none ${className}`}
+      className={`scrollbar-hide sticky top-0 flex h-[100vh] flex-col rounded-none bg-cs_semi_green pt-1 shadow-none dark:bg-cs_dark ${className}`}
     >
       <Link to="/" className="flex items-center p-5">
         <div className="flex items-center gap-2">
@@ -44,8 +44,8 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
               key={index}
               to={item.link}
               className={({ isActive }) =>
-                `} mt-2 rounded-xl transition-all hover:bg-white hover:text-cs_semi_green dark:hover:bg-white
-               ${isActive ? ' bg-white text-cs_semi_green' : 'text-cs_light'}`
+                `} mt-2 rounded-xl transition-all hover:bg-white hover:text-cs_semi_green dark:hover:bg-cs_lightDark
+               ${isActive ? ' bg-white text-cs_semi_green dark:bg-cs_lightDark' : 'text-cs_light'}`
               }
             >
               <div className={`flex items-center py-3 hover:bg-transparent`}>
@@ -54,7 +54,11 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
             </NavLink>
           ))}
         </List>
-        <Button value="Các câu hỏi thường gặp ?" rounded_full={false} className="!bg-cs_leaf-100 text-xs !text-white" />
+        <Button
+          value="Các câu hỏi thường gặp ?"
+          rounded_full={false}
+          className="!bg-cs_leaf-100 text-xs !text-white dark:!bg-cs_lightDark"
+        />
       </div>
     </Card>
   );
