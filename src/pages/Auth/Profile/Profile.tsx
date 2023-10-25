@@ -1,6 +1,6 @@
-import DefaultCoverImage from '~/assets/images/default-coverImage.png';
+import DefaultCoverImage from '~/assets/images/default-coverImage.jpg';
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
-import { useAppSelector } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { Tab, Tabs, TabsContent, TabsBody, TabsHeader } from '~/components/Tabs';
 import Icon from '~/components/customs/Icon';
 import UserInfo from '~/pages/Auth/Profile/components/UserInfo';
@@ -12,6 +12,7 @@ import Button from '~/components/customs/Button';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
+import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 interface ProfileProps {
   className?: string;
 }
@@ -23,8 +24,11 @@ interface ProfileProps {
  */
 const Profile: React.FC<ProfileProps> = () => {
   const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
   const { upLoad, loading } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
 
@@ -37,7 +41,7 @@ const Profile: React.FC<ProfileProps> = () => {
     if (result.isSuccess) {
       successNotify('Cập nhật ảnh thành công');
       setImagePreviewUrl(null);
-      // dispatch(setAuthCurrentUser(data?.data?.user));
+      dispatch(setAuthCurrentUser(result?.data?.data?.userUpdated));
     }
     if (result.isError) {
       errorNotify('Cập nhật ảnh thất bại');
@@ -48,12 +52,25 @@ const Profile: React.FC<ProfileProps> = () => {
       {(result.isLoading || loading) && <Loading />}
 
       <div className="relative">
-        <img className="h-[170px] w-full" src={auth?.currentUser?.coverImage || DefaultCoverImage} alt="" />
+        {!imagePreviewUrlCover && (
+          <img
+            className="h-[200px] w-full rounded-xl object-cover"
+            src={auth?.currentUser?.coverImage?.url || DefaultCoverImage}
+            alt=""
+          />
+        )}
+        {imagePreviewUrlCover && (
+          <img className="h-[200px] w-full rounded-xl object-cover" src={imagePreviewUrlCover} alt="" />
+        )}
         <div className="absolute ml-5 flex -translate-y-[75%] items-start gap-4 md:ml-[30px]">
           <div className="relative">
             <div className="h-[120px] w-[120px] overflow-hidden rounded-full border-[2px] border-cs_semi_green">
               {!imagePreviewUrl && (
-                <img className="h-full w-full object-cover" src={auth?.currentUser?.avatar || DefaultAvatar} alt="" />
+                <img
+                  className="h-full w-full object-cover"
+                  src={auth?.currentUser?.avatar?.url || DefaultAvatar}
+                  alt=""
+                />
               )}
               {imagePreviewUrl && <img className="h-full w-full object-cover" src={imagePreviewUrl} alt="" />}
             </div>
@@ -81,9 +98,24 @@ const Profile: React.FC<ProfileProps> = () => {
             <span className="text-cs_light">{auth?.currentUser?.email}</span>
           </div>
         </div>
-        <button className="absolute right-[5px] top-[35px] grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light sm:bottom-[5px]">
+        <label
+          htmlFor="avatarCover"
+          className="absolute right-[5px] top-[35px] grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light sm:bottom-[5px]"
+        >
           <Icon name="camera-reverse-outline" />
-        </button>
+        </label>
+        <input
+          type="file"
+          hidden
+          id="avatarCover"
+          onChange={(event) => {
+            const selectedFile = event.target.files?.[0];
+            if (selectedFile) {
+              setSelectedFile(selectedFile);
+              setImagePreviewUrlCover(URL.createObjectURL(selectedFile));
+            }
+          }}
+        />
       </div>
       <div className=" mt-12 dark:text-cs_light sm:mt-14">
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
