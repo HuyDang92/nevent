@@ -7,7 +7,6 @@ import SignUp from '~/pages/Auth/SignUp';
 import DetailEvent from '~/pages/DetailEvent';
 import About from '~/pages/About';
 import Categories from '~/pages/Categories';
-import SignUpEmail from '~/pages/Auth/SignUpEmail';
 import ForgotPassword from '~/pages/Auth/ForgotPassword';
 import Payment from '~/pages/Payment';
 import PrivateRoute from './PrivateRoute';
@@ -49,8 +48,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<LogIn />} />
           {/* đăng ký */}
           <Route path="/signup" element={<SignUp />} />
-          {/* đăng ký email */}
-          <Route path="/signup-email" element={<SignUpEmail />} />
+
           {/* đăng quên mật khẩu */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Route>
