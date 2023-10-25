@@ -4,6 +4,7 @@ import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
+import { useState } from 'react';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -22,6 +23,7 @@ interface IEventInfo {
   organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
+  // const [selectedFile, setSelectedFile] = useState<File | null>(File)
   const formik = useFormik({
     initialValues: {
       banner: '',
@@ -61,20 +63,27 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       <div className="">
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
-          <div className="group relative h-[250px] w-full">
+          <div className=" relative h-[250px] w-full">
             <img
               src="https://img.freepik.com/free-vector/hand-drawn-japanese-illustration-cherry-tree-petals_23-2149601832.jpg?w=1060&t=st=1698044776~exp=1698045376~hmac=1f7473d50dc44b63c902367920bec46f7ec41bad300ce5510c2f8cde7e022d68"
               alt="banner"
               className="h-full w-full rounded-xl object-cover "
             />
-            <div className="absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-0 transition group-hover:opacity-50"></div>
+            <div className="absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition"></div>
             <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
-              <div className="relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white opacity-0 transition hover:scale-105 group-hover:opacity-100">
+              <div className="relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ">
                 <input
                   type="file"
                   name="banner"
                   id="banner"
                   className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
+                  // onChange={(event) => {
+                  //   const selectedFile = event.target.files?.[0];
+                  //   if (selectedFile) {
+                  //     setSelectedFile(selectedFile);
+                  //     setImagePreviewUrl(URL.createObjectURL(selectedFile));
+                  //   }
+                  // }}
                 />
                 <Icon name="image" className="text-3xl" />
                 <p>Kích thước ảnh 1500 x 600 (Ảnh không quá 1MB) </p>
@@ -140,7 +149,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             <textarea
               name="description"
               id="description"
-              className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-full focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
+              className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
               placeholder="Nhập giới thiệu về sự kiện"
               onChange={formik.handleChange}
               value={formik.values.description}
@@ -195,7 +204,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                   <textarea
                     name="organization_desc"
                     id="organization_desc"
-                    className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-full focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
+                    className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
                     placeholder="Nhập thông tin giới thiệu"
                     onChange={formik.handleChange}
                     value={formik.values.organization_desc}
