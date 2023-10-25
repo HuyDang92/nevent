@@ -8,6 +8,7 @@ import logo from '~/assets/images/logo.png';
 import logoWhite from '~/assets/images/logoWhite.png';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import Notifications from '~/components/Notifications';
+import { Badge } from '@material-tailwind/react';
 
 type HeaderProps = {
   className?: string;
@@ -51,7 +52,9 @@ const Header = ({ className }: HeaderProps) => {
       {/* <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link> */}
-      <Notifications data={notificationData} />
+      <Badge className='' content="2">
+        <Notifications data={notificationData} />
+      </Badge>
       <Link
         to="/"
         className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
