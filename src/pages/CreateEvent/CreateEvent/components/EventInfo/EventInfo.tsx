@@ -52,13 +52,15 @@ const EventInfo = ({ setActiveStep }: Prop) => {
         .required('Email không được bỏ trống')
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
-    onSubmit: async (value: IEventInfo) => {},
+    onSubmit: async (value: IEventInfo) => {
+      console.log(value);
+    },
   });
   return (
     <>
       <div className="">
         {/* Banner sự kiện */}
-        <form action="" className="mt-3">
+        <form onSubmit={formik.handleSubmit} className="mt-3">
           <div className="group relative h-[250px] w-full">
             <img
               src="https://img.freepik.com/free-vector/hand-drawn-japanese-illustration-cherry-tree-petals_23-2149601832.jpg?w=1060&t=st=1698044776~exp=1698045376~hmac=1f7473d50dc44b63c902367920bec46f7ec41bad300ce5510c2f8cde7e022d68"
