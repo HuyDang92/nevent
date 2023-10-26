@@ -13,6 +13,7 @@ import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useParams } from 'react-router-dom';
 interface ProfileProps {
   className?: string;
 }
@@ -23,6 +24,7 @@ interface ProfileProps {
  * @return {ReactElement} The rendered profile component.
  */
 const Profile: React.FC<ProfileProps> = () => {
+  const { tab } = useParams();
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 

@@ -34,10 +34,10 @@ function DetailEvent() {
                 <img
                   src={detailEventQuery?.data?.data?.banner[0]?.url}
                   alt="banner"
-                  className="h-[180px] w-full rounded-xl object-cover sm:h-[300px] xl:h-[180px]"
+                  className="h-[160px] w-full rounded-xl object-cover sm:h-[300px] xl:h-[160px]"
                 />
                 <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
-                  <h1 className="text-[20px] font-bold text-cs_dark dark:text-cs_light">
+                  <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
                     {detailEventQuery?.data?.data?.title}
                   </h1>
                   <div className="flex items-center gap-[15px]">
@@ -83,7 +83,7 @@ function DetailEvent() {
                 <img
                   src={detailEventQuery?.data?.data?.banner[0]?.url}
                   alt=""
-                  className="w-full rounded-xl object-cover sm:h-[350px] xl:h-[450px]"
+                  className="w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]"
                 />
               </div>
               <div className="space-y-10 xl:py-5 ">

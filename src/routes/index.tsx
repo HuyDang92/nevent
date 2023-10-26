@@ -33,7 +33,7 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/event-detail/:idEvent" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
-          <Route path="/event-categories/:slug" element={<Categories />} />
+          <Route path="/event-categories/:keyword" element={<Categories />} />
         </Route>
 
         {/* Giới thiệu */}
