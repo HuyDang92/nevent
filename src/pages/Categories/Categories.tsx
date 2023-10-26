@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import thumb from '~/assets/images/pro.webp';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
@@ -9,11 +8,11 @@ import ProductCard from '~/components/EventCard/EventCard';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 
 function Categories() {
-  const [isActive, setIsActive] = useState<string>('');
+  const { keyword } = useParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const categories = useGetAllCategoryQuery();
-  const event = useGetAllEventQuery({ page: currentPage, limit: 16 });
+  const event = useGetAllEventQuery({ page: currentPage, limit: 16, search: keyword });
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
 
   const handlePageChange = (selectedPage: any) => {

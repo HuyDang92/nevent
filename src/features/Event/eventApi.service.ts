@@ -34,7 +34,8 @@ export const eventApi = createApi({
     }),
 
     getAllEvent: builder.query<any, any>({
-      query: ({ page, limit }) => `/api/events/get-all?page=${page}&limit=${limit}`,
+      query: ({ page, limit, search }) =>
+        `/api/events/get-all?page=${page}&limit=${limit}${search ? '&search=' + search : ''}`,
     }),
     getEventById: builder.query<any, string>({
       query: (eventId) => `/api/events/detail/${eventId}`,
@@ -42,4 +43,10 @@ export const eventApi = createApi({
   }),
 });
 
-export const { useCreateEventMutation, useDeleteEventMutation, useGetAllEventQuery, useGetEventByIdQuery } = eventApi;
+export const {
+  useCreateEventMutation,
+  useDeleteEventMutation,
+  useGetAllEventQuery,
+  useLazyGetAllEventQuery,
+  useGetEventByIdQuery,
+} = eventApi;
