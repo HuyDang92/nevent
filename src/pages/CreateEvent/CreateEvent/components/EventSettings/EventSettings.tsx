@@ -123,15 +123,14 @@ const EventSettings = ({ setActiveStep }: Prop) => {
             </div>
           </div>
         </div>
-        <div className="w-full text-right">
-          <Button
-            // onClick={() => setActiveStep(3)}
-            className="md:w mt-5 w-full"
-            type="submit"
-            mode="dark"
-            value="Tiếp tục"
-          />
-        </div>
+        <div className="w-full text-right"></div>
+        <Button
+          // onClick={() => setActiveStep(3)}
+          className="md:w mt-5 w-full"
+          type="submit"
+          mode="dark"
+          value="Tiếp tục"
+        />
       </form>
     </>
   );

@@ -57,7 +57,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
         .required('Email không được bỏ trống')
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
-    onSubmit: async (value: IEventInfo) => {
+    onSubmit: async (value: IEventInfo, { resetForm }) => {
       console.log(value);
     },
   });
@@ -269,18 +269,17 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             </div>
           </div>
           {/* //// */}
-          <div className="w-full text-right">
-            <Button
-              onClick={() => {
-                setIsSubmitted(true);
-                // setActiveStep(1);
-              }}
-              className="md:w mt-5 w-full"
-              type="submit"
-              mode="dark"
-              value="Tiếp tục"
-            />
-          </div>
+          <div className="w-full text-right"></div>
+          <Button
+            onClick={() => {
+              setIsSubmitted(true);
+              // setActiveStep(1);
+            }}
+            className="md:w mt-5 w-full"
+            type="submit"
+            mode="dark"
+            value="Tiếp tục"
+          />
         </form>
         {/* //// */}
       </div>
