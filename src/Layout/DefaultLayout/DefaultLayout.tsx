@@ -32,7 +32,6 @@ function DefaultLayout() {
           </main>
         </div>
       </div>
-      <NavbarMobile className="fixed bottom-0 sm:hidden" />
       <Footer />
     </>
   );

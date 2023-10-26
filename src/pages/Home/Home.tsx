@@ -19,15 +19,15 @@ function Home() {
     <>
       <div className="mb-6 w-full">
         <Banner />
-        <SectionTitle value="Danh mục yêu thích" />
+        <SectionTitle value="Danh mục yêu thích" to="/event-categories" />
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {!categories.isFetching &&
             categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
-        <SectionTitle value="Sự kiện nổi bật" />
+        <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
         {event.isFetching ? <SkeletonEventHot /> : <Slide data={event.data?.data?.docs} />}
-        <SectionTitle value="Sự kiện sắp diễn ra" />
+        <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
         {event.isFetching && <SkeletonEventList />}
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
@@ -38,9 +38,11 @@ function Home() {
               </Link>
             ))}
         </div>
-        <div className="mt-5 flex justify-center">
-          <Button className="" value="Xem thêm" mode="dark" />
-        </div>
+        <Link to="/event-categories">
+          <div className="mt-5 flex justify-center">
+            <Button className="" value="Xem thêm" mode="dark" />
+          </div>
+        </Link>
       </div>
     </>
   );

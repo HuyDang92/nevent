@@ -12,6 +12,7 @@ module.exports = withMT({
         '2xs': '0.5rem',
       },
       colors: {
+        cs_grayText: "#696969",
         cs_light: '#fff',
         // cs_dark: '#32313D',
         cs_semiDark: '#2B2B2B',
@@ -22,6 +23,7 @@ module.exports = withMT({
         cs_semi_green: '#13C6B3',
         cs_purple: '#793FDF',
         cs_gray: '#B6B6B6',
+        cs_light_gray: '#F6F2F2',
         cs_input_gray: '#EEEEEE',
         cs_label_gray: '#5B5B5B',
         cs_blur_black: '#67676A',

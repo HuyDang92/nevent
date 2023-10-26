@@ -10,12 +10,18 @@ import { useGetEventByIdQuery, useGetAllEventQuery } from '~/features/Event/even
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
+import { useEffect } from 'react';
 
 function DetailEvent() {
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
   return (
     <div className="relative">
       {detailEventQuery.isFetching && <SkeletonDetailEvent />}
@@ -66,7 +72,9 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Link to={'/user/payment'}><Button className="w-full" value="Đặt vé ngay" mode="dark" /></Link>
+                  <Link to={'/user/payment'}>
+                    <Button className="w-full" value="Đặt vé ngay" mode="dark" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -209,7 +217,7 @@ function DetailEvent() {
                       </Link>
                     ))}
                 </div>
-                <div className="mt-5 flex justify-center">
+                <div className="my-4 pb-4 flex justify-center">
                   <Button className="" value="Xem thêm" mode="dark" />
                 </div>
               </div>
