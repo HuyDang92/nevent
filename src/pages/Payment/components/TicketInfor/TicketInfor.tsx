@@ -28,11 +28,8 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
   ];
   return (
     <div>
-      <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button
-          onClick={() => setActiveStep(0)}
-          className="z-10 flex cursor-pointer items-center"
-        >
+      <div className="relative  flex h-[60px] items-center border-b-[0.5px] px-5">
+        <button onClick={() => setActiveStep(0)} className="z-10 flex cursor-pointer items-center">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
         <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase md:static md:text-left">
@@ -40,7 +37,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
         </h1>
       </div>
       <div className="">
-        <Card className="bg-transparent p-1 md:hidden">
+        <Card className=" p-2 md:hidden shadow-none">
           {ticketList.map((ticket, index) => (
             <div key={index} className={`my-[15px] flex`}>
               <div className="flex w-full items-center justify-between">
@@ -50,7 +47,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                   tooltip="Tooltip here"
                 />
                 <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
-                <div className="flex border w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full md:mx-auto">
+                <div className="flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">
                   <button>-</button>
                   <span>1</span>
                   <button>+</button>
@@ -66,7 +63,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </div>
           ))}
         </Card>
-        <Card className="hidden bg-transparent md:block">
+        <Card className="hidden bg-transparent md:block shadow-none">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -97,7 +94,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                       )}
                     </td>
                     <td className="border-t border-[#eeeeee] p-4">
-                      <div className="mx-auto border flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
+                      <div className="mx-auto flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full">
                         <button>-</button>
                         <span>1</span>
                         <button>+</button>
@@ -112,7 +109,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </tbody>
           </table>
         </Card>
-        <div className="w-full text-right">
+        <div className="w-full text-right pb-3 px-3">
           <Button
             onClick={() => setActiveStep(2)}
             className="md:w mt-5 w-full"

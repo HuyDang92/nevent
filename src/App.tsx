@@ -1,3 +1,4 @@
+import NavbarMobile from './components/NavbarMobile';
 import { useLogInGoogleMutation } from './features/Auth/authApi.service';
 import { useAppSelector } from './hooks/useActionRedux';
 import AppRoutes from './routes';
@@ -25,6 +26,7 @@ function App() {
         </div>
       )}
       <AppRoutes />
+      <NavbarMobile className="fixed bottom-0 sm:hidden" />
     </div>
   );
 }

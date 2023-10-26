@@ -101,7 +101,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
         </button>
         <h1 className="absolute w-[calc(100%-40px)] md:text-left md:static text-center font-bold uppercase">Thanh toán</h1>
       </div>
-      <div className="m-4">
+      <div className="m-3">
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
             <Tab className="flex items-center" index={0}>
@@ -202,7 +202,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
           </TabsBody>
         </Tabs>
       </div>
-      <div className="w-full text-right px-5">
+      <div className="w-full text-right px-3 pb-3">
         <Button
           onClick={() => setActiveStep(4)}
           className="md:w mt-5 w-full"

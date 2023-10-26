@@ -84,7 +84,7 @@ function LogIn() {
           }}
           className="absolute left-5 top-[15%] z-10 grid w-[90%] place-content-center rounded-xl bg-white p-5 dark:bg-cs_semiDark sm:left-1/4 sm:top-[25%] sm:w-1/2 lg:static lg:bg-transparent lg:dark:bg-transparent"
         >
-          <div className="w-full space-y-5 p-3 lg:w-[400px]">
+          <div className="w-full space-y-5 p-3 sm:w-[400px]">
             <div>
               <h1 className="text-center text-lg font-extrabold text-cs_semi_green md:text-2xl">
                 CHÀO MỪNG ĐẾN NEVENT!
@@ -161,7 +161,7 @@ function LogIn() {
                 />
               </GoogleOAuthProvider>
               {/* <Button className="font-semibold " value="Google" icon="logo-google" /> */}
-              <Button className="w-[67%]" value="Facebook" icon="logo-facebook" />
+              {/* <Button className="w-[67%]" value="Facebook" icon="logo-facebook" /> */}
             </div>
             <div className="text-center">
               <span className="text-cs_dark dark:text-cs_gray">Bạn chưa có tài khoản? </span>
@@ -176,11 +176,12 @@ function LogIn() {
           initial={{ x: 400 }} // Chuyển từ bên phải vào
           animate={{ x: 0 }} // Chạy đến vị trí ban đầu
           transition={{ duration: 0.5 }}
-          className="h-full w-full p-3 lg:w-1/2"
+          className="h-full w-full lg:w-1/2 xl:p-3"
         >
           <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
         </motion.div>
       </div>
+      
     </>
   );
 }

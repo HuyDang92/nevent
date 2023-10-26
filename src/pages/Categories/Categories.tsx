@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import thumb from '~/assets/images/pro.webp';
 import { Link } from 'react-router-dom';
@@ -18,8 +18,17 @@ function Categories() {
 
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
   const handleCategoryClick = (categoryId: string) => {
     // Kiểm tra xem categoryId đã tồn tại trong mảng filterNameCate chưa
     if (filterNameCate.includes(categoryId)) {
@@ -40,15 +49,15 @@ function Categories() {
   return (
     <>
       <div className="">
-        <h1 className="text-3xl font-bold dark:text-white">Danh mục</h1>
-        <div className="mt-5 flex items-center justify-between">
+        <h1 className="text-xl font-bold dark:text-white sm:text-3xl">Danh mục</h1>
+        <div className="mt-5 items-center justify-between xl:flex">
           {/* Cate tabs */}
           <div className="flex gap-2">
             {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
                 onClick={() => handleCategoryClick(item._id)}
-                className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all ${
+                className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all dark:bg-cs_lightDark ${
                   filterNameCate.includes(item._id) ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
@@ -57,8 +66,8 @@ function Categories() {
             ))}
           </div>
           {/* Filter */}
-          <div className="hidden gap-4 transition-all sm:flex">
-            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+          <div className="gap-4 space-y-2 pt-4 transition-all sm:flex sm:space-y-0 xl:pt-0">
+            <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option value="p-2">Tất cả địa điểm</option>
@@ -66,7 +75,7 @@ function Categories() {
                 <option value="p-2">Hà nội</option>
               </select>
             </div>
-            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+            <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
               <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option value="p-2">Tất cả giá vé</option>
@@ -74,7 +83,7 @@ function Categories() {
                 <option value="p-2">Có phí</option>
               </select>
             </div>
-            <div className="flex items-center gap-1 overflow-hidden rounded-xl px-3 shadow-border-full dark:border">
+            <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option value="p-2">Tất cả ngày sắp tới</option>
@@ -92,7 +101,7 @@ function Categories() {
         {/* Product */}
         {event.isFetching && <SkeletonEventList />}
 
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 3xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-3 py-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
             event.data?.data?.docs.map((item: IEvent, index: number) => (
               <Link to={'/'} key={index}>

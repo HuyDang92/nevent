@@ -138,7 +138,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             <textarea
               name="description"
               id="description"
-              className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-full focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
+              className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light  focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
               placeholder="Nhập giới thiệu về sự kiện"
               onChange={formik.handleChange}
               value={formik.values.description}
@@ -193,7 +193,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                   <textarea
                     name="organization_desc"
                     id="organization_desc"
-                    className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-full focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
+                    className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light  focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
                     placeholder="Nhập thông tin giới thiệu"
                     onChange={formik.handleChange}
                     value={formik.values.organization_desc}
