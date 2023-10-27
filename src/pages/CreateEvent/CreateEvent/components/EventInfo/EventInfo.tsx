@@ -24,7 +24,6 @@ interface IEventInfo {
   organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
@@ -59,6 +58,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
     }),
     onSubmit: async (value: IEventInfo, { resetForm }) => {
       console.log(value);
+      setActiveStep(1);
     },
   });
   return (
@@ -115,10 +115,12 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             <span className="font-semibold dark:text-white">Logo sự kiện</span>
           </div>
           {/* //// */}
-          <div className="mt-3 grid w-full grid-cols-2 gap-2">
-            <div className="">
-              {isSubmitted && formik.errors.name && (
-                <small className="px-2 text-[12px] text-red-600">{formik.errors.name}</small>
+          <div className="mt-5 grid w-full grid-cols-2 gap-2">
+            <div className="relative">
+              {formik.errors.name && (
+                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.name}
+                </small>
               )}
               <Input
                 name="name"
@@ -130,35 +132,61 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 onChange={formik.handleChange}
               />
             </div>
-            <Input
-              name="address"
-              id="address"
-              label="Địa điểm sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.address}
-              onChange={formik.handleChange}
-            />
-            <Input
-              name="location"
-              id="location"
-              label="Địa chỉ"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.location}
-              onChange={formik.handleChange}
-            />
-            <Input
-              name="category"
-              id="category"
-              label="Danh mục sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.category}
-              onChange={formik.handleChange}
-            />
+            <div className="relative">
+              {formik.errors.address && (
+                <small className="absolute left-[130px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa điểm sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.location && (
+                <small className="absolute left-[60px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.location}
+                </small>
+              )}
+              <Input
+                name="location"
+                id="location"
+                label="Địa chỉ"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.location}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.category && (
+                <small className="absolute left-[140px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.category}
+                </small>
+              )}
+              <Input
+                name="category"
+                id="category"
+                label="Danh mục sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              />
+            </div>
           </div>
-          <div className="mt-3">
+          <div className="relative mt-5">
+            {formik.errors.description && (
+              <small className="absolute left-[130px] top-[4px] z-10 px-2 text-[12px] text-red-600">
+                {formik.errors.description}
+              </small>
+            )}
             <label htmlFor="description" className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400">
               Giới thiệu sự kiện
             </label>
@@ -201,16 +229,29 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 </div>
               </div>
               <div className="flex w-[88%] flex-col gap-2">
-                <Input
-                  name="organization_name"
-                  id="organization_name"
-                  label="Tên ban tổ chức"
-                  classNameLabel="!text-cs_label_gray !text-sm"
-                  classNameInput="!w-full"
-                  value={formik.values.organization_name}
-                  onChange={formik.handleChange}
-                />
-                <div className="">
+                <div className="relative">
+                  {formik.errors.organization_name && (
+                    <small className="absolute left-[125px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_name}
+                    </small>
+                  )}
+                  <Input
+                    name="organization_name"
+                    id="organization_name"
+                    label="Tên ban tổ chức"
+                    classNameLabel="!text-cs_label_gray !text-sm"
+                    classNameInput="!w-full"
+                    value={formik.values.organization_name}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+
+                <div className="relative">
+                  {formik.errors.organization_desc && (
+                    <small className="absolute left-[150px] top-[4px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_desc}
+                    </small>
+                  )}
                   <label
                     htmlFor="organization_desc"
                     className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400"
@@ -238,6 +279,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
               </p>
               <div className="mt-6 flex justify-between gap-5">
                 <div className="relative w-1/2">
+                  {formik.errors.organization_phone && (
+                    <small className="absolute -top-[20px] left-[60px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_phone}
+                    </small>
+                  )}
                   <Input
                     name="organization_phone"
                     id="organization_phone"
@@ -252,6 +298,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                   </div>
                 </div>
                 <div className="relative w-1/2">
+                  {formik.errors.organization_email && (
+                    <small className="absolute -top-[20px] left-[60px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_email}
+                    </small>
+                  )}
                   <Input
                     name="organization_email"
                     id="organization_email"
@@ -270,16 +321,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
           </div>
           {/* //// */}
           <div className="w-full text-right"></div>
-          <Button
-            onClick={() => {
-              setIsSubmitted(true);
-              // setActiveStep(1);
-            }}
-            className="md:w mt-5 w-full"
-            type="submit"
-            mode="dark"
-            value="Tiếp tục"
-          />
+          <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
         </form>
         {/* //// */}
       </div>

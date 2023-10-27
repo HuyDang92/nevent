@@ -25,10 +25,13 @@ const EventSettings = ({ setActiveStep }: Prop) => {
     },
     validationSchema: Yup.object({
       URL: Yup.string().required('URL sự kiện không được bỏ trống'),
-      privacy: Yup.string().required('Quyền riêng tư không được bỏ trống'),
+      privacy: Yup.string()
+        .required('Vui lòng chọn quyền riêng tư')
+        .oneOf(['public', 'private'], 'Vui lòng chọn một tùy chọn quyền riêng tư.'),
     }),
     onSubmit: async (values: IEventSettings) => {
       console.log(values);
+      setActiveStep(3);
     },
   });
   return (
@@ -44,14 +47,19 @@ const EventSettings = ({ setActiveStep }: Prop) => {
               <span className="text-sm font-semibold text-cs_label_gray dark:text-gray-400">
                 https://nevent/envent/
               </span>
-              <Input
-                placeholder="Tên đường dẫn..."
-                name="URL"
-                id="URL"
-                classNameInput="!text-sm w-[300px]"
-                value={formik.values.URL}
-                onChange={formik.handleChange}
-              />
+              <div className="relative">
+                {formik.errors.URL && (
+                  <small className="absolute -top-[20px] z-10 px-2 text-[12px] text-red-600">{formik.errors.URL}</small>
+                )}
+                <Input
+                  placeholder="Tên đường dẫn..."
+                  name="URL"
+                  id="URL"
+                  classNameInput="!text-sm w-[300px]"
+                  value={formik.values.URL}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
           </div>
           <div className="border-b-[1px] py-6 dark:border-b-gray-600">
@@ -59,6 +67,9 @@ const EventSettings = ({ setActiveStep }: Prop) => {
               <Icon name="lock-closed" className="text-xl" />
               Quyền riêng tư của sự kiện
             </h2>
+            {formik.errors.privacy && (
+              <small className="z-10 px-2 text-[12px] text-red-600">{formik.errors.privacy}</small>
+            )}
             <div className="ml-6 mt-3 flex flex-col justify-center gap-2">
               <Radio
                 label={
@@ -75,7 +86,7 @@ const EventSettings = ({ setActiveStep }: Prop) => {
                 classNameIcon="bg-gray-200 p-1 rounded-lg text-cs_label_gray text-2xl"
                 className="flex items-center gap-6"
                 classNammeInput="w-4 h-4"
-                value={formik.values.privacy}
+                value="public"
               />
               <Radio
                 label={
@@ -92,7 +103,7 @@ const EventSettings = ({ setActiveStep }: Prop) => {
                 classNameIcon="bg-gray-200 p-1 rounded-lg text-cs_label_gray text-2xl"
                 className="flex items-center gap-6"
                 classNammeInput="w-4 h-4"
-                value={formik.values.privacy}
+                value="private"
               />
             </div>
           </div>
@@ -124,13 +135,7 @@ const EventSettings = ({ setActiveStep }: Prop) => {
           </div>
         </div>
         <div className="w-full text-right"></div>
-        <Button
-          // onClick={() => setActiveStep(3)}
-          className="md:w mt-5 w-full"
-          type="submit"
-          mode="dark"
-          value="Tiếp tục"
-        />
+        <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
       </form>
     </>
   );
