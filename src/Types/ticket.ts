@@ -1,6 +1,6 @@
 interface ITicket {
   _id: string;
-  title: string; 
+  title: string;
   type: string;
   event_id: string;
   color: string;

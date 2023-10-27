@@ -7,10 +7,14 @@ interface IUserInfor {
   address: string;
 }
 
+interface INewTicket extends ITicket {
+  quantity: number;
+}
+
 interface PaymentState {
   idEvent: string;
   userInfor: IUserInfor | null;
-  ticket: ITicket[];
+  ticket: INewTicket[];
   purchase: {
     paid: boolean;
     purchaseMethod: string;
@@ -36,7 +40,28 @@ const paymentSlice = createSlice({
     addUserInfor: (state, action) => {
       state.userInfor = action.payload;
     },
+    inscreaseTicket: (state, action) => {
+      if (state.ticket.find((ticket) => ticket._id === action.payload._id)) {
+        const index = state.ticket.findIndex((ticket) => ticket._id === action.payload._id);
+        state.ticket[index].quantity += 1;
+      } else {
+        const newTicket = action.payload;
+        newTicket.quantity = 1;
+        state.ticket.push(newTicket);
+      }
+    },
+    descreaseTicket: (state, action) => {
+      if (state.ticket.find((ticket) => ticket._id === action.payload._id)) {
+        console.log('Tang so luong');
+        const index = state.ticket.findIndex((ticket) => ticket._id === action.payload._id);
+        if (state.ticket[index].quantity > 1) {
+          state.ticket[index].quantity -= 1;
+        }else{
+          state.ticket.splice(index, 1);
+        }
+      }
+    },
   },
 });
-export const { addUserInfor } = paymentSlice.actions;
+export const { addUserInfor, inscreaseTicket, descreaseTicket } = paymentSlice.actions;
 export default paymentSlice.reducer;
