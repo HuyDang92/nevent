@@ -62,9 +62,9 @@ const AddTimeline = ({ handler }: Prop) => {
           <h1 className="font-semibold text-cs_semi_green">Ngày tổ chức</h1>
           <div className="flex flex-wrap justify-between gap-[40px]">
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
-              <span className="w-1/5">Bắt đầu:</span>
+              <span className="w-1/5 dark:text-gray-400">Bắt đầu:</span>
               <Input
-                classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                 className="!w-4/5"
                 name="beginDate"
                 value={eventTimelineFormik.values.beginDate}
@@ -72,9 +72,9 @@ const AddTimeline = ({ handler }: Prop) => {
               />
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
-              <span className="w-1/5">Thời gian:</span>
+              <span className="w-1/5 dark:text-gray-400">Thời gian:</span>
               <Input
-                classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                 className="!w-4/5"
                 name="beginTime"
                 value={eventTimelineFormik.values.beginTime}
@@ -82,9 +82,9 @@ const AddTimeline = ({ handler }: Prop) => {
               />
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
-              <span className="w-1/5">Đến:</span>
+              <span className="w-1/5 dark:text-gray-400">Đến:</span>
               <Input
-                classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                 className="!w-4/5"
                 name="endDate"
                 value={eventTimelineFormik.values.endDate}
@@ -92,9 +92,9 @@ const AddTimeline = ({ handler }: Prop) => {
               />
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
-              <span className="w-1/5">Thời gian:</span>
+              <span className="w-1/5 dark:text-gray-400">Thời gian:</span>
               <Input
-                classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                 className="!w-4/5"
                 name="endTime"
                 value={eventTimelineFormik.values.endTime}
@@ -104,23 +104,23 @@ const AddTimeline = ({ handler }: Prop) => {
           </div>
           <h1 className="font-semibold text-cs_semi_green">Loại vé</h1>
           {addTicket ? (
-            <form className="rounded-lg bg-cs_light_gray p-5">
+            <form className="rounded-lg bg-cs_light_gray p-5 dark:bg-cs_semiDark dark:shadow-border-full">
               <div className="flex flex-col gap-[18px]">
                 <div className="w-full">
-                  <span>Tên loại vé</span>
+                  <span className="dark:text-gray-400">Tên loại vé</span>
                   <Input
-                    classNameInput="w-full border-2"
+                    classNameInput="w-full border-2 dark:border-none"
                     name="title"
                     value={ticketFormik.values.title}
                     onChange={ticketFormik.handleChange}
                   />
                 </div>
-                <div className="flex h-[140px] rounded-xl border-[1px] border-[#e8e8e8] bg-cs_light p-5">
+                <div className="flex h-[140px] rounded-xl border-[1px] border-[#e8e8e8] bg-cs_light p-5 dark:border-none dark:bg-[#30302f]">
                   <div className="flex w-1/4 flex-col justify-between px-3">
-                    <span>Giá (VND)</span>
+                    <span className="dark:text-gray-400">Giá (VND)</span>
                     <div>
                       <input id="freeTicket" type="checkbox" />
-                      <label className="ml-2.5" htmlFor="freeTicket">
+                      <label className="ml-2.5 dark:text-gray-400" htmlFor="freeTicket">
                         Vé miễn phí
                       </label>
                     </div>
@@ -129,53 +129,57 @@ const AddTimeline = ({ handler }: Prop) => {
                       name="price"
                       value={ticketFormik.values.price}
                       onChange={ticketFormik.handleChange}
-                      classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                      classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                     />
                   </div>
                   <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
-                    <span>Tổng số lượng vé</span>
+                    <span className="dark:text-gray-400">Tổng số lượng vé</span>
                     <Input
                       type="number"
                       name="quantity"
                       value={ticketFormik.values.quantity}
                       onChange={ticketFormik.handleChange}
-                      classNameInput="w-full border-2 shadow-none border-[#cccccc]"
+                      classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
                     />
                   </div>
                   <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
-                    <span>Số lượng vé tối thiểu cho một lần mua</span>
-                    <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
+                    <span className="dark:text-gray-400">Số lượng vé tối thiểu cho một lần mua</span>
+                    <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
                   </div>
                   <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
-                    <span>Số lượng vé tối đa cho một lần mua</span>
-                    <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
+                    <span className="dark:text-gray-400">Số lượng vé tối đa cho một lần mua</span>
+                    <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
                   </div>
                 </div>
                 <div className="flex">
                   <div className="w-2/3 border-r-[1px] border-[#CDC0C0] pr-6">
                     <div className="mb-[18px] flex items-center justify-between">
-                      <span>Ngày bắt đầu bán vé: </span>
-                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
-                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
+                      <span className="dark:text-gray-400">Ngày bắt đầu bán vé: </span>
+                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
+                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>Ngày bắt đầu bán vé: </span>
-                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
-                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc]" />
+                      <span className="dark:text-gray-400">Ngày bắt đầu bán vé: </span>
+                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
+                      <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
                     </div>
                   </div>
                   <div className="flex w-1/3 flex-col gap-3 px-6">
-                    <span>Màu vé ( Phân biệt vé )</span>
-                    <input type="color" className="w-[150px] rounded-lg border-none outline-none" />
+                    <span className="dark:text-gray-400">Màu vé ( Phân biệt vé )</span>
+                    <input type="color" className="w-[150px] rounded-lg border-none bg-transparent outline-none" />
                   </div>
                 </div>
                 <div className="flex gap-5">
-                  <textarea name="" placeholder="Mô tả loại vé" className="h-[100px] w-2/3 rounded-xl p-4"></textarea>
-                  <div className="w-1/3 rounded-xl bg-cs_light"></div>
+                  <textarea
+                    name=""
+                    placeholder="Mô tả loại vé"
+                    className="h-[100px] w-2/3 rounded-xl p-4 focus:outline-none dark:bg-cs_formDark"
+                  ></textarea>
+                  <div className="w-1/3 rounded-xl bg-cs_light dark:bg-cs_formDark"></div>
                 </div>
                 <div className="flex justify-between gap-5">
                   <Button onClick={handleSubmitAddTicket} value="Hoàn thành" mode="dark" className="w-1/2" />
-                  <Button type="reset" value="Hủy" className="w-1/2" />
+                  <Button type="reset" value="Hủy" className="w-1/2 dark:!bg-cs_formDark" />
                 </div>
               </div>
             </form>
