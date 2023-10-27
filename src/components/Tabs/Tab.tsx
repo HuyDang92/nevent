@@ -1,8 +1,11 @@
 import { TabProp } from '~/Types/components/tab';
-const Tab = ({ className, index, children, activeTab, setActiveTab, width }: TabProp) => {
+const Tab = ({ className, onClick, index, children, activeTab, setActiveTab, width }: TabProp) => {
   return (
     <li
-      onClick={() => setActiveTab && setActiveTab(index)}
+      onClick={() => {
+        onClick && onClick();
+        setActiveTab && setActiveTab(index);
+      }}
       style={{ width: `${width}%` }}
       className={`h-10 rounded-[15px] md:border cursor-pointer md:px-6 text-[12px] md:h-12 md:text-[18px] ${
         activeTab === index ? 'text-white' : ''

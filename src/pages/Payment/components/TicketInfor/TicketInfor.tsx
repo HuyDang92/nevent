@@ -2,33 +2,65 @@ import { Card } from '@material-tailwind/react';
 import TicketCard from '../TicketCard';
 import Icon from '~/components/customs/Icon';
 import Button from '~/components/customs/Button';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { descreaseTicket, inscreaseTicket } from '~/features/Payment/paymentSlice';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
 const TicketInfor = ({ setActiveStep }: Prop) => {
+  const dispatch = useAppDispatch();
   const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Giá vé'];
   const conVe = false;
-  const ticketList = [
+  const tickets = useAppSelector((state) => state.payment.ticket);
+  const eventTicket = [
     {
+      _id: '1',
       title: 'VVip',
+      type: '',
+      event_id: 'string',
+      color: 'red',
       price: 4600000,
     },
     {
+      _id: '2',
       title: 'Offical Ticket',
+      type: '',
+      event_id: 'string',
+      color: 'red',
       price: 4600000,
     },
     {
-      title: 'VIP',
+      _id: '3',
+      title: 'Vip',
+      type: '',
+      event_id: 'string',
+      color: 'red',
       price: 4600000,
     },
     {
+      _id: '4',
+      type: '',
+      event_id: 'string',
+      color: 'red',
       title: 'Ghost Ticket',
       price: 4600000,
     },
   ];
+
+  // Functions
+
+  const inscreaseTicketQuantity = (ticket: ITicket) => {
+    dispatch(inscreaseTicket(ticket));
+  };
+
+  const descreaseTicketQuantity = (ticket: ITicket) => {
+    dispatch(descreaseTicket(ticket));
+  };
+
   return (
     <div>
       <div className="relative  flex h-[60px] items-center border-b-[0.5px] px-5">
+
         <button onClick={() => setActiveStep(0)} className="z-10 flex cursor-pointer items-center">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
@@ -37,7 +69,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
         </h1>
       </div>
       <div className="">
-        <Card className=" p-2 md:hidden shadow-none">
+<Card className=" p-2 md:hidden shadow-none">
           {ticketList.map((ticket, index) => (
             <div key={index} className={`my-[15px] flex`}>
               <div className="flex w-full items-center justify-between">
@@ -64,6 +96,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
           ))}
         </Card>
         <Card className="hidden bg-transparent md:block shadow-none">
+
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -80,10 +113,11 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
               </tr>
             </thead>
             <tbody>
-              {ticketList.map((ticket, index) => {
+              {eventTicket.map((ticket: ITicket) => {
+                const ExistedTicket = tickets.find((t) => t._id === ticket._id);
                 return (
-                  <tr key={index}>
-                    <td className="border-t border-[#eeeeee] p-4">
+<tr key={ticket._id}>
+                    <td className="border-t border-cs_gray p-4">
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
                     <td className="border-t border-[#eeeeee] p-4">
@@ -93,11 +127,11 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
                       )}
                     </td>
-                    <td className="border-t border-[#eeeeee] p-4">
-                      <div className="mx-auto flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full">
-                        <button>-</button>
-                        <span>1</span>
-                        <button>+</button>
+<td className="border-t border-cs_gray p-4">
+                      <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
+                        <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
+                        <span>{ExistedTicket ? ExistedTicket.quantity : 0}</span>
+                        <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
                       </div>
                     </td>
                     <td className="border-t border-[#eeeeee] p-4 text-right font-bold dark:text-cs_light">

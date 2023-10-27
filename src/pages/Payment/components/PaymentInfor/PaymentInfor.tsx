@@ -3,13 +3,16 @@ import TicketCard from '../TicketCard';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
 import { Icon as Iconify } from '@iconify/react';
+import { useAppSelector } from '~/hooks/useActionRedux';
 interface Prop {
   className?: string;
   setActiveStep?: React.Dispatch<React.SetStateAction<number>>;
 }
 const PaymentInfor = ({ className, setActiveStep }: Prop) => {
+  const tickets = useAppSelector((state) => state.payment.ticket);
+  const userInfor = useAppSelector((state) => state.payment.userInfor);
   return (
-    <div
+<div
       className={`rounded-[12px] bg-cs_light p-4 pt-2 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[30%] ${className}`}
     >
       <div className="relative flex h-[50px] items-center border-b-[0.5px] px-5">
@@ -37,24 +40,26 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
           <p className="w-[95%]">Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Tân Bình, Hồ Chí Minh</p>
         </div>
       </div>
+      <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
+        <h3 className="text-xl font-bold">Thông tin người nhận</h3>
+        <span>{userInfor?.fullName}</span>
+        <span>{userInfor?.email}</span>
+        <span>{userInfor?.phone}</span>
+        <span>{userInfor?.address}</span>
+      </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">
-        {/* item */}
-        <div className="flex items-center justify-between">
-          <div className="flex w-[28%] items-center gap-3">
-            <TicketCard title="VVip" tooltip="Tooltip here" />
-            <span className="font-bold text-cs_gray"> x2 </span>
+        {tickets?.map((ticket) => (
+          <div key={ticket._id} className="flex items-center justify-between">
+            <div className="flex w-[28%] items-center gap-3">
+              <TicketCard title={ticket.title} tooltip="Tooltip here" />
+              <span className="font-bold text-cs_gray"> x{ticket.quantity} </span>
+            </div>
+            <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
+              {(ticket.quantity * ticket.price).toLocaleString('vi')}đ
+            </span>
           </div>
-          <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">9.200.000đ</span>
-        </div>
-        {/* item */}
-        <div className="flex items-center justify-between">
-          <div className="flex w-[28%] items-center gap-3">
-            <TicketCard title="VVip" tooltip="Tooltip here" />
-            <span className="font-bold text-cs_gray"> x2 </span>
-          </div>
-          <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">9.200.000đ</span>
-        </div>
+        ))}
       </div>
       {/* /// */}
       <div className="border-b-[0.5px] py-4">
