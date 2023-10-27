@@ -25,6 +25,8 @@ interface IEventInfo {
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  console.log(selectedFile);
+
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
     initialValues: {
@@ -54,9 +56,9 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
       organization_email: Yup.string()
         .required('Email không được bỏ trống')
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
+        .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
-    onSubmit: async (value: IEventInfo, { resetForm }) => {
+    onSubmit: async (value: IEventInfo) => {
       console.log(value);
       setActiveStep(1);
     },
