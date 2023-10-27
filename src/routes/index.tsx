@@ -21,6 +21,7 @@ import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
 import EventManage from '~/pages/CreateEvent/EventManage';
 import CreateEvent from '~/pages/CreateEvent/CreateEvent';
 import Organizer from '~/pages/Organizer';
+import SearchMobile from '~/pages/SearchMobile';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -34,6 +35,7 @@ export default function AppRoutes() {
           <Route path="/event-detail/:idEvent" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
           <Route path="/event-categories/:keyword" element={<Categories />} />
+          <Route path="/search" element={<SearchMobile />} />
         </Route>
 
         {/* Giới thiệu */}
