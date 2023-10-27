@@ -20,7 +20,7 @@ const dataNavigation = [
     title: 'Danh mục',
   },
   {
-    link: '/test2',
+    link: '/search',
     icon: 'search',
     title: 'Tìm kiếm',
   },

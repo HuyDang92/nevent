@@ -48,7 +48,9 @@ function Categories() {
   return (
     <>
       <div className="">
-        <h1 className="text-xl font-bold dark:text-white sm:text-3xl">Danh mục</h1>
+        <h1 className="text-xl font-bold dark:text-white sm:text-3xl">
+          {keyword ? `Tìm kiếm "${keyword}"` : 'Danh mục'}
+        </h1>
         <div className="mt-5 items-center justify-between xl:flex">
           {/* Cate tabs */}
           <div className="flex gap-2">
