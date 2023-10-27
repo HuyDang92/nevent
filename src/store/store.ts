@@ -8,20 +8,24 @@ import { authApi } from '~/features/Auth/authApi.service';
 import { rtkQueryErrorLogger } from './middleware';
 import { eventApi } from '~/features/Event/eventApi.service';
 import { categoryApi } from '~/features/Category/categoryApi.service';
+import paymentSlice from '~/features/Payment/paymentSlice';
+import { bankApi } from '~/features/Payment/bankApi.service';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth','payment'],
 };
 
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
+  [bankApi.reducerPath]: bankApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
   auth: authSlice,
+  payment: paymentSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -32,13 +36,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(
-      authApi.middleware,
-      categoryApi.middleware,
-      eventApi.middleware,
-      uploadApi.middleware,
-      rtkQueryErrorLogger,
-    ),
+    }).concat(authApi.middleware, categoryApi.middleware, eventApi.middleware, uploadApi.middleware, bankApi.middleware, rtkQueryErrorLogger),
+
 
   devTools: import.meta.env.MODE !== 'production',
 });

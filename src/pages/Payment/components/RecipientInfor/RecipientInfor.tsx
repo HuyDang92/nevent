@@ -1,21 +1,40 @@
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { useAppSelector } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import * as Yup from 'yup';
+import { addUserInfor } from '~/features/Payment/paymentSlice';
 interface Props {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
 const RecipientInfor = ({ setActiveStep }: Props) => {
+  const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
+  const userInfor = useAppSelector((state) => state.payment.userInfor);
   const formik = useFormik({
-    initialValues: {
-      fullName: auth?.currentUser?.fullName ?? '',
-      email: auth?.currentUser?.email ?? '',
-      phone: auth?.currentUser?.phone ?? '',
-      address: auth?.currentUser?.address ?? '',
-    },
+    initialValues: userInfor
+      ? userInfor
+      : {
+          fullName: auth?.currentUser?.fullName ?? '',
+          email: auth?.currentUser?.email ?? '',
+          phone: auth?.currentUser?.phone ?? '',
+          address: auth?.currentUser?.address ?? '',
+        },
+    validationSchema: Yup.object({
+      fullName: Yup.string().required('Họ và tên không được bỏ trống'),
+      email: Yup.string()
+        .required('Email không được bỏ trống')
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
+      phone: Yup.string().required('Số điện thoại không được bỏ trống'),
+      address: Yup.string().required('Địa chỉ không được bỏ trống'),
+    }),
     onSubmit(values) {
-      console.log(values);
+      try {
+        dispatch(addUserInfor(values));
+        setActiveStep(1);
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (
@@ -28,6 +47,9 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
       <div className="p-4">
         <form onSubmit={formik.handleSubmit} className="flex flex-wrap gap-4">
           <div className="w-full md:w-[calc(50%-8px)]">
+            {formik.errors.fullName && (
+              <small className="px-2 text-[12px] text-red-600">{formik.errors.fullName}</small>
+            )}
             <Input
               id="fullName"
               name="fullName"
@@ -38,6 +60,7 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
             />
           </div>
           <div className="w-full md:w-[calc(50%-8px)]">
+            {formik.errors.email && <small className="px-2 text-[12px] text-red-600">{formik.errors.email}</small>}
             <Input
               id="email"
               name="email"
@@ -48,6 +71,7 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
             />
           </div>
           <div className="w-full md:w-[calc(50%-8px)]">
+            {formik.errors.phone && <small className="px-2 text-[12px] text-red-600">{formik.errors.phone}</small>}
             <Input
               id="phone"
               name="phone"
@@ -58,6 +82,7 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
             />
           </div>
           <div className="w-full md:w-[calc(50%-8px)]">
+            {formik.errors.address && <small className="px-2 text-[12px] text-red-600">{formik.errors.address}</small>}
             <Input
               name="address"
               value={formik.values.address}
@@ -68,13 +93,7 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
             />
           </div>
           <div className="w-full text-right">
-            <Button
-              onClick={() => setActiveStep(1)}
-              className="md:w w-full"
-              type="submit"
-              mode="dark"
-              value="Xác nhận"
-            />
+            <Button className="md:w w-full" type="submit" mode="dark" value="Xác nhận" />
           </div>
         </form>
       </div>

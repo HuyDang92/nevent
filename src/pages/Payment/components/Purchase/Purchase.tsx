@@ -3,112 +3,30 @@ import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs'
 import Icon from '~/components/customs/Icon';
 import { Icon as Iconify } from '@iconify/react';
 import Button from '~/components/customs/Button';
+import { useGetBankListQuery } from '~/features/Payment/bankApi.service';
+import Skeleton from 'react-loading-skeleton';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
 const Purchase = ({ setActiveStep }: Prop) => {
   const [method, setMethod] = useState(0);
-  const bankList = [
-    {
-      id: 1,
-      name: 'Ngân hàng TMCP An Bình',
-      code: 'ABB',
-      bin: '970425',
-      shortName: 'ABBANK',
-      logo: 'https://api.vietqr.io/img/ABB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 2,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 3,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 4,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 5,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 6,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 7,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-    {
-      id: 8,
-      name: 'Ngân hàng TMCP Á Châu',
-      code: 'ACB',
-      bin: '970416',
-      shortName: 'ACB',
-      logo: 'https://api.vietqr.io/img/ACB.png',
-      transferSupported: 1,
-      lookupSupported: 1,
-    },
-  ];
+  const { isFetching, data, isError } = useGetBankListQuery();
+  const bankList = data?.data;
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-      <button
-          onClick={() => setActiveStep(1)}
-          className="z-10 flex cursor-pointer items-center"
-        >
+        <button onClick={() => setActiveStep(1)} className="z-10 flex cursor-pointer items-center">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
-        <h1 className="absolute w-[calc(100%-40px)] md:text-left md:static text-center font-bold uppercase">Thanh toán</h1>
+        <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase md:static md:text-left">
+          Thanh toán
+        </h1>
       </div>
       <div className="m-3">
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
-            <Tab className="flex items-center" index={0}>
-              <div
-                className="flex w-full items-center justify-center gap-[10px] md:justify-normal"
-                onClick={() => setMethod(0)}
-              >
+            <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
+              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 0 ? true : false}
@@ -120,11 +38,8 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <span className="hidden md:block text-sm">Thẻ tín dụng</span>
               </div>
             </Tab>
-            <Tab className="flex items-center" index={1}>
-              <div
-                className="flex w-full items-center justify-center gap-[10px] md:justify-normal"
-                onClick={() => setMethod(1)}
-              >
+            <Tab onClick={() => setMethod(1)} className="flex items-center" index={1}>
+              <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 1 ? true : false}
@@ -136,11 +51,8 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <span className="hidden md:block text-sm">Internet Banking</span>
               </div>
             </Tab>
-            <Tab className="flex items-center" index={2}>
-              <div
-                className="flex w-full items-center justify-center gap-[10px] md:justify-normal"
-                onClick={() => setMethod(2)}
-              >
+            <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
+              <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 2 ? true : false}
@@ -152,11 +64,8 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <span className="hidden md:block">MoMo</span>
               </div>
             </Tab>
-            <Tab className="flex items-center" index={3}>
-              <div
-                className="flex w-full items-center justify-center gap-[10px] md:justify-normal"
-                onClick={() => setMethod(3)}
-              >
+            <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
+              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 3 ? true : false}
@@ -177,14 +86,31 @@ const Purchase = ({ setActiveStep }: Prop) => {
             </TabsContent>
             <TabsContent index={1}>
               <div className="flex flex-wrap gap-[15px] p-1 md:p-5">
-                {bankList?.map((bank) => (
-                  <div
-                    key={bank.id}
-                    className="flex h-[100px] w-[calc(100%/2-7.5px)] cursor-pointer items-center justify-between rounded-md border-[1px] md:w-[calc(100%/6-12.5px)] md:p-4"
-                  >
-                    <img src={bank.logo} alt="" />
-                  </div>
-                ))}
+                {isFetching && (
+                  <>
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                    <Skeleton className="h-[100px] w-[calc(100%/2-7.5px)] rounded-md md:w-[calc(100%/6-12.5px)] md:p-4" />
+                  </>
+                )}
+                {!isFetching && (
+                  <>
+                    {bankList?.map((bank) => (
+                      <div
+                        key={bank.id}
+                        className="grid h-[100px] w-[calc(100%/2-7.5px)] cursor-pointer place-items-center rounded-md border-[1px] md:w-[calc(100%/6-12.5px)] md:p-4"
+                      >
+                        <img src={bank.logo} alt="" />
+                      </div>
+                    ))}
+                  </>
+                )}
+                {isError && <div>Something went wrong</div>}
               </div>
             </TabsContent>
             <TabsContent index={2} className="p-5">

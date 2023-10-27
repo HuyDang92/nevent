@@ -19,6 +19,7 @@ export interface TabProp {
   width?: number;
   setActiveTab?: (index: number) => void;
   children?: React.ReactNode;
+  onClick?: () => void;
 }
 
 export interface TabsBodyProp {
