@@ -12,8 +12,10 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
   const tickets = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   return (
-    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light md:w-[30%] ${className}`}>
-      <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
+<div
+      className={`rounded-[12px] bg-cs_light p-4 pt-2 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[30%] ${className}`}
+    >
+      <div className="relative flex h-[50px] items-center border-b-[0.5px] px-5">
         <button
           onClick={() => setActiveStep && setActiveStep(2)}
           className="z-10 flex cursor-pointer items-center md:hidden"

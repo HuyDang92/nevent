@@ -5,7 +5,7 @@ import SideBar from '../components/SideBar';
 import Footer from '../components/Footer';
 import NavbarMobile from '~/components/NavbarMobile';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
-import { motion } from 'framer-motion';
+import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 
 function DefaultLayout() {
   const { width } = useCurrentViewportView();
@@ -20,13 +20,11 @@ function DefaultLayout() {
       <div className="relative">
         <Header />
         <div className={`mx-auto  flex`}>
-          <motion.aside
-            className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[15%]'} hidden transition-all sm:block `}
-          >
+          <aside className={`${isOpenSideBar ? 'w-[5%] min-w-[80px]' : 'w-[15%]'} hidden transition-all sm:block `}>
             <SideBar open={isOpenSideBar} setOpen={setIsOpenSideBar} />
-          </motion.aside>
+          </aside>
           <main
-            className={`mx-1 my-4 rounded-2xl bg-cs_light px-2 py-2 shadow-border-light dark:bg-cs_lightDark sm:mx-0 sm:px-4 sm:py-4 ${
+            className={`mx-1 my-5 rounded-2xl bg-cs_light px-2 py-2 shadow-border-full dark:bg-cs_lightDark sm:mx-0 sm:px-4 sm:py-4 ${
               isOpenSideBar ? 'w-full sm:w-[95%]' : 'w-[85%]'
             }`}
           >
@@ -34,7 +32,6 @@ function DefaultLayout() {
           </main>
         </div>
       </div>
-      <NavbarMobile className="fixed bottom-0 sm:hidden" />
       <Footer />
     </>
   );

@@ -59,7 +59,8 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
 
   return (
     <div>
-      <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
+      <div className="relative  flex h-[60px] items-center border-b-[0.5px] px-5">
+
         <button onClick={() => setActiveStep(0)} className="z-10 flex cursor-pointer items-center">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
@@ -68,18 +69,17 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
         </h1>
       </div>
       <div className="">
-        {/* Mobile */}
-        <Card className="bg-transparent p-1 md:hidden">
-          {eventTicket.map((ticket, index) => (
+<Card className=" p-2 md:hidden shadow-none">
+          {ticketList.map((ticket, index) => (
             <div key={index} className={`my-[15px] flex`}>
               <div className="flex w-full items-center justify-between">
                 <TicketCard
-                  className={`!px-1 ${conVe ? '' : '!bg-cs_gray'}`}
+                  className={`!px-1 ${conVe ? '' : '!bg-[#eeeeee]'}`}
                   title={ticket.title}
                   tooltip="Tooltip here"
                 />
                 <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
-                <div className="flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full md:mx-auto">
+                <div className="flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">
                   <button>-</button>
                   <span>1</span>
                   <button>+</button>
@@ -95,8 +95,8 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </div>
           ))}
         </Card>
-        {/* Desktop */}
-        <Card className="hidden bg-transparent p-4 md:block">
+        <Card className="hidden bg-transparent md:block shadow-none">
+
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -116,25 +116,25 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
               {eventTicket.map((ticket: ITicket) => {
                 const ExistedTicket = tickets.find((t) => t._id === ticket._id);
                 return (
-                  <tr key={ticket._id}>
+<tr key={ticket._id}>
                     <td className="border-t border-cs_gray p-4">
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eeeeee] p-4">
                       {conVe ? (
                         <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
                       ) : (
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
                       )}
                     </td>
-                    <td className="border-t border-cs_gray p-4">
+<td className="border-t border-cs_gray p-4">
                       <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
                         <span>{ExistedTicket ? ExistedTicket.quantity : 0}</span>
                         <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
                       </div>
                     </td>
-                    <td className="border-t border-cs_gray p-4 text-right font-bold dark:text-cs_light">
+                    <td className="border-t border-[#eeeeee] p-4 text-right font-bold dark:text-cs_light">
                       {ticket.price?.toLocaleString('vi')} VNĐ
                     </td>
                   </tr>
@@ -143,7 +143,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </tbody>
           </table>
         </Card>
-        <div className="w-full text-right">
+        <div className="w-full text-right pb-3 px-3">
           <Button
             onClick={() => setActiveStep(2)}
             className="md:w mt-5 w-full"

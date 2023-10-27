@@ -5,12 +5,16 @@ interface IUserField {
   fullName: string;
   phone: string;
   address: string;
-  avatar: string;
+  avatar: {
+    url: string;
+  };
   role: {
     id: string;
     name: string;
   };
-  coverImage: string;
+  coverImage: {
+    url: string;
+  };
   createdAt: string;
   updatedAt: string;
 }

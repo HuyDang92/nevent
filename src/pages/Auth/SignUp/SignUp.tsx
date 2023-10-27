@@ -2,20 +2,20 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import AuthImage from '~/assets/images/bgLogin.webp';
 import { Link, useNavigate } from 'react-router-dom';
-import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
 import { motion } from 'framer-motion';
 import { useState, useMemo, useEffect } from 'react';
-import { useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
+import { useLogInGoogleMutation, useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { errorNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import logo from '~/assets/images/logo.png';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 interface ISignUp {
   name: string;
@@ -30,6 +30,7 @@ function LogIn() {
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [signUp, { data, isError, isLoading, error, isSuccess }] = useSignUpWithEmailMutation();
+  const [loginGoogle] = useLogInGoogleMutation();
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -187,8 +188,19 @@ function LogIn() {
               <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
             </div>
             <div className="flex justify-center gap-1">
-              <Button className="font-semibold dark:bg-cs_formDark" value="Google" icon="logo-google" />
-              <Button className="dark:bg-cs_formDark" value="Facebook" icon="logo-facebook" />
+              <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    loginGoogle({ accessToken: credentialResponse.credential });
+                  }}
+                  onError={() => {
+                    console.log('Login Failed');
+                  }}
+                  // useOneTap
+                />
+              </GoogleOAuthProvider>
+              {/* <Button className="font-semibold dark:bg-cs_formDark" value="Google" icon="logo-google" />
+              <Button className="dark:bg-cs_formDark" value="Facebook" icon="logo-facebook" /> */}
             </div>
             <div className="text-center">
               <span className="text-cs_dark dark:text-cs_gray ">Bạn đã có tài khoản? </span>
@@ -208,7 +220,7 @@ function LogIn() {
             damping: 15, // Độ nảy của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
             stiffness: 100, // Độ cứng của rung lắc (điều chỉnh để phù hợp với mong muốn của bạn)
           }}
-          className="h-full w-full p-3 lg:w-1/2"
+          className="h-full w-full lg:w-1/2 xl:p-3"
         >
           <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
         </motion.div>

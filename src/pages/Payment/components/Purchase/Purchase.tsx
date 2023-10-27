@@ -22,7 +22,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
           Thanh toán
         </h1>
       </div>
-      <div className="m-4">
+      <div className="m-3">
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
             <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
@@ -35,7 +35,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                   name="payment"
                 />
                 <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Thẻ tín dụng</span>
+                <span className="hidden md:block text-sm">Thẻ tín dụng</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(1)} className="flex items-center" index={1}>
@@ -48,7 +48,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                   name="payment"
                 />
                 <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Internet Banking</span>
+                <span className="hidden md:block text-sm">Internet Banking</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
@@ -128,7 +128,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
           </TabsBody>
         </Tabs>
       </div>
-      <div className="w-full text-right">
+      <div className="w-full text-right px-3 pb-3">
         <Button
           onClick={() => setActiveStep(4)}
           className="md:w mt-5 w-full"
