@@ -60,7 +60,6 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
   return (
     <div>
       <div className="relative  flex h-[60px] items-center border-b-[0.5px] px-5">
-
         <button onClick={() => setActiveStep(0)} className="z-10 flex cursor-pointer items-center">
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
@@ -69,8 +68,8 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
         </h1>
       </div>
       <div className="">
-<Card className=" p-2 md:hidden shadow-none">
-          {ticketList.map((ticket, index) => (
+        <Card className=" p-2 shadow-none md:hidden">
+          {[]?.map((ticket: any, index) => (
             <div key={index} className={`my-[15px] flex`}>
               <div className="flex w-full items-center justify-between">
                 <TicketCard
@@ -95,8 +94,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </div>
           ))}
         </Card>
-        <Card className="hidden bg-transparent md:block shadow-none">
-
+        <Card className="hidden bg-transparent shadow-none md:block">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -116,7 +114,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
               {eventTicket.map((ticket: ITicket) => {
                 const ExistedTicket = tickets.find((t) => t._id === ticket._id);
                 return (
-<tr key={ticket._id}>
+                  <tr key={ticket._id}>
                     <td className="border-t border-cs_gray p-4">
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
@@ -127,7 +125,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
                       )}
                     </td>
-<td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-cs_gray p-4">
                       <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
                         <span>{ExistedTicket ? ExistedTicket.quantity : 0}</span>
@@ -143,7 +141,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
             </tbody>
           </table>
         </Card>
-        <div className="w-full text-right pb-3 px-3">
+        <div className="w-full px-3 pb-3 text-right">
           <Button
             onClick={() => setActiveStep(2)}
             className="md:w mt-5 w-full"

@@ -58,7 +58,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
         />
       </div>
       <div
-        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light ${
+        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light border dark:bg-cs_lightDark ${
           value === '' ? 'h-0 ' : 'max-h-60 p-3'
         }  space-y-2 shadow-border-full transition-all`}
       >
@@ -71,16 +71,19 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
 
           <span>Tìm kiếm sự kiện "{value}"</span>
         </div>
+        {result.data?.data?.docs?.length === 0 && (
+          <div className="py-2 text-center text-cs_lightDark">Không tìm thấy kết quả</div>
+        )}
         {!result.isFetching &&
           result.data?.data?.docs?.map((event: IEvent) => (
             <Link
               onClick={() => setValue('')}
               to={`/event-detail/${event?._id}`}
-              className="flex gap-2 rounded-lg p-1 transition-all hover:bg-[#eee]"
+              className="flex gap-2 rounded-lg p-1 transition-all hover:bg-[#eee] dark:hover:bg-cs_formDark"
             >
               <img src={event?.banner[0]?.url} alt="" className="h-[3.8rem] w-[25%] rounded-md object-cover" />
               <div className="">
-                <p className="line-clamp-2 text-sm">{event.title}</p>
+                <p className="line-clamp-2 text-sm dark:text-cs_light">{event.title}</p>
                 <p className="flex gap-2 pt-1 text-xs text-cs_grayText">
                   <span className="flex items-center gap-1">
                     <Icon name="location-outline" />
