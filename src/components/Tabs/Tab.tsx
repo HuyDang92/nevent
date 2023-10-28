@@ -7,7 +7,7 @@ const Tab = ({ className, onClick, index, children, activeTab, setActiveTab, wid
         setActiveTab && setActiveTab(index);
       }}
       style={{ width: `${width}%` }}
-      className={`h-10 rounded-[15px] md:border cursor-pointer md:px-6 text-[12px] md:h-12 md:text-[18px] ${
+      className={`h-10 cursor-pointer rounded-[15px] text-[12px] md:h-12 md:border md:px-6 md:text-[18px] ${
         activeTab === index ? 'text-white' : ''
       } z-10 ${className}`}
     >

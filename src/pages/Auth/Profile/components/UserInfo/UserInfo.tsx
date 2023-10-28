@@ -48,7 +48,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
   return (
     <div className={`${className}`}>
       {result.isLoading && <Loading />}
-      <h1 className="text-2xl font-bold">Thông tin tài khoản</h1>
+      <h1 className="text-xl font-bold">Thông tin tài khoản</h1>
       <form onSubmit={formik.handleSubmit} className="flex-wrap gap-5 sm:flex">
         <div className="w-full md:w-[calc(50%-20px)]">
           <Input
