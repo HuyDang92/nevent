@@ -14,6 +14,9 @@ import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { useParams } from 'react-router-dom';
+import MyTicket from './components/MyTicket';
+import History from './components/History';
+import Notifycation from './components/Notifycation';
 interface ProfileProps {
   className?: string;
 }
@@ -62,7 +65,7 @@ const Profile: React.FC<ProfileProps> = () => {
           />
         )}
         {imagePreviewUrlCover && (
-          <img className="h-[200px] w-full rounded-xl object-cover" src={imagePreviewUrlCover} alt="" />
+          <img className="h-[180px] w-full rounded-xl object-cover sm:h-[200px]" src={imagePreviewUrlCover} alt="" />
         )}
         <div className="absolute ml-5 flex -translate-y-[75%] items-start gap-4 md:ml-[30px]">
           <div className="relative">
@@ -128,12 +131,12 @@ const Profile: React.FC<ProfileProps> = () => {
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
             </Tab>
             <Tab className="flex items-center justify-center xl:justify-between" index={1}>
-              <span className="!hidden xl:!block">Lịch sử giao dịch</span>
-              <Icon name="time" className="text-2xl xl:text-base"></Icon>
-            </Tab>
-            <Tab className="flex items-center justify-center xl:justify-between" index={2}>
               <span className="!hidden xl:!block">Vé của bạn</span>
               <Icon name="wallet" className="text-2xl xl:text-base"></Icon>
+            </Tab>
+            <Tab className="flex items-center justify-center xl:justify-between" index={2}>
+              <span className="!hidden xl:!block">Lịch sử giao dịch</span>
+              <Icon name="time" className="text-2xl xl:text-base"></Icon>
             </Tab>
             <Tab className="flex items-center justify-center xl:justify-between" index={3}>
               <span className="!hidden xl:!block">Thông báo</span>
@@ -144,13 +147,19 @@ const Profile: React.FC<ProfileProps> = () => {
               <Icon name="key" className="text-2xl xl:text-base"></Icon>
             </Tab>
           </TabsHeader>
-          <TabsBody className="w-full rounded-[25px] p-6 xl:w-[75%]">
+          <TabsBody className="w-full rounded-[16px] p-4 xl:w-[75%]">
             <TabsContent index={0}>
               <UserInfo data={auth?.currentUser} />
             </TabsContent>
-            <TabsContent index={1}>Lịch sử giao dịch</TabsContent>
-            <TabsContent index={2}>Vé của bạn</TabsContent>
-            <TabsContent index={3}>Thông báo</TabsContent>
+            <TabsContent index={1}>
+              <MyTicket data={auth?.currentUser} />
+            </TabsContent>
+            <TabsContent index={2}>
+              <History data={auth?.currentUser} />
+            </TabsContent>
+            <TabsContent index={3}>
+              <Notifycation data={auth?.currentUser} />
+            </TabsContent>
             <TabsContent index={4}>
               <ChangePassword />
             </TabsContent>

@@ -9,7 +9,7 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
 
   return (
     <ul
-      className={`relative flex h-fit gap-1 rounded-[25px] p-4 shadow-border-full dark:border-2 ${
+      className={`relative flex h-fit gap-1 rounded-[18px] p-4 shadow-border-full dark:border-2 ${
         orientation == 'horizontal' ? 'flex-col' : 'flex-row'
       } ${className}`}
     >

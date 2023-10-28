@@ -6,6 +6,7 @@ import CreateEventStepper from './components/CreateEventStepper';
 import EventInfo from './components/EventInfo';
 import EventTime from './components/EventTime';
 import EventSettings from './components/EventSettings';
+import PaymentInfo from './components/PaymentInfo';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
@@ -25,9 +26,9 @@ const CreateEvent = () => {
       case 2: {
         return <EventSettings setActiveStep={setActiveStep} />;
       }
-      // case 3: {
-      //   return <Complete />;
-      // }
+      case 3: {
+        return <PaymentInfo setActiveStep={setActiveStep} />;
+      }
       // case 4: {
       //   return <PaymentInfor setActiveStep={setActiveStep} />;
       // }

@@ -4,6 +4,8 @@ import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
+import { useState } from 'react';
+import banner3 from '~/assets/images/banner3.jpg';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -22,6 +24,10 @@ interface IEventInfo {
   organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  console.log(selectedFile);
+
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
     initialValues: {
       banner: '',
@@ -50,29 +56,47 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
       organization_email: Yup.string()
         .required('Email không được bỏ trống')
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
+        .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
-    onSubmit: async (value: IEventInfo) => {},
+    onSubmit: async (value: IEventInfo) => {
+      console.log(value);
+      setActiveStep(1);
+    },
   });
   return (
     <>
       <div className="">
         {/* Banner sự kiện */}
-        <form action="" className="mt-3">
+        <form onSubmit={formik.handleSubmit} className="mt-3">
           <div className="group relative h-[250px] w-full">
-            <img
-              src="https://img.freepik.com/free-vector/hand-drawn-japanese-illustration-cherry-tree-petals_23-2149601832.jpg?w=1060&t=st=1698044776~exp=1698045376~hmac=1f7473d50dc44b63c902367920bec46f7ec41bad300ce5510c2f8cde7e022d68"
-              alt="banner"
-              className="h-full w-full rounded-xl object-cover "
-            />
-            <div className="absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-0 transition group-hover:opacity-50"></div>
+            {imagePreviewUrl ? (
+              <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            ) : (
+              <img src={banner3} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            )}
+            <div
+              className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${
+                imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
+              }`}
+            ></div>
             <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
-              <div className="relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white opacity-0 transition hover:scale-105 group-hover:opacity-100">
+              <div
+                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
+                  imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
+                }`}
+              >
                 <input
                   type="file"
                   name="banner"
                   id="banner"
                   className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
+                  onChange={(event) => {
+                    const selectedFile = event.target.files?.[0];
+                    if (selectedFile) {
+                      setSelectedFile(selectedFile);
+                      setImagePreviewUrl(URL.createObjectURL(selectedFile));
+                    }
+                  }}
                 />
                 <Icon name="image" className="text-3xl" />
                 <p>Kích thước ảnh 1500 x 600 (Ảnh không quá 1MB) </p>
@@ -93,45 +117,78 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             <span className="font-semibold dark:text-white">Logo sự kiện</span>
           </div>
           {/* //// */}
-          <div className="mt-3 grid w-full grid-cols-2 gap-2">
-            <Input
-              name="name"
-              id="name"
-              label="Tên sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-            />
-            <Input
-              name="address"
-              id="address"
-              label="Địa điểm sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.address}
-              onChange={formik.handleChange}
-            />
-            <Input
-              name="location"
-              id="location"
-              label="Địa chỉ"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.location}
-              onChange={formik.handleChange}
-            />
-            <Input
-              name="category"
-              id="category"
-              label="Danh mục sự kiện"
-              classNameLabel="!text-cs_label_gray !text-sm"
-              classNameInput="!w-full"
-              value={formik.values.category}
-              onChange={formik.handleChange}
-            />
+          <div className="mt-5 grid w-full grid-cols-2 gap-2">
+            <div className="relative">
+              {formik.errors.name && (
+                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.name}
+                </small>
+              )}
+              <Input
+                name="name"
+                id="name"
+                label="Tên sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.address && (
+                <small className="absolute left-[130px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa điểm sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.location && (
+                <small className="absolute left-[60px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.location}
+                </small>
+              )}
+              <Input
+                name="location"
+                id="location"
+                label="Địa chỉ"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.location}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.category && (
+                <small className="absolute left-[140px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.category}
+                </small>
+              )}
+              <Input
+                name="category"
+                id="category"
+                label="Danh mục sự kiện"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              />
+            </div>
           </div>
-          <div className="mt-3">
+          <div className="relative mt-5">
+            {formik.errors.description && (
+              <small className="absolute left-[130px] top-[4px] z-10 px-2 text-[12px] text-red-600">
+                {formik.errors.description}
+              </small>
+            )}
             <label htmlFor="description" className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400">
               Giới thiệu sự kiện
             </label>
@@ -174,16 +231,29 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 </div>
               </div>
               <div className="flex w-[88%] flex-col gap-2">
-                <Input
-                  name="organization_name"
-                  id="organization_name"
-                  label="Tên ban tổ chức"
-                  classNameLabel="!text-cs_label_gray !text-sm"
-                  classNameInput="!w-full"
-                  value={formik.values.organization_name}
-                  onChange={formik.handleChange}
-                />
-                <div className="">
+                <div className="relative">
+                  {formik.errors.organization_name && (
+                    <small className="absolute left-[125px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_name}
+                    </small>
+                  )}
+                  <Input
+                    name="organization_name"
+                    id="organization_name"
+                    label="Tên ban tổ chức"
+                    classNameLabel="!text-cs_label_gray !text-sm"
+                    classNameInput="!w-full"
+                    value={formik.values.organization_name}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+
+                <div className="relative">
+                  {formik.errors.organization_desc && (
+                    <small className="absolute left-[150px] top-[4px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_desc}
+                    </small>
+                  )}
                   <label
                     htmlFor="organization_desc"
                     className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400"
@@ -211,6 +281,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
               </p>
               <div className="mt-6 flex justify-between gap-5">
                 <div className="relative w-1/2">
+                  {formik.errors.organization_phone && (
+                    <small className="absolute -top-[20px] left-[60px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_phone}
+                    </small>
+                  )}
                   <Input
                     name="organization_phone"
                     id="organization_phone"
@@ -225,6 +300,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                   </div>
                 </div>
                 <div className="relative w-1/2">
+                  {formik.errors.organization_email && (
+                    <small className="absolute -top-[20px] left-[60px] z-10 px-2 text-[12px] text-red-600">
+                      {formik.errors.organization_email}
+                    </small>
+                  )}
                   <Input
                     name="organization_email"
                     id="organization_email"
@@ -242,15 +322,8 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             </div>
           </div>
           {/* //// */}
-          <div className="w-full text-right">
-            <Button
-              onClick={() => setActiveStep(1)}
-              className="md:w mt-5 w-full"
-              type="submit"
-              mode="dark"
-              value="Tiếp tục"
-            />
-          </div>
+          <div className="w-full text-right"></div>
+          <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
         </form>
         {/* //// */}
       </div>
