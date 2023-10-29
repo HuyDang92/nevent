@@ -3,9 +3,7 @@ import { TabsBodyProp, TabsContent } from '~/Types/components/tab';
 
 const TabsBody = ({ className, children, orientation, activeTab }: TabsBodyProp) => {
   return (
-    <div
-      className={`${className} relative rounded-[10px] dark:border-2 shadow-border-full`}
-    >
+    <div className={`${className} relative rounded-[10px]  shadow-border-inset dark:bg-cs_dark`}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {

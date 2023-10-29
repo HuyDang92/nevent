@@ -57,7 +57,7 @@ const Header = ({ className }: HeaderProps) => {
         to="/user/profile"
         className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
       >
-        <Icon name="wallet" className="text-2xl" />
+        <Icon name="ticket" className="text-2xl" />
       </Link>
 
       <ToggleDarkMode>

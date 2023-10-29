@@ -51,7 +51,7 @@ const Input = ({
       <p className="relative">
         <input
           placeholder={placeholder}
-          className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_formDark dark:text-white ${
+          className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_lightDark dark:text-white ${
             rounded_full ? 'rounded-full' : 'rounded-xl'
           }  px-4 py-3.5  focus:border-cs_semi_green focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
           type={showPassword ? 'text' : type}
