@@ -64,7 +64,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <span className="hidden md:block">MoMo</span>
               </div>
             </Tab>
-            <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
+            {/* <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
               <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
@@ -76,7 +76,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <Iconify icon="arcticons:zalopay" className="text-3xl dark:text-cs_light" />
                 <span className="hidden md:block">ZaloPay</span>
               </div>
-            </Tab>
+            </Tab> */}
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">

@@ -125,14 +125,14 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className=" mt-12 dark:text-cs_light sm:mt-14">
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
         <Tabs orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
-          <TabsHeader className="w-full xl:w-[25%]">
+          <TabsHeader className="w-full p-[15px] shadow-border-inset   xl:w-[25%]">
             <Tab className="flex items-center justify-center xl:justify-between" index={0}>
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
             </Tab>
             <Tab className="flex items-center justify-center xl:justify-between" index={1}>
-              <span className="!hidden xl:!block">Vé của bạn</span>
-              <Icon name="wallet" className="text-2xl xl:text-base"></Icon>
+              <span className="!hidden xl:!block">Vé của tôi</span>
+              <Icon name="ticket" className="text-2xl xl:text-base"></Icon>
             </Tab>
             <Tab className="flex items-center justify-center xl:justify-between" index={2}>
               <span className="!hidden xl:!block">Lịch sử giao dịch</span>
@@ -147,7 +147,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <Icon name="key" className="text-2xl xl:text-base"></Icon>
             </Tab>
           </TabsHeader>
-          <TabsBody className="w-full rounded-[16px] p-4 xl:w-[75%]">
+          <TabsBody className="w-full rounded-[16px] p-[15px]  xl:w-[75%]">
             <TabsContent index={0}>
               <UserInfo data={auth?.currentUser} />
             </TabsContent>

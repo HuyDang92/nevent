@@ -1,15 +1,16 @@
 import React from 'react';
 import { TabProp } from '~/Types/components/tab';
 import { TabsHeaderProp } from '~/Types/components/tab';
-// import { useCurrentViewportView } from '~/hooks/useViewPort';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 
 const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab }: TabsHeaderProp) => {
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
-  // const { width } = useCurrentViewportView();
-
+  const currentWidth = useCurrentViewportView();
+  console.log(currentWidth);
+  const calculateWidth = currentWidth.width < 560 ? 92 : 100;
   return (
     <ul
-      className={`relative flex h-fit gap-1 rounded-[18px] p-4 shadow-border-full dark:border-2 ${
+      className={`relative flex h-fit justify-between rounded-[18px] dark:bg-cs_dark ${
         orientation == 'horizontal' ? 'flex-col' : 'flex-row'
       } ${className}`}
     >
@@ -25,20 +26,13 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
       })}
       <li
         style={{
-          // width:
-          //   orientation == 'horizontal'
-          //     ? 'calc(100% - 32px)'
-          //     : `${width < 550 ? 93 / React.Children.count(children) : 95 / React.Children.count(children)}%`,
-          width:
-            orientation == 'horizontal'
-              ? 'calc(100% - 32px)'
-              : `calc((100% - 32px) / ${React.Children.count(children)} - 4px)`,
+          width: orientation == 'horizontal' ? 'calc(100% - 30px)' : `calc((100%) / ${React.Children.count(children)})`,
           transform:
             orientation == 'horizontal'
-              ? `translateY(${activeTab && activeTab * 108}%)`
-              : `translateX(calc(${activeTab && activeTab * 100}% + ${activeTab && activeTab * 5}px))`,
+              ? `translateY(${activeTab && activeTab * 100}%)`
+              : `translateX(calc(${activeTab && activeTab * calculateWidth}%))`,
         }}
-        className={`absolute flex h-10 w-fit items-center justify-center rounded-[15px] border bg-cs_semi_green transition-all md:h-12`}
+        className={`absolute flex h-10 w-fit items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
       ></li>
     </ul>
   );

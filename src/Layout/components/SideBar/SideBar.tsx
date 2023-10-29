@@ -24,7 +24,7 @@ const cateList = [
   },
   {
     name: 'Hỗ trợ',
-    link: '/support',
+    link: '/help-center',
     icon: 'call',
   },
   {

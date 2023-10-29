@@ -6,7 +6,7 @@ import Icon from '~/components/customs/Icon';
 import View from '~/motion/View';
 
 const data = [
-  'https://img.freepik.com/free-photo/colorful-3d-shapes-vaporwave-style_23-2148981126.jpg?size=626&ext=jpg',
+  'https://images.tkbcdn.com/1/780/300/Upload/eventcover/2023/10/22/B2F576.jpg',
   'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg',
   'https://img.freepik.com/free-photo/digital-illustration-multiplying-bacterial-cells_181624-22996.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
   'https://img.freepik.com/free-photo/3d-aesthetics-with-shapes-vaporwave-style_23-2148981116.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
@@ -108,12 +108,12 @@ const Banner = () => {
           </View>
         </Link>
       </AnimatePresence>
-      <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-1/2 lg:block xl:right-[30px]">
+      <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-[70%] lg:block xl:right-[30px]">
         <View className=" flex gap-[20px]">
           {data.map((item, index) => {
             return (
               <img
-                className={`h-[100px] w-[200px] object-cover hover:scale-105 cursor-pointer rounded-[10px] shadow-border-full duration-100 ${
+                className={`h-[100px] w-[200px] cursor-pointer rounded-[10px] object-cover shadow-border-full duration-100 hover:scale-105 ${
                   index === imageIndex ? 'border-[4px] border-cs_semi_green' : ''
                 }`}
                 key={index}
