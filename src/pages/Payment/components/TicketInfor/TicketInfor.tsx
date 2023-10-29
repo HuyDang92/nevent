@@ -4,10 +4,10 @@ import Icon from '~/components/customs/Icon';
 import Button from '~/components/customs/Button';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { descreaseTicket, inscreaseTicket } from '~/features/Payment/paymentSlice';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
-const TicketInfor = ({ setActiveStep }: Prop) => {
+import { useNavigate, useParams } from 'react-router-dom';
+const TicketInfor = () => {
+  const navigate = useNavigate();
+  const { idEvent } = useParams();
   const dispatch = useAppDispatch();
   const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Giá vé'];
   const conVe = false;
@@ -20,6 +20,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
       event_id: 'string',
       color: 'red',
       price: 4600000,
+      quantity: 12,
     },
     {
       _id: '2',
@@ -28,6 +29,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
       event_id: 'string',
       color: 'red',
       price: 4600000,
+      quantity: 12,
     },
     {
       _id: '3',
@@ -36,6 +38,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
       event_id: 'string',
       color: 'red',
       price: 4600000,
+      quantity: 0,
     },
     {
       _id: '4',
@@ -44,23 +47,33 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
       color: 'red',
       title: 'Ghost Ticket',
       price: 4600000,
+      quantity: 12,
     },
   ];
 
   // Functions
 
   const inscreaseTicketQuantity = (ticket: ITicket) => {
-    dispatch(inscreaseTicket(ticket));
+    if (ticket.quantity > 0) {
+      dispatch(inscreaseTicket(ticket));
+    }
   };
 
   const descreaseTicketQuantity = (ticket: ITicket) => {
-    dispatch(descreaseTicket(ticket));
+    if (ticket.quantity > 0) {
+      dispatch(descreaseTicket(ticket));
+    }
   };
 
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button onClick={() => setActiveStep(0)} className="z-10 flex cursor-pointer items-center">
+        <button
+          onClick={() => {
+            navigate(`/user/payment/${idEvent}/0`);
+          }}
+          className="z-10 flex cursor-pointer items-center"
+        >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
         <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase md:static md:text-left">
@@ -121,7 +134,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
                     <td className="border-t border-cs_gray p-4">
-                      {conVe ? (
+                      {ticket.quantity > 0 ? (
                         <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
                       ) : (
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
@@ -130,7 +143,7 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
                     <td className="border-t border-cs_gray p-4">
                       <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
-                        <span>{ExistedTicket ? ExistedTicket.quantity : 0}</span>
+                        <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>
                         <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
                       </div>
                     </td>
@@ -145,7 +158,9 @@ const TicketInfor = ({ setActiveStep }: Prop) => {
         </Card>
         <div className="w-full text-right">
           <Button
-            onClick={() => setActiveStep(2)}
+            onClick={() => {
+              navigate(`/user/payment/${idEvent}/2`);
+            }}
             className="md:w mt-5 w-full"
             type="submit"
             mode="dark"

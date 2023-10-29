@@ -5,17 +5,25 @@ import { Icon as Iconify } from '@iconify/react';
 import Button from '~/components/customs/Button';
 import { useGetBankListQuery } from '~/features/Payment/bankApi.service';
 import Skeleton from 'react-loading-skeleton';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
-const Purchase = ({ setActiveStep }: Prop) => {
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
+
+const Purchase = () => {
+  const { idEvent } = useParams();
+  const navigate = useNavigate();
   const [method, setMethod] = useState(0);
   const { isFetching, data, isError } = useGetBankListQuery();
   const bankList = data?.data;
+  const currentViewPort = useCurrentViewportView();
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button onClick={() => setActiveStep(1)} className="z-10 flex cursor-pointer items-center">
+        <button
+          onClick={() => {
+            navigate(`/user/payment/${idEvent}/1`);
+          }}
+          className="z-10 flex cursor-pointer items-center"
+        >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
         <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase md:static md:text-left">
@@ -130,7 +138,11 @@ const Purchase = ({ setActiveStep }: Prop) => {
       </div>
       <div className="w-full text-right">
         <Button
-          onClick={() => setActiveStep(4)}
+          onClick={() => {
+            if (currentViewPort.width <= 1024) {
+              navigate(`/user/payment/${idEvent}/4`);
+            }
+          }}
           className="md:w mt-5 w-full"
           type="submit"
           mode="dark"

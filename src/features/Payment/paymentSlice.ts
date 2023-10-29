@@ -8,11 +8,11 @@ interface IUserInfor {
 }
 
 interface INewTicket extends ITicket {
-  quantity: number;
+  orderQuantity: number;
 }
 
 interface PaymentState {
-  idEvent: string;
+  event: IEvent | null;
   userInfor: IUserInfor | null;
   ticket: INewTicket[];
   purchase: {
@@ -23,7 +23,7 @@ interface PaymentState {
 }
 
 const initialState: PaymentState = {
-  idEvent: '',
+  event: null,
   userInfor: null,
   ticket: [],
   purchase: {
@@ -43,10 +43,10 @@ const paymentSlice = createSlice({
     inscreaseTicket: (state, action) => {
       if (state.ticket.find((ticket) => ticket._id === action.payload._id)) {
         const index = state.ticket.findIndex((ticket) => ticket._id === action.payload._id);
-        state.ticket[index].quantity += 1;
+        state.ticket[index].orderQuantity += 1;
       } else {
         const newTicket = action.payload;
-        newTicket.quantity = 1;
+        newTicket.orderQuantity = 1;
         state.ticket.push(newTicket);
       }
     },
@@ -54,13 +54,14 @@ const paymentSlice = createSlice({
       if (state.ticket.find((ticket) => ticket._id === action.payload._id)) {
         console.log('Tang so luong');
         const index = state.ticket.findIndex((ticket) => ticket._id === action.payload._id);
-        if (state.ticket[index].quantity > 1) {
-          state.ticket[index].quantity -= 1;
-        }else{
+        if (state.ticket[index].orderQuantity > 1) {
+          state.ticket[index].orderQuantity -= 1;
+        } else {
           state.ticket.splice(index, 1);
         }
       }
     },
+    
   },
 });
 export const { addUserInfor, inscreaseTicket, descreaseTicket } = paymentSlice.actions;

@@ -5,4 +5,5 @@ interface ITicket {
   event_id: string;
   color: string;
   price: number;
+  quantity: number
 }

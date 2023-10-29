@@ -1,29 +1,30 @@
-import { useState } from 'react';
 import PaymentStepper from './components/PaymentStepper';
-import RecipientInfor from './components/RecipientInfor';
+import UserInfor from './components/UserInfor';
 import TicketInfor from './components/TicketInfor';
-import Purchase from './components/Purchase/Purchase';
+import BillingInfor from './components/BillingInfor';
 import Complete from './components/Complete';
-import PaymentInfor from './components/PaymentInfor';
+import ReviewOrder from './components/ReviewOrder';
+import { useParams } from 'react-router-dom';
 const Payment = () => {
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const { step } = useParams();
+  const activeStep = Number(step);
   const renderContent = (activeStep: number) => {
     //Switch case
     switch (activeStep) {
       case 0: {
-        return <RecipientInfor setActiveStep={setActiveStep} />;
+        return <UserInfor />;
       }
       case 1: {
-        return <TicketInfor setActiveStep={setActiveStep} />;
+        return <TicketInfor />;
       }
       case 2: {
-        return <Purchase setActiveStep={setActiveStep} />;
+        return <BillingInfor />;
       }
       case 3: {
         return <Complete />;
       }
       case 4: {
-        return <PaymentInfor setActiveStep={setActiveStep} />;
+        return <ReviewOrder />;
       }
       default: {
         return <h1>Not found</h1>;
@@ -33,15 +34,15 @@ const Payment = () => {
   return (
     <div className="">
       <div className="hidden h-[135px] items-center justify-center rounded-[15px] shadow-border-full md:flex">
-        <PaymentStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+        <PaymentStepper />
       </div>
       <div className="flex gap-10 md:mt-5">
-        <div className="w-full rounded-[12px] shadow-border-full dark:text-cs_light md:w-[70%]">
+        <div className="w-full rounded-[12px] md:p-3 shadow-border-full dark:text-cs_light md:w-[70%]">
           {renderContent(activeStep)}
         </div>
 
         {/* Phần thông tin đặt vé */}
-        <PaymentInfor className='hidden md:block' />
+        <ReviewOrder className="hidden md:block" />
       </div>
     </div>
   );

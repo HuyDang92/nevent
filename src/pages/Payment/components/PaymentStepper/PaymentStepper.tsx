@@ -1,17 +1,23 @@
 import { Stepper, Step, Typography } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
+import { useNavigate, useParams } from 'react-router-dom';
 interface PaymentStepperProps {
   className?: string;
-  activeStep: number;
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
-const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentStepperProps) => {
+const PaymentStepper = ({ className }: PaymentStepperProps) => {
+  const navigate = useNavigate();
+  const { idEvent, step } = useParams();
+  const activeStep = Number(step)
   return (
     <div className={`w-full px-24 py-4 ${className}`}>
       <Stepper activeStep={activeStep} activeLineClassName="bg-cs_semi_green">
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 0 : activeStep)}
-          onClick={() => setActiveStep(0)}
+          onClick={() => {
+            if (activeStep >= 1) {
+              navigate(`/user/payment/${idEvent}/0`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -23,8 +29,11 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
-          // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
-          onClick={() => setActiveStep(1)}
+          onClick={() => {
+            if (activeStep >= 2) {
+              navigate(`/user/payment/${idEvent}/1`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -36,8 +45,11 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
-          // onClick={() => setActiveStep(activeStep >= 1 ? 2 : activeStep)}
-          onClick={() => setActiveStep(2)}
+          onClick={() => {
+            if (activeStep >= 3) {
+              navigate(`/user/payment/${idEvent}/2`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -49,8 +61,11 @@ const PaymentStepper = ({ activeStep = 0, setActiveStep, className }: PaymentSte
           </div>
         </Step>
         <Step
-          //  onClick={() => setActiveStep(activeStep >= 1 ? 3 : activeStep)}
-          onClick={() => setActiveStep(3)}
+          onClick={() => {
+            if (activeStep >= 4) {
+              navigate(`/user/payment/${idEvent}/3`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >

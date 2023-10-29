@@ -4,11 +4,12 @@ import Input from '~/components/customs/Input';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import * as Yup from 'yup';
 import { addUserInfor } from '~/features/Payment/paymentSlice';
-interface Props {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
-const RecipientInfor = ({ setActiveStep }: Props) => {
+import { useNavigate, useParams } from 'react-router-dom';
+
+const UserInfor = () => {
+  const { idEvent } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   const formik = useFormik({
@@ -31,7 +32,7 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
     onSubmit(values) {
       try {
         dispatch(addUserInfor(values));
-        setActiveStep(1);
+        navigate(`/user/payment/${idEvent}/1`);
       } catch (err) {
         console.log(err);
       }
@@ -101,4 +102,4 @@ const RecipientInfor = ({ setActiveStep }: Props) => {
   );
 };
 
-export default RecipientInfor;
+export default UserInfor;
