@@ -13,7 +13,7 @@ import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { setAuthCurrentUser } from '~/features/Auth/authSlice';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import MyTicket from './components/MyTicket';
 import History from './components/History';
 import Notifycation from './components/Notifycation';
@@ -27,7 +27,7 @@ interface ProfileProps {
  * @return {ReactElement} The rendered profile component.
  */
 const Profile: React.FC<ProfileProps> = () => {
-  const { tab } = useParams();
+  // const { tab } = useParams();
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
@@ -36,6 +36,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
   const { upLoad, loading } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
+  console.log('render profile');
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
@@ -124,30 +125,30 @@ const Profile: React.FC<ProfileProps> = () => {
       </div>
       <div className=" mt-12 dark:text-cs_light sm:mt-14">
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
-        <Tabs orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
-          <TabsHeader className="w-full p-[15px] shadow-border-inset   xl:w-[25%]">
-            <Tab className="flex items-center justify-center xl:justify-between" index={0}>
+        <Tabs availableLink={true} orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
+          <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%]">
+            <Tab link="/user/profile/0" className="flex items-center justify-center xl:justify-between" index={0}>
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-center xl:justify-between" index={1}>
+            <Tab link="/user/profile/1" className="flex items-center justify-center xl:justify-between" index={1}>
               <span className="!hidden xl:!block">Vé của tôi</span>
               <Icon name="ticket" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-center xl:justify-between" index={2}>
+            <Tab link="/user/profile/2" className="flex items-center justify-center xl:justify-between" index={2}>
               <span className="!hidden xl:!block">Lịch sử giao dịch</span>
               <Icon name="time" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-center xl:justify-between" index={3}>
+            <Tab link="/user/profile/3" className="flex items-center justify-center xl:justify-between" index={3}>
               <span className="!hidden xl:!block">Thông báo</span>
               <Icon name="notifications" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab className="flex items-center justify-center xl:justify-between" index={4}>
+            <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
               <span className="!hidden xl:!block">Đổi mật khẩu</span>
               <Icon name="key" className="text-2xl xl:text-base"></Icon>
             </Tab>
           </TabsHeader>
-          <TabsBody className="w-full rounded-[16px] p-[15px]  xl:w-[75%]">
+          <TabsBody className="w-full rounded-[16px] p-[15px] xl:w-[75%]">
             <TabsContent index={0}>
               <UserInfo data={auth?.currentUser} />
             </TabsContent>
