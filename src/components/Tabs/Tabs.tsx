@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { TabsProp, TabsHeaderProp, TabsBodyProp } from '~/Types/components/tab';
 
-const Tabs = ({ children, className, orientation = 'vertical' }: TabsProp) => {
-  const [activeTab, setActiveTab] = useState(0);
+const Tabs = ({ children, className, orientation = 'vertical', availableLink = false }: TabsProp) => {
+  const { tab } = useParams();
+  const [activeTab, setActiveTab] = useState(availableLink ? Number(tab) : 0);
   return (
     <div className={`flex gap-5 ${orientation == 'horizontal' ? 'flex-row' : 'flex-col'} ${className}`}>
       {React.Children.map(children, (child) => {

@@ -12,7 +12,7 @@ interface INewTicket extends ITicket {
 }
 
 interface PaymentState {
-  event: IEvent | null;
+  idEvent: string;
   userInfor: IUserInfor | null;
   ticket: INewTicket[];
   purchase: {
@@ -23,7 +23,7 @@ interface PaymentState {
 }
 
 const initialState: PaymentState = {
-  event: null,
+  idEvent: '',
   userInfor: null,
   ticket: [],
   purchase: {
@@ -37,6 +37,10 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
+    refreshPayment: (state, action) => {
+      state.idEvent = action.payload;
+      state.ticket = [];
+    },
     addUserInfor: (state, action) => {
       state.userInfor = action.payload;
     },
@@ -61,8 +65,7 @@ const paymentSlice = createSlice({
         }
       }
     },
-    
   },
 });
-export const { addUserInfor, inscreaseTicket, descreaseTicket } = paymentSlice.actions;
+export const { addUserInfor, inscreaseTicket, descreaseTicket, refreshPayment } = paymentSlice.actions;
 export default paymentSlice.reducer;

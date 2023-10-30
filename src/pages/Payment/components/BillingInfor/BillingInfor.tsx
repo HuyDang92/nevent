@@ -34,7 +34,7 @@ const Purchase = () => {
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
             <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
-              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
+              <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 0 ? true : false}
@@ -72,19 +72,6 @@ const Purchase = () => {
                 <span className="hidden md:block">MoMo</span>
               </div>
             </Tab>
-            {/* <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
-              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
-                <input
-                  onChange={() => {}}
-                  checked={method === 3 ? true : false}
-                  className="hidden h-[20px] w-[20px] md:block"
-                  type="radio"
-                  name="payment"
-                />
-                <Iconify icon="arcticons:zalopay" className="text-3xl dark:text-cs_light" />
-                <span className="hidden md:block">ZaloPay</span>
-              </div>
-            </Tab> */}
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
@@ -122,12 +109,6 @@ const Purchase = () => {
               </div>
             </TabsContent>
             <TabsContent index={2} className="p-5">
-              <p>
-                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
-                đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
-              </p>
-            </TabsContent>
-            <TabsContent index={3} className="p-5">
               <p>
                 <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
                 đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.

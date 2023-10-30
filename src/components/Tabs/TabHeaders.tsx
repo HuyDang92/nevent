@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TabProp } from '~/Types/components/tab';
 import { TabsHeaderProp } from '~/Types/components/tab';
-import { useCurrentViewportView } from '~/hooks/useViewPort';
-
+interface Padding {
+  x: number;
+  y: number;
+}
 const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab }: TabsHeaderProp) => {
+  const elementRef = useRef(null);
+
+  const [headersTabpadding, setHeadersTabPadding] = useState<Padding>({ x: 0, y: 0 });
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
-  const currentWidth = useCurrentViewportView();
-  console.log(currentWidth);
-  const calculateWidth = currentWidth.width < 560 ? 92 : 100;
+  useEffect(() => {
+    // Get the DOM element
+    const element = elementRef.current;
+
+    if (element) {
+      // Get the computed style of the element
+      const computedStyle = window.getComputedStyle(element);
+
+      // Access the padding values
+      const paddingTop = computedStyle.getPropertyValue('padding-top');
+      const paddingRight = computedStyle.getPropertyValue('padding-right');
+      const paddingBottom = computedStyle.getPropertyValue('padding-bottom');
+      const paddingLeft = computedStyle.getPropertyValue('padding-left');
+      setHeadersTabPadding({
+        x: Number(paddingRight.split('px')[0]) + Number(paddingLeft.split('px')[0]),
+        y: Number(paddingTop.split('px')[0]) + Number(paddingBottom.split('px')[0]),
+      });
+    }
+  }, []);
   return (
     <ul
+      ref={elementRef}
       className={`relative flex h-fit justify-between rounded-[18px] dark:bg-cs_dark ${
         orientation == 'horizontal' ? 'flex-col' : 'flex-row'
       } ${className}`}
@@ -26,13 +48,16 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
       })}
       <li
         style={{
-          width: orientation == 'horizontal' ? 'calc(100% - 30px)' : `calc((100%) / ${React.Children.count(children)})`,
+          width:
+            orientation == 'horizontal'
+              ? `calc(100% - ${headersTabpadding.x}px)`
+              : `calc(${tabsWidth}% - ${headersTabpadding.x / React.Children.count(children)}px)`,
           transform:
             orientation == 'horizontal'
               ? `translateY(${activeTab && activeTab * 100}%)`
-              : `translateX(calc(${activeTab && activeTab * calculateWidth}%))`,
+              : `translateX(calc(${activeTab && activeTab * 100}%)`,
         }}
-        className={`absolute flex h-10 w-fit items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
+        className={`absolute flex h-10 w-fit items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12 md:px-4`}
       ></li>
     </ul>
   );

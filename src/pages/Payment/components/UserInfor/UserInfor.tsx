@@ -47,9 +47,9 @@ const UserInfor = () => {
       </div>
       <div className="p-4">
         <form onSubmit={formik.handleSubmit} className="flex flex-wrap gap-4">
-          <div className="w-full md:w-[calc(50%-8px)]">
+          <div className="relative w-full md:w-[calc(50%-8px)]">
             {formik.errors.fullName && (
-              <small className="px-2 text-[12px] text-red-600">{formik.errors.fullName}</small>
+              <small className="absolute -top-2 px-2 text-[12px] text-red-600">{formik.errors.fullName}</small>
             )}
             <Input
               id="fullName"
@@ -60,8 +60,10 @@ const UserInfor = () => {
               label="Họ và tên"
             />
           </div>
-          <div className="w-full md:w-[calc(50%-8px)]">
-            {formik.errors.email && <small className="px-2 text-[12px] text-red-600">{formik.errors.email}</small>}
+          <div className="relative w-full md:w-[calc(50%-8px)]">
+            {formik.errors.email && (
+              <small className="absolute -top-2 px-2 text-[12px] text-red-600">{formik.errors.email}</small>
+            )}
             <Input
               id="email"
               name="email"
@@ -71,8 +73,10 @@ const UserInfor = () => {
               label="Email"
             />
           </div>
-          <div className="w-full md:w-[calc(50%-8px)]">
-            {formik.errors.phone && <small className="px-2 text-[12px] text-red-600">{formik.errors.phone}</small>}
+          <div className="relative w-full md:w-[calc(50%-8px)]">
+            {formik.errors.phone && (
+              <small className="absolute -top-2 px-2 text-[12px] text-red-600">{formik.errors.phone}</small>
+            )}
             <Input
               id="phone"
               name="phone"
@@ -82,8 +86,10 @@ const UserInfor = () => {
               label="Số điện thoại"
             />
           </div>
-          <div className="w-full md:w-[calc(50%-8px)]">
-            {formik.errors.address && <small className="px-2 text-[12px] text-red-600">{formik.errors.address}</small>}
+          <div className="relative w-full md:w-[calc(50%-8px)]">
+            {formik.errors.address && (
+              <small className="absolute -top-2 px-2 text-[12px] text-red-600">{formik.errors.address}</small>
+            )}
             <Input
               name="address"
               value={formik.values.address}

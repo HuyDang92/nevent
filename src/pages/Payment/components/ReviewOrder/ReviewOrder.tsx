@@ -5,10 +5,14 @@ import Button from '~/components/customs/Button';
 import { Icon as Iconify } from '@iconify/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 interface Prop {
   className?: string;
+  event?: IEvent;
 }
-const ReviewOrder = ({ className }: Prop) => {
+const ReviewOrder = ({ className, event }: Prop) => {
+  console.log(event);
+
   const { idEvent } = useParams();
   const navigate = useNavigate();
   const tickets = useAppSelector((state) => state.payment.ticket);
@@ -28,26 +32,26 @@ const ReviewOrder = ({ className }: Prop) => {
       </div>
       {/* /// */}
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
-        <h3 className="text-xl font-bold">Ford V Ferratir</h3>
+        <h3 className="text-xl font-bold">{event?.title}</h3>
         <p className="flex items-center gap-1 text-sm font-semibold">
           <Icon name="time-outline" />
           18:00
         </p>
         <p className="flex items-center gap-1 text-sm font-semibold">
           <Icon name="calendar" />
-          Ngày 21 tháng 10 năm 2023
+          {moment(event?.start_date).format('dddd, DD MMMM YY')}
         </p>
         <div className="flex items-center justify-between text-sm font-semibold">
           <Icon name="location" className="" />
-          <p className="w-[95%]">Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Tân Bình, Hồ Chí Minh</p>
+          <p className="w-[95%]">{event?.location}</p>
         </div>
       </div>
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
         <h3 className="text-xl font-bold">Thông tin người nhận</h3>
-        <span>{userInfor?.fullName}</span>
-        <span>{userInfor?.email}</span>
-        <span>{userInfor?.phone}</span>
-        <span>{userInfor?.address}</span>
+        <span><b>Họ và tên:</b> {userInfor?.fullName}</span>
+        <span><b>Email:</b> {userInfor?.email}</span>
+        <span><b>Số điện thoại:</b> {userInfor?.phone}</span>
+        <span><b>Địa chỉ:</b> {userInfor?.address}</span>
       </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">

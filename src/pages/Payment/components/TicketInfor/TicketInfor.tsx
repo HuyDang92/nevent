@@ -10,7 +10,6 @@ const TicketInfor = () => {
   const { idEvent } = useParams();
   const dispatch = useAppDispatch();
   const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Giá vé'];
-  const conVe = false;
   const tickets = useAppSelector((state) => state.payment.ticket);
   const eventTicket = [
     {
