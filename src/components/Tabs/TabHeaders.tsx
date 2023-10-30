@@ -6,7 +6,6 @@ import { useCurrentViewportView } from '~/hooks/useViewPort';
 const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab }: TabsHeaderProp) => {
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
   const currentWidth = useCurrentViewportView();
-  console.log(currentWidth);
   const calculateWidth = currentWidth.width < 560 ? 92 : 100;
   return (
     <ul
@@ -32,7 +31,7 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
               ? `translateY(${activeTab && activeTab * 100}%)`
               : `translateX(calc(${activeTab && activeTab * calculateWidth}%))`,
         }}
-        className={`absolute flex h-10 w-fit items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
+        className={`absolute flex h-10 w-fit bg-cs_light items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
       ></li>
     </ul>
   );

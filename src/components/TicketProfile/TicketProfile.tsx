@@ -6,7 +6,7 @@ import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@materia
 import QR from '~/assets/images/qr.jpg';
 import useClickOutside from '~/hooks/useClickOutside';
 interface IProps {
-  data?: string;
+  data: any;
 }
 const arrayQR = [
   'https://jess3.com/wp-content/uploads/2011/10/JESS3_QRCode1.jpg',
@@ -43,46 +43,49 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           <span onClick={() => setOpen(false)}>
             <Icon name="close" className="absolute right-4 top-4 text-2xl transition-all hover:scale-110" />
           </span>
-          <Carousel
-            className=""
-            prevArrow={({ handlePrev }) => (
-              <span onClick={handlePrev} className="!absolute !left-0 top-2/4 -translate-y-2/4 text-cs_dark">
-                <Icon
-                  name="chevron-back-outline"
-                  className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
-                />
-              </span>
-            )}
-            nextArrow={({ handleNext }) => (
-              <span onClick={handleNext} className="!absolute !right-0 top-2/4 -translate-y-2/4 text-cs_dark">
-                <Icon
-                  name="chevron-forward-outline"
-                  className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
-                />
-              </span>
-            )}
-            navigation={({ setActiveIndex, activeIndex, length }) => (
-              <div className="absolute bottom-0 left-2/4 z-30 flex -translate-x-2/4 gap-2">
-                {new Array(length).fill('').map(
-                  (_, i) =>
-                    activeIndex === i && (
-                      <span className="cursor-pointer font-semibold" key={i} onClick={() => setActiveIndex(i)}>
-                        {activeIndex === i && `${activeIndex + 1}/${length}`}
-                      </span>
-                    ),
-                )}
-              </div>
-            )}
-          >
-            {arrayQR.map((item: any, index: number) => (
-              <div key={index} className="">
-                <div key={index}>
-                  <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" />
+          {data?.dataTicket.length > 1 ? (
+            <Carousel
+              className=""
+              prevArrow={({ handlePrev }) => (
+                <span onClick={handlePrev} className="!absolute !left-0 top-2/4 -translate-y-2/4 text-cs_dark">
+                  <Icon
+                    name="chevron-back-outline"
+                    className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
+                  />
+                </span>
+              )}
+              nextArrow={({ handleNext }) => (
+                <span onClick={handleNext} className="!absolute !right-0 top-2/4 -translate-y-2/4 text-cs_dark">
+                  <Icon
+                    name="chevron-forward-outline"
+                    className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
+                  />
+                </span>
+              )}
+              navigation={({ setActiveIndex, activeIndex, length }) => (
+                <div className="absolute bottom-0 left-2/4 z-30 flex -translate-x-2/4 gap-2">
+                  {new Array(length).fill('').map(
+                    (_, i) =>
+                      activeIndex === i && (
+                        <span className="cursor-pointer font-semibold" key={i} onClick={() => setActiveIndex(i)}>
+                          {activeIndex === i && `${activeIndex + 1}/${length}`}
+                        </span>
+                      ),
+                  )}
                 </div>
-              </div>
-            ))}
-          </Carousel>
-          {/* <img src={QR} alt="" className="w-full" /> */}
+              )}
+            >
+              {data?.dataTicket.map((item: any, index: number) => (
+                <div key={index} className="">
+                  <div key={index}>
+                    <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          ) : (
+            <img src={data?.dataTicket[0]} alt="" className="w-full" />
+          )}
         </DialogBody>
         <DialogFooter className="flex justify-center pt-0">
           <a href={QR} download="QR_vé">
@@ -103,21 +106,21 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
       />
       <div className="absolute left-0 top-0 z-20 flex w-full justify-between p-4 text-cs_light">
         <div className="xl:w-2/3">
-          <p className=" line-clamp-2 text-xl font-bold">HAPPY BEE V.O.L III VER 2 sdgfhgfnsdb</p>
+          <p className=" line-clamp-2 text-xl font-bold">{data?.title}</p>
           <span className="flex items-center gap-2 text-sm font-semibold">
             {/* <Icon name="time-outline" /> */}
             <span>Thời gian: </span>
-            {moment('2023-10-29T09:22:58+0000').format('hh:mm - DD/MM/YYYY')}
-            <span className="text-sm "> - Music</span>
+            {moment(data?.start_date).format('hh:mm - DD/MM/YYYY')}
+            <span className="text-sm "> - {data?.category}</span>
           </span>
-          <p className="text-sm font-semibold">Số vé: 2</p>
+          <p className="text-sm font-semibold">Số vé: {data?.ticketCount}</p>
           <p className="text-sm font-semibold">
-            Trạng thái: <span className="text-sm text-cs_semi_green">Chưa check-in</span>
+            Trạng thái: <span className="text-sm text-cs_semi_green">{data?.ticketStatus}</span>
           </p>
           <p className="text-sm font-semibold">
-            Loại vé: <span className="text-sm text-cs_semi_green">VIP</span>
+            Loại vé: <span className="text-sm text-cs_semi_green">{data?.ticketType}</span>
           </p>
-          <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="sm:mt-6 mt-4" mode="dark" />
+          <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
         </div>
         <div ref={toolRef} onClick={() => setOpenTool(!openTool)} className="">
           <Icon
