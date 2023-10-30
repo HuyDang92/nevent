@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { TabsProp, TabsHeaderProp, TabsBodyProp } from '~/Types/components/tab';
 
-const Tabs = ({ children, className, orientation = 'vertical', availableLink = false }: TabsProp) => {
+const Tabs = ({ children, className, orientation = 'vertical', availableLink }: TabsProp) => {
   const { tab } = useParams();
   const [activeTab, setActiveTab] = useState(availableLink ? Number(tab) : 0);
   return (
@@ -11,7 +11,7 @@ const Tabs = ({ children, className, orientation = 'vertical', availableLink = f
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
             orientation,
-            activeTab,
+            activeTab: availableLink ? Number(tab) : activeTab,
             setActiveTab,
           } as TabsHeaderProp | TabsBodyProp);
         }

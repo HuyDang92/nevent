@@ -36,6 +36,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
   const { upLoad, loading } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
+  console.log('render profile');
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
@@ -126,23 +127,23 @@ const Profile: React.FC<ProfileProps> = () => {
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
         <Tabs availableLink={true} orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
           <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%]">
-            <Tab link='/user/profile/0' className="flex items-center justify-center xl:justify-between" index={0}>
+            <Tab link="/user/profile/0" className="flex items-center justify-center xl:justify-between" index={0}>
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab link='/user/profile/1' className="flex items-center justify-center xl:justify-between" index={1}>
+            <Tab link="/user/profile/1" className="flex items-center justify-center xl:justify-between" index={1}>
               <span className="!hidden xl:!block">Vé của tôi</span>
               <Icon name="ticket" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab link='/user/profile/2' className="flex items-center justify-center xl:justify-between" index={2}>
+            <Tab link="/user/profile/2" className="flex items-center justify-center xl:justify-between" index={2}>
               <span className="!hidden xl:!block">Lịch sử giao dịch</span>
               <Icon name="time" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab link='/user/profile/3' className="flex items-center justify-center xl:justify-between" index={3}>
+            <Tab link="/user/profile/3" className="flex items-center justify-center xl:justify-between" index={3}>
               <span className="!hidden xl:!block">Thông báo</span>
               <Icon name="notifications" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab link='/user/profile/4' className="flex items-center justify-center xl:justify-between" index={4}>
+            <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
               <span className="!hidden xl:!block">Đổi mật khẩu</span>
               <Icon name="key" className="text-2xl xl:text-base"></Icon>
             </Tab>
