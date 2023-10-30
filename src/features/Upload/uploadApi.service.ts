@@ -6,7 +6,7 @@ export const uploadApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken;
+      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken?.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -23,12 +23,18 @@ export const uploadApi = createApi({
       query: (body) => ({
         url: '/api/files/upload',
         method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
         body: body,
       }),
     }),
     deleteFile: builder.mutation({
       query: ({ fileId, publicId }) => ({
         url: `/api/files/${fileId}/${publicId}`,
+        headers: {
+          Accept: 'application/json',
+        },
         method: 'DELETE',
       }),
     }),

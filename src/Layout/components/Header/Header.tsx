@@ -5,10 +5,7 @@ import Dropdown from '~/components/Dropdown';
 import ToggleDarkMode from '~/components/customs/DarkMode/DarkMode';
 import Icon from '~/components/customs/Icon';
 import logo from '~/assets/images/logo.png';
-import logoDark from '~/assets/images/logoDark.png';
 import logoWhite from '~/assets/images/logoWhite.png';
-import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import Notifications from '~/components/Notifications';
 
@@ -42,29 +39,12 @@ const Header = ({ className }: HeaderProps) => {
   ];
 
   const auth = useAppSelector((state) => state.auth);
-  const [loginGoogle] = useLogInGoogleMutation();
 
   const navList = (
     <ul className="flex items-center gap-2">
-      {!auth.loggedIn && (
-        <div className="hidden">
-          <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-                loginGoogle({ accessToken: credentialResponse.credential });
-              }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
-              useOneTap
-            />
-          </GoogleOAuthProvider>
-        </div>
-      )}
-      <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
+      {/* <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="search" className="text-2xl hover:scale-110" />
-      </Link>
+      </Link> */}
       <Link to="/" className="cursor-pointer px-2 text-cs_semi_green xl:hidden">
         <Icon name="qr-code-outline" className="text-2xl hover:scale-110" />
       </Link>
@@ -72,11 +52,12 @@ const Header = ({ className }: HeaderProps) => {
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link> */}
       <Notifications data={notificationData} />
+
       <Link
-        to="/"
+        to="/user/profile"
         className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
       >
-        <Icon name="wallet" className="text-2xl" />
+        <Icon name="ticket" className="text-2xl" />
       </Link>
 
       <ToggleDarkMode>
@@ -95,9 +76,9 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-light  dark:bg-cs_lightDark  ${className} sm:px-5`}
+      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-full  dark:bg-cs_lightDark  ${className} sm:px-5`}
     >
-      <div className="flex items-center">
+      <div className="flex items-center gap-8">
         <Link to="/">
           <div className="flex items-center gap-2">
             <img src={logo} alt="logo" className=" h-[20px] w-[40px] dark:hidden" />
@@ -105,7 +86,7 @@ const Header = ({ className }: HeaderProps) => {
             <span className="text-xl font-extrabold text-cs_semi_green dark:text-cs_light">NEVENT</span>
           </div>
         </Link>
-        <SearchBar className="ms-5 hidden rounded-xl shadow-border-light xl:block border" />
+        <SearchBar className="hidden rounded-xl border shadow-border-light xl:block" />
       </div>
       <div className="flex items-center justify-end gap-3">
         <div className="">{navList}</div>

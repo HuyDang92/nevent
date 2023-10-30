@@ -30,7 +30,7 @@ const Purchase = () => {
           Thanh toán
         </h1>
       </div>
-      <div className="m-4">
+      <div className="m-3">
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
             <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
@@ -43,7 +43,7 @@ const Purchase = () => {
                   name="payment"
                 />
                 <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Thẻ tín dụng</span>
+                <span className="hidden md:block text-sm">Thẻ tín dụng</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(1)} className="flex items-center" index={1}>
@@ -56,7 +56,7 @@ const Purchase = () => {
                   name="payment"
                 />
                 <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">Internet Banking</span>
+                <span className="hidden md:block text-sm">Internet Banking</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
@@ -72,7 +72,7 @@ const Purchase = () => {
                 <span className="hidden md:block">MoMo</span>
               </div>
             </Tab>
-            <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
+            {/* <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
               <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
@@ -84,7 +84,7 @@ const Purchase = () => {
                 <Iconify icon="arcticons:zalopay" className="text-3xl dark:text-cs_light" />
                 <span className="hidden md:block">ZaloPay</span>
               </div>
-            </Tab>
+            </Tab> */}
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
@@ -136,7 +136,7 @@ const Purchase = () => {
           </TabsBody>
         </Tabs>
       </div>
-      <div className="w-full text-right">
+      <div className="w-full text-right px-3 pb-3">
         <Button
           onClick={() => {
             if (currentViewPort.width <= 1024) {

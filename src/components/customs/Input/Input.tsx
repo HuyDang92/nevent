@@ -4,7 +4,7 @@ import IonIcon from '@reacticons/ionicons';
 type InputProps = {
   readonly?: boolean;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;
@@ -40,7 +40,7 @@ const Input = ({
     <div className={`relative ${className}`}>
       {label !== undefined ? (
         <>
-          <label htmlFor={id} className={`flex gap-1 p-2 font-medium ${classNameLabel}`}>
+          <label htmlFor={id} className={`flex gap-1 p-2 font-medium dark:!text-gray-400 ${classNameLabel}`}>
             <span>{label}</span>
             {/* <span className="grid h-2 place-content-center self-start text-red-500">&lowast;</span> */}
           </label>
@@ -51,7 +51,7 @@ const Input = ({
       <p className="relative">
         <input
           placeholder={placeholder}
-          className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_formDark ${
+          className={`${readonly ? 'bg-cs_gray' : ''} h-10 shadow-border-light dark:bg-cs_lightDark dark:text-white ${
             rounded_full ? 'rounded-full' : 'rounded-xl'
           }  px-4 py-3.5  focus:border-cs_semi_green focus:placeholder-cs_dark focus:outline-none dark:focus:placeholder-cs_light ${classNameInput}`}
           type={showPassword ? 'text' : type}

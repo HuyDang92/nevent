@@ -2,8 +2,6 @@ import SectionTitle from '~/components/SectionTitle';
 import CategoryCard from '~/components/CategoryCard';
 import Banner from './components/Banner';
 import { Link } from 'react-router-dom';
-import thumb from '~/assets/images/pro.webp';
-import poster from '~/assets/images/poster.jpg';
 import Button from '~/components/customs/Button';
 import Slide from './components/Slide';
 import ProductCard from '~/components/EventCard';
@@ -17,80 +15,20 @@ function Home() {
   const categories = useGetAllCategoryQuery();
   const event = useGetAllEventQuery({ page: 1, limit: 16 });
 
-  const dataPro = [
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-    {
-      image: poster,
-      title: '[PARADISE SHOW 29.09] MYRA TRẦN & BẠCH MÃ HOÀNG TỬ CỨU CÔNG CHÚA',
-      date: '12:00 - 21/12/2023',
-      place: 'Hồ Chí Minh',
-      category: 'Cuộc thi',
-    },
-  ];
-
   return (
     <>
       <div className="mb-6 w-full">
         <Banner />
-        <SectionTitle value="Danh mục yêu thích" />
+        <SectionTitle value="Danh mục yêu thích" to="/event-categories" />
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {!categories.isFetching &&
             categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
-        <SectionTitle value="Sự kiện nổi bật" />
+        <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
         {event.isFetching ? <SkeletonEventHot /> : <Slide data={event.data?.data?.docs} />}
-        <SectionTitle value="Sự kiện sắp diễn ra" />
+        <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
         {event.isFetching && <SkeletonEventList />}
-        {/* {!event.isFetching && <SkeletonEventList />} */}
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
@@ -100,9 +38,11 @@ function Home() {
               </Link>
             ))}
         </div>
-        <div className="mt-5 flex justify-center">
-          <Button className="" value="Xem thêm" mode="dark" />
-        </div>
+        <Link to="/event-categories">
+          <div className="mt-5 flex justify-center">
+            <Button className="" value="Xem thêm" mode="dark" />
+          </div>
+        </Link>
       </div>
     </>
   );

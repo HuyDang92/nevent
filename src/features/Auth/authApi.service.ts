@@ -6,7 +6,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken;
+      const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken?.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -36,6 +36,16 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/update',
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
@@ -52,4 +62,5 @@ export const {
   useLazyGetTokenFromRefreshTokenQuery,
   useGetProfileQuery,
   useLogInGoogleMutation,
+  useUpdateProfileMutation,
 } = authApi;

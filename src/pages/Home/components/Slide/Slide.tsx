@@ -74,7 +74,7 @@ function Slide({ data }: Props) {
         {formatArray.map((item: any, index: number) => (
           <div key={index} className="grid grid-cols-2 gap-4 overflow-hidden sm:grid-cols-3 xl:grid-cols-5">
             {item.map((item: IEvent, index: number) => (
-              <Link key={index} to="">
+              <Link key={index} to={`/event-detail/${item?._id}`}>
                 <img
                   src={item?.banner[0]?.url}
                   alt="image 1"

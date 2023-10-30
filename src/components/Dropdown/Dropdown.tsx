@@ -1,12 +1,13 @@
 import { Avatar } from '@material-tailwind/react';
 import avtDefault from '~/assets/images/default-avatar.jpg';
 import { motion, Variants } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '../customs/Button';
 import { logout } from '~/features/Auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import Icon from '../customs/Icon';
+import useClickOutside from '~/hooks/useClickOutside';
 
 const itemVariants: Variants = {
   open: {
@@ -23,7 +24,11 @@ const Dropdown = ({ auth }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const ref = useRef(null);
 
+  useClickOutside(ref, () => {
+    setIsOpen(false);
+  });
   const handleLogOut = () => {
     dispatch(logout());
     navigate('/login');
@@ -31,6 +36,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
       <motion.button
+        ref={ref}
         whileTap={{ scale: 0.97 }}
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-full border-2 border-cs_semi_green "
@@ -39,7 +45,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
           variant="circular"
           alt="tania andrew"
           className="h-10 w-10 cursor-pointer object-cover shadow-border-light"
-          src={avtDefault}
+          src={auth?.currentUser?.avatar?.url ?? avtDefault}
         />
       </motion.button>
       <motion.ul
@@ -72,7 +78,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             alt="tania andrew"
             size="xl"
             className="cursor-pointer border-2 border-cs_semi_green object-cover shadow-border-light"
-            src={auth?.currentUser?.avatar ?? avtDefault}
+            src={auth?.currentUser?.avatar?.url ?? avtDefault}
           />
           <h5 className="font-semibold dark:text-cs_light">{auth?.currentUser?.fullName}</h5>
           <span className="text-xs text-cs_gray">{auth?.currentUser?.email} </span>

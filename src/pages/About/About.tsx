@@ -1,19 +1,25 @@
 import Footer from '~/Layout/components/Footer';
 import Header from '~/Layout/components/Header';
 import { IconDiamond, IconTrophy } from '~/assets/icon';
-import AboutImage1 from '~/assets/images/about_image1.webp';
+import AboutImage1 from '~/assets/images/about_image1.jpg';
 import AboutImage2 from '~/assets/images/about_image2.png';
 import AboutImage3 from '~/assets/images/about_image3.png';
 function About() {
   return (
     <>
       <Header />
-      <main className="min-h-screen dark:bg-cs_dark pt-5">
+      <main className="min-h-screen pt-5 dark:bg-cs_dark ">
         <div className="relative grid place-items-center">
-          <h1 className="z-10 my-20 text-5xl font-bold text-cs_light">NEVENT</h1>
-          <img src={AboutImage1} className="absolute top-0 px-5" alt="Photo of Nevent" />
-          <div className="rounded-2xl bg-[rgba(169,167,167,0.2)] p-3 backdrop-blur-[100px] md:w-[70%] md:p-10">
-            <h1 className="mb-2.5 text-center text-3xl font-bold text-cs_light">Một phong cách mới. Tại sao?</h1>
+          <h1 className="z-10 my-12 sm:my-20 text-3xl font-bold text-cs_light sm:text-5xl">NEVENT</h1>
+          <img
+            src={AboutImage1}
+            className=" absolute top-0 h-[15rem] w-full rounded-[4rem] object-cover px-5 sm:h-[25rem]"
+            alt="Photo of Nevent"
+          />
+          <div className="mx-2 rounded-2xl bg-[rgba(169,167,167,0.2)] p-3 backdrop-blur-[100px] sm:mx-5 md:p-10 xl:w-[70%]">
+            <h1 className="mb-2.5 text-center text-2xl font-bold text-cs_light sm:text-3xl">
+              Một phong cách mới. Tại sao?
+            </h1>
             <p className="mb-10 text-center text-cs_light">
               Đi kèm nhu cầu sử dụng và trải nghiệm theo một phong cách hoàn toàn mới
             </p>
@@ -39,7 +45,7 @@ function About() {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-10 flex flex-col justify-between gap-3 rounded-2xl bg-cs_light p-3 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light md:w-[70%] md:flex-row md:gap-20 md:p-10">
+        <div className="mx-2 mt-10 flex flex-col justify-between gap-3 rounded-2xl bg-cs_light p-4 shadow-border-full dark:bg-cs_icon_black dark:text-cs_light sm:mx-5 md:flex-row md:p-10 xl:mx-auto xl:w-[70%] xl:gap-20">
           <div>
             <h1 className="mb-5 text-2xl font-bold">Sự chú ý của bạn có thể bảo vệ túi tiền của bạn.</h1>
             <p>
@@ -49,7 +55,7 @@ function About() {
           </div>
           <img src={AboutImage2} className="w-[455px]" alt="Photo of Nevent" />
         </div>
-        <div className="mx-auto mt-10 flex flex-col justify-between gap-10 pb-10 md:w-[70%] md:flex-row md:pb-20">
+        <div className="mx-2 mt-10 flex flex-col justify-between gap-10 pb-10 sm:mx-5 md:flex-row md:pb-20 xl:mx-auto xl:w-[70%]">
           <div className="flex gap-[30px] rounded-2xl bg-cs_light p-[30px] shadow-border-full dark:bg-cs_icon_black dark:text-cs_light md:w-2/3">
             <div>
               <h1 className="mb-5 text-2xl font-bold">Ai là người đứng sau Nevent?</h1>

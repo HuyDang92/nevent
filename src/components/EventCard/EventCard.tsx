@@ -55,7 +55,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                     initial={{ opacity: 0, y: -5, height: 0 }}
                     animate={{ opacity: 1, y: 0, height: 15 }}
                     exit={{ opacity: 0, y: -5, height: 0 }}
-                    className="flex justify-between text-[14px] font-normal dark:text-cs_light"
+                    className="hidden sm:flex justify-between text-[14px] font-normal dark:text-cs_light"
                   >
                     <span className="cursor-pointer font-semibold">Chi tiết</span>
                     <span className="cursor-pointer font-semibold">Đặt vé</span>
