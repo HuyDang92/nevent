@@ -10,36 +10,38 @@ interface UserInfoProp {
   data?: IUserField | null;
   popup?: boolean;
 }
-const check: any[] = [];
-const notificationData = [
-  {
-    id: 1,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 2,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 3,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-];
+
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
+  const [notificationData, setNotificationData] = useState([
+    {
+      id: 1,
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+    {
+      id: 2,
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+    {
+      id: 3,
+      avatar:
+        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+      name: 'Tania',
+      desc: 'send you a message',
+      time: '13 minutes',
+    },
+  ]);
   const [clickedItems, setClickedItems] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
+  const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
+
   useEffect(() => {
     const unclickedItems = notificationData.filter((item, index) => !clickedItems.includes(item));
     setUnclick(unclickedItems);
@@ -54,10 +56,23 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       // Nếu mục đã tồn tại, không thay đổi mảng
       return prevClickedItems;
     });
+    setTimeout(() => {
+      const updatedData = notificationData.filter((dataItem) => dataItem.id !== item.id);
+      setNotificationData(updatedData);
+    }, 300);
   };
 
-  console.log(clickedItems);
-
+  const handleRemoveItem = (item: any) => {
+    setShowDeleteMenu((prevClickedItems) => {
+      // Kiểm tra xem mục đã tồn tại trong mảng chưa
+      if (!prevClickedItems.includes(item)) {
+        // Nếu mục chưa tồn tại, thêm nó vào mảng
+        return [...prevClickedItems, item];
+      }
+      // Nếu mục đã tồn tại, không thay đổi mảng
+      return prevClickedItems;
+    });
+  };
   return (
     <div className={`${className}`}>
       <h1 className="text-xl font-bold">Thông báo</h1>
@@ -78,15 +93,20 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${
-                    clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc]'
-                  } flex items-center justify-between bg-[#f5f7fc]`}
+                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                    showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
+                  } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <div className="flex items-center gap-4  py-2 pl-2 pr-8">
                     <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
                     <div className="flex flex-col gap-1">
-                      <Typography variant="small" color="gray" className="font-normal">
-                        <span className="font-medium text-blue-gray-900">{item.name}</span> {item.desc}
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      >
+                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
+                        {item.desc}
                       </Typography>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
@@ -94,7 +114,9 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                       </Typography>
                     </div>
                   </div>
-                  {popup && <Icon name="trash-outline" className="px-5 text-red-500" />}
+                  {popup && (
+                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
+                  )}
                 </div>
               ))
             ) : (
@@ -112,15 +134,20 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${
-                    clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc]'
-                  } flex items-center justify-between bg-[#f5f7fc]`}
+                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                    showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
+                  } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <div className="flex items-center gap-4  py-2 pl-2 pr-8">
                     <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
                     <div className="flex flex-col gap-1">
-                      <Typography variant="small" color="gray" className="font-normal">
-                        <span className="font-medium text-blue-gray-900">{item.name}</span> {item.desc}
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      >
+                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
+                        {item.desc}
                       </Typography>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
@@ -128,7 +155,9 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                       </Typography>
                     </div>
                   </div>
-                  {popup && <Icon name="trash-outline" className="px-5 text-red-500" />}
+                  {popup && (
+                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
+                  )}
                 </div>
               ))
             ) : (

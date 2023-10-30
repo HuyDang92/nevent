@@ -54,7 +54,7 @@ const MyTicket = ({ data, className }: UserInfoProp) => {
         </TabsHeader>
         <TabsBody className="shadow-none">
           <TabsContent index={0} className="space-y-2">
-            {dataTicket.length === 0 ? (
+            {dataTicket.length > 0 ? (
               dataTicket.map((item, index) => <TicketProfile key={index} data={item} />)
             ) : (
               <div className="flex justify-center py-5 text-center">

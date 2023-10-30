@@ -13,7 +13,7 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 
 function Home() {
   const categories = useGetAllCategoryQuery();
-  const event = useGetAllEventQuery({ page: 1, limit: 16 });
+  const event = useGetAllEventQuery({ page: 1, limit: 12, status: 'UPCOMING' });
 
   return (
     <>

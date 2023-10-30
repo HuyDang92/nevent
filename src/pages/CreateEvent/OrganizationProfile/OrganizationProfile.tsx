@@ -66,7 +66,7 @@ const OrganizationProfile = () => {
             <select
               name="type"
               id="type"
-              className="mt-2 w-[55%] rounded-2xl border-2 p-2 focus:border-2 dark:border-none dark:bg-cs_formDark dark:text-white"
+              className="mt-2 w-[55%] rounded-xl border-2 p-2 focus:border-2 dark:border-none dark:bg-cs_formDark dark:text-white"
             >
               <option value="">Doanh nghiệp/Nhà tổ chức</option>
               <option value="">Cá nhân</option>
