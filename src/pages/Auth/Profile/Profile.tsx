@@ -158,7 +158,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <History data={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={3}>
-              <Notifycation data={auth?.currentUser} />
+              <Notifycation classNameTagHeader="sm:w-[30%]" popup />
             </TabsContent>
             <TabsContent index={4}>
               <ChangePassword />
