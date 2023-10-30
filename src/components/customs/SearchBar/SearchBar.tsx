@@ -1,11 +1,12 @@
 import { Spinner } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLazyGetAllEventQuery } from '~/features/Event/eventApi.service';
 import { useDebounce } from '~/hooks/useDebounce';
 import moment from 'moment';
 import Icon from '../Icon';
 import { Link, useNavigate } from 'react-router-dom';
+import useClickOutside from '~/hooks/useClickOutside';
 
 type SearchBarProps = {
   className?: string;
@@ -18,7 +19,11 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const [value, setValue] = useState<string>('');
   const [getEvent, result] = useLazyGetAllEventQuery();
   const { searchValue } = useDebounce(value, 500);
+  const ref = useRef(null);
 
+  useClickOutside(ref, () => {
+    setValue('');
+  });
   useEffect(() => {
     if (searchValue === '') return;
     getEvent({ page: 1, limit: 20, search: searchValue });
@@ -58,8 +63,9 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
         />
       </div>
       <div
-        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light border dark:bg-cs_lightDark ${
-          value === '' ? 'h-0 ' : 'max-h-60 p-3'
+        ref={ref}
+        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${
+          value === '' ? 'h-0 ' : 'max-h-60 border p-3'
         }  space-y-2 shadow-border-full transition-all`}
       >
         <div className="flex items-center gap-3 text-cs_gray">
@@ -72,7 +78,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
           <span>Tìm kiếm sự kiện "{value}"</span>
         </div>
         {result.data?.data?.docs?.length === 0 && (
-          <div className="py-2 text-center text-cs_lightDark">Không tìm thấy kết quả</div>
+          <div className="py-2 text-center text-cs_lightDark dark:text-cs_light">Không tìm thấy kết quả</div>
         )}
         {!result.isFetching &&
           result.data?.data?.docs?.map((event: IEvent) => (
