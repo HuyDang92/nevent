@@ -22,6 +22,7 @@ import EventManage from '~/pages/CreateEvent/EventManage';
 import CreateEvent from '~/pages/CreateEvent/CreateEvent';
 import Organizer from '~/pages/Organizer';
 import SearchMobile from '~/pages/SearchMobile';
+import Scan from '~/pages/Scan/Scan';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -62,6 +63,7 @@ export default function AppRoutes() {
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
         </Route>
+
         {/* Tạo sự kiện */}
         <Route element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<CreateEventLayout />}>
@@ -72,6 +74,14 @@ export default function AppRoutes() {
             <Route path="/create-event3/" element={<Categories />} />
           </Route>
         </Route>
+
+        {/* Scan ticket */}
+        <Route element={<PrivateRoute allowedRoles={['user']} />}>
+          <Route element={<DefaultLayout />}>
+            <Route path="/scan-ticket" element={<Scan />} />
+          </Route>
+        </Route>
+
 
         <Route path="*" element={<NotFound />} />
       </Routes>
