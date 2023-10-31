@@ -24,4 +24,4 @@ jobs:
             git pull
             yarn install
             yarn build
-            pm2 restart vite preview --port 8080 --host
+            pm2 restart nevent-client
