@@ -4,48 +4,54 @@ import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
 import { Icon as Iconify } from '@iconify/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
+import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 interface Prop {
   className?: string;
-  setActiveStep?: React.Dispatch<React.SetStateAction<number>>;
+  event?: IEvent;
 }
-const PaymentInfor = ({ className, setActiveStep }: Prop) => {
+const ReviewOrder = ({ className, event }: Prop) => {
+  console.log(event);
+
+  const { idEvent } = useParams();
+  const navigate = useNavigate();
   const tickets = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   return (
-<div
-      className={`rounded-[12px] bg-cs_light p-4 pt-2 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light md:w-[30%] ${className}`}
-    >
-      <div className="relative flex h-[50px] items-center border-b-[0.5px] px-5">
+    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light md:w-[30%] ${className}`}>
+      <div className="relative flex h-[60px] items-center border-b-[0.5px]">
         <button
-          onClick={() => setActiveStep && setActiveStep(2)}
+          onClick={() => {
+            navigate(`/user/payment/${idEvent}/2`);
+          }}
           className="z-10 flex cursor-pointer items-center md:hidden"
         >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
-        <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase">Thông tin đặt vé</h1>
+        <h1 className="absolute w-full text-center font-bold uppercase">Thông tin đặt vé</h1>
       </div>
       {/* /// */}
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
-        <h3 className="text-xl font-bold">Ford V Ferratir</h3>
+        <h3 className="text-xl font-bold">{event?.title}</h3>
         <p className="flex items-center gap-1 text-sm font-semibold">
           <Icon name="time-outline" />
           18:00
         </p>
         <p className="flex items-center gap-1 text-sm font-semibold">
           <Icon name="calendar" />
-          Ngày 21 tháng 10 năm 2023
+          {moment(event?.start_date).format('dddd, DD MMMM YY')}
         </p>
         <div className="flex items-center justify-between text-sm font-semibold">
           <Icon name="location" className="" />
-          <p className="w-[95%]">Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Tân Bình, Hồ Chí Minh</p>
+          <p className="w-[95%]">{event?.location}</p>
         </div>
       </div>
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
         <h3 className="text-xl font-bold">Thông tin người nhận</h3>
-        <span>{userInfor?.fullName}</span>
-        <span>{userInfor?.email}</span>
-        <span>{userInfor?.phone}</span>
-        <span>{userInfor?.address}</span>
+        <span><b>Họ và tên:</b> {userInfor?.fullName}</span>
+        <span><b>Email:</b> {userInfor?.email}</span>
+        <span><b>Số điện thoại:</b> {userInfor?.phone}</span>
+        <span><b>Địa chỉ:</b> {userInfor?.address}</span>
       </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">
@@ -53,10 +59,10 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
           <div key={ticket._id} className="flex items-center justify-between">
             <div className="flex w-[28%] items-center gap-3">
               <TicketCard title={ticket.title} tooltip="Tooltip here" />
-              <span className="font-bold text-cs_gray"> x{ticket.quantity} </span>
+              <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
             </div>
             <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
-              {(ticket.quantity * ticket.price).toLocaleString('vi')}đ
+              {(ticket.orderQuantity * ticket.price).toLocaleString('vi')}đ
             </span>
           </div>
         ))}
@@ -85,7 +91,9 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
           Thành tiền <span className="text-base text-cs_semi_green">12.000.000 VND</span>
         </p>
         <Button
-          onClick={() => setActiveStep && setActiveStep(3)}
+          onClick={() => {
+            navigate(`/user/payment/${idEvent}/3`);
+          }}
           value="Thanh toán"
           className="w-full !bg-cs_semi_green text-white !shadow-none"
         />
@@ -95,4 +103,4 @@ const PaymentInfor = ({ className, setActiveStep }: Prop) => {
   );
 };
 
-export default PaymentInfor;
+export default ReviewOrder;

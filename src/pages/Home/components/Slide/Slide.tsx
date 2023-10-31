@@ -12,17 +12,17 @@ function Slide({ data }: Props) {
   useEffect(() => {
     const splitArray = [];
     if (width < 768) {
-      for (let i = 0; i < data.length; i += 2) {
+      for (let i = 0; i < data?.length; i += 2) {
         const subArray = data.slice(i, i + 2);
         splitArray.push(subArray);
       }
     } else if (width < 1024) {
-      for (let i = 0; i < data.length; i += 3) {
+      for (let i = 0; i < data?.length; i += 3) {
         const subArray = data.slice(i, i + 3);
         splitArray.push(subArray);
       }
     } else {
-      for (let i = 0; i < data.length; i += 5) {
+      for (let i = 0; i < data?.length; i += 5) {
         const subArray = data.slice(i, i + 5);
         splitArray.push(subArray);
       }

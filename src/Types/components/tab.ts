@@ -2,6 +2,7 @@ export interface TabsProp {
   children: React.ReactNode;
   className?: string;
   orientation?: 'vertical' | 'horizontal';
+  availableLink?: boolean
 }
 
 export interface TabsHeaderProp {
@@ -20,6 +21,7 @@ export interface TabProp {
   setActiveTab?: (index: number) => void;
   children?: React.ReactNode;
   onClick?: () => void;
+  link?: string;
 }
 
 export interface TabsBodyProp {

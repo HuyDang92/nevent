@@ -72,9 +72,7 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Link to={'/user/payment'}>
-                    <Button className="w-full" value="Đặt vé ngay" mode="dark" />
-                  </Link>
+                  <Link to={`/user/payment/${detailEventQuery?.data?.data?._id}/0`}><Button className="w-full" value="Đặt vé ngay" mode="dark" /></Link>
                 </div>
               </div>
             </div>
