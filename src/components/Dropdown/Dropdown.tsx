@@ -85,7 +85,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
         </motion.li>
         <motion.li variants={itemVariants}>
           <Link
-            to={'/user/profile'}
+            to={'/user/profile/1'}
             className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
           >
             <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
@@ -103,7 +103,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
         </motion.li>
         <motion.li variants={itemVariants}>
           <Link
-            to={'/user/profile'}
+            to={'/user/profile/0'}
             className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
           >
             <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />

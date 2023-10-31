@@ -5,17 +5,25 @@ import { Icon as Iconify } from '@iconify/react';
 import Button from '~/components/customs/Button';
 import { useGetBankListQuery } from '~/features/Payment/bankApi.service';
 import Skeleton from 'react-loading-skeleton';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
-const Purchase = ({ setActiveStep }: Prop) => {
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
+
+const Purchase = () => {
+  const { idEvent } = useParams();
+  const navigate = useNavigate();
   const [method, setMethod] = useState(0);
   const { isFetching, data, isError } = useGetBankListQuery();
   const bankList = data?.data;
+  const currentViewPort = useCurrentViewportView();
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
-        <button onClick={() => setActiveStep(1)} className="z-10 flex cursor-pointer items-center">
+        <button
+          onClick={() => {
+            navigate(`/user/payment/${idEvent}/1`);
+          }}
+          className="z-10 flex cursor-pointer items-center"
+        >
           <Icon name="arrow-back-outline" className="mr-2 text-xl" />
         </button>
         <h1 className="absolute w-[calc(100%-40px)] text-center font-bold uppercase md:static md:text-left">
@@ -26,7 +34,7 @@ const Purchase = ({ setActiveStep }: Prop) => {
         <Tabs>
           <TabsHeader className="!rounded-[10px]">
             <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
-              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
+              <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
                   checked={method === 0 ? true : false}
@@ -64,19 +72,6 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 <span className="hidden md:block">MoMo</span>
               </div>
             </Tab>
-            {/* <Tab onClick={() => setMethod(3)} className="flex items-center" index={3}>
-              <div className="flex w-full items-center justify-center gap-[10px] md:justify-normal">
-                <input
-                  onChange={() => {}}
-                  checked={method === 3 ? true : false}
-                  className="hidden h-[20px] w-[20px] md:block"
-                  type="radio"
-                  name="payment"
-                />
-                <Iconify icon="arcticons:zalopay" className="text-3xl dark:text-cs_light" />
-                <span className="hidden md:block">ZaloPay</span>
-              </div>
-            </Tab> */}
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
@@ -119,18 +114,16 @@ const Purchase = ({ setActiveStep }: Prop) => {
                 đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
               </p>
             </TabsContent>
-            <TabsContent index={3} className="p-5">
-              <p>
-                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
-                đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
-              </p>
-            </TabsContent>
           </TabsBody>
         </Tabs>
       </div>
       <div className="w-full text-right px-3 pb-3">
         <Button
-          onClick={() => setActiveStep(4)}
+          onClick={() => {
+            if (currentViewPort.width <= 1024) {
+              navigate(`/user/payment/${idEvent}/4`);
+            }
+          }}
           className="md:w mt-5 w-full"
           type="submit"
           mode="dark"
