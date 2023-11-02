@@ -46,22 +46,34 @@ const Payment = () => {
       dispatch(refreshPayment(idEvent));
     }
   }, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
   return (
     <>
       <Header />
-      <div className="mx-auto md:w-5/6 py-5 ">
+      <div className="mx-auto py-5 md:w-5/6 ">
         <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={`${event?.title}`} />
         <div className="mx-2 xl:mx-0 ">
-          <div className="items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark hidden md:flex">
+          <div className="hidden items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
             <PaymentStepper />
           </div>
-          <div className="mt-2 flex gap-5 xl:mt-5">
-            <div className="w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light xl:w-[70%]">
+          <div className={`${activeStep !== 3 && 'flex'} mt-2 gap-5 xl:mt-5`}>
+            <div
+              className={`w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light ${
+                activeStep !== 3 && 'xl:w-[70%]'
+              } `}
+            >
               {renderContent(activeStep)}
             </div>
 
             {/* Phần thông tin đặt vé */}
-            <ReviewOrder event={event} className="hidden xl:block" />
+            {activeStep !== 3 && (
+              <ReviewOrder event={event} className="hidden bg-cs_light dark:bg-cs_lightDark xl:block" />
+            )}
           </div>
         </div>
       </div>

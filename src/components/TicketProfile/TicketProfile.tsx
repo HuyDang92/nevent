@@ -5,24 +5,50 @@ import Button from '../customs/Button';
 import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
 import QR from '~/assets/images/qr.jpg';
 import useClickOutside from '~/hooks/useClickOutside';
+import QRCode from 'react-qr-code';
+// import QRCode from 'qrcode.react';
+
 interface IProps {
   data: any;
 }
-const arrayQR = [
-  'https://jess3.com/wp-content/uploads/2011/10/JESS3_QRCode1.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0xLOY0G6BUyjKfKgt8hJHZtCxoupDj1n6cGE_kwMj_7EKV8fj4BQy59TsUfNY1J0vNZU&usqp=CAU',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS2Z-R-dy3l4OOykRpXXcJSwS2WXr9RY6lZG0YJeY_N5vJ17yAxEOJgWBpmyL-mkwlB4Y&usqp=CAU',
-];
+
 const TicketProfile: React.FC<IProps> = ({ data }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openTool, setOpenTool] = useState<boolean>(false);
+  const [dataUrl, setDataUrl] = useState('');
   const toolRef = useRef(null);
-
+  const qrCodeRef: any = useRef(null);
   useClickOutside(toolRef, () => {
     setOpenTool(false);
   });
+  const convertSvgToImage = () => {
+    const svgData = new XMLSerializer().serializeToString(qrCodeRef.current);
+    const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
+    const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`;
+    const image = new Image();
+    image.onload = () => {
+      const width = qrCodeRef.current.getAttribute('width');
+      const height = qrCodeRef.current.getAttribute('height');
+      const canvas = document.createElement('canvas');
 
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height);
+
+      const context: any = canvas.getContext('2d');
+      context.drawImage(image, 0, 0, width, height);
+
+      const imageDataUrl = canvas.toDataURL('image/png');
+      setDataUrl(imageDataUrl);
+    };
+
+    image.src = svgDataUrl;
+  };
   const handleDownload = () => {
+    convertSvgToImage();
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = 'QRCode.png';
+    link.click();
     setOpen(!open);
   };
 
@@ -36,14 +62,14 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
         }}
-        size="sm"
+        size="xs"
       >
         <DialogBody className="relative font-normal">
           <p className="text-center text-lg font-bold uppercase text-cs_semi_green">Scan QR để check-in</p>
           <span onClick={() => setOpen(false)}>
             <Icon name="close" className="absolute right-4 top-4 text-2xl transition-all hover:scale-110" />
           </span>
-          {data?.dataTicket.length > 1 ? (
+          {data?.tickets?.length > 1 ? (
             <Carousel
               className=""
               prevArrow={({ handlePrev }) => (
@@ -75,50 +101,52 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 </div>
               )}
             >
-              {data?.dataTicket.map((item: any, index: number) => (
-                <div key={index} className="">
+              {data?.tickets?.map((item: any, index: number) => (
+                <div key={index} className="flex justify-center py-5">
                   <div key={index}>
-                    <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" />
+                    {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
+                    <QRCode value={item?._id} />
                   </div>
                 </div>
               ))}
             </Carousel>
           ) : (
-            <img src={data?.dataTicket[0]} alt="" className="w-full" />
+            <div className="flex justify-center py-5">
+              <QRCode ref={qrCodeRef} id="qrcode" value={data?.tickets[0]?._id} />
+            </div>
           )}
         </DialogBody>
         <DialogFooter className="flex justify-center pt-0">
-          <a href={QR} download="QR_vé">
-            <Button
-              value="Tải về máy"
-              icon="download-outline"
-              className="!bg-cs_semi_green !text-white"
-              onClick={handleDownload}
-            />
-          </a>
+          <Button
+            value="Tải về máy"
+            icon="download-outline"
+            className="!bg-cs_semi_green !text-white"
+            onClick={handleDownload}
+          />
+          {/* <a href={QR} download="QR_vé">
+          </a> */}
         </DialogFooter>
       </Dialog>
       <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
-      <img
-        src="https://images.tkbcdn.com/1/780/300/Upload/eventcover/2023/10/22/B2F576.jpg"
-        alt=""
-        className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]"
-      />
-      <div className="absolute left-0 top-0 z-20 flex w-full justify-between p-4 text-cs_light">
+      <img src={data?.bannerEvent} alt="" className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]" />
+      <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
         <div className="xl:w-2/3">
-          <p className=" line-clamp-2 text-xl font-bold">{data?.title}</p>
+          <p className=" line-clamp-2 text-xl font-bold">{data?.titleEvent}</p>
           <span className="flex items-center gap-2 text-sm font-semibold">
             {/* <Icon name="time-outline" /> */}
             <span>Thời gian: </span>
-            {moment(data?.start_date).format('hh:mm - DD/MM/YYYY')}
+            {moment(data?.date).format('hh:mm - DD/MM/YYYY')}
             <span className="text-sm "> - {data?.category}</span>
           </span>
-          <p className="text-sm font-semibold">Số vé: {data?.ticketCount}</p>
+          <p className="text-sm font-semibold">Số vé: {data?.tickets?.length}</p>
           <p className="text-sm font-semibold">
-            Trạng thái: <span className="text-sm text-cs_semi_green">{data?.ticketStatus}</span>
+            Trạng thái:{' '}
+            <span className="text-sm text-cs_semi_green">
+              {data?.tickets[0]?.status === false ? 'Chưa sử dụng' : 'Đã sử dụng'}
+            </span>
           </p>
           <p className="text-sm font-semibold">
-            Loại vé: <span className="text-sm text-cs_semi_green">{data?.ticketType}</span>
+            Loại vé: <span className="text-sm text-cs_semi_green">{data?.tickets[0]?.title}</span>
           </p>
           <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
         </div>

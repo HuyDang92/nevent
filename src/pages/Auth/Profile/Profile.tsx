@@ -153,7 +153,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <UserInfo data={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={1}>
-              <MyTicket data={auth?.currentUser} />
+              <MyTicket auth={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={2}>
               <History data={auth?.currentUser} />
