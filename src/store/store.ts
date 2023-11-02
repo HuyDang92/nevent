@@ -22,8 +22,8 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
-  [bankApi.reducerPath]: bankApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
+  [bankApi.reducerPath]: bankApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
 });

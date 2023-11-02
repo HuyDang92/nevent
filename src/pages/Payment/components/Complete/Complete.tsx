@@ -3,11 +3,11 @@ import chameleon from '~/assets/images/chamaleon-1.svg';
 import Button from '~/components/customs/Button';
 const Complete = () => {
   return (
-    <div>
-      <img src={chameleon} alt="" className='w-full h-[120px]' />
-      <h1 className='text-center my-5 font-bold text-2xl'>Thanh toán thành công</h1>
-      <Link to={''}>
-        <Button className='w-full' value="Quản lí vé" mode='dark' ></Button>
+    <div className="px-5 py-10">
+      <img src={chameleon} alt="" className="h-[120px] w-full" />
+      <h1 className="my-5 text-center text-2xl font-bold">Thanh toán thành công</h1>
+      <Link to={''} className='flex justify-center'>
+        <Button className="w-52" value="Quản lí vé" mode="dark"></Button>
       </Link>
     </div>
   );

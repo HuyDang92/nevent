@@ -13,40 +13,44 @@ const TicketInfor = () => {
   const tickets = useAppSelector((state) => state.payment.ticket);
   const eventTicket = [
     {
-      _id: '1',
+      _id: 'd09f4246-7957-11ee-b962-0242ac120002',
       title: 'VVip',
       type: '',
       event_id: 'string',
       color: 'red',
       price: 4600000,
       quantity: 12,
+      status: false,
     },
     {
-      _id: '2',
+      _id: 'd09f4246-7947-12ee-b962-0242bc120032',
       title: 'Offical Ticket',
       type: '',
       event_id: 'string',
       color: 'red',
       price: 4600000,
       quantity: 12,
+      status: false,
     },
     {
-      _id: '3',
+      _id: 'd09f4246-7657-11ve-a962-0245ac125001',
       title: 'Vip',
       type: '',
       event_id: 'string',
       color: 'red',
       price: 4600000,
       quantity: 0,
+      status: false,
     },
     {
-      _id: '4',
+      _id: 'd29f4246-7957-11ee-b964-0242vc120402',
       type: '',
       event_id: 'string',
       color: 'red',
       title: 'Ghost Ticket',
       price: 4600000,
       quantity: 12,
+      status: false,
     },
   ];
 
@@ -120,17 +124,17 @@ const TicketInfor = () => {
                 const ExistedTicket = tickets.find((t) => t._id === ticket._id);
                 return (
                   <tr key={ticket._id}>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eee] p-4">
                       <TicketCard title={ticket.title} tooltip="Tooltip here" />
                     </td>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eee] p-4">
                       {ticket.quantity > 0 ? (
                         <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
                       ) : (
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
                       )}
                     </td>
-                    <td className="border-t border-cs_gray p-4">
+                    <td className="border-t border-[#eee] p-4">
                       <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
                         <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>

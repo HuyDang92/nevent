@@ -6,6 +6,8 @@ import { Icon as Iconify } from '@iconify/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import { useBuyTicket } from '~/hooks/useFirebase';
+import Loading from '~/components/customs/Loading';
 interface Prop {
   className?: string;
   event?: IEvent;
@@ -17,8 +19,27 @@ const ReviewOrder = ({ className, event }: Prop) => {
   const navigate = useNavigate();
   const tickets = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
+  const auth = useAppSelector((state) => state.auth.currentUser);
+
+  const { buyTicket, isPending } = useBuyTicket();
+
+  const handleBuyTicket = async () => {
+    const data = {
+      event_id: event?._id,
+      bannerEvent: event?.banner[0]?.url,
+      category: event?.categories[0]?.name,
+      date: event?.start_date,
+      titleEvent: event?.title,
+      owner: auth?._id,
+      tickets: tickets,
+    };
+    await buyTicket(data);
+    navigate(`/user/payment/${idEvent}/3`);
+  };
+
   return (
     <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light md:w-[30%] ${className}`}>
+      {isPending && <Loading />}
       <div className="relative flex h-[60px] items-center border-b-[0.5px]">
         <button
           onClick={() => {
@@ -48,10 +69,18 @@ const ReviewOrder = ({ className, event }: Prop) => {
       </div>
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">
         <h3 className="text-xl font-bold">Thông tin người nhận</h3>
-        <span><b>Họ và tên:</b> {userInfor?.fullName}</span>
-        <span><b>Email:</b> {userInfor?.email}</span>
-        <span><b>Số điện thoại:</b> {userInfor?.phone}</span>
-        <span><b>Địa chỉ:</b> {userInfor?.address}</span>
+        <span>
+          <b>Họ và tên:</b> {userInfor?.fullName}
+        </span>
+        <span>
+          <b>Email:</b> {userInfor?.email}
+        </span>
+        <span>
+          <b>Số điện thoại:</b> {userInfor?.phone}
+        </span>
+        <span>
+          <b>Địa chỉ:</b> {userInfor?.address}
+        </span>
       </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">
@@ -91,9 +120,7 @@ const ReviewOrder = ({ className, event }: Prop) => {
           Thành tiền <span className="text-base text-cs_semi_green">12.000.000 VND</span>
         </p>
         <Button
-          onClick={() => {
-            navigate(`/user/payment/${idEvent}/3`);
-          }}
+          onClick={handleBuyTicket}
           value="Thanh toán"
           className="w-full !bg-cs_semi_green text-white !shadow-none"
         />

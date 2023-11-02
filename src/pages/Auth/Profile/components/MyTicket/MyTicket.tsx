@@ -4,10 +4,11 @@ import TicketProfile from '~/components/TicketProfile';
 import nothing from '~/assets/images/nothing.svg';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
+import { useGetTicketsUser } from '~/hooks/useFirebase';
 
 interface UserInfoProp {
   className?: string;
-  data?: IUserField | null;
+  auth?: IUserField | null;
 }
 
 const code: any[] = [];
@@ -37,14 +38,28 @@ const dataTicket = [
     ticketType: 'Vé thường',
   },
 ];
-const MyTicket = ({ data, className }: UserInfoProp) => {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+const MyTicket = ({ auth, className }: UserInfoProp) => {
+  const [dataTicket, setDataTicket] = useState<any[]>([]);
+  const { getTickets, data, isPending } = useGetTicketsUser();
+  useEffect(() => {
+    getTickets(auth ? auth?._id : '');
+    if (data) {
+      setDataTicket(data);
+    }
+  }, [auth]);
+  console.log(dataTicket);
+
+  useEffect(() => {
+    if (!isPending) {
+      setDataTicket(data);
+    }
+  }, [isPending]);
 
   return (
     <div className={`${className}`}>
       <h1 className="text-xl font-bold">Vé của tôi</h1>
       <Tabs>
-        <TabsHeader className="mt-3 shadow-none sm:w-[30%]">
+        <TabsHeader className="mt-3 shadow-none sm:w-[40%]">
           <Tab className="flex items-center justify-center" index={0}>
             <span className="text-[16px]">Vé của tôi</span>
           </Tab>
