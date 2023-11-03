@@ -58,13 +58,13 @@ const TicketInfor = () => {
 
   const inscreaseTicketQuantity = (ticket: ITicket) => {
     if (ticket.quantity > 0) {
-      dispatch(inscreaseTicket(ticket));
+      dispatch(inscreaseTicket({ ...ticket, ticket }));
     }
   };
 
   const descreaseTicketQuantity = (ticket: ITicket) => {
     if (ticket.quantity > 0) {
-      dispatch(descreaseTicket(ticket));
+      dispatch(descreaseTicket({ ...ticket, ticket }));
     }
   };
 
@@ -125,7 +125,11 @@ const TicketInfor = () => {
                 return (
                   <tr key={ticket._id}>
                     <td className="border-t border-[#eee] p-4">
-                      <TicketCard title={ticket.title} tooltip="Tooltip here" />
+                      <TicketCard
+                        title={ticket.title}
+                        tooltip="Tooltip here"
+                        className={`${ticket.quantity === 0 && 'bg-[#ccc]'}`}
+                      />
                     </td>
                     <td className="border-t border-[#eee] p-4">
                       {ticket.quantity > 0 ? (

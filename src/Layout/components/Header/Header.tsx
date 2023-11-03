@@ -30,7 +30,7 @@ const Header = ({ className }: HeaderProps) => {
       <Notifications />
 
       <Link
-        to="/user/profile"
+        to="/user/profile/1"
         className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
       >
         <Icon name="ticket" className="text-2xl" />

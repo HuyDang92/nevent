@@ -47,7 +47,6 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
       setDataTicket(data);
     }
   }, [auth]);
-  console.log(dataTicket);
 
   useEffect(() => {
     if (!isPending) {

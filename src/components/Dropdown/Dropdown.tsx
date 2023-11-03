@@ -89,12 +89,12 @@ const Dropdown = ({ auth }: DropdownProps) => {
             className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
           >
             <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-            <span className="group-hover:text-cs_light">Vé đã đặt</span>
+            <span className="group-hover:text-cs_light">Vé của tôi</span>
           </Link>
         </motion.li>
         <motion.li variants={itemVariants}>
           <Link
-            to={'/user/profile'}
+            to={'/event-manage'}
             className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
           >
             <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
