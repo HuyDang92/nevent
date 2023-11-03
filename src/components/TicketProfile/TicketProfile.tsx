@@ -3,7 +3,6 @@ import moment from 'moment';
 import Icon from '../customs/Icon';
 import Button from '../customs/Button';
 import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
-import QR from '~/assets/images/qr.jpg';
 import useClickOutside from '~/hooks/useClickOutside';
 import QRCode from 'react-qr-code';
 // import QRCode from 'qrcode.react';
@@ -21,7 +20,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
   useClickOutside(toolRef, () => {
     setOpenTool(false);
   });
-  const convertSvgToImage = () => {
+  const handleDownload = (typeTicket: string) => {
     const svgData = new XMLSerializer().serializeToString(qrCodeRef.current);
     const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
     const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`;
@@ -38,17 +37,14 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
       context.drawImage(image, 0, 0, width, height);
 
       const imageDataUrl = canvas.toDataURL('image/png');
-      setDataUrl(imageDataUrl);
+      // setDataUrl(imageDataUrl);
+      const link = document.createElement('a');
+      link.href = imageDataUrl;
+      link.download = `${typeTicket}.png`;
+      link.click();
     };
 
     image.src = svgDataUrl;
-  };
-  const handleDownload = () => {
-    convertSvgToImage();
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'QRCode.png';
-    link.click();
     setOpen(!open);
   };
 
@@ -89,7 +85,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 </span>
               )}
               navigation={({ setActiveIndex, activeIndex, length }) => (
-                <div className="absolute bottom-0 left-2/4 z-30 flex -translate-x-2/4 gap-2">
+                <div className="absolute bottom-10 left-2/4 z-30 flex -translate-x-2/4 gap-2">
                   {new Array(length).fill('').map(
                     (_, i) =>
                       activeIndex === i && (
@@ -102,30 +98,46 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
               )}
             >
               {data?.tickets?.map((item: any, index: number) => (
-                <div key={index} className="flex justify-center py-5">
-                  <div key={index}>
-                    {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
-                    <QRCode value={item?._id} />
+                <>
+                  <div key={index} className="flex justify-center py-3 pb-8">
+                    <div key={index}>
+                      {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
+                      <div className="pb-2 font-bold">Vé: {item?.title}</div>
+                      <QRCode ref={qrCodeRef} id="qrcode" value={item?._id} />
+                    </div>
                   </div>
-                </div>
+                  <Button
+                    value="Tải về máy"
+                    icon="download-outline"
+                    className="ms-[50%] -translate-x-1/2 !bg-cs_semi_green pt-2 !text-white"
+                    onClick={() => handleDownload(item?.title)}
+                  />
+                </>
               ))}
             </Carousel>
           ) : (
-            <div className="flex justify-center py-5">
-              <QRCode ref={qrCodeRef} id="qrcode" value={data?.tickets[0]?._id} />
-            </div>
+            <>
+              <div className="flex justify-center py-5">
+                <QRCode ref={qrCodeRef} id="qrcode" value={data?.tickets[0]?._id} />
+              </div>
+              <Button
+                value="Tải về máy"
+                icon="download-outline"
+                className="!bg-cs_semi_green !text-white"
+                onClick={() => handleDownload(data?.tickets[0]?.title)}
+              />
+            </>
           )}
         </DialogBody>
-        <DialogFooter className="flex justify-center pt-0">
+        {/* <DialogFooter className="flex justify-center pt-0">
           <Button
             value="Tải về máy"
             icon="download-outline"
             className="!bg-cs_semi_green !text-white"
             onClick={handleDownload}
           />
-          {/* <a href={QR} download="QR_vé">
-          </a> */}
-        </DialogFooter>
+        
+        </DialogFooter> */}
       </Dialog>
       <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
       <img src={data?.bannerEvent} alt="" className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]" />
@@ -145,9 +157,9 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
               {data?.tickets[0]?.status === false ? 'Chưa sử dụng' : 'Đã sử dụng'}
             </span>
           </p>
-          <p className="text-sm font-semibold">
+          {/* <p className="text-sm font-semibold">
             Loại vé: <span className="text-sm text-cs_semi_green">{data?.tickets[0]?.title}</span>
-          </p>
+          </p> */}
           <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
         </div>
         <div ref={toolRef} onClick={() => setOpenTool(!openTool)} className="">

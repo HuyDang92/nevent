@@ -36,7 +36,6 @@ const Profile: React.FC<ProfileProps> = () => {
   const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
   const { upLoad, loading } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
-  console.log('render profile');
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {

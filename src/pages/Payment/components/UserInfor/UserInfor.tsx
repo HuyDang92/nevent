@@ -19,7 +19,7 @@ const UserInfor = () => {
           fullName: auth?.currentUser?.fullName ?? '',
           email: auth?.currentUser?.email ?? '',
           phone: auth?.currentUser?.phone ?? '',
-          address: auth?.currentUser?.address ?? '',
+          // address: auth?.currentUser?.address ?? '',
         },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Họ và tên không được bỏ trống'),
@@ -86,7 +86,7 @@ const UserInfor = () => {
               label="Số điện thoại"
             />
           </div>
-          <div className="relative w-full md:w-[calc(50%-8px)]">
+          {/* <div className="relative w-full md:w-[calc(50%-8px)]">
             {formik.errors.address && (
               <small className="absolute -top-2 px-2 text-[12px] text-red-600">{formik.errors.address}</small>
             )}
@@ -98,7 +98,7 @@ const UserInfor = () => {
               classNameInput="w-full"
               label="Địa chỉ"
             />
-          </div>
+          </div> */}
           <div className="w-full text-right">
             <Button className="md:w w-full" type="submit" mode="dark" value="Xác nhận" />
           </div>
