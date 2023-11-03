@@ -17,11 +17,11 @@ interface IEventInfo {
   address: string;
   category: string;
   description: string;
-  organization_name: string;
-  organization_desc: string;
-  organization_phone: string;
-  organization_email: string;
-  organization_img: string;
+  // organization_name: string;
+  // organization_desc: string;
+  // organization_phone: string;
+  // organization_email: string;
+  // organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -37,11 +37,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       address: '',
       category: '',
       description: '',
-      organization_name: '',
-      organization_desc: '',
-      organization_phone: '',
-      organization_email: '',
-      organization_img: Chamaleon2,
+      // organization_name: '',
+      // organization_desc: '',
+      // organization_phone: '',
+      // organization_email: '',
+      // organization_img: Chamaleon2,
     },
     validationSchema: Yup.object({
       // banner: Yup.string().required('Banner không được bỏ trống'),
@@ -51,16 +51,16 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
-      organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
-      organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
-      organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
-      organization_email: Yup.string()
-        .required('Email không được bỏ trống')
-        .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
+      // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
+      // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
+      // organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
+      // organization_email: Yup.string()
+      //   .required('Email không được bỏ trống')
+      //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
     onSubmit: async (value: IEventInfo) => {
       console.log(value);
-      setActiveStep(1);
+      // setActiveStep(1);
     },
   });
   return (
@@ -104,7 +104,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             </div>
           </div>
           {/* //// */}
-          <div className="mt-7 flex items-center gap-2">
+          {/* <div className="mt-7 flex items-center gap-2">
             <div className="relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 bg-cs_input_gray">
               <input
                 type="file"
@@ -115,7 +115,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
               <Icon name="add" className="cursor-pointer text-2xl" />
             </div>
             <span className="font-semibold dark:text-white">Logo sự kiện</span>
-          </div>
+          </div> */}
           {/* //// */}
           <div className="mt-5 grid w-full grid-cols-2 gap-2">
             <div className="relative">
@@ -202,7 +202,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             />
           </div>
           {/* //// */}
-          <div className="">
+          {/* <div className="">
             <label
               htmlFor="organization_name"
               className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400"
@@ -320,7 +320,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* //// */}
           <div className="w-full text-right"></div>
           <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
