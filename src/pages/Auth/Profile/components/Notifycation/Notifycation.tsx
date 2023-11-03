@@ -10,7 +10,32 @@ interface UserInfoProp {
   data?: IUserField | null;
   popup?: boolean;
 }
-
+const dataAPI = [
+  {
+    id: 1,
+    avatar:
+      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+    name: 'Tania',
+    desc: 'send you a message',
+    time: '13 minutes',
+  },
+  {
+    id: 2,
+    avatar:
+      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+    name: 'Tania',
+    desc: 'send you a message',
+    time: '13 minutes',
+  },
+  {
+    id: 3,
+    avatar:
+      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+    name: 'Tania',
+    desc: 'send you a message',
+    time: '13 minutes',
+  },
+];
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
   const [notificationData, setNotificationData] = useState([
     {
@@ -46,8 +71,21 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
     const unclickedItems = notificationData.filter((item, index) => !clickedItems.includes(item));
     setUnclick(unclickedItems);
   }, [clickedItems]);
+
   const handleItemClick = (item: any) => {
     setClickedItems((prevClickedItems) => {
+      // Kiểm tra xem mục đã tồn tại trong mảng chưa
+      if (!prevClickedItems.includes(item)) {
+        // Nếu mục chưa tồn tại, thêm nó vào mảng
+        return [...prevClickedItems, item];
+      }
+      // Nếu mục đã tồn tại, không thay đổi mảng
+      return prevClickedItems;
+    });
+  };
+
+  const handleRemoveItem = (item: any) => {
+    setShowDeleteMenu((prevClickedItems) => {
       // Kiểm tra xem mục đã tồn tại trong mảng chưa
       if (!prevClickedItems.includes(item)) {
         // Nếu mục chưa tồn tại, thêm nó vào mảng
@@ -61,29 +99,17 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       setNotificationData(updatedData);
     }, 300);
   };
-
-  const handleRemoveItem = (item: any) => {
-    setShowDeleteMenu((prevClickedItems) => {
-      // Kiểm tra xem mục đã tồn tại trong mảng chưa
-      if (!prevClickedItems.includes(item)) {
-        // Nếu mục chưa tồn tại, thêm nó vào mảng
-        return [...prevClickedItems, item];
-      }
-      // Nếu mục đã tồn tại, không thay đổi mảng
-      return prevClickedItems;
-    });
-  };
   return (
     <div className={`${className}`}>
       <h1 className="text-xl font-bold">Thông báo</h1>
       <Tabs>
-        <TabsHeader className={` mt-3 shadow-none  ${classNameTagHeader} `}>
+        <TabsHeader className={` mt-3 p-1 shadow-none ${classNameTagHeader} `}>
           <Tab className="flex items-center justify-center" index={0}>
             <span className="text-[16px]">Tất cả</span>
           </Tab>
           <Tab className="relative flex items-center justify-center" index={1}>
-            <span className="text-[16px]">Chưa đọc</span>
-            <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-red-500"></span>
+            <span className="text-[16px] dark:text-cs_light">Chưa đọc</span>
+            {unClick.length > 0 && <span className="absolute -right-0 -top-0 h-3 w-3 rounded-full bg-red-500"></span>}
           </Tab>
         </TabsHeader>
         <TabsBody className="shadow-none">

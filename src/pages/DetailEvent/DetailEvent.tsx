@@ -43,12 +43,11 @@ function DetailEvent() {
                   <div className="flex items-center gap-[15px]">
                     <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
-                      {moment(detailEventQuery?.data?.data?.start_date).format('dddd, DD MMMM YY')} (07:00 PM - 11:00
-                      PM)
+                      {moment(detailEventQuery?.data?.data?.start_date).format('HH:mm - DD/MM/YYYY')}
                     </span>
                   </div>
                   <div className="flex items-center gap-[15px]">
-                    <Icon name="navigate-outline" className="w-[10%] text-xl dark:text-cs_light" />
+                    <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
                       <span>{detailEventQuery?.data?.data?.location}</span>
                     </span>
@@ -72,7 +71,9 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Link to={`/user/payment/${detailEventQuery?.data?.data?._id}/0`}><Button className="w-full" value="Đặt vé ngay" mode="dark" /></Link>
+                  <Link to={`/user/payment/${detailEventQuery?.data?.data?._id}/0`}>
+                    <Button className="w-full" value="Đặt vé ngay" mode="dark" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -107,12 +108,12 @@ function DetailEvent() {
                       <div className="flex items-center gap-[15px]">
                         <Icon name="timer-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                         <span className="w-[90%] dark:text-cs_light">
-                          {moment(detailEventQuery?.data?.data?.start_date).format('dddd, DD MMMM YY')}&nbsp;
-                          <span className="text-[#ff0000] "> (07:00 PM - 11:00 PM)</span>
+                          {moment(detailEventQuery?.data?.data?.start_date).format('HH:mm - DD/MM/YYYY')}&nbsp;
+                          {/* <span className="text-[#ff0000] "> (07:00 PM - 11:00 PM)</span> */}
                         </span>
                       </div>
                       <div className="flex items-center gap-[15px]">
-                        <Icon name="navigate-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+                        <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                         <span className="w-[90%] dark:text-cs_light">
                           <span>{detailEventQuery?.data?.data?.location}</span>
                         </span>
@@ -124,57 +125,15 @@ function DetailEvent() {
                 <div className="space-y-4 px-2 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
                   <div className=" leading-8">
-                    <h3>I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "{detailEventQuery?.data?.data?.title}" [ ENGLISH BELOW]</h3>
-                    {/* <ul>
-                      <li>▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”</li>
-                      <li>
-                        ▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH” ▪️ Thời gian tổ chức: 18h00
-                        thứ 7, 21/10/2023 tại Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Quận Tân
-                        Bình, TP.Hồ Chí Minh ▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”
-                      </li>
-                      <li>▪️ Hotline hỗ trợ: 08.999.80.818 - 0243.788.00.99</li>
-                    </ul>
-                    <h3>GIÁ VÉ VÀ QUYỀN LỢI CÁC HẠNG VÉ</h3>
-                    <ul>
-                      <li>▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”</li>
-                      <li>
-                        ▪️ Giá vé: VVIP: 4.600.000 VNĐ - Vé VIP: 3.800.000 VNĐ - Vé Platinum A: 2.000.000 VNĐ - Vé
-                        Platinum B: 1.500.000VNĐ
-                      </li>
-                      <li>
-                        ▪️ Lưu ý: Tất cả giá vé trên chưa bao gồm thuế GTGT theo quy định của pháp luật áp dụng hiện
-                        hành.
-                      </li>
-                    </ul> */}
+                    <h3>
+                      I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "
+                      <span className="font-semibold">{detailEventQuery?.data?.data?.title}</span>"
+                    </h3>
+
                     {detailEventQuery?.data?.data?.desc}
                   </div>
                   <img src={des} alt="" className="w-full" />
                   <img src={des2} alt="" className="w-full" />
-                  <div className=" leading-8">
-                    <h3>I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN “{detailEventQuery?.data?.data?.title}” [ ENGLISH BELOW]</h3>
-                    {/* <ul>
-                      <li>▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”</li>
-                      <li>
-                        ▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH” ▪️ Thời gian tổ chức: 18h00
-                        thứ 7, 21/10/2023 tại Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Quận Tân
-                        Bình, TP.Hồ Chí Minh ▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”
-                      </li>
-                      <li>▪️ Hotline hỗ trợ: 08.999.80.818 - 0243.788.00.99</li>
-                    </ul>
-                    <h3>GIÁ VÉ VÀ QUYỀN LỢI CÁC HẠNG VÉ</h3>
-                    <ul>
-                      <li>▪️ Tên sự kiện: “LEE JONG SUK 2023 FANMEETING TOUR in HO CHI MINH”</li>
-                      <li>
-                        ▪️ Giá vé: VVIP: 4.600.000 VNĐ - Vé VIP: 3.800.000 VNĐ - Vé Platinum A: 2.000.000 VNĐ - Vé
-                        Platinum B: 1.500.000VNĐ
-                      </li>
-                      <li>
-                        ▪️ Lưu ý: Tất cả giá vé trên chưa bao gồm thuế GTGT theo quy định của pháp luật áp dụng hiện
-                        hành.
-                      </li>
-                    </ul> */}
-                    {detailEventQuery?.data?.data?.desc}
-                  </div>
                 </div>
                 {/* Info bussiness */}
                 <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">
@@ -215,7 +174,7 @@ function DetailEvent() {
                       </Link>
                     ))}
                 </div>
-                <div className="my-4 pb-4 flex justify-center">
+                <div className="my-4 flex justify-center pb-4">
                   <Button className="" value="Xem thêm" mode="dark" />
                 </div>
               </div>
