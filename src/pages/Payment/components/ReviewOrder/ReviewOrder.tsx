@@ -8,18 +8,34 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useBuyTicket } from '~/hooks/useFirebase';
 import Loading from '~/components/customs/Loading';
+import { useEffect, useState } from 'react';
 interface Prop {
   className?: string;
   event?: IEvent;
+  activeTab?: number;
 }
-const ReviewOrder = ({ className, event }: Prop) => {
-  console.log(event);
-
+const ReviewOrder = ({ className, event, activeTab }: Prop) => {
   const { idEvent } = useParams();
   const navigate = useNavigate();
-  const tickets = useAppSelector((state) => state.payment.ticket);
+  const [ticketsData, setTicketsData] = useState<any[]>([]);
+  const tickets: any[] = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   const auth = useAppSelector((state) => state.auth.currentUser);
+  // console.log(tickets);
+  useEffect(() => {
+    const result = [
+      ...tickets
+        .reduce((map, item) => {
+          const { _id, orderQuantity } = item;
+          if (!map.has(_id) || map.get(_id).orderQuantity < orderQuantity) {
+            map.set(_id, item);
+          }
+          return map;
+        }, new Map())
+        .values(),
+    ];
+    setTicketsData(result);
+  }, [tickets]);
 
   const { buyTicket, isPending } = useBuyTicket();
 
@@ -38,7 +54,7 @@ const ReviewOrder = ({ className, event }: Prop) => {
   };
 
   return (
-    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light md:w-[30%] ${className}`}>
+    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light xl:w-[30%] ${className}`}>
       {isPending && <Loading />}
       <div className="relative flex h-[60px] items-center border-b-[0.5px]">
         <button
@@ -78,23 +94,25 @@ const ReviewOrder = ({ className, event }: Prop) => {
         <span>
           <b>Số điện thoại:</b> {userInfor?.phone}
         </span>
-        <span>
+        {/* <span>
           <b>Địa chỉ:</b> {userInfor?.address}
-        </span>
+        </span> */}
       </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">
-        {tickets?.map((ticket) => (
-          <div key={ticket._id} className="flex items-center justify-between">
-            <div className="flex w-[28%] items-center gap-3">
-              <TicketCard title={ticket.title} tooltip="Tooltip here" />
-              <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
+        {ticketsData?.map((ticket, index) => {
+          return (
+            <div key={index} className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <TicketCard title={ticket.title} tooltip="Tooltip here" className="w-full" />
+                <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
+              </div>
+              <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
+                {(ticket.orderQuantity * ticket.price).toLocaleString('vi')}đ
+              </span>
             </div>
-            <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
-              {(ticket.orderQuantity * ticket.price).toLocaleString('vi')}đ
-            </span>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {/* /// */}
       <div className="border-b-[0.5px] py-4">
@@ -111,19 +129,27 @@ const ReviewOrder = ({ className, event }: Prop) => {
       {/* /// */}
       <div className="border-b-[0.5px] px-1 py-4">
         <p className="flex items-center justify-between font-semibold text-cs_gray">
-          Tổng cộng <span className="text-sm">13.800.000 VND</span>
+          Tổng cộng{' '}
+          <span className="text-sm">
+            {tickets.reduce((total, item) => total + item.price, 0).toLocaleString('vi')}đ
+          </span>
         </p>
         <p className="my-2 flex items-center justify-between font-semibold text-cs_gray">
-          Mã giảm giá <span className="text-sm">1.800.000 VND</span>
+          Mã giảm giá <span className="text-sm">{'0'}đ</span>
         </p>
         <p className="my-2 flex items-center justify-between text-lg font-bold">
-          Thành tiền <span className="text-base text-cs_semi_green">12.000.000 VND</span>
+          Thành tiền{' '}
+          <span className="text-base text-cs_semi_green">
+            {tickets.reduce((total, item) => total + item.price, 0).toLocaleString('vi')}đ
+          </span>
         </p>
-        <Button
-          onClick={handleBuyTicket}
-          value="Thanh toán"
-          className="w-full !bg-cs_semi_green text-white !shadow-none"
-        />
+        {activeTab === 2 && (
+          <Button
+            onClick={handleBuyTicket}
+            value="Thanh toán"
+            className="w-full !bg-cs_semi_green text-white !shadow-none"
+          />
+        )}
       </div>
       {/* /// */}
     </div>

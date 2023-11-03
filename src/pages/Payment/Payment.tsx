@@ -57,13 +57,13 @@ const Payment = () => {
       <Header />
       <div className="mx-auto py-5 md:w-5/6 ">
         <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={`${event?.title}`} />
-        <div className="mx-2 xl:mx-0 ">
+        <div className="mx-2 sm:mx-0 ">
           <div className="hidden items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
             <PaymentStepper />
           </div>
-          <div className={`${activeStep !== 3 && 'flex'} mt-2 gap-5 xl:mt-5`}>
+          <div className={`${activeStep !== 3 && 'xl:flex'} mt-2 gap-5 sm:mt-5`}>
             <div
-              className={`w-full rounded-[12px]  bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light ${
+              className={`w-full rounded-[12px] h-fit bg-cs_light shadow-border-full mb-5 dark:bg-cs_lightDark dark:text-cs_light ${
                 activeStep !== 3 && 'xl:w-[70%]'
               } `}
             >
@@ -72,7 +72,11 @@ const Payment = () => {
 
             {/* Phần thông tin đặt vé */}
             {activeStep !== 3 && (
-              <ReviewOrder event={event} className="hidden bg-cs_light dark:bg-cs_lightDark xl:block" />
+              <ReviewOrder
+                event={event}
+                activeTab={activeStep}
+                className=" bg-cs_light dark:bg-cs_lightDark sm:block mb-10"
+              />
             )}
           </div>
         </div>
