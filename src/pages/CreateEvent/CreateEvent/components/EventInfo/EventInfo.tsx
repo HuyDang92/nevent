@@ -3,7 +3,7 @@ import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
+// import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
 import { useState } from 'react';
 import banner3 from '~/assets/images/banner3.jpg';
 interface Prop {
