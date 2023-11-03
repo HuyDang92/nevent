@@ -166,13 +166,13 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
+            <div className="relative pt-3">
               {formik.errors.category && (
-                <small className="absolute left-[140px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.category}
                 </small>
               )}
-              <Input
+              {/* <Input
                 name="category"
                 id="category"
                 label="Danh mục sự kiện"
@@ -180,7 +180,21 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 classNameInput="!w-full"
                 value={formik.values.category}
                 onChange={formik.handleChange}
-              />
+              /> */}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Danh mục sự kiện
+              </label>
+              <br />
+              <select
+                name="type"
+                id="type"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                <option value="">Âm nhạc</option>
+                <option value="">Live Show</option>
+              </select>
             </div>
           </div>
           <div className="relative mt-5">
