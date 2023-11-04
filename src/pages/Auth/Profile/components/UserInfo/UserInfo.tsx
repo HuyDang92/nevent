@@ -84,6 +84,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             label="Số điện thoại"
           />
         </div>
+
         {/* <div className="w-full md:w-[calc(50%-20px)]">
           <Radios label="Giới tính" classNameInput="flex gap-4">
             <Radio className="flex gap-2" name="gender" label="Nam" id="nam" />
