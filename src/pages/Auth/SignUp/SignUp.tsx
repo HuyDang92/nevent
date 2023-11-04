@@ -54,8 +54,8 @@ function LogIn() {
       password: Yup.string()
         .required('Mật khẩu không được bỏ trống')
         .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])([A-Za-z\d@#$%^&+=!]){6,10}$/,
-          'Tối thiểu 6 ký tự, ít nhất 1 chữ cái và 1 số',
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])([A-Za-z\d@#$%^&+=!]){6,15}$/,
+          'Mật khẩu 6 -15 ký tự, ít nhất 1 chữ cái và 1 số và 1 kí tự đặc biệt',
         ),
       repassword: Yup.string()
         .required('Xác nhận mật khẩu không được bỏ trống')

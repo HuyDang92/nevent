@@ -21,7 +21,7 @@ function Categories() {
     limit: 16,
     search: keyword,
     location: locationId,
-    categories: filterNameCate,
+    categories: filterNameCate.length === 0 ? undefined : filterNameCate,
   });
 
   const handlePageChange = (selectedPage: any) => {
