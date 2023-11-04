@@ -49,7 +49,7 @@ const paymentSlice = createSlice({
         const index = state.ticket.findIndex((ticket) => ticket._id === action.payload._id);
         state.ticket[index].orderQuantity += 1;
       } else {
-        const newTicket = action.payload;
+        const newTicket = { ...action.payload };
         newTicket.orderQuantity = 1;
         state.ticket.push(newTicket);
       }

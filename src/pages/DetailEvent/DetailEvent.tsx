@@ -6,7 +6,11 @@ import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '~/components/EventCard';
-import { useGetEventByIdQuery, useGetAllEventQuery } from '~/features/Event/eventApi.service';
+import {
+  useGetEventByIdQuery,
+  useGetAllEventQuery,
+  useGetTicketByEventIdQuery,
+} from '~/features/Event/eventApi.service';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
@@ -16,6 +20,9 @@ function DetailEvent() {
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
+  const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
+  console.log(eventTickets);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -56,18 +63,16 @@ function DetailEvent() {
                     <span className="w-[90%] dark:text-cs_light">Giá vé:</span>
                     <div className="py-2">
                       <ul className="grid grid-cols-2 gap-2">
-                        <li className="rounded-lg  bg-[#FF3232] p-2 text-cs_light">
-                          <span className="">VIP: 3.800.000 VNĐ</span>
-                        </li>
-                        <li className="rounded-lg bg-[#FF6F32] p-2 text-cs_light">
-                          <span className="">VIP: 3.800.000 VNĐ</span>
-                        </li>
-                        <li className="rounded-lg bg-[#D7C524] p-2 text-cs_light">
-                          <span className="">VIP: 3.800.000 VNĐ</span>
-                        </li>
-                        <li className="rounded-lg bg-[#3FD827] p-2 text-cs_light">
-                          <span className="">VIP: 3.800.000 VNĐ</span>
-                        </li>
+                        {eventTickets?.data?.data?.map((ticket: ITicket) => (
+                          <li
+                            style={{ backgroundColor: ticket.color }}
+                            className={`rounded-lg ${ticket.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
+                          >
+                            <span className="">
+                              {ticket.title}: {ticket.price.toLocaleString('vi')} VNĐ
+                            </span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
