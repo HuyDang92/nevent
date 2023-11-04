@@ -34,13 +34,19 @@ export const eventApi = createApi({
     }),
 
     getAllEvent: builder.query<any, any>({
-      query: ({ page, limit, search, status }) =>
+      query: ({ page, limit, search, status, categories, hotLevel, start_date, location }) =>
         `/api/events/get-all?page=${page}&limit=${limit}${search ? '&search=' + search : ''}${
           status ? '&status=' + status : ''
-        }`,
+        }${categories ? '&categories=' + categories : ''}${hotLevel ? '&hotLevel=' + hotLevel : ''}${
+          start_date ? '&start_date=' + start_date : ''
+        }${location ? '&location=' + location : ''}`,
     }),
+    
     getEventById: builder.query<any, string>({
       query: (eventId) => `/api/events/detail/${eventId}`,
+    }),
+    getLocations: builder.query<any, void>({
+      query: () => `/api/locations`,
     }),
   }),
 });
@@ -51,4 +57,5 @@ export const {
   useGetAllEventQuery,
   useLazyGetAllEventQuery,
   useGetEventByIdQuery,
+  useGetLocationsQuery,
 } = eventApi;

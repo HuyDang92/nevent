@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import Icon from '../customs/Icon';
 import Button from '../customs/Button';
 import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
 import useClickOutside from '~/hooks/useClickOutside';
 import QRCode from 'react-qr-code';
-// import QRCode from 'qrcode.react';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import { Link } from 'react-router-dom';
 
 interface IProps {
   data: any;
@@ -14,12 +16,37 @@ interface IProps {
 const TicketProfile: React.FC<IProps> = ({ data }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [openTool, setOpenTool] = useState<boolean>(false);
+  const [listQR, setListQR] = useState<any>([]);
+  const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  const fileExtension = '.xlsx';
+
   const [dataUrl, setDataUrl] = useState('');
   const toolRef = useRef(null);
   const qrCodeRef: any = useRef(null);
   useClickOutside(toolRef, () => {
     setOpenTool(false);
   });
+
+  const exportDSSV = () => {
+    const ws = XLSX.utils.json_to_sheet(listQR);
+    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, 'Danh sách vé sự kiện' + fileExtension);
+    setOpenTool(!openTool);
+  };
+  useEffect(() => {
+    const formattedData = data?.tickets?.map((item: any, index: number) => {
+      return {
+        STT: index + 1,
+        'Loại vé': item?.type,
+        'Trạng thái': item?.status,
+        'Ảnh vé': 'QRCode',
+      };
+    });
+    setListQR(formattedData);
+  }, [data]);
+
   const handleDownload = (typeTicket: string) => {
     const svgData = new XMLSerializer().serializeToString(qrCodeRef.current);
     const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
@@ -37,7 +64,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
       context.drawImage(image, 0, 0, width, height);
 
       const imageDataUrl = canvas.toDataURL('image/png');
-      // setDataUrl(imageDataUrl);
+      console.log(imageDataUrl);
       const link = document.createElement('a');
       link.href = imageDataUrl;
       link.download = `${typeTicket}.png`;
@@ -45,6 +72,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
     };
 
     image.src = svgDataUrl;
+
     setOpen(!open);
   };
 
@@ -103,11 +131,11 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                     <div key={index}>
                       {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
                       <div className="pb-2 font-bold">Vé: {item?.title}</div>
-                      <QRCode ref={qrCodeRef} id="qrcode" value={item?._id} />
+                      <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?._id} />
                     </div>
                   </div>
                   <Button
-                    value="Tải về máy"
+                    value="Tải về"
                     icon="download-outline"
                     className="ms-[50%] -translate-x-1/2 !bg-cs_semi_green pt-2 !text-white"
                     onClick={() => handleDownload(item?.title)}
@@ -121,7 +149,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 <QRCode ref={qrCodeRef} id="qrcode" value={data?.tickets[0]?._id} />
               </div>
               <Button
-                value="Tải về máy"
+                value="Tải về"
                 icon="download-outline"
                 className="!bg-cs_semi_green !text-white"
                 onClick={() => handleDownload(data?.tickets[0]?.title)}
@@ -144,7 +172,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
       <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
         <div className="xl:w-2/3">
           <p className=" line-clamp-2 text-xl font-bold">{data?.titleEvent}</p>
-          <span className="flex items-center gap-2 text-sm font-semibold">
+          <span className=" gap-2 text-sm font-semibold">
             {/* <Icon name="time-outline" /> */}
             <span>Thời gian: </span>
             {moment(data?.date).format('hh:mm - DD/MM/YYYY')}
@@ -174,18 +202,20 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           } absolute right-6 top-12 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
         >
           <li
-            onClick={() => setOpenTool(!openTool)}
+            onClick={exportDSSV}
             className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
           >
             <Icon name="download-outline" />
             <span>Tải danh sách vé</span>
           </li>
-          <li
-            onClick={() => setOpenTool(!openTool)}
-            className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-[#eee]"
-          >
-            <Icon name="send-outline" />
-            <span>Chuyển giao vé</span>
+          <li onClick={() => setOpenTool(!openTool)}>
+            <Link
+              to="/user/pass-event"
+              className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-[#eee]"
+            >
+              <Icon name="send-outline" />
+              <span>Chuyển giao vé</span>
+            </Link>
           </li>
         </ul>
       </div>
