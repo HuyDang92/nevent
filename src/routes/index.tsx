@@ -63,7 +63,8 @@ export default function AppRoutes() {
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
         </Route>
         {/* Tạo sự kiện */}
-        <Route element={<PrivateRoute allowedRoles={['user']} />}>
+        {/* element={<PrivateRoute allowedRoles={['user']} />} */}
+        <Route>
           <Route element={<CreateEventLayout />}>
             <Route path="/organization-profile" element={<OrganizationProfile />} />
             <Route path="/event-manage" element={<EventManage />} />

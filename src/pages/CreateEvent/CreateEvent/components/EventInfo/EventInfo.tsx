@@ -1,6 +1,7 @@
 import Icon from '~/components/customs/Icon';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
+import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
@@ -9,6 +10,7 @@ import banner3 from '~/assets/images/banner3.jpg';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
+
 interface IEventInfo {
   banner: string;
   logo: string;
@@ -24,6 +26,8 @@ interface IEventInfo {
   // organization_img: string;
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
+  const { data: categories } = useGetAllCategoryQuery();
+  console.log(categories);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   console.log(selectedFile);
 
@@ -166,13 +170,13 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
+            <div className="relative pt-3">
               {formik.errors.category && (
-                <small className="absolute left-[140px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.category}
                 </small>
               )}
-              <Input
+              {/* <Input
                 name="category"
                 id="category"
                 label="Danh mục sự kiện"
@@ -180,7 +184,24 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 classNameInput="!w-full"
                 value={formik.values.category}
                 onChange={formik.handleChange}
-              />
+              /> */}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Danh mục sự kiện
+              </label>
+              <br />
+              <select
+                name="type"
+                id="type"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                {categories?.data?.map((category: ICategory, index: number) => (
+                  <option key={index} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="relative mt-5">
