@@ -58,13 +58,13 @@ const TicketInfor = () => {
 
   const inscreaseTicketQuantity = (ticket: ITicket) => {
     if (ticket.quantity > 0) {
-      dispatch(inscreaseTicket({ ...ticket, ticket }));
+      dispatch(inscreaseTicket(ticket));
     }
   };
 
   const descreaseTicketQuantity = (ticket: ITicket) => {
     if (ticket.quantity > 0) {
-      dispatch(descreaseTicket({ ...ticket, ticket }));
+      dispatch(descreaseTicket(ticket));
     }
   };
 
@@ -84,24 +84,27 @@ const TicketInfor = () => {
         </h1>
       </div>
       <div className="">
-        <Card className=" p-2 shadow-none md:hidden">
-          {eventTicket?.map((ticket: any, index) => (
-            <div key={index} className={`my-[15px] flex`}>
-              <div className="flex w-full items-center justify-between">
-                <TicketCard
-                  className={`!px-1 ${ticket.quantity > 0 ? '' : '!bg-[#eeeeee]'}`}
-                  title={ticket.title}
-                  tooltip="Tooltip here"
-                />
-                <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
-                <div className="flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">
-                  <button>-</button>
-                  <span>1</span>
-                  <button>+</button>
+        <Card className="bg-transparent p-2 shadow-none md:hidden">
+          {eventTicket?.map((ticket: any, index) => {
+            const ExistedTicket = tickets.find((t) => t._id === ticket._id);
+            return (
+              <div key={index} className={`my-[15px] flex`}>
+                <div className="flex gap-5 w-full items-center justify-between">
+                  <TicketCard
+                    className={`!px-1 ${ticket.quantity > 0 ? '' : '!bg-[#eeeeee]'}`}
+                    title={ticket.title}
+                    tooltip="Tooltip here"
+                  />
+                  <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
+                  <div className="flex w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">
+                    <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
+                    <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>
+                    <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </Card>
         <Card className="hidden bg-transparent shadow-none md:block">
           <table className="w-full min-w-max table-auto text-left">

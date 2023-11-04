@@ -27,9 +27,11 @@ const UserInfor = () => {
         .required('Email không được bỏ trống')
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
       phone: Yup.string().required('Số điện thoại không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
+      // address: Yup.string().required('Địa chỉ không được bỏ trống'),
     }),
     onSubmit(values) {
+      console.log(values);
+      
       try {
         dispatch(addUserInfor(values));
         navigate(`/user/payment/${idEvent}/1`);

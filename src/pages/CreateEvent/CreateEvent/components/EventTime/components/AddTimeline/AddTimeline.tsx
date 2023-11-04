@@ -159,7 +159,7 @@ const AddTimeline = ({ handler }: Prop) => {
                       <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="dark:text-gray-400">Ngày bắt đầu bán vé: </span>
+                      <span className="dark:text-gray-400">Ngày kết thúc bán vé: </span>
                       <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
                       <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
                     </div>

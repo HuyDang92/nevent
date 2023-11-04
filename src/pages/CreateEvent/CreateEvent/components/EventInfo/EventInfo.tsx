@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
 import { useState } from 'react';
 import banner3 from '~/assets/images/banner3.jpg';
+import { useUploadFile } from '~/hooks/useUpLoadFile';
 interface Prop {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -19,6 +20,7 @@ interface IEventInfo {
   address: string;
   category: string;
   description: string;
+  file: null | File;
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;
@@ -27,9 +29,10 @@ interface IEventInfo {
 }
 const EventInfo = ({ setActiveStep }: Prop) => {
   const { data: categories } = useGetAllCategoryQuery();
-  console.log(categories);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  console.log(selectedFile);
+  const { upLoad, loading } = useUploadFile();
+  // console.log(categories);
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // console.log(selectedFile);
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
@@ -41,6 +44,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       address: '',
       category: '',
       description: '',
+      file: null,
       // organization_name: '',
       // organization_desc: '',
       // organization_phone: '',
@@ -55,6 +59,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
+      file: Yup.mixed()
+        .required('A file is required')
+        .test('fileSize', 'The file is too large', (value: any) => {
+          return value ? value.size <= 1024000 : true; // 1MB
+        }),
       // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
       // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
       // organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
@@ -64,6 +73,8 @@ const EventInfo = ({ setActiveStep }: Prop) => {
     }),
     onSubmit: async (value: IEventInfo) => {
       console.log(value);
+      const bannerId = await upLoad(value.file!);
+      value.banner = bannerId;
       // setActiveStep(1);
     },
   });
@@ -91,13 +102,14 @@ const EventInfo = ({ setActiveStep }: Prop) => {
               >
                 <input
                   type="file"
-                  name="banner"
-                  id="banner"
+                  name="file"
+                  id="file"
                   className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
                   onChange={(event) => {
                     const selectedFile = event.target.files?.[0];
+                    formik.setFieldValue('file', selectedFile);
                     if (selectedFile) {
-                      setSelectedFile(selectedFile);
+                      // setSelectedFile(selectedFile);
                       setImagePreviewUrl(URL.createObjectURL(selectedFile));
                     }
                   }}
@@ -106,6 +118,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
                 <p>Kích thước ảnh 1500 x 600 (Ảnh không quá 1MB) </p>
               </div>
             </div>
+            {formik.errors.file ? <div className="z-10 px-2 text-[12px] text-red-600">{formik.errors.file}</div> : null}
           </div>
           {/* //// */}
           {/* <div className="mt-7 flex items-center gap-2">
@@ -190,12 +203,13 @@ const EventInfo = ({ setActiveStep }: Prop) => {
               </label>
               <br />
               <select
-                name="type"
-                id="type"
+                name="category"
+                id="category"
                 className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
                 value={formik.values.category}
                 onChange={formik.handleChange}
               >
+                <option value={''}>Hãy chọn danh mục </option>
                 {categories?.data?.map((category: ICategory, index: number) => (
                   <option key={index} value={category._id}>
                     {category.name}
