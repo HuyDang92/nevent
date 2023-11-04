@@ -101,11 +101,11 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
   };
   return (
     <div className={`${className}`}>
-      <h1 className="text-xl font-bold">Thông báo</h1>
+      <h1 className="text-xl font-bold dark:text-cs_light">Thông báo</h1>
       <Tabs>
         <TabsHeader className={` mt-3 p-1 shadow-none ${classNameTagHeader} `}>
           <Tab className="flex items-center justify-center" index={0}>
-            <span className="text-[16px]">Tất cả</span>
+            <span className="text-[16px] dark:text-cs_light">Tất cả</span>
           </Tab>
           <Tab className="relative flex items-center justify-center" index={1}>
             <span className="text-[16px] dark:text-cs_light">Chưa đọc</span>

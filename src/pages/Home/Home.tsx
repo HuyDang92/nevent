@@ -10,6 +10,7 @@ import SkeletonCategories from '~/components/customs/Skeleton/SkeletonCategories
 import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
 import SkeletonEventHot from '~/components/customs/Skeleton/SkeletonEventHot';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
+import nothing from '~/assets/images/nothing.svg';
 
 function Home() {
   const categories = useGetAllCategoryQuery();
@@ -26,10 +27,29 @@ function Home() {
             categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
         <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
-        {event.isFetching ? <SkeletonEventHot /> : <Slide data={event.data?.data?.docs} />}
+        {event.data?.data?.docs?.length === 0 && (
+          <div className="mt-24 flex justify-center text-center">
+            <div>
+              <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
+              <h3 className="font-medium text-[#ccc]">Không có sự kiện</h3>
+            </div>
+          </div>
+        )}
+        {event.isFetching && event.data?.data?.docs?.length === 0 ? (
+          <SkeletonEventHot />
+        ) : (
+          <Slide data={event.data?.data?.docs} />
+        )}
         <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
         {event.isFetching && <SkeletonEventList />}
-
+        {event.data?.data?.docs?.length === 0 && (
+          <div className="my-24 flex justify-center text-center">
+            <div>
+              <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
+              <h3 className="font-medium text-[#ccc]">Không có sự kiện</h3>
+            </div>
+          </div>
+        )}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
             event.data?.data?.docs.map((item: IEvent, index: number) => (
@@ -38,11 +58,13 @@ function Home() {
               </Link>
             ))}
         </div>
-        <Link to="/event-categories">
-          <div className="mt-5 flex justify-center">
-            <Button className="" value="Xem thêm" mode="dark" />
-          </div>
-        </Link>
+        {event.data?.data?.docs?.length !== 0 && (
+          <Link to="/event-categories">
+            <div className="mt-5 flex justify-center">
+              <Button className="" value="Xem thêm" mode="dark" />
+            </div>
+          </Link>
+        )}
       </div>
     </>
   );
