@@ -25,7 +25,7 @@ const dataNavigation = [
     title: 'Tìm kiếm',
   },
   {
-    link: '/user/profile',
+    link: '/user/profile/0',
     icon: 'person',
     title: 'Tài khoản',
   },

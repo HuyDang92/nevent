@@ -23,6 +23,7 @@ import CreateEvent from '~/pages/CreateEvent/CreateEvent';
 import Organizer from '~/pages/Organizer';
 import SearchMobile from '~/pages/SearchMobile';
 import Scan from '~/pages/Scan/Scan';
+import PassTicket from '~/pages/Auth/PassTicket';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -60,12 +61,12 @@ export default function AppRoutes() {
         <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile/:tab" element={<Profile />} />
+            <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
         </Route>
 
         {/* Tạo sự kiện */}
-        {/* element={<PrivateRoute allowedRoles={['user']} />} */}
         <Route>
           <Route element={<CreateEventLayout />}>
             <Route path="/organization-profile" element={<OrganizationProfile />} />
@@ -77,12 +78,11 @@ export default function AppRoutes() {
         </Route>
 
         {/* Scan ticket */}
-        <Route element={<PrivateRoute allowedRoles={['user']} />}>
+        <Route element={<PrivateRoute allowedRoles={['bussiness']} />}>
           <Route element={<DefaultLayout />}>
             <Route path="/scan-ticket" element={<Scan />} />
           </Route>
         </Route>
-
 
         <Route path="*" element={<NotFound />} />
       </Routes>
