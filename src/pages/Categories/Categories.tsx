@@ -3,15 +3,18 @@ import ReactPaginate from 'react-paginate';
 import { Link, useParams } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
-import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
+import { useGetAllEventQuery, useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import ProductCard from '~/components/EventCard/EventCard';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
+import nothing from '~/assets/images/nothing.svg';
 
 function Categories() {
   const { keyword } = useParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [locationId, setLocationId] = useState<string>('');
 
   const categories = useGetAllCategoryQuery();
+  const locations = useGetLocationsQuery();
   const event = useGetAllEventQuery({ page: currentPage, limit: 16, search: keyword });
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
 
@@ -70,28 +73,50 @@ function Categories() {
           <div className="gap-4 space-y-2 pt-4 transition-all sm:flex sm:space-y-0 xl:pt-0">
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
-              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
-                <option value="p-2">Tất cả địa điểm</option>
-                <option value="p-2">Hồ chí minh</option>
-                <option value="p-2">Hà nội</option>
+              <select
+                onChange={(e) => setLocationId(e.target.value)}
+                className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
+              >
+                <option>Tất cả địa điểm</option>
+                {locations?.data?.data?.map((item: any, index: number) => (
+                  <option key={index} className="p-2" value={item?._id}>
+                    {item?.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
               <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
-                <option value="p-2">Tất cả giá vé</option>
-                <option value="p-2">Miễn phí</option>
-                <option value="p-2">Có phí</option>
+                <option className="p-2" value="">
+                  Tất cả giá vé
+                </option>
+                <option className="p-2" value="">
+                  Miễn phí
+                </option>
+                <option className="p-2" value="">
+                  Có phí
+                </option>
               </select>
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
-                <option value="p-2">Tất cả ngày sắp tới</option>
-                <option value="p-2">Hôm nay</option>
-                <option value="p-2">Ngày mai</option>
-                <option value="p-2">Tuần này</option>
-                <option value="p-2">Tháng này</option>
+                <option className="p-2" value="">
+                  Tất cả ngày sắp tới
+                </option>
+                <option className="p-2" value="">
+                  Hôm nay
+                </option>
+                <option className="p-2" value="">
+                  Ngày mai
+                </option>
+                <option className="p-2" value="">
+                  Tuần này
+                </option>
+                <option className="p-2" value="">
+                  Tháng này
+                </option>
               </select>
             </div>
           </div>
@@ -101,6 +126,14 @@ function Categories() {
         </div>
         {/* Product */}
         {event.isFetching && <SkeletonEventList />}
+        {event.data?.data?.docs?.length === 0 && (
+          <div className="flex justify-center mt-32 text-center">
+            <div>
+              <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
+              <h3 className="font-medium text-[#ccc]">Không có sự kiện</h3>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-3 py-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
@@ -112,20 +145,22 @@ function Categories() {
         </div>
 
         {/* Phân trang */}
-        <div className="my-4 flex justify-center">
-          <ReactPaginate
-            className="flex items-center"
-            breakLabel="..."
-            pageCount={event.data?.data?.totalPages}
-            onPageChange={handlePageChange}
-            previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-xl" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
-            nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-xl" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
-            previousClassName={pageClassNames.previous}
-            nextClassName={pageClassNames.next}
-            activeClassName={pageClassNames.active}
-            pageClassName={pageClassNames.page}
-          />
-        </div>
+        {event.data?.data?.docs?.length !== 0 && (
+          <div className="my-4 flex justify-center">
+            <ReactPaginate
+              className="flex items-center"
+              breakLabel="..."
+              pageCount={event.data?.data?.totalPages}
+              onPageChange={handlePageChange}
+              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-xl" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-xl" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+              previousClassName={pageClassNames.previous}
+              nextClassName={pageClassNames.next}
+              activeClassName={pageClassNames.active}
+              pageClassName={pageClassNames.page}
+            />
+          </div>
+        )}
       </div>
     </>
   );
