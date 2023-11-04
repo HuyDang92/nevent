@@ -41,6 +41,7 @@ export const eventApi = createApi({
           start_date ? '&start_date=' + start_date : ''
         }${location ? '&location=' + location : ''}`,
     }),
+    
     getEventById: builder.query<any, string>({
       query: (eventId) => `/api/events/detail/${eventId}`,
     }),

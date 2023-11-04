@@ -61,3 +61,27 @@ export const useBuyTicket = () => {
 
   return { buyTicket, isPending, error };
 };
+export const useCheckIn = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState<boolean>(false);
+
+  const checkIn = async (ticketData: any) => {
+    setError(null);
+    setIsPending(true);
+
+    try {
+      const ticketRef = collection(db, 'ticketUsers');
+
+      setError(null);
+      setIsPending(false);
+    } catch (err: any) {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      console.log(errorCode, errorMessage);
+      setError(errorCode);
+      setIsPending(false);
+    }
+  };
+
+  return { checkIn, isPending, error };
+};

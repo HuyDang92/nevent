@@ -13,6 +13,7 @@ function Categories() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [locationId, setLocationId] = useState<string>('');
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
+  console.log(filterNameCate);
 
   const categories = useGetAllCategoryQuery();
   const locations = useGetLocationsQuery();
@@ -39,12 +40,13 @@ function Categories() {
   }, []);
   const handleCategoryClick = (categoryId: string) => {
     // Kiểm tra xem categoryId đã tồn tại trong mảng filterNameCate chưa
-    if (filterNameCate.includes(categoryId)) {
+    const cates = `${categoryId}`;
+    if (filterNameCate.includes(cates)) {
       // Nếu có, loại bỏ nó khỏi mảng
-      setFilterNameCate(filterNameCate.filter((id) => id !== categoryId));
+      setFilterNameCate(filterNameCate.filter((id) => id !== cates));
     } else {
       // Nếu chưa có, thêm nó vào mảng
-      setFilterNameCate([...filterNameCate, categoryId]);
+      setFilterNameCate([...filterNameCate, cates]);
     }
   };
   const pageClassNames = {
@@ -68,7 +70,7 @@ function Categories() {
                 key={index}
                 onClick={() => handleCategoryClick(item._id)}
                 className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all dark:bg-cs_lightDark ${
-                  filterNameCate.includes(item._id) ? '!bg-cs_semi_green text-white' : ''
+                  filterNameCate.includes(`${item._id}`) ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
                 {item.name}
@@ -83,7 +85,7 @@ function Categories() {
                 onChange={(e) => setLocationId(e.target.value)}
                 className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
               >
-                <option>Tất cả địa điểm</option>
+                <option value="">Tất cả địa điểm</option>
                 {locations?.data?.data?.map((item: any, index: number) => (
                   <option key={index} className="p-2" value={item?._id}>
                     {item?.name}
