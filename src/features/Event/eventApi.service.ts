@@ -48,6 +48,11 @@ export const eventApi = createApi({
     getLocations: builder.query<any, void>({
       query: () => `/api/locations`,
     }),
+    getTicketByEventId: builder.query<any, string>({
+      query: (eventId) => ({
+        url: `/api/tickets/event/${eventId}`,
+      }),
+    }),
   }),
 });
 
@@ -58,4 +63,5 @@ export const {
   useLazyGetAllEventQuery,
   useGetEventByIdQuery,
   useGetLocationsQuery,
+  useGetTicketByEventIdQuery,
 } = eventApi;

@@ -7,6 +7,7 @@ import EventInfo from './components/EventInfo';
 import EventTime from './components/EventTime';
 import EventSettings from './components/EventSettings';
 import PaymentInfo from './components/PaymentInfo';
+import TicketList from './components/TicketList';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
@@ -24,9 +25,12 @@ const CreateEvent = () => {
         return <EventTime setActiveStep={setActiveStep} />;
       }
       case 2: {
-        return <EventSettings setActiveStep={setActiveStep} />;
+        return <TicketList setActiveStep={setActiveStep} />
       }
       case 3: {
+        return <EventSettings setActiveStep={setActiveStep} />;
+      }
+      case 4: {
         return <PaymentInfo setActiveStep={setActiveStep} />;
       }
       // case 4: {
