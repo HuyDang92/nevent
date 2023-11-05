@@ -38,7 +38,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
             />
 
             <div className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3">
-              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data.location}</span>
+              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data?.location?.name}</span>
               <p className={`line-clamp-2 text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm`}>
                 {data.title}
               </p>
@@ -55,7 +55,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                     initial={{ opacity: 0, y: -5, height: 0 }}
                     animate={{ opacity: 1, y: 0, height: 15 }}
                     exit={{ opacity: 0, y: -5, height: 0 }}
-                    className="hidden sm:flex justify-between text-[14px] font-normal dark:text-cs_light"
+                    className="hidden justify-between text-[14px] font-normal dark:text-cs_light sm:flex"
                   >
                     <span className="cursor-pointer font-semibold">Chi tiết</span>
                     <span className="cursor-pointer font-semibold">Đặt vé</span>

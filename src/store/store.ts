@@ -15,7 +15,7 @@ import { uploadApi } from '~/features/Upload/uploadApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth','payment'],
+  whitelist: ['auth'],
 };
 
 const rootReducer = combineReducers({

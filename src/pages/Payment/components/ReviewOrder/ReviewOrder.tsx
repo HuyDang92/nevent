@@ -51,7 +51,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
     };
     console.log(data);
 
-    // await buyTicket(data);
+    await buyTicket(data);
     navigate(`/user/payment/${idEvent}/3`);
   };
 
@@ -82,7 +82,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
         </p>
         <div className="flex items-center justify-between text-sm font-semibold">
           <Icon name="location" className="" />
-          <p className="w-[95%]">{event?.location}</p>
+          <p className="w-[95%]">{event?.location?.name}</p>
         </div>
       </div>
       <div className="flex flex-col gap-3 border-b-[0.5px] py-4">

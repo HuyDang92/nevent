@@ -25,7 +25,7 @@ const EventManage = () => {
       banner: [
         {
           _id: '652cd4a7911b66e0c85f305a',
-          url: 'http://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
+          url: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?w=1060&t=st=1699185891~exp=1699186491~hmac=a732ea8c66b43b7cc68fffe22e13992be7adef9ddbb178e9fd1b5648d68d8a78',
           secureUrl: 'https://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
           publicId: 'Nevents/nevent-1697436837783',
           width: 54,
@@ -62,7 +62,7 @@ const EventManage = () => {
       banner: [
         {
           _id: '652cd4a7911b66e0c85f305a',
-          url: 'http://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
+          url: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?w=1060&t=st=1699185891~exp=1699186491~hmac=a732ea8c66b43b7cc68fffe22e13992be7adef9ddbb178e9fd1b5648d68d8a78',
           secureUrl: 'https://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
           publicId: 'Nevents/nevent-1697436837783',
           width: 54,
@@ -90,7 +90,7 @@ const EventManage = () => {
           <Dropdown />
         </div>
         <div className="mt-2 flex justify-between">
-          <div className="w-[60%]">
+          <div className="w-[72%]">
             <Link to="/create-event" className="">
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
@@ -105,7 +105,7 @@ const EventManage = () => {
                   <div className="my-4 rounded-xl border-[1px] border-cs_semi_green p-7" key={event._id}>
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex gap-4">
-                        <img className="h-[110px] w-[110px]" src={event.banner[0].url} alt="" />
+                        <img className="h-[110px] w-[110px] object-cover" src={event.banner[0].url} alt="" />
                         <div className="text-[14px] text-cs_grayText dark:text-cs_light">
                           <h1 className="text-lg font-bold text-cs_dark dark:text-cs_light">{event.title}</h1>
                           <div className="flex items-center gap-[15px]">

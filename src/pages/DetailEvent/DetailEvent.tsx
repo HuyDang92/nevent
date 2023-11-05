@@ -21,7 +21,6 @@ function DetailEvent() {
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
-  console.log(eventTickets);
 
   useEffect(() => {
     window.scrollTo({
@@ -56,7 +55,7 @@ function DetailEvent() {
                   <div className="flex items-center gap-[15px]">
                     <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
-                      <span>{detailEventQuery?.data?.data?.location}</span>
+                      <span>{detailEventQuery?.data?.data?.location?.name}</span>
                     </span>
                   </div>
                   <div className="">
@@ -120,7 +119,7 @@ function DetailEvent() {
                       <div className="flex items-center gap-[15px]">
                         <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                         <span className="w-[90%] dark:text-cs_light">
-                          <span>{detailEventQuery?.data?.data?.location}</span>
+                          <span>{detailEventQuery?.data?.data?.location?.name}</span>
                         </span>
                       </div>
                     </div>

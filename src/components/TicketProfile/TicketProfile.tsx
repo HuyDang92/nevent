@@ -151,7 +151,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
               <Button
                 value="Tải về"
                 icon="download-outline"
-                className="!bg-cs_semi_green !text-white"
+                className="ms-[35%] !bg-cs_semi_green !text-white"
                 onClick={() => handleDownload(data?.tickets[0]?.title)}
               />
             </>
@@ -182,7 +182,8 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           <p className="text-sm font-semibold">
             Trạng thái:{' '}
             <span className="text-sm text-cs_semi_green">
-              {data?.tickets[0]?.status === false ? 'Chưa sử dụng' : 'Đã sử dụng'}
+              {/* {data?.tickets[0]?.status === false ? 'Chưa sử dụng' : 'Đã sử dụng'} */}
+              Chưa sử dụng
             </span>
           </p>
           {/* <p className="text-sm font-semibold">
@@ -201,13 +202,15 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
             openTool ? 'h-fit w-fit p-2' : 'h-0 w-0'
           } absolute right-6 top-12 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
         >
-          <li
-            onClick={exportDSSV}
-            className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
-          >
-            <Icon name="download-outline" />
-            <span>Tải danh sách vé</span>
-          </li>
+          {data?.tickets?.length > 1 && (
+            <li
+              onClick={exportDSSV}
+              className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
+            >
+              <Icon name="download-outline" />
+              <span>Tải danh sách vé</span>
+            </li>
+          )}
           <li onClick={() => setOpenTool(!openTool)}>
             <Link
               to="/user/pass-event"

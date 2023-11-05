@@ -39,6 +39,8 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
+    console.log(selectedFile);
+
     const id = await upLoad(selectedFile!);
     await updateProfile({ avatar: id });
   };
