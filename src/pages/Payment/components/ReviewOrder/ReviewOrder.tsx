@@ -8,7 +8,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useBuyTicket } from '~/hooks/useFirebase';
 import Loading from '~/components/customs/Loading';
-import { useEffect, useState } from 'react';
 interface Prop {
   className?: string;
   event?: IEvent;
@@ -17,25 +16,26 @@ interface Prop {
 const ReviewOrder = ({ className, event, activeTab }: Prop) => {
   const { idEvent } = useParams();
   const navigate = useNavigate();
-  const [ticketsData, setTicketsData] = useState<any[]>([]);
+  // const [ticketsData, setTicketsData] = useState<any[]>([]);
   const tickets: any[] = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   const auth = useAppSelector((state) => state.auth.currentUser);
-  // console.log(tickets);
-  useEffect(() => {
-    const result = [
-      ...tickets
-        .reduce((map, item) => {
-          const { _id, orderQuantity } = item;
-          if (!map.has(_id) || map.get(_id).orderQuantity < orderQuantity) {
-            map.set(_id, item);
-          }
-          return map;
-        }, new Map())
-        .values(),
-    ];
-    setTicketsData(result);
-  }, [tickets]);
+  // console.log(ticketsData);
+
+  // useEffect(() => {
+  //   const result = [
+  //     ...tickets
+  //       .reduce((map, item) => {
+  //         const { _id, orderQuantity } = item;
+  //         if (!map.has(_id) || map.get(_id).orderQuantity < orderQuantity) {
+  //           map.set(_id, item);
+  //         }
+  //         return map;
+  //       }, new Map())
+  //       .values(),
+  //   ];
+  //   setTicketsData(result);
+  // }, [tickets]);
 
   const { buyTicket, isPending } = useBuyTicket();
 
@@ -49,7 +49,9 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       owner: auth?._id,
       tickets: tickets,
     };
-    await buyTicket(data);
+    console.log(data);
+
+    // await buyTicket(data);
     navigate(`/user/payment/${idEvent}/3`);
   };
 
@@ -100,7 +102,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       </div>
       {/* /// */}
       <div className="flex flex-col gap-2 border-b-[0.5px] py-4">
-        {ticketsData?.map((ticket, index) => {
+        {tickets?.map((ticket, index) => {
           return (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -131,7 +133,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
         <p className="flex items-center justify-between font-semibold text-cs_gray">
           Tổng cộng{' '}
           <span className="text-sm">
-            {tickets.reduce((total, item) => total + item.price, 0).toLocaleString('vi')}đ
+            {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
         <p className="my-2 flex items-center justify-between font-semibold text-cs_gray">
@@ -140,10 +142,10 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
         <p className="my-2 flex items-center justify-between text-lg font-bold">
           Thành tiền{' '}
           <span className="text-base text-cs_semi_green">
-            {tickets.reduce((total, item) => total + item.price, 0).toLocaleString('vi')}đ
+            {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        {activeTab === 2 && (
+        {(activeTab === 2 || activeTab === 4) && (
           <Button
             onClick={handleBuyTicket}
             value="Thanh toán"
