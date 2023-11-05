@@ -1,12 +1,12 @@
 import { Spinner } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
-import { useState, ChangeEvent, useEffect, useRef } from 'react';
-import { useLazyGetAllEventQuery } from '~/features/Event/eventApi.service';
-import { useDebounce } from '~/hooks/useDebounce';
 import moment from 'moment';
-import Icon from '../Icon';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLazyGetAllEventQuery } from '~/features/Event/eventApi.service';
 import useClickOutside from '~/hooks/useClickOutside';
+import { useDebounce } from '~/hooks/useDebounce';
+import Icon from '../Icon';
 
 type SearchBarProps = {
   className?: string;
@@ -20,6 +20,9 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const [getEvent, result] = useLazyGetAllEventQuery();
   const { searchValue } = useDebounce(value, 500);
   const ref = useRef(null);
+
+  const [listHistory, setListHistory] = useState<string[]>([])
+  const searchHistory = localStorage.getItem('search-history')
 
   useClickOutside(ref, () => {
     setValue('');
@@ -35,23 +38,45 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value === '') return;
+
+    if (searchHistory !== null) {
+      const history = JSON.parse(searchHistory);
+
+      if (!history.includes(value)) {
+        history.push(value);
+      }
+
+      localStorage.setItem('search-history', JSON.stringify(history));
+    } else {
+      const history = [value];
+      localStorage.setItem('search-history', JSON.stringify(history));
+    }
+
     navigate(`/event-categories/${value}`);
     setValue('');
   };
 
+  const handleRemoveHistory = (item: string) => () => {
+    if (searchHistory !== null) {
+      const history = JSON.parse(searchHistory);
+      const newHistory = history.filter((i: string) => i !== item)
+      localStorage.setItem('search-history', JSON.stringify(newHistory));
+      setListHistory(newHistory)
+    }
+  }
+
+
   return (
     <div className="relative">
       <div
-        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${
-          size === 'lg' && 'w-[640px]'
-        }  ${className}`}
+        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${size === 'lg' && 'w-[640px]'
+          }  ${className}`}
       >
         <form onSubmit={handleSubmit}>
           <input
             placeholder="Tìm kiếm sự kiện..."
-            className={` ${size === 'md' && 'h-10'} ${
-              size === 'lg' && 'h-14'
-            }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light ${classNameInput}`}
+            className={` ${size === 'md' && 'h-10'} ${size === 'lg' && 'h-14'
+              }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light ${classNameInput}`}
             type="text"
             value={value}
             onChange={handleSearch}
@@ -64,9 +89,8 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
       </div>
       <div
         ref={ref}
-        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${
-          value === '' ? 'h-0 ' : 'max-h-60 border p-3'
-        }  space-y-2 shadow-border-full transition-all`}
+        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${value === '' ? 'h-0 ' : 'max-h-60 border p-3'
+          }  space-y-2 shadow-border-full transition-all`}
       >
         <div className="flex items-center gap-3 text-cs_gray">
           {result.isFetching ? (
@@ -103,6 +127,29 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
               </div>
             </Link>
           ))}
+        <div className='text-sm text-cs_grayText w-full py-2 flex gap-2 items-center border-[#f0f0f0] border-t '>
+          {
+            searchHistory !== null ? (
+              JSON.parse(searchHistory).length > 0 ? JSON.parse(searchHistory).map((item: string, index: number) => (
+                <div key={index} className='bg-[#f5f5f5] flex items-center gap-3 hover:bg-[#e5e5e5] duration-150 text-[#9b9b9b] text-[16px] px-[10px] py-[5px] rounded-lg'>
+                  <button className='flex justify-center items-center'
+                    onClick={() => {
+                      navigate(`/event-categories/${item}`);
+                      setValue('');
+                    }}
+                  >{item}</button>
+                  <button className='flex justify-center items-center' onClick={handleRemoveHistory(item)}>
+                    <IonIcon name='close-outline' className='text-[#9b9b9b] text-[16px]' />
+                  </button>
+                </div>
+              )) : (
+                <i className='text-[14px] underline text-[#9b9b9b]'>Không có lịch sử tìm kiếm</i>
+
+              )
+            ) : null
+          }
+
+        </div>
       </div>
     </div>
   );
