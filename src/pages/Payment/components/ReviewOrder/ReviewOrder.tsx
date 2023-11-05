@@ -145,13 +145,13 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
             {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        {(activeTab === 2 || activeTab === 4) && (
-          <Button
-            onClick={handleBuyTicket}
-            value="Thanh toán"
-            className="w-full !bg-cs_semi_green text-white !shadow-none"
-          />
-        )}
+        <Button
+          onClick={handleBuyTicket}
+          value="Thanh toán"
+          className="w-full !bg-cs_semi_green text-white !shadow-none"
+        />
+        {/* {(activeTab === 2 || activeTab === 4) && (
+        )} */}
       </div>
       {/* /// */}
     </div>

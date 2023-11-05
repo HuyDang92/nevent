@@ -64,7 +64,7 @@ const Payment = () => {
           <div className={`mt-2 gap-5 sm:mt-5 xl:flex`}>
             <div
               className={`mb-5 h-fit w-full rounded-[12px] bg-cs_light shadow-border-full dark:bg-cs_lightDark dark:text-cs_light ${
-                activeStep !== 4 && 'xl:w-[70%]'
+                activeStep !== 3 && 'xl:w-[70%]'
               } `}
             >
               {renderContent(activeStep)}
@@ -74,7 +74,7 @@ const Payment = () => {
             <ReviewOrder
               event={event}
               activeTab={activeStep}
-              className={`${activeStep !== 4 && 'hidden'} mb-10 bg-cs_light dark:bg-cs_lightDark sm:block`}
+              className={`hidden mb-10 bg-cs_light dark:bg-cs_lightDark ${activeStep !== 3 && 'md:block'}`}
             />
           </div>
         </div>
