@@ -1,5 +1,5 @@
 import { Card, List, Typography } from '@material-tailwind/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logoWhite from '~/assets/images/logoWhite.png';
 import Button from '~/components/customs/Button';
@@ -9,24 +9,25 @@ type CreateEventSidebarProps = {
 
 const cateList = [
   {
-    name: 'Hồ sơ tổ chức',
-    link: 'organization-profile',
+    name: 'Thống kê',
+    link: '/manage-event/statistics',
   },
   {
-    name: 'Tạo sự kiện',
-    link: '/event-list',
+    name: 'Quản lý RSVPs',
+    link: '/manage-event/rsvps',
   },
   {
-    name: 'Tài khoản ví của tôi',
-    link: '/',
+    name: 'Quảng bá',
+    link: '/manage-event/pr',
   },
   {
-    name: 'Thông tin ngân hàng',
-    link: '/',
+    name: 'Giảm giá',
+    link: '/manage-event/discount',
   },
 ];
 
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
+  const { idEvent } = useParams();
   return (
     <Card
       className={`scrollbar-hide sticky top-0 flex h-[100vh] flex-col rounded-none bg-cs_semi_green pt-1 shadow-none dark:bg-cs_dark ${className}`}
@@ -42,7 +43,7 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
           {cateList.map((item, index) => (
             <NavLink
               key={index}
-              to={item.link}
+              to={`${item.link}/${idEvent}`}
               className={({ isActive }) =>
                 `} mt-2 rounded-xl transition-all hover:bg-white hover:text-cs_semi_green dark:hover:bg-cs_lightDark
                ${isActive ? ' bg-white text-cs_semi_green dark:bg-cs_lightDark' : 'text-cs_light'}`
