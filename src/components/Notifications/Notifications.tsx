@@ -25,8 +25,8 @@ const Notifycations = ({ auth }: DropdownProps) => {
           variant="text"
           className="relative items-center rounded-lg text-cs_semi_green transition hover:scale-110 hover:bg-transparent"
         >
-          <div className="absolute -right-1 -top-1 z-50 rounded-full bg-red-500 px-[5px] text-[10px] text-cs_light xl:-right-2 xl:-top-2">
-            2
+          <div className="absolute -right-1 -top-1 z-50 rounded-full h-2 w-2 bg-red-500 text-cs_light ">
+            
           </div>
           <Icon name="notifications" className="text-2xl" />
         </IconButton>

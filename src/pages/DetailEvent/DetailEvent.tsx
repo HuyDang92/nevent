@@ -21,7 +21,6 @@ function DetailEvent() {
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
-  console.log(eventTickets);
 
   useEffect(() => {
     window.scrollTo({
@@ -56,20 +55,20 @@ function DetailEvent() {
                   <div className="flex items-center gap-[15px]">
                     <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
-                      <span>{detailEventQuery?.data?.data?.location.name}</span>
+                      <span>{detailEventQuery?.data?.data?.location?.name}</span>
                     </span>
                   </div>
                   <div className="">
                     <span className="w-[90%] dark:text-cs_light">Giá vé:</span>
                     <div className="py-2">
-                      <ul className="grid grid-cols-2 gap-2">
+                      <ul className="space-y-1 font-medium">
                         {eventTickets?.data?.data?.map((ticket: ITicket) => (
                           <li
                             style={{ backgroundColor: ticket.color }}
                             className={`rounded-lg ${ticket.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                           >
-                            <span className="">
-                              {ticket.title}: {ticket.price.toLocaleString('vi')} VNĐ
+                            <span className="flex justify-between">
+                              <span>{ticket.title}:</span> <span>{ticket.price.toLocaleString('vi')}đ</span>
                             </span>
                           </li>
                         ))}
@@ -95,7 +94,7 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">
                     {detailEventQuery?.data?.data?.title}
                   </h1>
-                  <div className="mt-[10px] flex items-center gap-[10px] md:gap-[20px] ">
+                  <div className="mt-[10px] flex  gap-[10px] md:gap-[20px] ">
                     <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full dark:border md:h-[120px] md:w-[115px]">
                       <div className="grid h-[10px] place-content-center bg-cs_semi_green py-2 text-[8px] text-cs_light md:h-[35px] md:text-[15px]">
                         Tháng {moment(detailEventQuery?.data?.data?.start_date).format('MM')}
@@ -120,7 +119,7 @@ function DetailEvent() {
                       <div className="flex items-center gap-[15px]">
                         <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                         <span className="w-[90%] dark:text-cs_light">
-                          <span>{detailEventQuery?.data?.data?.location.name}</span>
+                          <span>{detailEventQuery?.data?.data?.location?.name}</span>
                         </span>
                       </div>
                     </div>

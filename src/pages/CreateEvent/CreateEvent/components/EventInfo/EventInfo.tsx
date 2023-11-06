@@ -8,9 +8,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import banner3 from '~/assets/images/banner3.jpg';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
+import { useNavigate } from 'react-router';
 
 interface IEventInfo {
   banner: string;
@@ -27,9 +25,10 @@ interface IEventInfo {
   // organization_email: string;
   // organization_img: string;
 }
-const EventInfo = ({ setActiveStep }: Prop) => {
+const EventInfo = () => {
   const { data: categories } = useGetAllCategoryQuery();
   const { upLoad, loading } = useUploadFile();
+  const navigate = useNavigate();
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
@@ -60,8 +59,8 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
       file: Yup.mixed()
-        .required('A file is required')
-        .test('fileSize', 'The file is too large', (value: any) => {
+        .required('Yêu cầu banner sự kiện')
+        .test('fileSize', 'File ảnh quá lớn', (value: any) => {
           return value ? value.size <= 1024000 : true; // 1MB
         }),
       // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
@@ -75,6 +74,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       console.log(value);
       const bannerId = await upLoad(value.file!);
       value.banner = bannerId;
+      navigate(`/create-event/1`);
       // setActiveStep(1);
     },
   });
@@ -87,7 +87,11 @@ const EventInfo = ({ setActiveStep }: Prop) => {
             {imagePreviewUrl ? (
               <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
             ) : (
-              <img src={banner3} alt="banner" className="h-full w-full rounded-xl object-cover " />
+              <img
+                src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
+                alt="banner"
+                className="h-full w-full rounded-xl object-cover "
+              />
             )}
             <div
               className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${

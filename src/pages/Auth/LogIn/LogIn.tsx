@@ -131,7 +131,7 @@ function LogIn() {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <Checkbox crossOrigin={{}} label="Lưu đăng nhập" className="h-4 w-4 dark:text-cs_gray" />
-                <Link to="/" className="hover:underline dark:text-cs_gray">
+                <Link to="/forgot-password" className="hover:underline dark:text-cs_gray">
                   Quên mật khẩu?
                 </Link>
               </div>
@@ -181,7 +181,6 @@ function LogIn() {
           <img className="h-full w-full rounded-xl object-cover" src={AuthImage} alt="" />
         </motion.div>
       </div>
-      
     </>
   );
 }

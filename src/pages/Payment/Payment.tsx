@@ -74,7 +74,7 @@ const Payment = () => {
             <ReviewOrder
               event={event}
               activeTab={activeStep}
-              className={`hidden mb-10 bg-cs_light dark:bg-cs_lightDark ${activeStep !== 3 && 'md:block'}`}
+              className={`mb-10 hidden bg-cs_light dark:bg-cs_lightDark ${activeStep !== 3 && 'md:block'}`}
             />
           </div>
         </div>

@@ -8,30 +8,32 @@ import EventTime from './components/EventTime';
 import EventSettings from './components/EventSettings';
 import PaymentInfo from './components/PaymentInfo';
 import TicketList from './components/TicketList';
+import { useParams } from 'react-router';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
 
   const handleOpen = () => setOpen(!open);
+  const { step } = useParams();
+  const activeStep = Number(step);
 
-  const [activeStep, setActiveStep] = useState<number>(0);
   const renderContent = (activeStep: number) => {
     //Switch case
     switch (activeStep) {
       case 0: {
-        return <EventInfo setActiveStep={setActiveStep} />;
+        return <EventInfo />;
       }
       case 1: {
-        return <EventTime setActiveStep={setActiveStep} />;
+        return <EventTime />;
       }
       case 2: {
-        return <TicketList setActiveStep={setActiveStep} />
+        return <TicketList />;
       }
       case 3: {
-        return <EventSettings setActiveStep={setActiveStep} />;
+        return <EventSettings />;
       }
       case 4: {
-        return <PaymentInfo setActiveStep={setActiveStep} />;
+        return <PaymentInfo />;
       }
       // case 4: {
       //   return <PaymentInfor setActiveStep={setActiveStep} />;
@@ -88,7 +90,7 @@ const CreateEvent = () => {
         </div>
         <div className="w-[80%]">
           <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
-            <CreateEventStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+            <CreateEventStepper />
           </div>
           <div className="w-full dark:bg-cs_lightDark">{renderContent(activeStep)}</div>
         </div>

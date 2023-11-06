@@ -74,9 +74,7 @@ export default function AppRoutes() {
           <Route element={<CreateEventLayout />}>
             <Route path="/organization-profile" element={<OrganizationProfile />} />
             <Route path="/event-list" element={<EventManage />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/create-event2/" element={<Categories />} />
-            <Route path="/create-event3/" element={<Categories />} />
+            <Route path="/create-event/:step" element={<CreateEvent />} />
           </Route>
           <Route path="/manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
@@ -87,7 +85,7 @@ export default function AppRoutes() {
         </Route>
 
         {/* Scan ticket */}
-        <Route element={<PrivateRoute allowedRoles={['bussiness']} />}>
+        <Route element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route path="/scan-ticket" element={<Scan />} />
           </Route>
