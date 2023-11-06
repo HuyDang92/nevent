@@ -103,7 +103,7 @@ const EventManage = () => {
               {eventList &&
                 eventList.map((event) => (
                   <div className="my-4 rounded-xl border-[1px] border-cs_semi_green p-7" key={event._id}>
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="mb-4 flex items-start justify-between">
                       <div className="flex gap-4">
                         <img className="h-[110px] w-[110px]" src={event.banner[0].url} alt="" />
                         <div className="text-[14px] text-cs_grayText dark:text-cs_light">
@@ -137,40 +137,30 @@ const EventManage = () => {
                       </div>
                       <Button mode="dark" value={<Iconfy className="text-2xl" icon="formkit:people" />} />
                     </div>
-                    <div>
-                      <div className="flex items-center justify-between bg-cs_semi_green p-4">
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="mdi:chart-line" />
-                          <span>Bản tóm tắt</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="material-symbols:person-outline" />
-                          <span>Quản lý RSVPs</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="mdi:bell" />
-                          <span>Khuyến khích</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="solar:card-broken" />
-                          <span>Mã giảm giá</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="bxs:message-square-edit" />
-                          <span>Chỉnh sửa</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="mingcute:copy-fill" />
-                          <span>Nhân rộng</span>
-                        </div>
+                    <div className="flex items-center justify-between bg-cs_semi_green p-4">
+                      <Link to={`/manage-event/statistics/${event._id}`} className="flex items-center text-cs_light">
+                        <Iconfy icon="mdi:chart-line" />
+                        <span>Thống kê</span>
+                      </Link>
+                      <div className="flex items-center text-cs_light">
+                        <Iconfy icon="material-symbols:person-outline" />
+                        <span>Quản lý RSVPs</span>
                       </div>
-                      <div className="flex items-center justify-between p-4 dark:text-cs_light shadow-border-full">
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
+                      <div className="flex items-center text-cs_light">
+                        <Iconfy icon="mdi:bell" />
+                        <span>Khuyến khích</span>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Iconfy icon="solar:card-broken" />
+                        <span>Mã giảm giá</span>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Iconfy icon="bxs:message-square-edit" />
+                        <span>Chỉnh sửa</span>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Iconfy icon="mingcute:copy-fill" />
+                        <span>Nhân rộng</span>
                       </div>
                     </div>
                   </div>

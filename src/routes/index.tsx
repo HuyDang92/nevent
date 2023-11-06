@@ -24,6 +24,9 @@ import Organizer from '~/pages/Organizer';
 import SearchMobile from '~/pages/SearchMobile';
 import Scan from '~/pages/Scan/Scan';
 import PassTicket from '~/pages/Auth/PassTicket';
+import ManageEventLayout from '~/Layout/ManageEventLayout';
+import Statistics from '~/pages/ManageEvent/Statistics';
+import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -70,10 +73,16 @@ export default function AppRoutes() {
         <Route>
           <Route element={<CreateEventLayout />}>
             <Route path="/organization-profile" element={<OrganizationProfile />} />
-            <Route path="/event-manage" element={<EventManage />} />
+            <Route path="/event-list" element={<EventManage />} />
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/create-event2/" element={<Categories />} />
             <Route path="/create-event3/" element={<Categories />} />
+          </Route>
+          <Route path="/manage-event" element={<ManageEventLayout />}>
+            <Route path="statistics/:idEvent" element={<Statistics />} />
+            <Route path="rsvps/:idEvent" element={<RsvpsManage />} />
+            <Route path="pr/:idEvent" element={<RsvpsManage />} />
+            <Route path="discount/:idEvent" element={<RsvpsManage />} />
           </Route>
         </Route>
 
