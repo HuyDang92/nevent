@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router';
 import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
+import Button from '~/components/customs/Button';
 
 interface Prop {
   handler: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,7 +57,7 @@ const AddTimeline = ({ handler }: Prop) => {
               <span className="w-1/5 dark:text-gray-400">Bắt đầu:</span>
               <div className="relative w-4/5">
                 {formik.errors.beginDate && (
-                  <small className="absolute left-[0px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
                     {formik.errors.beginDate}
                   </small>
                 )}
@@ -72,38 +73,60 @@ const AddTimeline = ({ handler }: Prop) => {
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
               <span className="w-1/5 dark:text-gray-400">Thời gian:</span>
-              <Input
-                type="time"
-                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
-                className="!w-4/5"
-                name="beginTime"
-                value={formik.values.beginTime}
-                onChange={formik.handleChange}
-              />
+              <div className="relative w-4/5">
+                {formik.errors.beginTime && (
+                  <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
+                    {formik.errors.beginTime}
+                  </small>
+                )}
+                <Input
+                  type="time"
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                  className="!w-full"
+                  name="beginTime"
+                  value={formik.values.beginTime}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
               <span className="w-1/5 dark:text-gray-400">Đến:</span>
-              <Input
-                type="date"
-                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
-                className="!w-4/5"
-                name="endDate"
-                value={formik.values.endDate}
-                onChange={formik.handleChange}
-              />
+              <div className="relative w-4/5">
+                {formik.errors.endDate && (
+                  <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
+                    {formik.errors.endDate}
+                  </small>
+                )}
+                <Input
+                  type="date"
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                  className="!w-full"
+                  name="endDate"
+                  value={formik.values.endDate}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
             <div className="flex w-[calc(50%-30px)] items-center justify-between">
               <span className="w-1/5 dark:text-gray-400">Thời gian:</span>
-              <Input
-                type="time"
-                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
-                className="!w-4/5"
-                name="endTime"
-                value={formik.values.endTime}
-                onChange={formik.handleChange}
-              />
+              <div className="relative w-4/5">
+                {formik.errors.endTime && (
+                  <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
+                    {formik.errors.endTime}
+                  </small>
+                )}
+                <Input
+                  type="time"
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                  className="!w-full"
+                  name="endTime"
+                  value={formik.values.endTime}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
           </div>
+          <Button type="submit" className="h-10 w-[120px]" value="Tạo" mode="dark" />
         </form>
       </div>
     </div>
