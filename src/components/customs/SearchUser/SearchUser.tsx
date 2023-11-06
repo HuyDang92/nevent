@@ -95,7 +95,7 @@ const SearchUser = ({ className, size = 'md', classNameInput }: SearchBarProps) 
                 <p className="flex gap-2 pt-1 text-xs text-cs_grayText">
                   <span className="flex items-center gap-1">
                     <Icon name="location-outline" />
-                    {event?.location}
+                    {event?.location?.name}
                   </span>
                   <span className="flex items-center gap-1">
                     <Icon name="time-outline" />
