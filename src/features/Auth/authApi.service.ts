@@ -46,6 +46,16 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/forgot-password',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
@@ -63,4 +73,5 @@ export const {
   useGetProfileQuery,
   useLogInGoogleMutation,
   useUpdateProfileMutation,
+  useChangePasswordMutation,
 } = authApi;

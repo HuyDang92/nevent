@@ -12,7 +12,7 @@ const ChangePassword = () => {
         <Input classNameInput="w-full border" type="password" label="Mật khẩu mới" />
         <Input classNameInput="w-full border" type="password" label="Xác nhận mật khẩu mới" />
         <div className="mt-20 text-right">
-          <Button className="w-[230px]" mode="dark" value="Lưu thông tin" />
+          <Button className="w-[200px]" mode="dark" value="Lưu thông tin" />
         </div>
       </form>
     </div>
