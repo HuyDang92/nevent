@@ -2,14 +2,40 @@ import IonIcon from '@reacticons/ionicons';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
+import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
 import View from '~/motion/View';
 
 const data = [
-  'https://images.tkbcdn.com/1/780/300/Upload/eventcover/2023/10/22/B2F576.jpg',
-  'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg',
-  'https://img.freepik.com/free-photo/digital-illustration-multiplying-bacterial-cells_181624-22996.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-  'https://img.freepik.com/free-photo/3d-aesthetics-with-shapes-vaporwave-style_23-2148981116.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+  {
+    id: 1,
+    thumbnail:
+      'https://images.pexels.com/photos/13073249/pexels-photo-13073249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    title: 'PEPSI presents RAVOLUTION Music Festival (RAVO-X Edition)',
+    time: 'Sunday, 03 December 2023 (03:00 PM - 11:00 PM)',
+  },
+  {
+    id: 2,
+    thumbnail:
+      'https://images.pexels.com/photos/3563172/pexels-photo-3563172.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    title: '[Bến Thành] MINISHOW KIỀU OANH | NGÀY MAI NGƯỜI TA LẤY CHỒNG Special guest: Quân Lee - Thành Đạt',
+    time: 'Tuesday, 07 November 2023 (08:00 PM - 10:30 PM)',
+  },
+  {
+    id: 3,
+    thumbnail:
+      'https://images.pexels.com/photos/1652361/pexels-photo-1652361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    title: 'FAN CONCERT MR. SIRO - CHẲNG AI ĐẾN THẾ GIỚI NÀY ĐỂ CÔ ĐƠN',
+    time: 'Wednesday, 22 November 2023 (06:00 PM - 10:00 PM) + 1 more',
+  },
+  {
+    id: 4,
+    thumbnail:
+      'https://images.pexels.com/photos/2990830/pexels-photo-2990830.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    title: '[Bến Thành] MINISHOW ĐẠI MINH TINH | VĂN MAI HƯƠNG',
+    time: 'Wednesday, 15 November 2023 (08:00 PM - 10:30 PM)',
+  },
 ];
 
 const variants = {
@@ -40,6 +66,8 @@ const swipePower = (offset: number, velocity: number) => {
 
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
+  const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5 });
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const [isShowBanner, setIsShowBanner] = React.useState(0);
@@ -75,14 +103,14 @@ const Banner = () => {
   };
 
   return (
-    <View className="relative h-[180px] rounded-[15px] bg-white md:h-[300px] lg:mb-16 lg:h-[350px] xl:h-[450px]">
+    <View className="relative h-[180px] rounded-[15px] bg-white md:h-[300px] lg:mb-16 lg:h-[350px] xl:h-[60vh]">
       <AnimatePresence initial={false} custom={direction}>
-        <Link to="/about">
-          <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
+        <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
+          <View className="relative h-full w-full">
             <motion.img
               className=" h-full w-full cursor-pointer rounded-xl object-cover "
               key={page}
-              src={`${data[imageIndex]}`}
+              src={`${data[imageIndex].thumbnail}`}
               custom={direction}
               variants={variants}
               initial="enter"
@@ -105,8 +133,21 @@ const Banner = () => {
                 }
               }}
             />
+            <View className="absolute left-0 top-0 hidden h-full w-full bg-gradient-to-r from-[#0000008f] p-8 text-white duration-150 lg:block ">
+              <h1 className="max-w-[50rem] text-2xl font-bold">{data[imageIndex].title}</h1>
+              <p className="text-sm">{data[imageIndex].time}</p>
+              <Link to={`about`}>
+                <motion.button
+                  className="mt-8 rounded-lg bg-[#ffffffa9] px-6 py-2 text-sm font-semibold text-[#242424]"
+                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1 }}
+                >
+                  Xem chi tiết
+                </motion.button>
+              </Link>
+            </View>
           </View>
-        </Link>
+        </View>
       </AnimatePresence>
       <View className=" absolute bottom-0 right-0 z-10 hidden translate-y-[70%] lg:block xl:right-[30px]">
         <View className=" flex gap-[20px]">
@@ -122,7 +163,7 @@ const Banner = () => {
                   setCurrentImageIndex(index);
                   setPage([index, 0]);
                 }}
-                src={`${item}`}
+                src={`${item.thumbnail}`}
               />
             );
           })}

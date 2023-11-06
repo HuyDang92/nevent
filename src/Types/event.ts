@@ -2,7 +2,9 @@ interface IEvent {
   _id: string;
   title: string;
   start_date: string;
-  location: string;
+  location: {
+    name: string;
+  };
   desc: string;
   categories: ICategory[];
   status: string;

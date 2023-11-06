@@ -87,7 +87,11 @@ const EventInfo = () => {
             {imagePreviewUrl ? (
               <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
             ) : (
-              <img src={banner3} alt="banner" className="h-full w-full rounded-xl object-cover " />
+              <img
+                src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
+                alt="banner"
+                className="h-full w-full rounded-xl object-cover "
+              />
             )}
             <div
               className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${

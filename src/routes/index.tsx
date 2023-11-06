@@ -76,7 +76,7 @@ export default function AppRoutes() {
         </Route>
 
         {/* Scan ticket */}
-        <Route element={<PrivateRoute allowedRoles={['bussiness']} />}>
+        <Route element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route path="/scan-ticket" element={<Scan />} />
           </Route>

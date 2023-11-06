@@ -2,6 +2,9 @@ import { Carousel } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
+import moment from 'moment';
+import Icon from '~/components/customs/Icon';
+
 type Props = {
   data: IEvent[]; //dữ liệu
 };
@@ -75,11 +78,27 @@ function Slide({ data }: Props) {
           <div key={index} className="grid grid-cols-2 gap-4 overflow-hidden sm:grid-cols-3 xl:grid-cols-5">
             {item.map((item: IEvent, index: number) => (
               <Link key={index} to={`/event-detail/${item?._id}`}>
-                <img
-                  src={item?.banner[0]?.url}
-                  alt="image 1"
-                  className="h-[280px] w-full rounded-xl object-cover transition-all hover:scale-95"
-                />
+                <div className="group relative">
+                  <img
+                    src={item?.banner[0]?.url}
+                    alt="image 1"
+                    className="h-[280px] w-full rounded-xl object-cover transition-all group-hover:scale-[98%]"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 top-0 rounded-xl bg-black bg-opacity-0 transition-all group-hover:scale-[98%] group-hover:bg-opacity-50"></div>
+                  <div className="absolute bottom-0 left-0 right-0 top-0 hidden p-3 text-cs_light group-hover:block">
+                    <h2 className="pb-3 font-bold">{item?.title}</h2>
+                    <span className="text-sm font-medium">
+                      {/* <Icon name="time-outline" /> */}
+                      <span className="flex items-center gap-2">
+                        <Icon name="time-outline" className="" />
+                        <span> {moment(item?.start_date).format('hh:mm - DD/MM/YYYY')}</span>
+                      </span>
+                      <span className="text-sm ">
+                        {item?.categories[0]?.name} - {item?.location?.name}
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
