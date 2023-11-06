@@ -59,8 +59,8 @@ const EventInfo = () => {
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
       file: Yup.mixed()
-        .required('A file is required')
-        .test('fileSize', 'The file is too large', (value: any) => {
+        .required('Yêu cầu banner sự kiện')
+        .test('fileSize', 'File ảnh quá lớn', (value: any) => {
           return value ? value.size <= 1024000 : true; // 1MB
         }),
       // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
