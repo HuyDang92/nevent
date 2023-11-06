@@ -1,19 +1,10 @@
 import moment from 'moment';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
 import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip } from 'chart.js';
 
 const Statistics = () => {
   const { idEvent } = useParams();
@@ -22,7 +13,11 @@ const Statistics = () => {
     _id: '652cd125fc13ae657b6c7cdf',
     title: 'ÅÍÎÏ˝ÓÔÒÚÆ☃',
     start_date: '2022-08-11T00:00:00.000Z',
-    location: 'PO Box 62967',
+    location: {
+      _id: '6545c75892a98643864286e2',
+      name: 'Hồ Chí Minh',
+      code: '700000',
+    },
     categories: [
       {
         _id: '652ccfbc9341999a095b76b5',
@@ -104,12 +99,14 @@ const Statistics = () => {
             <div className="flex items-center gap-[15px]">
               <Iconfy icon="carbon:location-filled" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
               <span className="w-[90%] dark:text-cs_light">
-                <span>{event.location}</span>
+                <span>{event.location.name}</span>
               </span>
             </div>
           </div>
         </div>
-        <Button mode="dark" value="Check in" />
+        <Link to={`/scan-ticket`}>
+          <Button mode="dark" value="Check in" />
+        </Link>
       </div>
       <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4">
         <div className="flex justify-between rounded-lg bg-cs_light_gray px-4 py-3">
@@ -131,7 +128,7 @@ const Statistics = () => {
           <span className="font-bold text-cs_semi_green">0 VNĐ</span>
         </div>
       </div>
-      <div className="dark:text-cs_light mt-8 rounded-xl border-[1px] border-cs_semi_green p-4">
+      <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
         <b>Thời gian: </b>
         <div className="mt-2 flex items-center gap-4">
           <b>Từ: </b> <div className="rounded border-[1px] border-cs_semi_green px-6 py-2">12/12/2023</div>

@@ -24,7 +24,8 @@ export default function Scan() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center bg-cs_light">
+      <h1 className="text-center text-[40px] font-bold">Vui lòng quét vé của bạn</h1>
       <div className="h-[40rem] w-[40rem] overflow-hidden rounded-lg border-4 border-cs_semi_green">
         <QrScanner
           onDecode={(result) => handleScan(result)}

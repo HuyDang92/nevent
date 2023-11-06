@@ -138,29 +138,44 @@ const EventManage = () => {
                       <Button mode="dark" value={<Iconfy className="text-2xl" icon="formkit:people" />} />
                     </div>
                     <div className="flex items-center justify-between bg-cs_semi_green p-4">
-                      <Link to={`/manage-event/statistics/${event._id}`} className="flex items-center text-cs_light">
-                        <Iconfy icon="mdi:chart-line" />
-                        <span>Thống kê</span>
+                      <Link
+                        to={`/manage-event/statistics/${event._id}`}
+                        className="flex items-center gap-2 text-cs_light"
+                      >
+                        <Iconfy icon="mdi:chart-line" /> <span>Thống kê</span>
                       </Link>
                       <div className="flex items-center text-cs_light">
-                        <Iconfy icon="material-symbols:person-outline" />
-                        <span>Quản lý RSVPs</span>
+                        <Link to={`/manage-event/rsvps/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                          <Iconfy icon="material-symbols:person-outline" />
+                          <span>Quản lý RSVPs</span>
+                        </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Iconfy icon="mdi:bell" />
-                        <span>Khuyến khích</span>
+                        <Link to={`/manage-event/pr/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                          <Iconfy icon="mdi:bell" />
+                          <span>Quảng bá</span>
+                        </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Iconfy icon="solar:card-broken" />
-                        <span>Mã giảm giá</span>
+                        <Link
+                          to={`/manage-event/discount/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
+                          <Iconfy icon="solar:card-broken" />
+                          <span>Mã giảm giá</span>
+                        </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Iconfy icon="bxs:message-square-edit" />
-                        <span>Chỉnh sửa</span>
+                        <Link to={`/manage-event/edit/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                          <Iconfy icon="bxs:message-square-edit" />
+                          <span>Chỉnh sửa</span>
+                        </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Iconfy icon="mingcute:copy-fill" />
-                        <span>Nhân rộng</span>
+                        <Link to={`/manage-event/copy/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                          <Iconfy icon="mingcute:copy-fill" />
+                          <span>Nhân rộng</span>
+                        </Link>
                       </div>
                     </div>
                   </div>

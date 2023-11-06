@@ -27,6 +27,7 @@ import PassTicket from '~/pages/Auth/PassTicket';
 import ManageEventLayout from '~/Layout/ManageEventLayout';
 import Statistics from '~/pages/ManageEvent/Statistics';
 import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
+import Pr from '~/pages/ManageEvent/Pr';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -79,14 +80,14 @@ export default function AppRoutes() {
           <Route path="/manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
             <Route path="rsvps/:idEvent" element={<RsvpsManage />} />
-            <Route path="pr/:idEvent" element={<RsvpsManage />} />
+            <Route path="pr/:idEvent" element={<Pr />} />
             <Route path="discount/:idEvent" element={<RsvpsManage />} />
           </Route>
         </Route>
 
         {/* Scan ticket */}
         <Route element={<PrivateRoute allowedRoles={['user']} />}>
-          <Route element={<DefaultLayout />}>
+          <Route element={<ManageEventLayout />}>
             <Route path="/scan-ticket" element={<Scan />} />
           </Route>
         </Route>

@@ -4,7 +4,7 @@ import RecommendCard from '~/components/customs/RecommendCard';
 import Organization from './components/Organization';
 import Person from './components/Person';
 const OrganizationProfile = () => {
-  const [selectedValue, setSelectedValue] = useState('organization');
+  const [selectedValue, setSelectedValue] = useState<string>('organization');
 
   const handleChange = (event: any) => {
     setSelectedValue(event.target.value);
