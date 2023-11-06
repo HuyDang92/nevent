@@ -21,8 +21,8 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const { searchValue } = useDebounce(value, 500);
   const ref = useRef(null);
 
-  const [listHistory, setListHistory] = useState<string[]>([])
-  const searchHistory = localStorage.getItem('search-history')
+  const [listHistory, setListHistory] = useState<string[]>([]);
+  const searchHistory = localStorage.getItem('search-history');
 
   useClickOutside(ref, () => {
     setValue('');
@@ -59,24 +59,25 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const handleRemoveHistory = (item: string) => () => {
     if (searchHistory !== null) {
       const history = JSON.parse(searchHistory);
-      const newHistory = history.filter((i: string) => i !== item)
+      const newHistory = history.filter((i: string) => i !== item);
       localStorage.setItem('search-history', JSON.stringify(newHistory));
-      setListHistory(newHistory)
+      setListHistory(newHistory);
     }
-  }
-
+  };
 
   return (
     <div className="relative">
       <div
-        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${size === 'lg' && 'w-[640px]'
-          }  ${className}`}
+        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${
+          size === 'lg' && 'w-[640px]'
+        }  ${className}`}
       >
         <form onSubmit={handleSubmit}>
           <input
             placeholder="Tìm kiếm sự kiện..."
-            className={` ${size === 'md' && 'h-10'} ${size === 'lg' && 'h-14'
-              }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light ${classNameInput}`}
+            className={` ${size === 'md' && 'h-10'} ${
+              size === 'lg' && 'h-14'
+            }  w-full rounded-xl px-5 py-3.5 text-sm font-medium  focus:placeholder-cs_blur_black focus:outline-none dark:bg-cs_formDark dark:text-cs_light dark:focus:placeholder-cs_light ${classNameInput}`}
             type="text"
             value={value}
             onChange={handleSearch}
@@ -89,8 +90,9 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
       </div>
       <div
         ref={ref}
-        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${value === '' ? 'h-0 ' : 'max-h-60 border p-3'
-          }  space-y-2 shadow-border-full transition-all`}
+        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${
+          value === '' ? 'h-0 ' : 'max-h-60 border p-3'
+        }  space-y-2 shadow-border-full transition-all`}
       >
         <div className="flex items-center gap-3 text-cs_gray">
           {result.isFetching ? (
@@ -117,8 +119,8 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
                 <p className="flex gap-2 pt-1 text-xs text-cs_grayText">
                   <span className="flex items-center gap-1">
                     <Icon name="location-outline" />
-                    {event?.location}
-                  </span>
+                    {event?.location?.name}
+                </span>
                   <span className="flex items-center gap-1">
                     <Icon name="time-outline" />
                     {moment(event?.start_date).format('DD/MM/YYYY')}
@@ -127,28 +129,32 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
               </div>
             </Link>
           ))}
-        <div className='text-sm text-cs_grayText w-full py-2 flex gap-2 items-center border-[#f0f0f0] border-t '>
-          {
-            searchHistory !== null ? (
-              JSON.parse(searchHistory).length > 0 ? JSON.parse(searchHistory).map((item: string, index: number) => (
-                <div key={index} className='bg-[#f5f5f5] flex items-center gap-3 hover:bg-[#e5e5e5] duration-150 text-[#9b9b9b] text-[16px] px-[10px] py-[5px] rounded-lg'>
-                  <button className='flex justify-center items-center'
+        <div className="flex w-full items-center gap-2 border-t border-[#f0f0f0] py-2 text-sm text-cs_grayText ">
+          {searchHistory !== null ? (
+            JSON.parse(searchHistory).length > 0 ? (
+              JSON.parse(searchHistory).map((item: string, index: number) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 rounded-lg bg-[#f5f5f5] px-[10px] py-[5px] text-[16px] text-[#9b9b9b] duration-150 hover:bg-[#e5e5e5]"
+                >
+                  <button
+                    className="flex items-center justify-center"
                     onClick={() => {
                       navigate(`/event-categories/${item}`);
                       setValue('');
                     }}
-                  >{item}</button>
-                  <button className='flex justify-center items-center' onClick={handleRemoveHistory(item)}>
-                    <IonIcon name='close-outline' className='text-[#9b9b9b] text-[16px]' />
+                  >
+                    {item}
+                  </button>
+                  <button className="flex items-center justify-center" onClick={handleRemoveHistory(item)}>
+                    <IonIcon name="close-outline" className="text-[16px] text-[#9b9b9b]" />
                   </button>
                 </div>
-              )) : (
-                <i className='text-[14px] underline text-[#9b9b9b]'>Không có lịch sử tìm kiếm</i>
-
-              )
-            ) : null
-          }
-
+              ))
+            ) : (
+              <i className="text-[14px] text-[#9b9b9b] underline">Không có lịch sử tìm kiếm</i>
+            )
+          ) : null}
         </div>
       </div>
     </div>

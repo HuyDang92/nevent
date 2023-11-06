@@ -4,32 +4,37 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
+import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
 import View from '~/motion/View';
 
 const data = [
   {
     id: 1,
-    thumbnail: 'https://images.pexels.com/photos/13073249/pexels-photo-13073249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    thumbnail:
+      'https://images.pexels.com/photos/13073249/pexels-photo-13073249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     title: 'PEPSI presents RAVOLUTION Music Festival (RAVO-X Edition)',
-    time: 'Sunday, 03 December 2023 (03:00 PM - 11:00 PM)'
+    time: 'Sunday, 03 December 2023 (03:00 PM - 11:00 PM)',
   },
   {
     id: 2,
-    thumbnail: 'https://images.pexels.com/photos/3563172/pexels-photo-3563172.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    thumbnail:
+      'https://images.pexels.com/photos/3563172/pexels-photo-3563172.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     title: '[Bến Thành] MINISHOW KIỀU OANH | NGÀY MAI NGƯỜI TA LẤY CHỒNG Special guest: Quân Lee - Thành Đạt',
-    time: 'Tuesday, 07 November 2023 (08:00 PM - 10:30 PM)'
+    time: 'Tuesday, 07 November 2023 (08:00 PM - 10:30 PM)',
   },
   {
     id: 3,
-    thumbnail: 'https://images.pexels.com/photos/1652361/pexels-photo-1652361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    thumbnail:
+      'https://images.pexels.com/photos/1652361/pexels-photo-1652361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     title: 'FAN CONCERT MR. SIRO - CHẲNG AI ĐẾN THẾ GIỚI NÀY ĐỂ CÔ ĐƠN',
-    time: 'Wednesday, 22 November 2023 (06:00 PM - 10:00 PM) + 1 more'
+    time: 'Wednesday, 22 November 2023 (06:00 PM - 10:00 PM) + 1 more',
   },
   {
     id: 4,
-    thumbnail: 'https://images.pexels.com/photos/2990830/pexels-photo-2990830.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    thumbnail:
+      'https://images.pexels.com/photos/2990830/pexels-photo-2990830.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     title: '[Bến Thành] MINISHOW ĐẠI MINH TINH | VĂN MAI HƯƠNG',
-    time: 'Wednesday, 15 November 2023 (08:00 PM - 10:30 PM)'
+    time: 'Wednesday, 15 November 2023 (08:00 PM - 10:30 PM)',
   },
 ];
 
@@ -61,6 +66,8 @@ const swipePower = (offset: number, velocity: number) => {
 
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
+  const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5 });
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const [isShowBanner, setIsShowBanner] = React.useState(0);
@@ -99,7 +106,7 @@ const Banner = () => {
     <View className="relative h-[180px] rounded-[15px] bg-white md:h-[300px] lg:mb-16 lg:h-[350px] xl:h-[60vh]">
       <AnimatePresence initial={false} custom={direction}>
         <View className=" absolute h-full w-full overflow-x-hidden rounded-xl ">
-          <View className='w-full h-full relative'>
+          <View className="relative h-full w-full">
             <motion.img
               className=" h-full w-full cursor-pointer rounded-xl object-cover "
               key={page}
@@ -126,15 +133,12 @@ const Banner = () => {
                 }
               }}
             />
-            <View className='absolute hidden lg:block duration-150 top-0 left-0 w-full h-full bg-gradient-to-r p-8 text-white from-[#0000008f] '>
-              <h1 className='text-2xl font-bold max-w-[50rem]'>
-                {data[imageIndex].title}
-              </h1>
-              <p className='text-sm'>
-                {data[imageIndex].time}
-              </p>
+            <View className="absolute left-0 top-0 hidden h-full w-full bg-gradient-to-r from-[#0000008f] p-8 text-white duration-150 lg:block ">
+              <h1 className="max-w-[50rem] text-2xl font-bold">{data[imageIndex].title}</h1>
+              <p className="text-sm">{data[imageIndex].time}</p>
               <Link to={`about`}>
-                <motion.button className='text-sm mt-8 py-2 px-6 rounded-lg font-semibold bg-[#ffffffa9] text-[#242424]'
+                <motion.button
+                  className="mt-8 rounded-lg bg-[#ffffffa9] px-6 py-2 text-sm font-semibold text-[#242424]"
                   whileTap={{ scale: 0.9 }}
                   whileHover={{ scale: 1.1 }}
                 >
@@ -150,8 +154,9 @@ const Banner = () => {
           {data.map((item, index) => {
             return (
               <img
-                className={`h-[100px] w-[200px] cursor-pointer rounded-[10px] object-cover shadow-border-full duration-100 hover:scale-105 ${index === imageIndex ? 'border-[4px] border-cs_semi_green' : ''
-                  }`}
+                className={`h-[100px] w-[200px] cursor-pointer rounded-[10px] object-cover shadow-border-full duration-100 hover:scale-105 ${
+                  index === imageIndex ? 'border-[4px] border-cs_semi_green' : ''
+                }`}
                 key={index}
                 onClick={() => {
                   setIsShowBanner(index);
