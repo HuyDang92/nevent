@@ -2,10 +2,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
-const TicketList = ({ setActiveStep }: Prop) => {
+
+const TicketList = () => {
   const ticketFormik = useFormik({
     initialValues: {
       title: '',
@@ -17,7 +15,6 @@ const TicketList = ({ setActiveStep }: Prop) => {
     onSubmit: (values) => {
       console.log(values);
       // Handle ticket form submission
-      setActiveStep(3);
     },
   });
 

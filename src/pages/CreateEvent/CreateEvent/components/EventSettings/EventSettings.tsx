@@ -4,9 +4,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Input from '~/components/customs/Input';
 import { Radio } from '~/components/customs/Radio';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
 interface IEventSettings {
   URL: string;
   privacy: string;
@@ -14,7 +11,7 @@ interface IEventSettings {
   noti: string;
   active_noti: boolean;
 }
-const EventSettings = ({ setActiveStep }: Prop) => {
+const EventSettings = () => {
   const formik = useFormik({
     initialValues: {
       URL: '',

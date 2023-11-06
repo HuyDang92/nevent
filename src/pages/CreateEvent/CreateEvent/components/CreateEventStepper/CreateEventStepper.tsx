@@ -1,17 +1,23 @@
 import { Stepper, Step, Typography } from '@material-tailwind/react';
+import { useNavigate, useParams } from 'react-router';
 import Icon from '~/components/customs/Icon';
 interface CreateEventStepperProps {
   className?: string;
-  activeStep: number;
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }
-const CreateEventStepper = ({ activeStep = 0, setActiveStep, className }: CreateEventStepperProps) => {
+const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
+  const navigate = useNavigate();
+  const { step } = useParams();
+  const activeStep = Number(step);
   return (
     <div className={`w-full px-24 py-4 ${className}`}>
       <Stepper activeStep={activeStep} activeLineClassName="bg-cs_semi_green">
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 0 : activeStep)}
-          onClick={() => setActiveStep(0)}
+          onClick={() => {
+            if (activeStep >= 1) {
+              navigate(`/create-event/0`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -24,11 +30,15 @@ const CreateEventStepper = ({ activeStep = 0, setActiveStep, className }: Create
         </Step>
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
-          onClick={() => setActiveStep(1)}
+          onClick={() => {
+            if (activeStep >= 2) {
+              navigate(`/create-event/1`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
-          <Icon name="ticket-outline" className="h-5 w-5 text-2xl" />
+          <Icon name="time-outline" className="h-5 w-5 text-2xl" />
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography variant="h6" className={`${activeStep === 1 ? '!text-cs_semi_green' : 'text-cs_label_gray'}`}>
               Thời gian sự kiện
@@ -37,7 +47,11 @@ const CreateEventStepper = ({ activeStep = 0, setActiveStep, className }: Create
         </Step>
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
-          onClick={() => setActiveStep(2)}
+          onClick={() => {
+            if (activeStep >= 3) {
+              navigate(`/create-event/2`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -50,7 +64,11 @@ const CreateEventStepper = ({ activeStep = 0, setActiveStep, className }: Create
         </Step>
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 2 : activeStep)}
-          onClick={() => setActiveStep(3)}
+          onClick={() => {
+            if (activeStep >= 4) {
+              navigate(`/create-event/3`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
@@ -63,7 +81,11 @@ const CreateEventStepper = ({ activeStep = 0, setActiveStep, className }: Create
         </Step>
         <Step
           //  onClick={() => setActiveStep(activeStep >= 1 ? 3 : activeStep)}
-          onClick={() => setActiveStep(4)}
+          onClick={() => {
+            if (activeStep >= 5) {
+              navigate(`/create-event/4`);
+            }
+          }}
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >

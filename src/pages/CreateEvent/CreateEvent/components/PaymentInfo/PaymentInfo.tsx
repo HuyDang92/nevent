@@ -3,9 +3,7 @@ import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
+
 interface IPaymentInfo {
   owner: string;
   account_num: string;
@@ -14,7 +12,7 @@ interface IPaymentInfo {
   VAT: boolean;
 }
 
-const PaymentInfo = ({ setActiveStep }: Prop) => {
+const PaymentInfo = () => {
   const formik = useFormik({
     initialValues: {
       owner: '',
@@ -32,7 +30,6 @@ const PaymentInfo = ({ setActiveStep }: Prop) => {
     }),
     onSubmit: async (value: IPaymentInfo) => {
       console.log(value);
-      setActiveStep(1);
     },
   });
   return (

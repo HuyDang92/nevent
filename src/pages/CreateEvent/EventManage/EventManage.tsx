@@ -91,7 +91,7 @@ const EventManage = () => {
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[60%]">
-            <Link to="/create-event" className="">
+            <Link to="/create-event/0" className="">
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
@@ -103,7 +103,7 @@ const EventManage = () => {
               {eventList &&
                 eventList.map((event) => (
                   <div className="my-4 rounded-xl border-[1px] border-cs_semi_green p-7" key={event._id}>
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="mb-4 flex items-start justify-between">
                       <div className="flex gap-4">
                         <img className="h-[110px] w-[110px]" src={event.banner[0].url} alt="" />
                         <div className="text-[14px] text-cs_grayText dark:text-cs_light">
@@ -164,7 +164,7 @@ const EventManage = () => {
                           <span>Nhân rộng</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-4 dark:text-cs_light shadow-border-full">
+                      <div className="flex items-center justify-between p-4 shadow-border-full dark:text-cs_light">
                         <span>data</span>
                         <span>data</span>
                         <span>data</span>

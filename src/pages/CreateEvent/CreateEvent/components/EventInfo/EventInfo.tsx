@@ -8,9 +8,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import banner3 from '~/assets/images/banner3.jpg';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
-interface Prop {
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
+import { useNavigate } from 'react-router';
 
 interface IEventInfo {
   banner: string;
@@ -27,9 +25,10 @@ interface IEventInfo {
   // organization_email: string;
   // organization_img: string;
 }
-const EventInfo = ({ setActiveStep }: Prop) => {
+const EventInfo = () => {
   const { data: categories } = useGetAllCategoryQuery();
   const { upLoad, loading } = useUploadFile();
+  const navigate = useNavigate();
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
@@ -75,6 +74,7 @@ const EventInfo = ({ setActiveStep }: Prop) => {
       console.log(value);
       const bannerId = await upLoad(value.file!);
       value.banner = bannerId;
+      navigate(`/create-event/1`);
       // setActiveStep(1);
     },
   });

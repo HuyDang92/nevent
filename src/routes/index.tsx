@@ -71,9 +71,7 @@ export default function AppRoutes() {
           <Route element={<CreateEventLayout />}>
             <Route path="/organization-profile" element={<OrganizationProfile />} />
             <Route path="/event-manage" element={<EventManage />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/create-event2/" element={<Categories />} />
-            <Route path="/create-event3/" element={<Categories />} />
+            <Route path="/create-event/:step" element={<CreateEvent />} />
           </Route>
         </Route>
 
