@@ -95,7 +95,7 @@ const EventManage = () => {
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
-            <SearchBar className="mt-4 w-full" classNameInput=" !rounded-full" />
+            <SearchBar className="mt-4 w-full" classNameInput=" !rounded-full shadow-border-light" />
             <div className="mt-8">
               {!eventList && (
                 <p className="text-center font-semibold text-cs_gray underline">Bạn chưa có sự kiện nào!</p>

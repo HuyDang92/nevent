@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
 import { useState } from 'react';
-import banner3 from '~/assets/images/banner3.jpg';
+// import banner3 from '~/assets/images/banner3.jpg';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { useNavigate } from 'react-router';
 
@@ -15,7 +15,6 @@ interface IEventInfo {
   logo: string;
   name: string;
   location: string;
-  address: string;
   category: string;
   description: string;
   file: null | File;
@@ -40,7 +39,6 @@ const EventInfo = () => {
       logo: '',
       name: '',
       location: '',
-      address: '',
       category: '',
       description: '',
       file: null,
@@ -55,7 +53,6 @@ const EventInfo = () => {
       // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
       file: Yup.mixed()
@@ -152,22 +149,6 @@ const EventInfo = () => {
                 classNameLabel="!text-cs_label_gray !text-sm"
                 classNameInput="!w-full"
                 value={formik.values.name}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
-              {formik.errors.address && (
-                <small className="absolute left-[130px] top-[9px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.address}
-                </small>
-              )}
-              <Input
-                name="address"
-                id="address"
-                label="Địa điểm sự kiện"
-                classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!w-full"
-                value={formik.values.address}
                 onChange={formik.handleChange}
               />
             </div>
