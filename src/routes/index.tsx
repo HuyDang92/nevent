@@ -71,13 +71,13 @@ export default function AppRoutes() {
         </Route>
 
         {/* Tạo sự kiện */}
-        <Route>
+        <Route path="/organization" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<CreateEventLayout />}>
-            <Route path="/organization-profile" element={<OrganizationProfile />} />
-            <Route path="/event-list" element={<EventManage />} />
-            <Route path="/create-event/:step" element={<CreateEvent />} />
+            <Route path="profile" element={<OrganizationProfile />} />
+            <Route path="event-list" element={<EventManage />} />
+            <Route path="create-event/:step" element={<CreateEvent />} />
           </Route>
-          <Route path="/manage-event" element={<ManageEventLayout />}>
+          <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
             <Route path="rsvps/:idEvent" element={<RsvpsManage />} />
             <Route path="pr/:idEvent" element={<Pr />} />
