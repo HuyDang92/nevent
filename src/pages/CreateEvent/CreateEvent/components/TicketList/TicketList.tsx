@@ -3,16 +3,51 @@ import * as Yup from 'yup';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
 
+interface TicketListInfo {
+  title: string;
+  quantity: number;
+  color: string;
+  type: string;
+  price: number;
+  description: string;
+  min: number;
+  max: number;
+  free: boolean;
+  beginDate: string;
+  beginTime: string;
+  endDate: string;
+  endTime: string;
+}
+
 const TicketList = () => {
-  const ticketFormik = useFormik({
+  const formik = useFormik({
     initialValues: {
       title: '',
       quantity: 0,
-      color: '',
+      type: '',
+      color: '#13C6B3',
       price: 0,
       description: '',
+      min: 0,
+      max: 5,
+      free: false,
+      beginDate: '',
+      beginTime: '',
+      endDate: '',
+      endTime: '23:59',
     },
-    onSubmit: (values) => {
+    validationSchema: Yup.object({
+      title: Yup.string().required('Tên loại vé không được bỏ trống'),
+      type: Yup.string().required('Loại vé không được bỏ trống'),
+      price: Yup.number().required('Giá vé không được bỏ trống'),
+      quantity: Yup.number().moreThan(0, 'SL vé phải lớn hơn 0').required('SL vé không được bỏ trống'),
+      free: Yup.boolean(),
+      beginDate: Yup.string().required('Không được bỏ trống'),
+      beginTime: Yup.string().required('Không được bỏ trống'),
+      endDate: Yup.string().required('Không được bỏ trống'),
+      endTime: Yup.string().required('Không được bỏ trống'),
+    }),
+    onSubmit: (values: TicketListInfo) => {
       console.log(values);
       // Handle ticket form submission
     },
@@ -21,17 +56,40 @@ const TicketList = () => {
   return (
     <form
       className="rounded-lg bg-cs_light_gray p-5 dark:bg-cs_semiDark dark:shadow-border-full"
-      onSubmit={ticketFormik.handleSubmit}
+      onSubmit={formik.handleSubmit}
     >
       <div className="flex flex-col gap-[18px]">
         <div className="w-full">
           <span className="dark:text-gray-400">Tên loại vé</span>
-          <Input
-            classNameInput="w-full border-2 dark:border-none"
-            name="title"
-            value={ticketFormik.values.title}
-            onChange={ticketFormik.handleChange}
-          />
+          <div className="relative">
+            {formik.errors.title && (
+              <small className="absolute -top-[20px] left-[90px] z-10 px-2 text-[12px] text-red-600">
+                {formik.errors.title}
+              </small>
+            )}
+            <Input
+              classNameInput="w-full border-2 dark:border-none"
+              name="title"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+            />
+          </div>
+        </div>
+        <div className="w-full">
+          <span className="dark:text-gray-400">Loại vé</span>
+          <div className="relative">
+            {formik.errors.type && (
+              <small className="absolute -top-[20px] left-[65px] z-10 px-2 text-[12px] text-red-600">
+                {formik.errors.type}
+              </small>
+            )}
+            <Input
+              classNameInput="w-full border-2 dark:border-none"
+              name="type"
+              value={formik.values.type}
+              onChange={formik.handleChange}
+            />
+          </div>
         </div>
         <div className="flex h-[140px] rounded-xl border-[1px] border-[#e8e8e8] bg-cs_light p-5 dark:border-none dark:bg-[#30302f]">
           <div className="flex w-1/4 flex-col justify-between px-3">
@@ -42,44 +100,122 @@ const TicketList = () => {
                 Vé miễn phí
               </label>
             </div>
-            <Input
-              type="number"
-              name="price"
-              value={ticketFormik.values.price}
-              onChange={ticketFormik.handleChange}
-              classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
-            />
+            <div className="relative">
+              {formik.errors.price && (
+                <small className="absolute -bottom-[20px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.price}
+                </small>
+              )}
+              <Input
+                type="number"
+                name="price"
+                value={formik.values.price}
+                onChange={formik.handleChange}
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+              />
+            </div>
           </div>
           <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
             <span className="dark:text-gray-400">Tổng số lượng vé</span>
-            <Input
-              type="number"
-              name="quantity"
-              value={ticketFormik.values.quantity}
-              onChange={ticketFormik.handleChange}
-              classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
-            />
+            <div className="relative">
+              {formik.errors.quantity && (
+                <small className="absolute -top-[20px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.quantity}
+                </small>
+              )}
+              <Input
+                type="number"
+                name="quantity"
+                value={formik.values.quantity}
+                onChange={formik.handleChange}
+                classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+              />
+            </div>
           </div>
           <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
             <span className="dark:text-gray-400">Số lượng vé tối thiểu cho một lần mua</span>
-            <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
+            <Input
+              classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+              type="number"
+              name="min"
+              value={formik.values.min}
+              onChange={formik.handleChange}
+            />
           </div>
           <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
             <span className="dark:text-gray-400">Số lượng vé tối đa cho một lần mua</span>
-            <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
+            <Input
+              classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+              type="number"
+              name="max"
+              value={formik.values.max}
+              onChange={formik.handleChange}
+            />
           </div>
         </div>
         <div className="flex">
           <div className="w-2/3 border-r-[1px] border-[#CDC0C0] pr-6">
             <div className="mb-[18px] flex items-center justify-between">
               <span className="dark:text-gray-400">Ngày bắt đầu bán vé: </span>
-              <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
-              <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
+              <div className="relative">
+                {formik.errors.beginDate && (
+                  <small className="absolute -top-[18px] z-10 px-2 text-[12px] text-red-600">
+                    {formik.errors.beginDate}
+                  </small>
+                )}
+                <Input
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                  type="date"
+                  name="beginDate"
+                  value={formik.values.beginDate}
+                  onChange={formik.handleChange}
+                />
+              </div>
+              <div className="relative w-[150px]">
+                {formik.errors.beginTime && (
+                  <small className="absolute -top-[18px] z-10 px-2 text-[12px] text-red-600">
+                    {formik.errors.beginTime}
+                  </small>
+                )}
+                <Input
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2"
+                  type="time"
+                  name="beginTime"
+                  value={formik.values.beginTime}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <span className="dark:text-gray-400">Ngày kết thúc bán vé: </span>
-              <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none" />
-              <Input classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2" />
+              <div className="relative">
+                {formik.errors.endDate && (
+                  <small className="absolute -top-[18px] z-10 px-2 text-[12px] text-red-600">
+                    {formik.errors.endDate}
+                  </small>
+                )}
+                <Input
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                  type="date"
+                  name="endDate"
+                  value={formik.values.endDate}
+                  onChange={formik.handleChange}
+                />
+              </div>
+              <div className="relative w-[150px]">
+                {formik.errors.endTime && (
+                  <small className="absolute -top-[18px] z-10 px-2 text-[12px] text-red-600">
+                    {formik.errors.endTime}
+                  </small>
+                )}
+                <Input
+                  classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none ml-2"
+                  type="time"
+                  name="endTime"
+                  value={formik.values.endTime}
+                  onChange={formik.handleChange}
+                />
+              </div>
             </div>
           </div>
           <div className="flex w-1/3 flex-col gap-3 px-6">
@@ -91,9 +227,8 @@ const TicketList = () => {
           <textarea
             name=""
             placeholder="Mô tả loại vé"
-            className="h-[100px] w-2/3 rounded-xl p-4 focus:outline-none dark:bg-cs_formDark"
+            className="h-[100px] w-full rounded-xl p-4 focus:outline-none dark:bg-cs_formDark"
           ></textarea>
-          <div className="w-1/3 rounded-xl bg-cs_light dark:bg-cs_formDark"></div>
         </div>
         <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
       </div>

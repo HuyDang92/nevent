@@ -59,8 +59,12 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                     exit={{ opacity: 0, y: -5, height: 0 }}
                     className="hidden justify-between text-[14px] font-normal dark:text-cs_light sm:flex"
                   >
-                    <span className="cursor-pointer font-semibold">Chi tiết</span>
-                    <span className="cursor-pointer font-semibold">Đặt vé</span>
+                    <Link to={`/event-detail/${data?._id}`}>
+                      <span className="cursor-pointer font-semibold">Chi tiết</span>
+                    </Link>
+                    <Link to={`/user/payment/${data?._id}/0`}>
+                      <span className="cursor-pointer font-semibold">Đặt vé</span>
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>
