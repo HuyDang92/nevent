@@ -3,9 +3,10 @@ import Dropdown from '~/components/Dropdown';
 import RecommendCard from '~/components/customs/RecommendCard';
 import Organization from './components/Organization';
 import Person from './components/Person';
+import { useAppSelector } from '~/hooks/useActionRedux';
 const OrganizationProfile = () => {
   const [selectedValue, setSelectedValue] = useState<string>('organization');
-
+  const auth = useAppSelector((state) => state.auth);
   const handleChange = (event: any) => {
     setSelectedValue(event.target.value);
   };
@@ -13,7 +14,9 @@ const OrganizationProfile = () => {
     <>
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-bold dark:text-white">Đăng ký tổ chức</h1>
+          <h1 className="text-2xl font-bold dark:text-white">
+            {auth.currentUser?.role.name === 'user' ? 'Đăng ký tổ chức' : 'Hồ số tổ chức'}
+          </h1>
           <Dropdown />
         </div>
         <div className="mt-2 flex justify-between">

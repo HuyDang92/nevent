@@ -2,37 +2,41 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
+import { useAppSelector } from '~/hooks/useActionRedux';
 
 interface IPersonInfo {
   name: string;
-  TNCN: string; //Mã số thuế cá nhân
+  taxCode: string; //Mã số thuế cá nhân
   description: string;
   tel: string;
   email: string;
-  CCCD: string;
+  cccd: string;
   city: string;
   district: string;
   road: string;
   address: string;
 }
 const Person = () => {
+  const auth = useAppSelector((state) => state.auth);
+  const location = auth?.currentUser?.address?.split(',');
+  const [address, road, district, city] = location ?? [];
   const formik = useFormik({
     initialValues: {
-      name: '',
-      TNCN: '', //Mã số thuế cá nhân
-      CCCD: '',
+      name: auth?.currentUser?.fullName ?? '',
+      taxCode: '', //Mã số thuế cá nhân
+      cccd: '',
       description: '',
-      tel: '',
-      email: '',
-      city: '',
-      district: '',
-      road: '',
-      address: '',
+      tel: auth?.currentUser?.phone ?? '',
+      email: auth?.currentUser?.email ?? '',
+      city: city,
+      district: district,
+      road: road,
+      address: address,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Tên tổ chức không được bỏ trống'),
-      TNCN: Yup.string().required('TNCN không được bỏ trống'),
-      CCCD: Yup.string().required('Căn cước công dân không được bỏ trống'),
+      taxCode: Yup.string().required('TNCN không được bỏ trống'),
+      cccd: Yup.string().required('Căn cước công dân không được bỏ trống'),
       description: Yup.string().required('Giới thiệu cá nhân không được bỏ trống'),
       tel: Yup.string().required('Số điện thoại không được bỏ trống'),
       email: Yup.string()
@@ -44,7 +48,17 @@ const Person = () => {
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
     }),
     onSubmit: async (value: IPersonInfo) => {
-      console.log(value);
+      console.log({
+        user: auth?.currentUser?._id,
+        type: 'person',
+        address: `${value.address}, ${value.road}, ${value.district}, ${value.city}`,
+        cccd: value.cccd,
+        taxCode: value.taxCode,
+        name: value.name,
+        description: value.description,
+        tel: value.tel,
+        email: value.email,
+      });
     },
   });
   return (
@@ -70,18 +84,18 @@ const Person = () => {
               />
             </div>
             <div className="relative">
-              {formik.errors.TNCN && (
+              {formik.errors.taxCode && (
                 <small className="absolute left-[205px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.TNCN}
+                  {formik.errors.taxCode}
                 </small>
               )}
               <Input
-                name="TNCN"
-                id="TNCN"
+                name="taxCode"
+                id="taxCode"
                 label="Mã số thuế cá nhân (TNCN)"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.TNCN}
+                value={formik.values.taxCode}
                 onChange={formik.handleChange}
               />
             </div>
@@ -119,18 +133,18 @@ const Person = () => {
               />
             </div>
             <div className="relative">
-              {formik.errors.CCCD && (
+              {formik.errors.cccd && (
                 <small className="absolute left-[105px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.CCCD}
+                  {formik.errors.cccd}
                 </small>
               )}
               <Input
-                name="CCCD"
-                id="CCCD"
+                name="cccd"
+                id="cccd"
                 label="CMND/CCCD"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.CCCD}
+                value={formik.values.cccd}
                 onChange={formik.handleChange}
               />
             </div>

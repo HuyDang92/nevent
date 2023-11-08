@@ -10,7 +10,7 @@ type CreateEventSidebarProps = {
 const cateList = [
   {
     name: 'Hồ sơ tổ chức',
-    link: '/organization/profile',
+    link: '/user/organization-profile',
   },
   {
     name: 'Tạo sự kiện',

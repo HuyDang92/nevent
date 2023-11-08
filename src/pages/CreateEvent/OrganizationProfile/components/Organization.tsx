@@ -2,6 +2,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { useUpdateBusinessMutation } from '~/features/Business/business.service';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
+import { setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useEffect } from 'react';
 
 interface IOrganizationInfo {
   organization_name: string;
@@ -10,28 +15,43 @@ interface IOrganizationInfo {
   releasePlace: string;
   releaseDate: string;
   description: string;
-  tel: string;
+  phone: string;
   email: string;
   city: string;
   district: string;
   road: string;
   address: string;
+  cccd: string;
+  taxCode: string;
 }
 const Organization = () => {
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((state) => state.auth);
+  const businessInfo = useAppSelector((state) => state.business.businessInfo);
+  const location = businessInfo?.address?.split(',');
+  const [address, road, district, city] = location ?? [];
+  const [updateBusiness, result] = useUpdateBusinessMutation();
+  // useEffect(() => {
+  //   if(auth.currentUser?.role.name === 'business'){
+
+  //   }
+  // },[])
   const formik = useFormik({
     initialValues: {
-      organization_name: '',
-      name: '',
-      CRN: '',
-      releasePlace: '',
-      releaseDate: '',
-      description: '',
-      tel: '',
-      email: '',
-      city: '',
-      district: '',
-      road: '',
-      address: '',
+      organization_name: businessInfo?.organization_name ?? '',
+      name: businessInfo?.name ?? '',
+      CRN: businessInfo?.crn ?? '',
+      releasePlace: businessInfo?.dateOfIssue ?? '',
+      releaseDate: businessInfo?.placeOfIssue ?? '',
+      description: businessInfo?.description ?? '',
+      phone: businessInfo?.phone ?? '',
+      email: businessInfo?.email ?? '',
+      city: city,
+      district: district,
+      road: road,
+      address: address,
+      cccd: businessInfo?.cccd ?? '',
+      taxCode: businessInfo?.taxCode ?? '',
     },
     validationSchema: Yup.object({
       organization_name: Yup.string().required('Tên ban tổ chức không được bỏ trống'),
@@ -40,7 +60,7 @@ const Organization = () => {
       description: Yup.string().required('Giới thiệu ban tổ chức không được bỏ trống'),
       releasePlace: Yup.string().required('Nơi phát hành không được bỏ trống'),
       releaseDate: Yup.string().required('Ngày phát hành không được bỏ trống'),
-      tel: Yup.string().required('Số điện thoại không được bỏ trống'),
+      phone: Yup.string().required('Số điện thoại không được bỏ trống'),
       email: Yup.string()
         .required('Email không được bỏ trống')
         .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
@@ -48,9 +68,26 @@ const Organization = () => {
       district: Yup.string().required('Huyện không được bỏ trống'),
       road: Yup.string().required('Phường không được bỏ trống'),
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
+      cccd: Yup.string().required('Căn cước công dân không được bỏ trống'),
+      taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
-      console.log(value);
+      await updateBusiness({
+        type: 'business',
+        address: `${value.address}, ${value.road}, ${value.district}, ${value.city}`,
+        cccd: value.cccd,
+        crn: value.CRN,
+        dateOfIssue: value.releaseDate,
+        name: value.name,
+        placeOfIssue: value.releasePlace,
+        taxCode: value.taxCode,
+        organization_name: value.organization_name,
+        description: value.description,
+        phone: value.phone,
+        email: value.email,
+      });
+      // dispatch(setAuthCurrentUser(result?.data?.data?.doc?.user));
+      dispatch(setBusinessInfo(result?.data?.data?.doc));
     },
   });
   return (
@@ -124,6 +161,38 @@ const Organization = () => {
               />
             </div>
             <div className="relative">
+              {formik.errors.cccd && (
+                <small className="absolute left-[150px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.cccd}
+                </small>
+              )}
+              <Input
+                name="cccd"
+                id="cccd"
+                label="Căn cước công dân"
+                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
+                classNameInput=" !w-full dark:text-white"
+                value={formik.values.cccd}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
+              {formik.errors.taxCode && (
+                <small className="absolute left-[95px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.taxCode}
+                </small>
+              )}
+              <Input
+                name="taxCode"
+                id="taxCode"
+                label="Mã số thuế"
+                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
+                classNameInput=" !w-full dark:text-white"
+                value={formik.values.taxCode}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="relative">
               {formik.errors.releaseDate && (
                 <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.releaseDate}
@@ -163,18 +232,18 @@ const Organization = () => {
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin liên lạc</h2>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="relative">
-              {formik.errors.tel && (
+              {formik.errors.phone && (
                 <small className="absolute left-[100px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.tel}
+                  {formik.errors.phone}
                 </small>
               )}
               <Input
-                name="tel"
-                id="tel"
+                name="phone"
+                id="phone"
                 label="Số điện thoại"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.tel}
+                value={formik.values.phone}
                 onChange={formik.handleChange}
               />
             </div>
@@ -212,14 +281,14 @@ const Organization = () => {
             </div>
             <div className="relative">
               {formik.errors.district && (
-                <small className="absolute left-[60px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[100px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.district}
                 </small>
               )}
               <Input
                 name="district"
                 id="district"
-                label="Huyện"
+                label="Quận/Huyện"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
                 value={formik.values.district}
@@ -228,14 +297,14 @@ const Organization = () => {
             </div>
             <div className="relative">
               {formik.errors.road && (
-                <small className="absolute left-[70px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[90px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.road}
                 </small>
               )}
               <Input
                 name="road"
                 id="road"
-                label="Phường"
+                label="Phường/Xã"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
                 value={formik.values.road}

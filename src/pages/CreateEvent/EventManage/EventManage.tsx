@@ -91,7 +91,7 @@ const EventManage = () => {
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[72%]">
-            <Link to="/create-event/0" className="">
+            <Link to="/organization/create-event/0" className="">
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
@@ -139,26 +139,32 @@ const EventManage = () => {
                     </div>
                     <div className="flex items-center justify-between bg-cs_semi_green p-4">
                       <Link
-                        to={`/manage-event/statistics/${event._id}`}
+                        to={`/organization/manage-event/statistics/${event._id}`}
                         className="flex items-center gap-2 text-cs_light"
                       >
                         <Iconfy icon="mdi:chart-line" /> <span>Thống kê</span>
                       </Link>
                       <div className="flex items-center text-cs_light">
-                        <Link to={`/manage-event/rsvps/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/rsvps/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="material-symbols:person-outline" />
                           <span>Quản lý RSVPs</span>
                         </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Link to={`/manage-event/pr/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/pr/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="mdi:bell" />
                           <span>Quảng bá</span>
                         </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
                         <Link
-                          to={`/manage-event/discount/${event._id}`}
+                          to={`/organization/manage-event/discount/${event._id}`}
                           className="flex items-center gap-2 text-cs_light"
                         >
                           <Iconfy icon="solar:card-broken" />
@@ -166,13 +172,19 @@ const EventManage = () => {
                         </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Link to={`/manage-event/edit/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/edit/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="bxs:message-square-edit" />
                           <span>Chỉnh sửa</span>
                         </Link>
                       </div>
                       <div className="flex items-center text-cs_light">
-                        <Link to={`/manage-event/copy/${event._id}`} className="flex items-center gap-2 text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/copy/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="mingcute:copy-fill" />
                           <span>Nhân rộng</span>
                         </Link>

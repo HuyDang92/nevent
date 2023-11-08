@@ -31,7 +31,6 @@ import Pr from '~/pages/ManageEvent/Pr';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
-
   return (
     <>
       <Routes>
@@ -62,18 +61,19 @@ export default function AppRoutes() {
         </Route>
 
         {/* user */}
-        <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
+        <Route path="/user" element={<PrivateRoute allowedRoles={['user', 'business']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile/:tab" element={<Profile />} />
             <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
-        </Route>
-
-        {/* Tạo sự kiện */}
-        <Route path="/organization" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<CreateEventLayout />}>
-            <Route path="profile" element={<OrganizationProfile />} />
+            <Route path="organization-profile" element={<OrganizationProfile />} />
+          </Route>
+        </Route>
+        {/* Tạo sự kiện */}
+        <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
+          <Route element={<CreateEventLayout />}>
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
           </Route>
