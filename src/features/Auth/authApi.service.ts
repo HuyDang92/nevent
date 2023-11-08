@@ -46,9 +46,19 @@ export const authApi = createApi({
         body: body,
       }),
     }),
-    changePassword: builder.mutation({
+    forgotPassWord: builder.mutation({
       query: (body) => ({
         url: '/api/users/forgot-password',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/change-password',
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -74,4 +84,5 @@ export const {
   useLogInGoogleMutation,
   useUpdateProfileMutation,
   useChangePasswordMutation,
+  useForgotPassWordMutation,
 } = authApi;

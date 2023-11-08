@@ -40,11 +40,11 @@ const SearchUser = ({ className, size = 'md', classNameInput }: SearchBarProps) 
   };
 
   return (
-    <div className={`relative ${size === 'md' && 'w-[440px]'} ${
+    <div className={`relative ${size === 'md' && 'w-[340px]'} ${
       size === 'lg' && 'w-[640px]'
     }`}>
       <div
-        className={`relative inline-block ${size === 'md' && 'w-[440px]'} ${
+        className={`relative inline-block ${size === 'md' && 'w-[340px]'} ${
           size === 'lg' && 'w-[640px]'
         }  ${className}`}
       >
