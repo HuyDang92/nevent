@@ -14,7 +14,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
         <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 0 : activeStep)}
           onClick={() => {
-            if (activeStep >= 1) {
+            if (activeStep >= 1 && activeStep !== 3) {
               navigate(`/user/payment/${idEvent}/0`);
             }
           }}
@@ -22,7 +22,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
           completedClassName="!bg-cs_semi_green text-white"
         >
           <IonIcon name="person-outline" className="h-5 w-5  text-sm sm:text-2xl " />
-            <div className="absolute -bottom-[2rem] w-max text-center">
+          <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography
               variant="h6"
               className={`w-20 text-xs sm:w-fit sm:text-[15px] ${
@@ -35,7 +35,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
         </Step>
         <Step
           onClick={() => {
-            if (activeStep >= 2) {
+            if (activeStep >= 2 && activeStep !== 3) {
               navigate(`/user/payment/${idEvent}/1`);
             }
           }}
@@ -55,7 +55,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
         </Step>
         <Step
           onClick={() => {
-            if (activeStep >= 3) {
+            if (activeStep >= 3 && activeStep !== 3) {
               navigate(`/user/payment/${idEvent}/2`);
             }
           }}
@@ -75,7 +75,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
         <Step
           onClick={() => {
             if (activeStep >= 4) {
-              navigate(`/user/payment/${idEvent}/3`);
+              navigate(`/user/payment/3`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"

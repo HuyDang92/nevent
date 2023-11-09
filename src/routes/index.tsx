@@ -64,6 +64,7 @@ export default function AppRoutes() {
             <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
+          <Route index path="payment/:step" element={<Payment />} />
         </Route>
 
         {/* Tạo sự kiện */}

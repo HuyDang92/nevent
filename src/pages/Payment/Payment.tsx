@@ -33,7 +33,7 @@ const Payment = () => {
         return <Complete />;
       }
       case 4: {
-        return <ReviewOrder event={event} />;
+        return <ReviewOrder activeTab={activeStep} event={event} />;
       }
       default: {
         return <h1>Not found</h1>;
