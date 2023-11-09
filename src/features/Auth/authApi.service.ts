@@ -72,6 +72,9 @@ export const authApi = createApi({
     getProfile: builder.query<any, void>({
       query: () => `/api/auth/profile`,
     }),
+    getMyTicket: builder.query<any, void>({
+      query: () => `/api/my-tickets`,
+    }),
   }),
 });
 
@@ -85,4 +88,5 @@ export const {
   useUpdateProfileMutation,
   useChangePasswordMutation,
   useForgotPassWordMutation,
+  useGetMyTicketQuery,
 } = authApi;

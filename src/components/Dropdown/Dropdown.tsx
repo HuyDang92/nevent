@@ -92,7 +92,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             <span className="group-hover:text-cs_light">Vé của tôi</span>
           </Link>
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='hidden lg:block'>
           <Link
             to={'/event-manage'}
             className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"

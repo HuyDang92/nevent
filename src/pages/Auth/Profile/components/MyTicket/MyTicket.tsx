@@ -5,6 +5,7 @@ import nothing from '~/assets/images/nothing.svg';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import { useGetTicketsUser } from '~/hooks/useFirebase';
+import { useGetMyTicketQuery } from '~/features/Auth/authApi.service';
 
 interface UserInfoProp {
   className?: string;
@@ -12,47 +13,10 @@ interface UserInfoProp {
 }
 
 const code: any[] = [];
-const dataTicket = [
-  {
-    id: 1,
-    title: 'HAPPY BEE V.O.L III VER 2',
-    start_date: '2023-10-16T05:53:00.698Z',
-    category: 'Âm nhạc',
-    ticketCount: 3,
-    dataTicket: [
-      'https://jess3.com/wp-content/uploads/2011/10/JESS3_QRCode1.jpg',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0xLOY0G6BUyjKfKgt8hJHZtCxoupDj1n6cGE_kwMj_7EKV8fj4BQy59TsUfNY1J0vNZU&usqp=CAU',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS2Z-R-dy3l4OOykRpXXcJSwS2WXr9RY6lZG0YJeY_N5vJ17yAxEOJgWBpmyL-mkwlB4Y&usqp=CAU',
-    ],
-    ticketStatus: 'Chưa sử dụng',
-    ticketType: 'Vé thường',
-  },
-  {
-    id: 1,
-    title: 'MINISHOW HỒ QUỲNH HƯƠNG & MYRA TRẦN MÚA LỬA TUNG SÂN KHẤU...',
-    start_date: '2023-10-16T05:53:00.698Z',
-    category: 'Âm nhạc',
-    ticketCount: 1,
-    dataTicket: ['https://jess3.com/wp-content/uploads/2011/10/JESS3_QRCode1.jpg'],
-    ticketStatus: 'Chưa sử dụng',
-    ticketType: 'Vé thường',
-  },
-];
-const MyTicket = ({ auth, className }: UserInfoProp) => {
-  const [dataTicket, setDataTicket] = useState<any[]>([]);
-  const { getTickets, data, isPending } = useGetTicketsUser();
-  useEffect(() => {
-    getTickets(auth ? auth?._id : '');
-    if (data) {
-      setDataTicket(data);
-    }
-  }, [auth]);
 
-  useEffect(() => {
-    if (!isPending) {
-      setDataTicket(data);
-    }
-  }, [isPending]);
+const MyTicket = ({ auth, className }: UserInfoProp) => {
+  const [getTickets, setDataTicket] = useState<any[]>([]);
+  // const getTickets = useGetMyTicketQuery();
 
   return (
     <div className={`${className}`}>
@@ -68,8 +32,8 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
         </TabsHeader>
         <TabsBody className="shadow-none">
           <TabsContent index={0} className="space-y-2">
-            {dataTicket.length > 0 ? (
-              dataTicket.map((item, index) => <TicketProfile key={index} data={item} />)
+            {getTickets.length > 0 ? (
+              getTickets.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
             ) : (
               <div className="flex justify-center py-5 text-center">
                 <div>
