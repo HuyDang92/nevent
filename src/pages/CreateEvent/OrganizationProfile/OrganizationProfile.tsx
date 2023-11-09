@@ -4,14 +4,18 @@ import RecommendCard from '~/components/customs/RecommendCard';
 import Organization from './components/Organization';
 import Person from './components/Person';
 import { useAppSelector } from '~/hooks/useActionRedux';
+import { useGetProfileQuery } from '~/features/Auth/authApi.service';
+import Loading from '~/components/customs/Loading';
 const OrganizationProfile = () => {
   const [selectedValue, setSelectedValue] = useState<string>('organization');
+  const userProfile = useGetProfileQuery();
   const auth = useAppSelector((state) => state.auth);
   const handleChange = (event: any) => {
     setSelectedValue(event.target.value);
   };
   return (
     <>
+      {userProfile.isFetching && <Loading />}
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">
@@ -21,6 +25,15 @@ const OrganizationProfile = () => {
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-full">
+            {auth?.currentUser?.role.name === 'business' && (
+              <>
+                <span className="dark:text-cs_light">
+                  Đã đăng kí ban tổ chức{' '}
+                  {userProfile?.data?.data?.businessProfile.type === 'personal' ? '(Cá nhân)' : '(Doanh nghiệp)'}
+                </span>{' '}
+                <br />
+              </>
+            )}
             <label htmlFor="type" className="ml-2 text-sm font-semibold text-cs_label_gray dark:text-gray-400">
               Loại hình kinh doanh
             </label>

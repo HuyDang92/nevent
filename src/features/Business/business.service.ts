@@ -15,15 +15,6 @@ export const businessApi = createApi({
   }),
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
-    getBusiness: builder.query<any, string>({
-      query: () => ({
-        url: '/api/business-profile',
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      }),
-    }),
     updateBusiness: builder.mutation({
       query: (body) => ({
         url: '/api/business-profile/update',
