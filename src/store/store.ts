@@ -17,7 +17,7 @@ import businessSlice from '~/features/Business/businessSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth, business'], 
+  whitelist: ['auth'],
 };
 
 const rootReducer = combineReducers({
@@ -29,7 +29,6 @@ const rootReducer = combineReducers({
   [businessApi.reducerPath]: businessApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
-  business: businessSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

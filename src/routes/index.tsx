@@ -31,6 +31,7 @@ import Pr from '~/pages/ManageEvent/Pr';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
+
   return (
     <>
       <Routes>
