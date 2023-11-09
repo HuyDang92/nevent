@@ -17,7 +17,6 @@ interface Prop {
 const ReviewOrder = ({ className, event, activeTab }: Prop) => {
   const { idEvent } = useParams();
   const navigate = useNavigate();
-  const [ticketsData, setTicketsData] = useState<any[]>([]);
   const tickets: any[] = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
 

@@ -8,6 +8,9 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
   const navigate = useNavigate();
   const { idEvent, step } = useParams();
   const activeStep = Number(step);
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get('s');
+
   return (
     <div className={` w-full px-7 pb-12 pt-5 sm:mx-0 sm:px-32 xl:px-52 xl:pb-16 xl:pt-10 ${className}`}>
       <Stepper activeStep={activeStep} activeLineClassName="bg-cs_semi_green">
@@ -78,16 +81,20 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
               navigate(`/user/payment/3`);
             }
           }}
-          activeClassName="!bg-cs_semi_green text-white"
+          activeClassName={`${myParam === '00' ? '!bg-cs_semi_green' : ' !bg-red-500'}  text-white`}
           completedClassName="!bg-cs_semi_green text-white"
         >
           <IonIcon name="checkmark-outline" className="h-5 w-5  text-sm sm:text-2xl " />
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography
               variant="h6"
-              className={`text-xs sm:text-[15px] ${activeStep === 3 ? '!text-cs_semi_green' : 'text-cs_label_gray'}`}
+              className={`text-xs sm:text-[15px] ${
+                activeStep === 3
+                  ? ` ${myParam === '00' ? '!text-cs_semi_green' : ' !text-red-500'} `
+                  : 'text-cs_label_gray'
+              }`}
             >
-              Hoàn thành
+              {`${myParam === '00' ? 'Hoàn thành' : 'Thất bại'}`}
             </Typography>
           </div>
         </Step>

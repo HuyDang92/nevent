@@ -25,7 +25,10 @@ export const paymentApi = createApi({
         body: body,
       }),
     }),
+    ticketCallbank: builder.query<any, void>({
+      query: () => '/api/tickets/payment/callback',
+    }),
   }),
 });
 
-export const { usePayTicketMutation } = paymentApi;
+export const { usePayTicketMutation, useTicketCallbankQuery } = paymentApi;

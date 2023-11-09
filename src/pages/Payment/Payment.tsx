@@ -41,6 +41,7 @@ const Payment = () => {
     }
   };
   const previousEvent = useAppSelector((state) => state.payment.idEvent);
+
   useEffect(() => {
     if (idEvent !== previousEvent) {
       dispatch(refreshPayment(idEvent));
