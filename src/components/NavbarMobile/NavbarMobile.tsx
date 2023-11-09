@@ -3,6 +3,8 @@ import IonIcon from '@reacticons/ionicons';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Icon from '../customs/Icon';
+import { useAppSelector } from '~/hooks/useActionRedux';
+import Dropdown from '../Dropdown';
 
 type NavbarMobileProps = {
   className?: string;
@@ -23,16 +25,12 @@ const dataNavigation = [
     link: '/search',
     icon: 'search',
     title: 'Tìm kiếm',
-  },
-  {
-    link: '/user/profile/0',
-    icon: 'person',
-    title: 'Tài khoản',
-  },
+  }
 ];
 
 const NavbarMobile = ({ className }: NavbarMobileProps) => {
   const location = useLocation();
+  const auth = useAppSelector((state) => state.auth);
 
   return (
     <>
@@ -49,6 +47,25 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
             </NavLink>
           </motion.button>
         ))}
+        {auth.loggedIn ? (
+          <motion.button whileTap={{ scale: 0.9 }}>
+            <NavLink to={'/user/profile/0'} className={(nav) => `flex items-center justify-between`}>
+              <Icon
+                name='person-outline'
+                className="text-2xl text-cs_semi_green"
+              />
+            </NavLink>
+          </motion.button>
+        ) : (
+          <motion.button whileTap={{ scale: 0.9 }}>
+            <NavLink to={'/login'} className={(nav) => `flex items-center justify-between`}>
+              <Icon
+                name='person-outline'
+                className="text-2xl text-cs_semi_green"
+              />
+            </NavLink>
+          </motion.button>
+        )}
       </div>
     </>
   );
