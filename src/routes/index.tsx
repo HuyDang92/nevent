@@ -24,6 +24,8 @@ import Organizer from '~/pages/Organizer';
 import SearchMobile from '~/pages/SearchMobile';
 import Scan from '~/pages/Scan/Scan';
 import PassTicket from '~/pages/Auth/PassTicket';
+import MyPallet from '~/pages/MyPallet/MyPallet';
+import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -44,6 +46,10 @@ export default function AppRoutes() {
         <Route path="/about" element={<About />} />
         {/* Cho người tổ chức */}
         <Route path="/organizer-about" element={<Organizer />} />
+        <Route element={<CreateEventLayout />}>
+          <Route path="/organizer-my-pallet" element={<MyPallet />} />
+          <Route path="/organizer-information-banking" element={<InformationBanking />} />
+        </Route>
         {/* FAQ */}
         <Route path="/help-center" element={<FAQ />} />
 
@@ -79,11 +85,11 @@ export default function AppRoutes() {
         </Route>
 
         {/* Scan ticket */}
-        <Route element={<PrivateRoute allowedRoles={['user']} />}>
-          <Route element={<DefaultLayout />}>
-            <Route path="/scan-ticket" element={<Scan />} />
-          </Route>
+        {/* <Route element={<PrivateRoute allowedRoles={['user']} />}> */}
+        <Route element={<DefaultLayout />}>
+          <Route path="/scan-ticket" element={<Scan />} />
         </Route>
+        {/* </Route> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>
