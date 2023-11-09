@@ -21,7 +21,7 @@ const cateList = [
     link: '/organization/manage-event/pr',
   },
   {
-    name: 'Giảm giá',
+    name: 'Mã giảm giá',
     link: '/organization/manage-event/discount',
   },
 ];
