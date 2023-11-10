@@ -28,6 +28,7 @@ interface IOrganizationInfo {
 const Organization = () => {
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
+  
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;

@@ -5,7 +5,7 @@
 // const initialState: BusinessState = {
 //   businessInfo: null,
 // };
-// const businessSlice = createSlice({
+// const businesslice = createSlice({
 //   name: 'business',
 //   initialState,
 //   reducers: {
