@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
 import { useEffect } from 'react';
 const Payment = () => {
-  const dispatch = useAppDispatch();
   const { step, idEvent } = useParams();
   const activeStep = Number(step);
   const { data } = useGetEventByIdQuery(idEvent || '');
@@ -40,13 +39,7 @@ const Payment = () => {
       }
     }
   };
-  const previousEvent = useAppSelector((state) => state.payment.idEvent);
 
-  useEffect(() => {
-    if (idEvent !== previousEvent) {
-      dispatch(refreshPayment(idEvent));
-    }
-  }, []);
   useEffect(() => {
     window.scrollTo({
       top: 0,

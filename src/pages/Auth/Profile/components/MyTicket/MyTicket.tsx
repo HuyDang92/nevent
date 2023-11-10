@@ -15,8 +15,8 @@ interface UserInfoProp {
 const code: any[] = [];
 
 const MyTicket = ({ auth, className }: UserInfoProp) => {
-  const [getTickets, setDataTicket] = useState<any[]>([]);
-  // const getTickets = useGetMyTicketQuery();
+  // const [getTickets, setDataTicket] = useState<any[]>([]);
+  const getTickets = useGetMyTicketQuery();
 
   return (
     <div className={`${className}`}>
@@ -32,8 +32,8 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
         </TabsHeader>
         <TabsBody className="shadow-none">
           <TabsContent index={0} className="space-y-2">
-            {getTickets.length > 0 ? (
-              getTickets.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
+            {getTickets.data?.data?.length > 0 ? (
+              getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
             ) : (
               <div className="flex justify-center py-5 text-center">
                 <div>

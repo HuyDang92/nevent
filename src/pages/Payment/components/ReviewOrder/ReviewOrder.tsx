@@ -102,8 +102,8 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       {/* /// */}
       <div className="border-b-[0.5px] py-4">
         <div className="flex w-1/3 items-center gap-2 rounded-xl border p-2 font-semibold shadow-lg">
-          <Iconify icon="arcticons:momo" className="text-2xl dark:text-cs_light" />
-          <span>MoMo</span>
+          <Iconify icon="arcticons:v-vnpay" className="text-2xl dark:text-cs_light" />
+          <span>VNPAY</span>
         </div>
       </div>
       {/* /// */}
