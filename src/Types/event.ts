@@ -51,3 +51,52 @@ interface IImage {
   updatedAt: string;
   __v: number;
 }
+interface IEventInfo {
+  banner: string;
+  logo: string;
+  name: string;
+  location: string;
+  category: string;
+  description: string;
+  file: null | File;
+  // organization_name: string;
+  // organization_desc: string;
+  // organization_phone: string;
+  // organization_email: string;
+  // organization_img: string;
+}
+interface IAddTimeline {
+  beginDate: string;
+  endDate: string;
+  beginTime: string;
+  endTime: string;
+}
+interface TicketListInfo {
+  title: string;
+  quantity: number;
+  color: string;
+  type: string;
+  price: number;
+  description: string;
+  min: number;
+  max: number;
+  free: boolean;
+  beginDate: string;
+  beginTime: string;
+  endDate: string;
+  endTime: string;
+}
+interface IEventSettings {
+  URL: string;
+  privacy: string;
+  name: string;
+  noti: string;
+  active_noti: boolean;
+}
+interface IPaymentInfo {
+  owner: string;
+  account_num: string;
+  bank: string;
+  branch: string;
+  VAT: boolean;
+}

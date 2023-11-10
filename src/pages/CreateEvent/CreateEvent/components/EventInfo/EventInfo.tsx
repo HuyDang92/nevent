@@ -9,22 +9,13 @@ import { useState } from 'react';
 // import banner3 from '~/assets/images/banner3.jpg';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { setEventInfo } from '~/features/Business/businessSlice';
 
-interface IEventInfo {
-  banner: string;
-  logo: string;
-  name: string;
-  location: string;
-  category: string;
-  description: string;
-  file: null | File;
-  // organization_name: string;
-  // organization_desc: string;
-  // organization_phone: string;
-  // organization_email: string;
-  // organization_img: string;
-}
 const EventInfo = () => {
+  const dispatch = useAppDispatch();
+  const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
+
   const { data: categories } = useGetAllCategoryQuery();
   const { upLoad, loading } = useUploadFile();
   const navigate = useNavigate();
@@ -34,20 +25,22 @@ const EventInfo = () => {
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const formik = useFormik({
-    initialValues: {
-      banner: '',
-      logo: '',
-      name: '',
-      location: '',
-      category: '',
-      description: '',
-      file: null,
-      // organization_name: '',
-      // organization_desc: '',
-      // organization_phone: '',
-      // organization_email: '',
-      // organization_img: Chamaleon2,
-    },
+    initialValues: eventInfo
+      ? eventInfo
+      : {
+          banner: '',
+          logo: '',
+          name: '',
+          location: '',
+          category: '',
+          description: '',
+          file: null,
+          // organization_name: '',
+          // organization_desc: '',
+          // organization_phone: '',
+          // organization_email: '',
+          // organization_img: Chamaleon2,
+        },
     validationSchema: Yup.object({
       // banner: Yup.string().required('Banner không được bỏ trống'),
       // logo: Yup.string().required('Logo không được bỏ trống'),
@@ -69,10 +62,15 @@ const EventInfo = () => {
     }),
     onSubmit: async (value: IEventInfo) => {
       console.log(value);
-      const bannerId = await upLoad(value.file!);
-      value.banner = bannerId;
-      navigate(`/create-event/1`);
-      // setActiveStep(1);
+
+      try {
+        const bannerId = await upLoad(value.file!);
+        value.banner = bannerId;
+        dispatch(setEventInfo(value));
+        navigate(`/organization/create-event/1`);
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (

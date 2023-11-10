@@ -2,40 +2,33 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
-
-interface TicketListInfo {
-  title: string;
-  quantity: number;
-  color: string;
-  type: string;
-  price: number;
-  description: string;
-  min: number;
-  max: number;
-  free: boolean;
-  beginDate: string;
-  beginTime: string;
-  endDate: string;
-  endTime: string;
-}
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { useNavigate } from 'react-router-dom';
+import { setTicketList } from '~/features/Business/businessSlice';
 
 const TicketList = () => {
+  const dispatch = useAppDispatch();
+  const ticketInfo = useAppSelector((state) => state.bussiness.ticketList);
+  const navigate = useNavigate();
+
   const formik = useFormik({
-    initialValues: {
-      title: '',
-      quantity: 0,
-      type: '',
-      color: '#13C6B3',
-      price: 0,
-      description: '',
-      min: 0,
-      max: 5,
-      free: false,
-      beginDate: '',
-      beginTime: '',
-      endDate: '',
-      endTime: '23:59',
-    },
+    initialValues: ticketInfo
+      ? ticketInfo
+      : {
+          title: '',
+          quantity: 0,
+          type: '',
+          color: '#13C6B3',
+          price: 0,
+          description: '',
+          min: 0,
+          max: 5,
+          free: false,
+          beginDate: '',
+          beginTime: '',
+          endDate: '',
+          endTime: '23:59',
+        },
     validationSchema: Yup.object({
       title: Yup.string().required('Tên loại vé không được bỏ trống'),
       type: Yup.string().required('Loại vé không được bỏ trống'),
@@ -49,6 +42,12 @@ const TicketList = () => {
     }),
     onSubmit: (values: TicketListInfo) => {
       console.log(values);
+      try {
+        dispatch(setTicketList(values));
+        navigate('/organization/create-event/3');
+      } catch (err) {
+        console.log(err);
+      }
       // Handle ticket form submission
     },
   });
@@ -225,9 +224,12 @@ const TicketList = () => {
         </div>
         <div className="flex gap-5">
           <textarea
-            name=""
+            name="description"
+            id="description"
             placeholder="Mô tả loại vé"
-            className="h-[100px] w-full rounded-xl p-4 focus:outline-none dark:bg-cs_formDark"
+            className="h-[100px] w-full rounded-xl p-4 focus:outline-none dark:bg-cs_formDark dark:text-white"
+            value={formik.values.description}
+            onChange={formik.handleChange}
           ></textarea>
         </div>
         <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />

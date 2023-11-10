@@ -15,7 +15,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           // onClick={() => setActiveStep(activeStep >= 1 ? 0 : activeStep)}
           onClick={() => {
             if (activeStep >= 1) {
-              navigate(`/create-event/0`);
+              navigate(`/organization/create-event/0`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"
@@ -32,7 +32,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
           onClick={() => {
             if (activeStep >= 2) {
-              navigate(`/create-event/1`);
+              navigate(`/organization/create-event/1`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"
@@ -49,7 +49,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
           onClick={() => {
             if (activeStep >= 3) {
-              navigate(`/create-event/2`);
+              navigate(`/organization/create-event/2`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"
@@ -66,7 +66,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           // onClick={() => setActiveStep(activeStep >= 1 ? 2 : activeStep)}
           onClick={() => {
             if (activeStep >= 4) {
-              navigate(`/create-event/3`);
+              navigate(`/organization/create-event/3`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"
@@ -83,7 +83,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           //  onClick={() => setActiveStep(activeStep >= 1 ? 3 : activeStep)}
           onClick={() => {
             if (activeStep >= 5) {
-              navigate(`/create-event/4`);
+              navigate(`/organization/create-event/4`);
             }
           }}
           activeClassName="!bg-cs_semi_green text-white"

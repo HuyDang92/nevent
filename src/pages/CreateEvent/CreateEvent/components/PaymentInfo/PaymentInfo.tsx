@@ -3,24 +3,24 @@ import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
-interface IPaymentInfo {
-  owner: string;
-  account_num: string;
-  bank: string;
-  branch: string;
-  VAT: boolean;
-}
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { useNavigate } from 'react-router-dom';
+import { setPaymentInfo } from '~/features/Business/businessSlice';
 
 const PaymentInfo = () => {
+  const dispatch = useAppDispatch();
+  const paymentInfo = useAppSelector((state) => state.bussiness.paymentInfo);
+  const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: {
-      owner: '',
-      account_num: '',
-      bank: '',
-      branch: '',
-      VAT: false,
-    },
+    initialValues: paymentInfo
+      ? paymentInfo
+      : {
+          owner: '',
+          account_num: '',
+          bank: '',
+          branch: '',
+          VAT: false,
+        },
     validationSchema: Yup.object({
       owner: Yup.string().required('Chủ tài khoản không được bỏ trống'),
       account_num: Yup.string().required('Số tài khoản không được bỏ trống'),
@@ -28,8 +28,14 @@ const PaymentInfo = () => {
       bank: Yup.string().required('Ngân hàng không được bỏ trống'),
       branch: Yup.string().required('Chi nhánh không được bỏ trống'),
     }),
-    onSubmit: async (value: IPaymentInfo) => {
+    onSubmit: (value: IPaymentInfo) => {
       console.log(value);
+      try {
+        dispatch(setPaymentInfo(value));
+        navigate('//organization/create-event/1');
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (
@@ -121,7 +127,7 @@ const PaymentInfo = () => {
               </div>
               <div className="mt-2 flex items-center gap-2">
                 <input type="checkbox" className="" id="VAT" name="VAT" />
-                <label htmlFor="active_noti" className="font-semibold text-cs_label_gray dark:text-gray-400">
+                <label htmlFor="VAT" className="font-semibold text-cs_label_gray dark:text-gray-400">
                   Cần hóa đơn VAT màu đỏ
                 </label>
               </div>
