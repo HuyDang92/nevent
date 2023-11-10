@@ -46,10 +46,20 @@ export const authApi = createApi({
         body: body,
       }),
     }),
-    changePassword: builder.mutation({
+    forgotPassWord: builder.mutation({
       query: (body) => ({
         url: '/api/users/forgot-password',
         method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/change-password',
+        method: 'PATCH',
         headers: {
           Accept: 'application/json',
         },
@@ -61,6 +71,9 @@ export const authApi = createApi({
     }),
     getProfile: builder.query<any, void>({
       query: () => `/api/auth/profile`,
+    }),
+    getMyTicket: builder.query<any, void>({
+      query: () => `/api/my-tickets`,
     }),
   }),
 });
@@ -74,4 +87,6 @@ export const {
   useLogInGoogleMutation,
   useUpdateProfileMutation,
   useChangePasswordMutation,
+  useForgotPassWordMutation,
+  useGetMyTicketQuery,
 } = authApi;

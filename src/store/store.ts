@@ -13,11 +13,12 @@ import { bankApi } from '~/features/Payment/bankApi.service';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 import { businessApi } from '~/features/Business/business.service';
 import businessSlice from '~/features/Business/businessSlice';
+import { paymentApi } from '~/features/Payment/paymentApi.service';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'payment'],
 };
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   [eventApi.reducerPath]: eventApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
   [bankApi.reducerPath]: bankApi.reducer,
+  [paymentApi.reducerPath]: paymentApi.reducer,
   [businessApi.reducerPath]: businessApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
@@ -46,6 +48,7 @@ const store = configureStore({
       eventApi.middleware,
       uploadApi.middleware,
       bankApi.middleware,
+      paymentApi.middleware,
       businessApi.middleware,
       rtkQueryErrorLogger,
     ),

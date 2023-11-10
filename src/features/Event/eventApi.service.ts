@@ -37,11 +37,11 @@ export const eventApi = createApi({
       query: ({ page, limit, search, status, categories, hotLevel, start_date, location }) =>
         `/api/events/get-all?page=${page}&limit=${limit}${search ? '&search=' + search : ''}${
           status ? '&status=' + status : ''
-        }${categories ? '&categories=' + categories : ''}${hotLevel ? '&hotLevel=' + hotLevel : ''}${
+        }${categories ? categories : ''}${hotLevel ? '&hotLevel=' + hotLevel : ''}${
           start_date ? '&start_date=' + start_date : ''
         }${location ? '&location=' + location : ''}`,
     }),
-    
+
     getEventById: builder.query<any, string>({
       query: (eventId) => `/api/events/detail/${eventId}`,
     }),

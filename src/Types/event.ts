@@ -51,6 +51,22 @@ interface IImage {
   updatedAt: string;
   __v: number;
 }
+// Định nghĩa một interface cho đối tượng Ticket
+interface Ticket {
+  status: string;
+  _id: string;
+  title: string;
+  type: string;
+  color: string;
+  price: number;
+}
+
+// Định nghĩa một interface cho đối tượng ITicket
+interface ITicket {
+  totalTickets: number;
+  event: IEvent;
+  myTickets: Ticket[];
+}
 interface IEventInfo {
   banner: string;
   logo: string;
