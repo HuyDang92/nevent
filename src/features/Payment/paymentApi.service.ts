@@ -25,7 +25,10 @@ export const paymentApi = createApi({
         body: body,
       }),
     }),
+    getHistory: builder.query<any, void>({
+      query: () => `/api/payments/history`,
+    }),
   }),
 });
 
-export const { usePayTicketMutation } = paymentApi;
+export const { usePayTicketMutation, useGetHistoryQuery } = paymentApi;
