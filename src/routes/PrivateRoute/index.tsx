@@ -90,22 +90,30 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
 
   useEffect(() => {
     if (!auth.loggedIn) return;
+
     const jwtDecodeAccess: IJwtDecode = jwt_decode(auth?.accessToken?.token ?? '');
     const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth?.refreshToken?.token ?? '');
+
     if (auth.loggedIn && jwtDecodeAccess.exp < currentTime) {
-      if (jwtDecodeRefresh.exp > currentTime) {
-        getTokenFromRefreshToken(auth?.refreshToken.token ? auth?.refreshToken.token : '');
-      } else {
-        dispatch(logout());
+      const timeUntilExpiration = jwtDecodeAccess.exp - currentTime;
+
+      // Check if the remaining time is less than 30 seconds
+      if (timeUntilExpiration <= 60) {
+        if (jwtDecodeRefresh.exp > currentTime) {
+          // Trigger token refresh
+          getTokenFromRefreshToken(auth?.refreshToken.token ? auth?.refreshToken.token : '');
+        } else {
+          // Logout if refresh token has also expired
+          dispatch(logout());
+        }
       }
     }
-  }, [location.pathname, auth.loggedIn, auth.accessToken, auth.refreshToken, dispatch, getTokenFromRefreshToken]);
+  }, [auth.loggedIn, auth.accessToken, auth.refreshToken, currentTime, dispatch]);
 
   // use useEffect
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
-      const jwtDecodeAccess: IJwtDecode = jwt_decode(auth?.accessToken?.token ?? '');
       const jwtDecodeRefresh: IJwtDecode = jwt_decode(auth?.refreshToken?.token ?? '');
       if (auth.loggedIn && jwtDecodeRefresh.exp > currentTime) {
         getTokenFromRefreshToken(auth.refreshToken?.token ? auth.refreshToken?.token : '');

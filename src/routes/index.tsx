@@ -71,6 +71,7 @@ export default function AppRoutes() {
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
           <Route index path="payment/:step" element={<Payment />} />
+          <Route path="scan-ticket" element={<Scan />} />
         </Route>
 
         {/* Tạo sự kiện */}
@@ -83,13 +84,6 @@ export default function AppRoutes() {
             <Route path="/create-event3/" element={<Categories />} />
           </Route>
         </Route>
-
-        {/* Scan ticket */}
-        {/* <Route element={<PrivateRoute allowedRoles={['user']} />}> */}
-        <Route element={<DefaultLayout />}>
-          <Route path="/scan-ticket" element={<Scan />} />
-        </Route>
-        {/* </Route> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

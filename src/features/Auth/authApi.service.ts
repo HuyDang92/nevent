@@ -69,6 +69,9 @@ export const authApi = createApi({
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
+    verifyTicket: builder.query<any, string>({
+      query: (signature) => `/api/signatures/verify?${signature}`,
+    }),
     getProfile: builder.query<any, void>({
       query: () => `/api/auth/profile`,
     }),
@@ -89,4 +92,5 @@ export const {
   useChangePasswordMutation,
   useForgotPassWordMutation,
   useGetMyTicketQuery,
+  useLazyVerifyTicketQuery,
 } = authApi;
