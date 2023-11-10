@@ -24,15 +24,14 @@ const PaymentInfo = () => {
     validationSchema: Yup.object({
       owner: Yup.string().required('Chủ tài khoản không được bỏ trống'),
       account_num: Yup.string().required('Số tài khoản không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       bank: Yup.string().required('Ngân hàng không được bỏ trống'),
       branch: Yup.string().required('Chi nhánh không được bỏ trống'),
     }),
-    onSubmit: (value: IPaymentInfo) => {
-      console.log(value);
+    onSubmit: (values: IPaymentInfo) => {
+      console.log(values);
       try {
-        dispatch(setPaymentInfo(value));
-        navigate('//organization/create-event/1');
+        dispatch(setPaymentInfo(values));
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
@@ -48,7 +47,7 @@ const PaymentInfo = () => {
               <div className="">
                 <h2 className="text-lg font-bold dark:text-white">Thông tin ngân hàng</h2>
                 <p className="text-sm text-cs_label_gray dark:text-gray-400">
-                  Ticketbox sẽ chuyển tiền thu được từ việc bán vé vào tài khoản ngân hàng của bạn
+                  Nevent sẽ chuyển tiền thu được từ việc bán vé vào tài khoản ngân hàng của bạn
                 </p>
               </div>
             </div>
