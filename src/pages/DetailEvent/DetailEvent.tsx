@@ -4,7 +4,7 @@ import des from '~/assets/images/detail.png';
 import des2 from '~/assets/images/detail2.png';
 import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '~/components/EventCard';
 import {
   useGetEventByIdQuery,
@@ -15,8 +15,12 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
 import { useEffect } from 'react';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { refreshPayment } from '~/features/Payment/paymentSlice';
 
 function DetailEvent() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
@@ -28,6 +32,10 @@ function DetailEvent() {
       behavior: 'smooth',
     });
   }, []);
+  const handlePayment = (idEvent: string) => {
+    dispatch(refreshPayment(idEvent));
+    navigate(`/user/payment/${idEvent}/0`);
+  };
   return (
     <div className="relative">
       {detailEventQuery.isFetching && <SkeletonDetailEvent />}
@@ -64,20 +72,24 @@ function DetailEvent() {
                       <ul className="space-y-1 font-medium">
                         {eventTickets?.data?.data?.map((ticket: ITicket) => (
                           <li
-                            style={{ backgroundColor: ticket.color }}
-                            className={`rounded-lg ${ticket.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
+                            key={ticket?._id}
+                            style={{ backgroundColor: ticket?.color }}
+                            className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                           >
                             <span className="flex justify-between">
-                              <span>{ticket.title}:</span> <span>{ticket.price.toLocaleString('vi')}đ</span>
+                              <span>{ticket?.title}:</span> <span>{ticket?.price.toLocaleString('vi')}đ</span>
                             </span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                  <Link to={`/user/payment/${detailEventQuery?.data?.data?._id}/0`}>
-                    <Button className="w-full" value="Đặt vé ngay" mode="dark" />
-                  </Link>
+                  <Button
+                    className="w-full"
+                    value="Đặt vé ngay"
+                    mode="dark"
+                    onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                  />
                 </div>
               </div>
             </div>

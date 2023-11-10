@@ -20,15 +20,12 @@ export const paymentApi = createApi({
   endpoints: (builder) => ({
     payTicket: builder.mutation({
       query: (body) => ({
-        url: '/api/tickets/payment',
+        url: '/api/payments/vnpay',
         method: 'POST',
         body: body,
       }),
     }),
-    ticketCallbank: builder.query<any, void>({
-      query: () => '/api/tickets/payment/callback',
-    }),
   }),
 });
 
-export const { usePayTicketMutation, useTicketCallbankQuery } = paymentApi;
+export const { usePayTicketMutation } = paymentApi;
