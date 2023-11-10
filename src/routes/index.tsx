@@ -29,8 +29,6 @@ import Statistics from '~/pages/ManageEvent/Statistics';
 import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
 import Pr from '~/pages/ManageEvent/Pr';
 import Discount from '~/pages/ManageEvent/Discount';
-import MyWallet from '~/pages/CreateEvent/MyWallet';
-import BankInfo from '~/pages/CreateEvent/BankInfo';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -80,8 +78,6 @@ export default function AppRoutes() {
           <Route element={<CreateEventLayout />}>
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
-            <Route path="mywallet" element={<MyWallet />} />
-            <Route path="bankinfo" element={<BankInfo />} />
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
