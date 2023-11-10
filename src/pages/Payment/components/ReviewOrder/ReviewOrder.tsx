@@ -6,8 +6,9 @@ import { Icon as Iconify } from '@iconify/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
-import { useBuyTicket } from '~/hooks/useFirebase';
 import Loading from '~/components/customs/Loading';
+import { usePayTicketMutation } from '~/features/Payment/paymentApi.service';
+import { useEffect, useState } from 'react';
 interface Prop {
   className?: string;
   event?: IEvent;
@@ -16,48 +17,30 @@ interface Prop {
 const ReviewOrder = ({ className, event, activeTab }: Prop) => {
   const { idEvent } = useParams();
   const navigate = useNavigate();
-  // const [ticketsData, setTicketsData] = useState<any[]>([]);
   const tickets: any[] = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
-  const auth = useAppSelector((state) => state.auth.currentUser);
-  // console.log(ticketsData);
 
-  // useEffect(() => {
-  //   const result = [
-  //     ...tickets
-  //       .reduce((map, item) => {
-  //         const { _id, orderQuantity } = item;
-  //         if (!map.has(_id) || map.get(_id).orderQuantity < orderQuantity) {
-  //           map.set(_id, item);
-  //         }
-  //         return map;
-  //       }, new Map())
-  //       .values(),
-  //   ];
-  //   setTicketsData(result);
-  // }, [tickets]);
-
-  const { buyTicket, isPending } = useBuyTicket();
+  const [buyTicket, result] = usePayTicketMutation();
 
   const handleBuyTicket = async () => {
-    const data = {
-      event_id: event?._id,
-      bannerEvent: event?.banner[0]?.url,
-      category: event?.categories[0]?.name,
-      date: event?.start_date,
-      titleEvent: event?.title,
-      owner: auth?._id,
-      tickets: tickets,
-    };
-    console.log(data);
-
-    await buyTicket(data);
-    navigate(`/user/payment/${idEvent}/3`);
+    const body = tickets.map((ticket) => {
+      return {
+        ticketId: ticket._id,
+        quantity: Number(ticket.orderQuantity),
+      };
+    });
+    console.log(body);
+    await buyTicket({ tickets: body });
+    // navigate(`/user/payment/3`);
   };
-
+  useEffect(() => {
+    if (result.isSuccess) {
+      window.location.href = result.data?.data;
+    }
+  }, [result.isLoading]);
   return (
-    <div className={`rounded-[12px] p-4 shadow-border-full dark:text-cs_light xl:w-[30%] ${className}`}>
-      {isPending && <Loading />}
+    <div className={`mb-10 rounded-[12px] p-4 shadow-border-full dark:text-cs_light xl:w-[30%] ${className}`}>
+      {result.isLoading && <Loading />}
       <div className="relative flex h-[60px] items-center border-b-[0.5px]">
         <button
           onClick={() => {
@@ -119,8 +102,8 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       {/* /// */}
       <div className="border-b-[0.5px] py-4">
         <div className="flex w-1/3 items-center gap-2 rounded-xl border p-2 font-semibold shadow-lg">
-          <Iconify icon="arcticons:momo" className="text-2xl dark:text-cs_light" />
-          <span>MoMo</span>
+          <Iconify icon="arcticons:v-vnpay" className="text-2xl dark:text-cs_light" />
+          <span>VNPAY</span>
         </div>
       </div>
       {/* /// */}

@@ -10,7 +10,7 @@ import * as XLSX from 'xlsx';
 import { Link } from 'react-router-dom';
 
 interface IProps {
-  data: any;
+  data: ITicket;
 }
 
 const TicketProfile: React.FC<IProps> = ({ data }) => {
@@ -20,7 +20,6 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
   const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
 
-  const [dataUrl, setDataUrl] = useState('');
   const toolRef = useRef(null);
   const qrCodeRef: any = useRef(null);
   useClickOutside(toolRef, () => {
@@ -36,7 +35,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
     setOpenTool(!openTool);
   };
   useEffect(() => {
-    const formattedData = data?.tickets?.map((item: any, index: number) => {
+    const formattedData = data?.myTickets?.map((item: Ticket, index: number) => {
       return {
         STT: index + 1,
         'Loại vé': item?.type,
@@ -93,7 +92,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           <span onClick={() => setOpen(false)}>
             <Icon name="close" className="absolute right-4 top-4 text-2xl transition-all hover:scale-110" />
           </span>
-          {data?.tickets?.length > 1 ? (
+          {data?.myTickets?.length > 1 ? (
             <Carousel
               className=""
               prevArrow={({ handlePrev }) => (
@@ -125,12 +124,12 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 </div>
               )}
             >
-              {data?.tickets?.map((item: any, index: number) => (
+              {data?.myTickets?.map((item: Ticket, index: number) => (
                 <>
                   <div key={index} className="flex justify-center py-3 pb-8">
                     <div key={index}>
                       {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
-                      <div className="pb-2 font-bold">Vé: {item?.title}</div>
+                      <div className="pb-2 font-bold">Vé: {item?.type}</div>
                       <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?._id} />
                     </div>
                   </div>
@@ -146,13 +145,16 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           ) : (
             <>
               <div className="flex justify-center py-5">
-                <QRCode ref={qrCodeRef} id="qrcode" value={data?.tickets[0]?._id} />
+                <div>
+                  <div className="pb-2 font-bold">Vé: {data?.myTickets[0]?.type}</div>
+                  <QRCode ref={qrCodeRef} id="qrcode" value={data?.myTickets[0]?._id} />
+                </div>
               </div>
               <Button
                 value="Tải về"
                 icon="download-outline"
                 className="ms-[35%] !bg-cs_semi_green !text-white"
-                onClick={() => handleDownload(data?.tickets[0]?.title)}
+                onClick={() => handleDownload(data?.myTickets[0]?.title)}
               />
             </>
           )}
@@ -168,17 +170,19 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
         </DialogFooter> */}
       </Dialog>
       <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
-      <img src={data?.bannerEvent} alt="" className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]" />
+      <img src={data?.event?.banner[0]?.url} alt="" className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]" />
       <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
         <div className="xl:w-2/3">
-          <p className=" line-clamp-2 text-xl font-bold">{data?.titleEvent}</p>
+          <Link to={`/event-detail/${data?.event?._id}`}>
+            <p className=" line-clamp-2 text-xl font-bold">{data?.event?.title}</p>
+          </Link>
           <span className=" gap-2 text-sm font-semibold">
             {/* <Icon name="time-outline" /> */}
             <span>Thời gian: </span>
-            {moment(data?.date).format('hh:mm - DD/MM/YYYY')}
-            <span className="text-sm "> - {data?.category}</span>
+            {moment(data?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
+            <span className="text-sm "> - {data?.event?.categories[0]?.name}</span>
           </span>
-          <p className="text-sm font-semibold">Số vé: {data?.tickets?.length}</p>
+          <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p>
           <p className="text-sm font-semibold">
             Trạng thái:{' '}
             <span className="text-sm text-cs_semi_green">
@@ -202,7 +206,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
             openTool ? 'h-fit w-fit p-2' : 'h-0 w-0'
           } absolute right-6 top-12 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
         >
-          {data?.tickets?.length > 1 && (
+          {data?.myTickets?.length > 1 && (
             <li
               onClick={exportDSSV}
               className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"

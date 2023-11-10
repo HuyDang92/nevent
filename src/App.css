@@ -5,6 +5,13 @@
   text-align: center;
   background-color: #F5F7FC;
 }
+
+.progress-ring__circle {
+  stroke-dasharray: 400, 400;
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
 /* 
 .logo {
   height: 6em;
