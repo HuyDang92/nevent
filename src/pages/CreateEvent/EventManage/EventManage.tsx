@@ -91,11 +91,11 @@ const EventManage = () => {
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[72%]">
-            <Link to="/create-event" className="">
+            <Link to="/organization/create-event/0" className="">
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
-            <SearchBar className="mt-4 w-full" classNameInput=" !rounded-full" />
+            <SearchBar className="mt-4 w-full" classNameInput=" !rounded-full shadow-border-light" />
             <div className="mt-8">
               {!eventList && (
                 <p className="text-center font-semibold text-cs_gray underline">Bạn chưa có sự kiện nào!</p>
@@ -103,7 +103,7 @@ const EventManage = () => {
               {eventList &&
                 eventList.map((event) => (
                   <div className="my-4 rounded-xl border-[1px] border-cs_semi_green p-7" key={event._id}>
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="mb-4 flex items-start justify-between">
                       <div className="flex gap-4">
                         <img className="h-[110px] w-[110px] object-cover" src={event.banner[0].url} alt="" />
                         <div className="text-[14px] text-cs_grayText dark:text-cs_light">
@@ -137,40 +137,57 @@ const EventManage = () => {
                       </div>
                       <Button mode="dark" value={<Iconfy className="text-2xl" icon="formkit:people" />} />
                     </div>
-                    <div>
-                      <div className="flex items-center justify-between bg-cs_semi_green p-4">
-                        <div className="flex items-center text-cs_light">
-                          <Iconfy icon="mdi:chart-line" />
-                          <span>Bản tóm tắt</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
+                    <div className="flex items-center justify-between bg-cs_semi_green p-4">
+                      <Link
+                        to={`/organization/manage-event/statistics/${event._id}`}
+                        className="flex items-center gap-2 text-cs_light"
+                      >
+                        <Iconfy icon="mdi:chart-line" /> <span>Thống kê</span>
+                      </Link>
+                      <div className="flex items-center text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/rsvps/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="material-symbols:person-outline" />
                           <span>Quản lý RSVPs</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
+                        </Link>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/pr/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="mdi:bell" />
-                          <span>Khuyến khích</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
+                          <span>Quảng bá</span>
+                        </Link>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/discount/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="solar:card-broken" />
                           <span>Mã giảm giá</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
+                        </Link>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/edit/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="bxs:message-square-edit" />
                           <span>Chỉnh sửa</span>
-                        </div>
-                        <div className="flex items-center text-cs_light">
+                        </Link>
+                      </div>
+                      <div className="flex items-center text-cs_light">
+                        <Link
+                          to={`/organization/manage-event/copy/${event._id}`}
+                          className="flex items-center gap-2 text-cs_light"
+                        >
                           <Iconfy icon="mingcute:copy-fill" />
                           <span>Nhân rộng</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between p-4 dark:text-cs_light shadow-border-full">
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
-                        <span>data</span>
+                        </Link>
                       </div>
                     </div>
                   </div>

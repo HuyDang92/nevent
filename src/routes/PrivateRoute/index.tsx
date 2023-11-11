@@ -84,8 +84,10 @@ interface IJwtDecode {
 function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const auth = useAppSelector((state) => state.auth);
 
+
   const authorized: boolean =
     allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
+
 
   return auth.loggedIn ? (
     authorized ? (

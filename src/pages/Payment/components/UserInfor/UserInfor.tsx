@@ -12,6 +12,8 @@ const UserInfor = () => {
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
+  console.log(userInfor);
+
   const formik = useFormik({
     initialValues: userInfor
       ? userInfor
@@ -31,7 +33,7 @@ const UserInfor = () => {
     }),
     onSubmit(values) {
       console.log(values);
-      
+
       try {
         dispatch(addUserInfor(values));
         navigate(`/user/payment/${idEvent}/1`);
