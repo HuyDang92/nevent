@@ -75,19 +75,15 @@ export default function AppRoutes() {
             <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
-<<<<<<< HEAD
-=======
           <Route index path="payment/:step" element={<Payment />} />
           <Route path="scan-ticket" element={<Scan />} />
-        </Route>
-
-        {/* Tạo sự kiện */}
-        <Route>
->>>>>>> 3238366b61304eb4767265dd440fe7b8a12d512a
           <Route element={<CreateEventLayout />}>
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
         </Route>
+
+        {/* Tạo sự kiện */}
+        <Route></Route>
         {/* Tạo sự kiện */}
         <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
           <Route element={<CreateEventLayout />}>
@@ -102,16 +98,6 @@ export default function AppRoutes() {
           </Route>
         </Route>
 
-<<<<<<< HEAD
-        {/* Scan ticket */}
-        <Route element={<PrivateRoute allowedRoles={['user']} />}>
-          <Route element={<ManageEventLayout />}>
-            <Route path="/scan-ticket" element={<Scan />} />
-          </Route>
-        </Route>
-
-=======
->>>>>>> 3238366b61304eb4767265dd440fe7b8a12d512a
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

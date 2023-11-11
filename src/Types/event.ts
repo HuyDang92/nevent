@@ -101,6 +101,7 @@ interface IPaymentInfo {
   bank: string;
   branch: string;
   VAT: boolean;
+}
 // Định nghĩa một interface cho đối tượng Ticket
 interface Ticket {
   status: string;
