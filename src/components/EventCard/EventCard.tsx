@@ -28,7 +28,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`group relative h-[260px] sm:h-[270px] w-full overflow-hidden rounded-xl shadow-border-full ${className}`}
+          className={`group relative h-[250px] sm:h-[260px] w-full overflow-hidden rounded-xl shadow-border-full ${className}`}
         >
           <Link to={`/event-detail/${data?._id}`}>
             <img
@@ -37,7 +37,7 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
               className="sm:h-[160px] h-[180px] w-full rounded-xl object-cover transition-all group-hover:scale-105"
             />
 
-            <div className=" z-5 sm:min-h-[120px] min-h-[100px] absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3">
+            <div className=" z-5 sm:min-h-[110px] min-h-[90px] absolute bottom-0 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black">
               <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data?.location?.name}</span>
               <p className={`line-clamp-2 text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm`}>
                 {data.title}
@@ -53,12 +53,16 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
                 {isHovered && (
                   <motion.div
                     initial={{ opacity: 0, y: -5, height: 0 }}
-                    animate={{ opacity: 1, y: 0, height: 15 }}
+                    animate={{ opacity: 1, y: 0, height: 20 }}
                     exit={{ opacity: 0, y: -5, height: 0 }}
                     className="hidden justify-between text-[14px] font-normal dark:text-cs_light sm:flex"
                   >
-                    <span className="cursor-pointer font-semibold">Chi tiết</span>
-                    <span className="cursor-pointer font-semibold">Đặt vé</span>
+                    <Link to={`/event-detail/${data?._id}`}>
+                      <span className="cursor-pointer font-semibold">Chi tiết</span>
+                    </Link>
+                    <Link to={`/user/payment/${data?._id}/0`}>
+                      <span className="cursor-pointer font-semibold">Đặt vé</span>
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>

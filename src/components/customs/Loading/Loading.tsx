@@ -4,7 +4,7 @@ type InputProps = {
   size?: number;
 };
 
-const LoadingLocal = ({ title, size = 60 }: InputProps) => {
+const Loading = ({ title, size = 60 }: InputProps) => {
   return (
     <div className="">
       <div className="fixed bottom-0 left-0 right-0 top-0 z-50 bg-black opacity-60"></div>
@@ -16,4 +16,4 @@ const LoadingLocal = ({ title, size = 60 }: InputProps) => {
   );
 };
 
-export default LoadingLocal;
+export default Loading;
