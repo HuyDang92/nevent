@@ -20,17 +20,15 @@ const Notifycations = ({ auth }: DropdownProps) => {
 
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
-      <motion.button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
+      <motion.div whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
         <IconButton
           variant="text"
           className="relative items-center rounded-lg text-cs_semi_green transition hover:scale-110 hover:bg-transparent"
         >
-          <div className="absolute -right-1 -top-1 z-50 rounded-full h-2 w-2 bg-red-500 text-cs_light ">
-            
-          </div>
+          <div className="absolute -right-1 -top-1 z-50 h-2 w-2 rounded-full bg-red-500 text-cs_light "></div>
           <Icon name="notifications" className="text-2xl" />
         </IconButton>
-      </motion.button>
+      </motion.div>
       <motion.ul
         className="absolute right-0 top-[140%] z-20 w-[320px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
         variants={{

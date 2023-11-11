@@ -15,7 +15,6 @@ interface UserInfoProp {
 const code: any[] = [];
 
 const MyTicket = ({ auth, className }: UserInfoProp) => {
-  // const [getTickets, setDataTicket] = useState<any[]>([]);
   const getTickets = useGetMyTicketQuery();
 
   return (

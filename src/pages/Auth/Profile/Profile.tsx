@@ -61,7 +61,7 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className="relative">
         {!imagePreviewUrlCover && (
           <img
-            className="h-[160px] sm:h-[200px] w-full rounded-xl object-cover"
+            className="h-[160px] w-full rounded-xl object-cover sm:h-[200px]"
             src={auth?.currentUser?.coverImage?.url || DefaultCoverImage}
             alt=""
           />
@@ -157,7 +157,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <MyTicket auth={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={2}>
-              <History data={auth?.currentUser} />
+              <History />
             </TabsContent>
             <TabsContent index={3}>
               <Notifycation classNameTagHeader="sm:w-[30%]" popup />
