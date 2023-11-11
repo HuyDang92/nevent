@@ -33,8 +33,8 @@ const OverView = () => {
   const mergeDate = (date: string, time: string) => {
     const newDate = new Date(date);
     const [hour, minutes] = time.split(':');
-    newDate.setHours(hour);
-    newDate.setMinutes(minutes);
+    newDate.setHours(Number(hour));
+    newDate.setMinutes(Number(minutes));
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
     const isoDateTime = newDate.toISOString();
@@ -59,8 +59,8 @@ const OverView = () => {
           totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
           tickets: ticketList,
           banner: [bannerId],
-          salesStartDate:eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
-          salesEndDate:eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
+          salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
+          salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
       }
     } catch (err) {
