@@ -29,6 +29,8 @@ import Statistics from '~/pages/ManageEvent/Statistics';
 import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
 import Pr from '~/pages/ManageEvent/Pr';
 import Discount from '~/pages/ManageEvent/Discount';
+import MyPallet from '~/pages/MyPallet/MyPallet';
+import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 
 export default function AppRoutes() {
   const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -49,6 +51,10 @@ export default function AppRoutes() {
         <Route path="/about" element={<About />} />
         {/* Cho người tổ chức */}
         <Route path="/organizer-about" element={<Organizer />} />
+        <Route element={<CreateEventLayout />}>
+          <Route path="/organizer-my-pallet" element={<MyPallet />} />
+          <Route path="/organizer-information-banking" element={<InformationBanking />} />
+        </Route>
         {/* FAQ */}
         <Route path="/help-center" element={<FAQ />} />
 
@@ -69,6 +75,15 @@ export default function AppRoutes() {
             <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
+<<<<<<< HEAD
+=======
+          <Route index path="payment/:step" element={<Payment />} />
+          <Route path="scan-ticket" element={<Scan />} />
+        </Route>
+
+        {/* Tạo sự kiện */}
+        <Route>
+>>>>>>> 3238366b61304eb4767265dd440fe7b8a12d512a
           <Route element={<CreateEventLayout />}>
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
@@ -87,6 +102,7 @@ export default function AppRoutes() {
           </Route>
         </Route>
 
+<<<<<<< HEAD
         {/* Scan ticket */}
         <Route element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<ManageEventLayout />}>
@@ -94,6 +110,8 @@ export default function AppRoutes() {
           </Route>
         </Route>
 
+=======
+>>>>>>> 3238366b61304eb4767265dd440fe7b8a12d512a
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

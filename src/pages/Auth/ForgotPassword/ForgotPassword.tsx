@@ -5,10 +5,9 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logoWhite.png';
 import { useEffect, useState } from 'react';
-import { useChangePasswordMutation } from '~/features/Auth/authApi.service';
+import { useForgotPassWordMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
-import { Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
-import Icon from '~/components/customs/Icon';
+import { Dialog, DialogBody, DialogFooter } from '@material-tailwind/react';
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ function ForgotPassword() {
   const [openMessage, setOpenMessage] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
 
-  const [changePass, result] = useChangePasswordMutation();
+  const [changePass, result] = useForgotPassWordMutation();
   const handleSubmit = async (type: string) => {
     if (!email) return;
     if (type === 'send') {

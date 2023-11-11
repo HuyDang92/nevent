@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
 import { useEffect } from 'react';
 const Payment = () => {
-  const dispatch = useAppDispatch();
   const { step, idEvent } = useParams();
   const activeStep = Number(step);
   const { data } = useGetEventByIdQuery(idEvent || '');
@@ -33,19 +32,14 @@ const Payment = () => {
         return <Complete />;
       }
       case 4: {
-        return <ReviewOrder event={event} />;
+        return <ReviewOrder activeTab={activeStep} event={event} />;
       }
       default: {
         return <h1>Not found</h1>;
       }
     }
   };
-  const previousEvent = useAppSelector((state) => state.payment.idEvent);
-  useEffect(() => {
-    if (idEvent !== previousEvent) {
-      dispatch(refreshPayment(idEvent));
-    }
-  }, []);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,

@@ -117,17 +117,19 @@ const TicketInfor = () => {
             </tbody>
           </table>
         </Card>
-        <div className="w-full px-3 pb-3 text-right">
-          <Button
-            onClick={() => {
-              navigate(`/user/payment/${idEvent}/2`);
-            }}
-            className="md:w mt-5 w-full"
-            type="submit"
-            mode="dark"
-            value="Xác nhận"
-          />
-        </div>
+        {tickets.length > 0 && (
+          <div className="w-full px-3 pb-3 text-right">
+            <Button
+              onClick={() => {
+                navigate(`/user/payment/${idEvent}/2`);
+              }}
+              className="md:w mt-5 w-full"
+              type="submit"
+              mode="dark"
+              value="Xác nhận"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

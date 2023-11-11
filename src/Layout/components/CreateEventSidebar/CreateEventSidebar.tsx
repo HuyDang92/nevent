@@ -18,11 +18,11 @@ const cateList = [
   },
   {
     name: 'Tài khoản ví của tôi',
-    link: '/',
+    link: '/organizer-my-pallet',
   },
   {
     name: 'Thông tin ngân hàng',
-    link: '/',
+    link: '/organizer-information-banking',
   },
 ];
 

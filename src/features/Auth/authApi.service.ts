@@ -46,7 +46,7 @@ export const authApi = createApi({
         body: body,
       }),
     }),
-    changePassword: builder.mutation({
+    forgotPassWord: builder.mutation({
       query: (body) => ({
         url: '/api/users/forgot-password',
         method: 'POST',
@@ -56,11 +56,27 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/change-password',
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
+    verifyTicket: builder.query<any, string>({
+      query: (signature) => `/api/signatures/verify?${signature}`,
+    }),
     getProfile: builder.query<any, void>({
       query: () => `/api/auth/profile`,
+    }),
+    getMyTicket: builder.query<any, void>({
+      query: () => `/api/my-tickets`,
     }),
   }),
 });
@@ -74,4 +90,7 @@ export const {
   useLogInGoogleMutation,
   useUpdateProfileMutation,
   useChangePasswordMutation,
+  useForgotPassWordMutation,
+  useGetMyTicketQuery,
+  useLazyVerifyTicketQuery,
 } = authApi;

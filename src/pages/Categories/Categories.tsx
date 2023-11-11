@@ -13,7 +13,7 @@ function Categories() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [locationId, setLocationId] = useState<string>('');
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
-  console.log(filterNameCate);
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   const categories = useGetAllCategoryQuery();
   const locations = useGetLocationsQuery();
@@ -22,7 +22,8 @@ function Categories() {
     limit: 16,
     search: keyword,
     location: locationId,
-    categories: filterNameCate.length === 0 ? undefined : filterNameCate,
+    categories: filterNameCate.length === 0 ? undefined : filterNameCate.join(''),
+    // start_date: selectedDate,
   });
 
   const handlePageChange = (selectedPage: any) => {
@@ -32,15 +33,34 @@ function Categories() {
       behavior: 'smooth',
     });
   };
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   }, []);
+
+  const handleFilterDate = (value: any) => {
+    // 2. Tại đây, bạn có thể chuyển đổi giá trị `selectedDate` thành timestamp.
+    // Ví dụ, sử dụng JavaScript Date để chuyển đổi.
+
+    if (value === 'Hôm nay') {
+      const today = new Date();
+      const timestamp = today.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
+      setSelectedDate(timestamp);
+    } else if (value === 'Ngày mai') {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const timestamp = tomorrow.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
+      setSelectedDate(timestamp);
+    } else {
+      setSelectedDate('');
+    }
+  };
   const handleCategoryClick = (categoryId: string) => {
     // Kiểm tra xem categoryId đã tồn tại trong mảng filterNameCate chưa
-    const cates = `${categoryId}`;
+    const cates = `&categories=${categoryId}`;
     if (filterNameCate.includes(cates)) {
       // Nếu có, loại bỏ nó khỏi mảng
       setFilterNameCate(filterNameCate.filter((id) => id !== cates));
@@ -70,7 +90,7 @@ function Categories() {
                 key={index}
                 onClick={() => handleCategoryClick(item._id)}
                 className={`z-10 rounded-full border border-cs_semi_green bg-white px-3 py-1 text-[13px] font-medium text-cs_semi_green transition-all dark:bg-cs_lightDark ${
-                  filterNameCate.includes(`${item._id}`) ? '!bg-cs_semi_green text-white' : ''
+                  filterNameCate.includes(`&categories=${item._id}`) ? '!bg-cs_semi_green text-white' : ''
                 }`}
               >
                 {item.name}
@@ -109,20 +129,23 @@ function Categories() {
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
-              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
+              <select
+                className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
+                onChange={(e) => handleFilterDate(e.target.value)}
+              >
                 <option className="p-2" value="">
                   Tất cả ngày sắp tới
                 </option>
-                <option className="p-2" value="">
+                <option className="p-2" value="Hôm nay">
                   Hôm nay
                 </option>
-                <option className="p-2" value="">
+                <option className="p-2" value="Ngày mai">
                   Ngày mai
                 </option>
-                <option className="p-2" value="">
+                <option className="p-2" value="Tuần này">
                   Tuần này
                 </option>
-                <option className="p-2" value="">
+                <option className="p-2" value="Tháng này">
                   Tháng này
                 </option>
               </select>

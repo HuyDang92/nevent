@@ -42,8 +42,8 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block text-sm">Thẻ tín dụng</span>
+                <Iconify icon="arcticons:v-vnpay" className="text-3xl dark:text-cs_light md:text-base" />
+                <span className="hidden md:block">VNPAY</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(1)} className="flex items-center" index={1}>
@@ -55,8 +55,8 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block text-sm">Internet Banking</span>
+                <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
+                <span className="hidden text-sm md:block">Thẻ tín dụng</span>
               </div>
             </Tab>
             <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
@@ -68,18 +68,24 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <Iconify icon="arcticons:momo" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden md:block">MoMo</span>
+                <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
+                <span className="hidden text-sm md:block">Internet Banking</span>
               </div>
             </Tab>
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
+              <p>
+                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
+                đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
+              </p>
+            </TabsContent>
+            <TabsContent index={1} className="p-5">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas, reiciendis. Exercitationem quasi quod et?
               Expedita molestias, dolore, velit dolores ab amet quia debitis soluta consequatur rem qui voluptatem nobis
               delectus!
             </TabsContent>
-            <TabsContent index={1}>
+            <TabsContent index={2}>
               <div className="flex flex-wrap gap-[15px] p-1 md:p-5">
                 {isFetching && (
                   <>
@@ -108,16 +114,10 @@ const Purchase = () => {
                 {isError && <div>Something went wrong</div>}
               </div>
             </TabsContent>
-            <TabsContent index={2} className="p-5">
-              <p>
-                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
-                đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
-              </p>
-            </TabsContent>
           </TabsBody>
         </Tabs>
       </div>
-      <div className="w-full text-right px-3 pb-3">
+      <div className="w-full px-3 pb-3 text-right xl:hidden">
         <Button
           onClick={() => {
             if (currentViewPort.width <= 1024) {

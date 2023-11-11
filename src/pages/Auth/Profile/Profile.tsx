@@ -61,7 +61,7 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className="relative">
         {!imagePreviewUrlCover && (
           <img
-            className="h-[200px] w-full rounded-xl object-cover"
+            className="h-[160px] sm:h-[200px] w-full rounded-xl object-cover"
             src={auth?.currentUser?.coverImage?.url || DefaultCoverImage}
             alt=""
           />
@@ -71,7 +71,7 @@ const Profile: React.FC<ProfileProps> = () => {
         )}
         <div className="absolute ml-5 flex -translate-y-[75%] items-start gap-4 md:ml-[30px]">
           <div className="relative">
-            <div className="h-[120px] w-[120px] overflow-hidden rounded-full border-[2px] border-cs_semi_green">
+            <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <img
                   className="h-full w-full object-cover"
@@ -101,7 +101,7 @@ const Profile: React.FC<ProfileProps> = () => {
             />
           </div>
           <div className="mt-5">
-            <h1 className="text-2xl font-bold text-cs_light">{auth?.currentUser?.fullName}</h1>
+            <h1 className="text-xl font-bold text-cs_light sm:text-2xl">{auth?.currentUser?.fullName}</h1>
             <span className="text-cs_light">{auth?.currentUser?.email}</span>
           </div>
         </div>
