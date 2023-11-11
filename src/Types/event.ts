@@ -79,14 +79,7 @@ interface TicketListInfo {
   color: string;
   type: string;
   price: number;
-  description: string;
-  min: number;
-  max: number;
-  free: boolean;
-  beginDate: string;
-  beginTime: string;
-  endDate: string;
-  endTime: string;
+  desc: string;
 }
 interface IEventSettings {
   URL: string;

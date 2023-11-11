@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-type TicketForm = Omit<ITicket, '_id' | 'event_id'>;
 interface BusinessState {
   businessInfo: IBusinessField | null;
   eventInfo: IEventInfo | null;
   eventTime: IAddTimeline | null;
-  ticketList: TicketForm[];
+  ticketList: TicketListInfo[];
   eventSetting: IEventSettings | null;
   paymentInfo: IPaymentInfo | null;
 }

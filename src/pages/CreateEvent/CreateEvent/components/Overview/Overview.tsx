@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
 import Loading from '~/components/customs/Loading';
@@ -54,13 +54,13 @@ const OverView = () => {
           title: eventInfo?.name,
           categories: [eventInfo?.categories?._id],
           location: eventInfo?.location?._id,
-          start_date: mergeDate(eventTime?.endDate, eventTime?.endTime),
+          start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
           desc: eventInfo?.description,
           totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
           tickets: ticketList,
           banner: [bannerId],
-          salesStartDate: mergeDate(eventTime?.beginDate, eventTime?.beginTime),
-          salesEndDate: mergeDate(eventTime?.endDate, eventTime?.endTime),
+          salesStartDate:eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
+          salesEndDate:eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
       }
     } catch (err) {
@@ -137,7 +137,7 @@ const OverView = () => {
                     color={ticket.color}
                     key={index}
                     title={ticket.title}
-                    tooltip={ticket.description}
+                    tooltip={ticket.desc}
                   />
                 ))}
               </div>

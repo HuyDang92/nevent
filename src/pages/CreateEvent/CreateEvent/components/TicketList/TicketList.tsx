@@ -8,7 +8,6 @@ import { setTicketList } from '~/features/Business/businessSlice';
 import { useState } from 'react';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { errorNotify } from '~/components/customs/Toast';
-type TicketForm = Omit<ITicket, '_id' | 'event_id'>;
 const TicketList = () => {
   const dispatch = useAppDispatch();
   const ticketInfo = useAppSelector((state) => state.bussiness.ticketList);
@@ -21,7 +20,7 @@ const TicketList = () => {
       type: '',
       color: '#13C6B3',
       price: 0,
-      description: '',
+      desc: '',
       // min: 0,
       // max: 5,
       // beginDate: '',
@@ -35,12 +34,13 @@ const TicketList = () => {
       price: Yup.number().required('Giá vé không được bỏ trống'),
       quantity: Yup.number().moreThan(0, 'SL vé phải lớn hơn 0').required('SL vé không được bỏ trống'),
       color: Yup.string(),
+      desc: Yup.string(),
       // beginDate: Yup.string().required('Không được bỏ trống'),
       // beginTime: Yup.string().required('Không được bỏ trống'),
       // endDate: Yup.string().required('Không được bỏ trống'),
       // endTime: Yup.string().required('Không được bỏ trống'),
     }),
-    onSubmit: (values: TicketForm, {resetForm}) => {
+    onSubmit: (values: TicketListInfo, { resetForm }) => {
       console.log(values);
       try {
         dispatch(setTicketList(values));
@@ -70,7 +70,7 @@ const TicketList = () => {
               color={ticket.color}
               key={index}
               title={ticket.title}
-              tooltip={ticket.description}
+              tooltip={ticket.desc}
             />
           ))}
         </div>
@@ -259,11 +259,11 @@ const TicketList = () => {
           </div> */}
           <div className="flex gap-5">
             <textarea
-              name="description"
-              id="description"
+              name="desc"
+              id="desc"
               placeholder="Mô tả loại vé"
               className="h-[100px] w-full rounded-xl p-4 focus:outline-none dark:bg-cs_formDark dark:text-white"
-              value={formik.values.description}
+              value={formik.values.desc}
               onChange={formik.handleChange}
             ></textarea>
           </div>
