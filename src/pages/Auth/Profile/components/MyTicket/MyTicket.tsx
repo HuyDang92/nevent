@@ -4,8 +4,8 @@ import TicketProfile from '~/components/TicketProfile';
 import nothing from '~/assets/images/nothing.svg';
 import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
-import { useGetTicketsUser } from '~/hooks/useFirebase';
 import { useGetMyTicketQuery } from '~/features/Auth/authApi.service';
+import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 
 interface UserInfoProp {
   className?: string;
@@ -31,6 +31,7 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
         </TabsHeader>
         <TabsBody className="shadow-none">
           <TabsContent index={0} className="space-y-2">
+            {getTickets.isFetching && <LoadingLocal />}
             {getTickets.data?.data?.length > 0 ? (
               getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
             ) : (

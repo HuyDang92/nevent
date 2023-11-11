@@ -2,6 +2,7 @@ import { useGetHistoryQuery } from '~/features/Payment/paymentApi.service';
 import Button from '~/components/customs/Button';
 import moment from 'moment';
 import { PopUpDetail } from './PopUpDetail';
+import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 
 interface UserInfoProp {
   className?: string;
@@ -12,6 +13,8 @@ const History = ({ className }: UserInfoProp) => {
   return (
     <div className={`${className}`}>
       <h1 className="pb-5 text-xl font-bold">Lịch sử giao dịch</h1>
+      {getHistory.isFetching && <LoadingLocal />}
+
       <div className="space-y-3">
         {!getHistory.isFetching &&
           getHistory.data?.data?.length > 0 &&

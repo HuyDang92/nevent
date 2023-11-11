@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Icon from '~/components/customs/Icon';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import nothing from '~/assets/images/nothing.svg';
+import useSocket from '~/hooks/useConnecrSocket';
 
 interface UserInfoProp {
   className?: string;
@@ -10,33 +11,11 @@ interface UserInfoProp {
   data?: IUserField | null;
   popup?: boolean;
 }
-const dataAPI = [
-  {
-    id: 1,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 2,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 3,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-];
+
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
+  const { messages, sendMessage } = useSocket({ event: 'count-user' });
+  console.log('socket', messages);
+
   const [notificationData, setNotificationData] = useState([
     {
       id: 1,

@@ -22,12 +22,12 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
   const [updateProfile, result] = useUpdateProfileMutation();
   const formik = useFormik({
     initialValues: {
-      username: data?.username ?? '',
+      // username: data?.username ?? '',
       fullName: data?.fullName ?? '',
       phone: data?.phone ?? '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required('Username không được bỏ trống'),
+      // username: Yup.string().required('Username không được bỏ trống'),
       fullName: Yup.string().required('Họ và tên không được bỏ trống'),
       phone: Yup.string().required('Số điện thoại không được bỏ trống'),
     }),
@@ -50,7 +50,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
       {result.isLoading && <Loading />}
       <h1 className="text-xl font-bold">Thông tin tài khoản</h1>
       <form onSubmit={formik.handleSubmit} className="flex-wrap gap-5 sm:flex">
-        <div className="w-full md:w-[calc(50%-20px)]">
+        {/* <div className="w-full md:w-[calc(50%-20px)]">
           <Input
             id="username"
             name="username"
@@ -59,10 +59,10 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
             classNameInput={`w-full  ${isSubmitted && formik.errors.username ? 'border-red-500 border' : ''}`}
             label="Username"
           />
-        </div>
+        </div> */}
 
         <div className="sm:w-[calc(50%-20px)]">
-          <Input readonly={true} value={data?.email} classNameInput={`w-full`} label="Email" />
+          <Input readonly={true} value={data?.email} classNameInput={`w-full bg-[#eee]`} label="Email" />
         </div>
         <div className="sm:w-[calc(50%-20px)]">
           <Input
