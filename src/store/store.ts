@@ -1,4 +1,5 @@
 import authSlice from '~/features/Auth/authSlice';
+import ticketSlice from '~/features/Auth/ticketSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
@@ -18,7 +19,7 @@ import { paymentApi } from '~/features/Payment/paymentApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'payment'],
+  whitelist: ['auth', 'payment', 'ticket'],
 };
 
 const rootReducer = combineReducers({
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   auth: authSlice,
   payment: paymentSlice,
   bussiness: businessSlice,
+  ticket: ticketSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

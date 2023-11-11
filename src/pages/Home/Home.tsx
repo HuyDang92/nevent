@@ -53,9 +53,7 @@ function Home() {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {!event.isFetching &&
             event.data?.data?.docs.map((item: IEvent, index: number) => (
-              <Link to={'/'} key={index}>
-                <ProductCard data={item} index={index} />
-              </Link>
+              <ProductCard key={index} data={item} index={index} />
             ))}
         </div>
         {event.data?.data?.docs?.length !== 0 && (

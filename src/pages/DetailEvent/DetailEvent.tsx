@@ -185,9 +185,7 @@ function DetailEvent() {
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 3xl:grid-cols-4">
                   {!event.isFetching &&
                     event.data?.data?.docs.map((item: IEvent, index: number) => (
-                      <Link to={'/'} key={index}>
-                        <ProductCard data={item} index={index} />
-                      </Link>
+                      <ProductCard key={index} data={item} index={index} />
                     ))}
                 </div>
                 <div className="my-4 flex justify-center pb-4">
