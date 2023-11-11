@@ -9,6 +9,7 @@ import EventSettings from './components/EventSettings';
 import PaymentInfo from './components/PaymentInfo';
 import TicketList from './components/TicketList';
 import { useParams } from 'react-router';
+import Overview from './components/Overview';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
@@ -35,9 +36,9 @@ const CreateEvent = () => {
       case 4: {
         return <PaymentInfo />;
       }
-      // case 4: {
-      //   return <PaymentInfor setActiveStep={setActiveStep} />;
-      // }
+      case 5: {
+        return <Overview />;
+      }
       default: {
         return <h1>Not found</h1>;
       }

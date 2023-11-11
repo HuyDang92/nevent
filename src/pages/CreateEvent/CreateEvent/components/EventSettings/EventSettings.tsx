@@ -4,22 +4,24 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Input from '~/components/customs/Input';
 import { Radio } from '~/components/customs/Radio';
-interface IEventSettings {
-  URL: string;
-  privacy: string;
-  name: string;
-  noti: string;
-  active_noti: boolean;
-}
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { setEventSetting } from '~/features/Business/businessSlice';
+import { useNavigate } from 'react-router-dom';
+
 const EventSettings = () => {
+  const dispatch = useAppDispatch();
+  const eventSetting = useAppSelector((state) => state.bussiness.eventSetting);
+  const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: {
-      URL: '',
-      privacy: '',
-      name: '',
-      noti: '',
-      active_noti: false,
-    },
+    initialValues: eventSetting
+      ? eventSetting
+      : {
+          URL: '',
+          privacy: '',
+          name: '',
+          noti: '',
+          active_noti: false,
+        },
     validationSchema: Yup.object({
       URL: Yup.string().required('URL sự kiện không được bỏ trống'),
       privacy: Yup.string()
@@ -28,7 +30,12 @@ const EventSettings = () => {
     }),
     onSubmit: async (values: IEventSettings) => {
       console.log(values);
-      setActiveStep(3);
+      try {
+        dispatch(setEventSetting(values));
+        navigate('/organization/create-event/4');
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (
@@ -84,6 +91,8 @@ const EventSettings = () => {
                 className="flex items-center gap-6"
                 classNammeInput="w-4 h-4"
                 value="public"
+                checked={formik.values.privacy === 'public'}
+                onChange={() => formik.setFieldValue('privacy', 'public')}
               />
               <Radio
                 label={
@@ -101,6 +110,8 @@ const EventSettings = () => {
                 className="flex items-center gap-6"
                 classNammeInput="w-4 h-4"
                 value="private"
+                checked={formik.values.privacy === 'private'}
+                onChange={() => formik.setFieldValue('privacy', 'private')}
               />
             </div>
           </div>
@@ -118,16 +129,10 @@ const EventSettings = () => {
                 name="noti"
                 id="noti"
                 className="h-[120px] w-full rounded-xl p-3 text-sm shadow-border-full focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white"
-                placeholder="Nội dung thông báo..."
+                placeholder="(Không bắt buộc)"
                 value={formik.values.noti}
                 onChange={formik.handleChange}
               />
-              <div className="flex items-center gap-2">
-                <input type="checkbox" className="" id="active_noti" name="active_noti" />
-                <label htmlFor="active_noti" className="font-semibold text-cs_label_gray dark:text-gray-400">
-                  Kích hoạt tính năng này
-                </label>
-              </div>
             </div>
           </div>
         </div>

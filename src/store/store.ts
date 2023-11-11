@@ -29,6 +29,7 @@ const rootReducer = combineReducers({
   [businessApi.reducerPath]: businessApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
+  bussiness: businessSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

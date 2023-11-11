@@ -1,0 +1,153 @@
+import moment from 'moment';
+import { useEffect, useMemo, useState } from 'react';
+import Button from '~/components/customs/Button';
+import Icon from '~/components/customs/Icon';
+import Loading from '~/components/customs/Loading';
+import { errorNotify, successNotify } from '~/components/customs/Toast';
+import { useCreateEventMutation } from '~/features/Event/eventApi.service';
+import { useAppSelector } from '~/hooks/useActionRedux';
+import TicketCard from '~/pages/Payment/components/TicketCard';
+import { useUploadFile } from '~/hooks/useUpLoadFile';
+import { isFetchBaseQueryError } from '~/utils/helper';
+
+const OverView = () => {
+  const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
+  const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
+  const { upLoad, loading } = useUploadFile();
+  console.log(isSuccess);
+  console.log(data?.data);
+  const errorForm = useMemo(() => {
+    if (isFetchBaseQueryError(error)) {
+      return error;
+    }
+    return null;
+  }, [error]);
+  useEffect(() => {
+    if (isSuccess) {
+      successNotify('Thêm sự kiện thành công');
+    }
+    if (isError) {
+      errorNotify('Thêm sự kiện thất bại');
+    }
+  }, [isError, isSuccess]);
+  const mergeDate = (date: string, time: string) => {
+    const newDate = new Date(date);
+    const [hour, minutes] = time.split(':');
+    newDate.setHours(hour);
+    newDate.setMinutes(minutes);
+    newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
+    const isoDateTime = newDate.toISOString();
+    return isoDateTime;
+  };
+  const handleAddEvent = async () => {
+    try {
+      if (eventInfo?.banner) {
+        const file = await fetch(eventInfo?.banner)
+          .then((r) => r.blob())
+          .then(
+            (blobFile) =>
+              new File([blobFile], `${eventInfo?.name ? eventInfo?.name : 'eventImage'}`, { type: 'image/png' }),
+          );
+        const bannerId = await upLoad(file);
+        await createEvent({
+          title: eventInfo?.name,
+          categories: [eventInfo?.categories?._id],
+          location: eventInfo?.location?._id,
+          start_date: mergeDate(eventTime?.endDate, eventTime?.endTime),
+          desc: eventInfo?.description,
+          totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
+          tickets: ticketList,
+          banner: [bannerId],
+          salesStartDate: mergeDate(eventTime?.beginDate, eventTime?.beginTime),
+          salesEndDate: mergeDate(eventTime?.endDate, eventTime?.endTime),
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return (
+    <>
+      {loading && <Loading />}
+      {isLoading && <Loading />}
+      <div>
+        <div>
+          <h1 className="text-center text-3xl font-bold dark:text-cs_light">Thông tin sự kiện</h1>
+          {errorForm && (
+            <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
+          )}
+          <div className="my-5 h-[250px] w-full">
+            <img src={eventInfo?.banner} alt="banner" className="h-full w-full rounded-xl object-cover " />
+          </div>
+          <div>
+            <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">
+              {eventInfo?.name}
+            </h1>
+            <h1 className="text-[18px] font-semibold text-cs_dark dark:text-cs_light md:text-lg">
+              Danh mục: {eventInfo?.categories?.name}
+            </h1>
+            <div className="mt-[10px] flex  gap-[10px] md:gap-[20px] ">
+              <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full dark:border md:h-[120px] md:w-[115px]">
+                <div className="grid h-[10px] place-content-center bg-cs_semi_green py-2 text-[8px] text-cs_light md:h-[35px] md:text-[15px]">
+                  Tháng {moment(eventTime?.beginDate).format('MM')}
+                </div>
+                <div className="flex h-[60px] flex-col items-center justify-center md:h-[85px]">
+                  <span className="text-xl font-bold dark:text-cs_light md:mb-2 md:text-[40px]">
+                    {moment(eventTime?.beginDate).format('DD')}
+                  </span>
+                  <span className="text-[8px] dark:text-cs_light md:text-[14px]">
+                    {moment(eventTime?.beginDate).format('dddd')}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-[15px]">
+                  <Icon name="timer-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+                  <span className="w-[90%] dark:text-cs_light">
+                    {eventTime?.beginTime}
+                    {/* {moment(eventTime?.beginDate).format('HH:mm - DD/MM/YYYY')}&nbsp; */}
+                    {/* <span className="text-[#ff0000] "> (07:00 PM - 11:00 PM)</span> */}
+                  </span>
+                </div>
+                <div className="flex items-center gap-[15px]">
+                  <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+                  <span className="w-[90%] dark:text-cs_light">
+                    <span>{eventInfo?.location?.name}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-4 px-2 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
+              <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
+              <div className=" leading-8">
+                <h3>
+                  I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "<span className="font-semibold">{eventInfo?.name}</span>"
+                </h3>
+
+                {eventInfo?.description}
+              </div>
+            </div>
+            <div className="my-5">
+              <span className="dark:text-cs_light">Danh sách vé: </span>
+              <div className="flex gap-4">
+                {ticketList.map((ticket, index) => (
+                  <TicketCard
+                    price={ticket.price}
+                    color={ticket.color}
+                    key={index}
+                    title={ticket.title}
+                    tooltip={ticket.description}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <Button mode="dark" className="w-full" onClick={handleAddEvent} value="Tạo sự kiện" />
+      </div>
+    </>
+  );
+};
+
+export default OverView;

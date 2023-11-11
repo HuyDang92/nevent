@@ -3,33 +3,38 @@ import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-
-interface IPaymentInfo {
-  owner: string;
-  account_num: string;
-  bank: string;
-  branch: string;
-  VAT: boolean;
-}
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { useNavigate } from 'react-router-dom';
+import { setPaymentInfo } from '~/features/Business/businessSlice';
 
 const PaymentInfo = () => {
+  const dispatch = useAppDispatch();
+  const paymentInfo = useAppSelector((state) => state.bussiness.paymentInfo);
+  const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: {
-      owner: '',
-      account_num: '',
-      bank: '',
-      branch: '',
-      VAT: false,
-    },
+    initialValues: paymentInfo
+      ? paymentInfo
+      : {
+          owner: '',
+          account_num: '',
+          bank: '',
+          branch: '',
+          VAT: false,
+        },
     validationSchema: Yup.object({
       owner: Yup.string().required('Chủ tài khoản không được bỏ trống'),
       account_num: Yup.string().required('Số tài khoản không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       bank: Yup.string().required('Ngân hàng không được bỏ trống'),
       branch: Yup.string().required('Chi nhánh không được bỏ trống'),
     }),
-    onSubmit: async (value: IPaymentInfo) => {
-      console.log(value);
+    onSubmit: (values: IPaymentInfo) => {
+      console.log(values);
+      try {
+        dispatch(setPaymentInfo(values));
+        navigate('/');
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (
@@ -42,7 +47,7 @@ const PaymentInfo = () => {
               <div className="">
                 <h2 className="text-lg font-bold dark:text-white">Thông tin ngân hàng</h2>
                 <p className="text-sm text-cs_label_gray dark:text-gray-400">
-                  Ticketbox sẽ chuyển tiền thu được từ việc bán vé vào tài khoản ngân hàng của bạn
+                  Nevent sẽ chuyển tiền thu được từ việc bán vé vào tài khoản ngân hàng của bạn
                 </p>
               </div>
             </div>
@@ -121,7 +126,7 @@ const PaymentInfo = () => {
               </div>
               <div className="mt-2 flex items-center gap-2">
                 <input type="checkbox" className="" id="VAT" name="VAT" />
-                <label htmlFor="active_noti" className="font-semibold text-cs_label_gray dark:text-gray-400">
+                <label htmlFor="VAT" className="font-semibold text-cs_label_gray dark:text-gray-400">
                   Cần hóa đơn VAT màu đỏ
                 </label>
               </div>

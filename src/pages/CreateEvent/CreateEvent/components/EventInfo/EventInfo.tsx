@@ -5,54 +5,52 @@ import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import banner3 from '~/assets/images/banner3.jpg';
-import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
+import { setEventInfo } from '~/features/Business/businessSlice';
+import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 
-interface IEventInfo {
-  banner: string;
-  logo: string;
-  name: string;
-  location: string;
-  category: string;
-  description: string;
-  file: null | File;
-  // organization_name: string;
-  // organization_desc: string;
-  // organization_phone: string;
-  // organization_email: string;
-  // organization_img: string;
-}
 const EventInfo = () => {
+  const dispatch = useAppDispatch();
+  const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
+  const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
-  const { upLoad, loading } = useUploadFile();
   const navigate = useNavigate();
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
-
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  useEffect(() => {
+    if (eventInfo?.banner) {
+      setImagePreviewUrl(eventInfo?.banner);
+    }
+  }, []);
   const formik = useFormik({
-    initialValues: {
-      banner: '',
-      logo: '',
-      name: '',
-      location: '',
-      category: '',
-      description: '',
-      file: null,
-      // organization_name: '',
-      // organization_desc: '',
-      // organization_phone: '',
-      // organization_email: '',
-      // organization_img: Chamaleon2,
-    },
+    initialValues: eventInfo
+      ? eventInfo
+      : {
+          address: '',
+          banner: '',
+          logo: '',
+          name: '',
+          location: null,
+          category: '',
+          description: '',
+          file: null,
+          categories: null,
+          // organization_name: '',
+          // organization_desc: '',
+          // organization_phone: '',
+          // organization_email: '',
+          // organization_img: Chamaleon2,
+        },
     validationSchema: Yup.object({
-      // banner: Yup.string().required('Banner không được bỏ trống'),
+      banner: Yup.mixed(),
       // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
-      location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
+      address: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
       file: Yup.mixed()
@@ -69,10 +67,17 @@ const EventInfo = () => {
     }),
     onSubmit: async (value: IEventInfo) => {
       console.log(value);
-      const bannerId = await upLoad(value.file!);
-      value.banner = bannerId;
-      navigate(`/create-event/1`);
-      // setActiveStep(1);
+      try {
+        if (value.file) {
+          value.banner = URL.createObjectURL(value.file);
+        }
+        value.location = locations?.data?.find((item: ILocation) => item._id === value.address);
+        value.categories = categories?.data?.find((item: ICategory) => item._id === value.category);
+        dispatch(setEventInfo(value));
+        navigate(`/organization/create-event/1`);
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
   return (
@@ -152,21 +157,30 @@ const EventInfo = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
-              {formik.errors.location && (
-                <small className="absolute left-[60px] top-[9px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.location}
+            <div className="relative pt-3">
+              {formik.errors.address && (
+                <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
                 </small>
               )}
-              <Input
-                name="location"
-                id="location"
-                label="Địa chỉ"
-                classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!w-full"
-                value={formik.values.location}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Địa chỉ
+              </label>
+              <br />
+              <select
+                name="address"
+                id="address"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.address}
                 onChange={formik.handleChange}
-              />
+              >
+                <option value={''}>Hãy chọn danh mục </option>
+                {locations?.data?.map((location: ILocation, index: number) => (
+                  <option key={index} value={location._id}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="relative pt-3">
               {formik.errors.category && (
