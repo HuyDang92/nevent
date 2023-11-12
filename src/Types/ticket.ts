@@ -5,5 +5,12 @@ interface ITicket {
   event_id: string;
   color: string;
   price: number;
-  quantity: number
+  quantity: number;
+  desc: string;
+}
+interface IPayloadNotify {
+  sender: string;
+  recipient: string;
+  content: string;
+  url: string;
 }

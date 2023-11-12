@@ -24,6 +24,11 @@ import Organizer from '~/pages/Organizer';
 import SearchMobile from '~/pages/SearchMobile';
 import Scan from '~/pages/Scan/Scan';
 import PassTicket from '~/pages/Auth/PassTicket';
+import ManageEventLayout from '~/Layout/ManageEventLayout';
+import Statistics from '~/pages/ManageEvent/Statistics';
+import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
+import Pr from '~/pages/ManageEvent/Pr';
+import Discount from '~/pages/ManageEvent/Discount';
 import MyPallet from '~/pages/MyPallet/MyPallet';
 import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 
@@ -64,32 +69,34 @@ export default function AppRoutes() {
         </Route>
 
         {/* user */}
-        <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
+        <Route path="/user" element={<PrivateRoute allowedRoles={['user', 'business']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile/:tab" element={<Profile />} />
             <Route index path="pass-event" element={<PassTicket />} />
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
           <Route index path="payment/:step" element={<Payment />} />
-        </Route>
-
-        {/* Tạo sự kiện */}
-        <Route>
+          <Route path="scan-ticket" element={<Scan />} />
           <Route element={<CreateEventLayout />}>
-            <Route path="/organization-profile" element={<OrganizationProfile />} />
-            <Route path="/event-manage" element={<EventManage />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/create-event2/" element={<Categories />} />
-            <Route path="/create-event3/" element={<Categories />} />
+            <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
         </Route>
 
-        {/* Scan ticket */}
-        {/* <Route element={<PrivateRoute allowedRoles={['user']} />}> */}
-        <Route element={<DefaultLayout />}>
-          <Route path="/scan-ticket" element={<Scan />} />
+        {/* Tạo sự kiện */}
+        <Route></Route>
+        {/* Tạo sự kiện */}
+        <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
+          <Route element={<CreateEventLayout />}>
+            <Route path="event-list" element={<EventManage />} />
+            <Route path="create-event/:step" element={<CreateEvent />} />
+          </Route>
+          <Route path="manage-event" element={<ManageEventLayout />}>
+            <Route path="statistics/:idEvent" element={<Statistics />} />
+            <Route path="rsvps/:idEvent" element={<RsvpsManage />} />
+            <Route path="pr/:idEvent" element={<Pr />} />
+            <Route path="discount/:idEvent" element={<Discount />} />
+          </Route>
         </Route>
-        {/* </Route> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

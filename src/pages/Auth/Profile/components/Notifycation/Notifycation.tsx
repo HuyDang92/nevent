@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import Icon from '~/components/customs/Icon';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import nothing from '~/assets/images/nothing.svg';
+import useSocket from '~/hooks/useConnecrSocket';
+import moment from 'moment';
 
 interface UserInfoProp {
   className?: string;
@@ -10,68 +12,51 @@ interface UserInfoProp {
   data?: IUserField | null;
   popup?: boolean;
 }
-const dataAPI = [
-  {
-    id: 1,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 2,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-  {
-    id: 3,
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-    name: 'Tania',
-    desc: 'send you a message',
-    time: '13 minutes',
-  },
-];
+
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
-  const [notificationData, setNotificationData] = useState([
-    {
-      id: 1,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-    {
-      id: 2,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-    {
-      id: 3,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-  ]);
+  const socket = useSocket();
+  const [notificationData, setNotificationData] = useState<INotify[]>([]);
   const [clickedItems, setClickedItems] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
 
   useEffect(() => {
-    const unclickedItems = notificationData.filter((item, index) => !clickedItems.includes(item));
+    const unclickedItems = notificationData.filter((item, index: number) => !clickedItems.includes(item));
     setUnclick(unclickedItems);
   }, [clickedItems]);
 
+  useEffect(() => {
+    if (socket) {
+      socket.emit('get-notifications', '');
+      socket.on('get-notifications', (data) => {
+        // Xử lý dữ liệu từ sự kiện
+        console.log('Received data:', data);
+        setNotificationData(data);
+      });
+    } else {
+      console.log('Socket not connected');
+    }
+  }, []);
+  function formatTimeDifference(timestamp: string): string {
+    const currentTime = new Date();
+    const compareTime = new Date(timestamp);
+
+    const timeDifferenceInSeconds = Math.floor((currentTime.getTime() - compareTime.getTime()) / 1000);
+
+    const minutes = Math.floor(timeDifferenceInSeconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d ago`;
+    } else if (hours > 0) {
+      return `${hours}h ago`;
+    } else if (minutes > 0) {
+      return `${minutes}m ago`;
+    } else {
+      return `Just now`;
+    }
+  }
   const handleItemClick = (item: any) => {
     setClickedItems((prevClickedItems) => {
       // Kiểm tra xem mục đã tồn tại trong mảng chưa
@@ -95,7 +80,7 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       return prevClickedItems;
     });
     setTimeout(() => {
-      const updatedData = notificationData.filter((dataItem) => dataItem.id !== item.id);
+      const updatedData = notificationData.filter((dataItem: any) => dataItem.id !== item.id);
       setNotificationData(updatedData);
     }, 300);
   };
@@ -124,19 +109,19 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                   } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <div className="flex items-center gap-4  py-2 pl-2 pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
                       <Typography
                         variant="small"
                         color="gray"
                         className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
                       >
-                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
-                        {item.desc}
+                        {/* <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item?.content}</span>{' '} */}
+                        {item?.content}
                       </Typography>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
-                        {item.time} ago
+                        {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
                   </div>
@@ -177,7 +162,7 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                       </Typography>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
-                        {item.time} ago
+                        {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
                   </div>

@@ -75,6 +75,7 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
             </Typography>
           </div>
         </Step>
+
         <Step
           onClick={() => {
             if (activeStep >= 4) {
@@ -84,17 +85,21 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
           activeClassName={`${myParam === '00' ? '!bg-cs_semi_green' : ' !bg-red-500'}  text-white`}
           completedClassName="!bg-cs_semi_green text-white"
         >
-          <IonIcon name="checkmark-outline" className="h-5 w-5  text-sm sm:text-2xl " />
+          {myParam === '00' ? (
+            <IonIcon name={`checkmark-outline`} className="h-5 w-5  text-sm sm:text-2xl " />
+          ) : (
+            <IonIcon name="close-outline" className="h-5 w-5  text-sm sm:text-2xl " />
+          )}
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography
               variant="h6"
-              className={`text-xs sm:text-[15px] ${
+              className={`text-xs sm:text-[15px] ${activeStep === 3 ? 'block' : 'hidden'} ${
                 activeStep === 3
                   ? ` ${myParam === '00' ? '!text-cs_semi_green' : ' !text-red-500'} `
                   : 'text-cs_label_gray'
               }`}
             >
-              {`${myParam === '00' ? 'Hoàn thành' : 'Thất bại'}`}
+              {`${myParam !== '00' ? 'Thất bại' : 'Hoàn thành'}`}
             </Typography>
           </div>
         </Step>

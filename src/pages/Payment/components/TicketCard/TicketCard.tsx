@@ -3,14 +3,25 @@ interface TicketCardProps {
   title: string;
   tooltip: string;
   className?: string;
+  color?: string;
+  price?: number;
 }
-const TicketCard = ({ title, tooltip, className }: TicketCardProps) => {
+const TicketCard = ({ title, tooltip, className, color = '#13C6B3', price }: TicketCardProps) => {
   return (
     <div
-      className={`flex w-fit items-center justify-between gap-1 rounded-xl bg-cs_semi_green px-4 py-2 text-center font-semibold text-white ${className}`}
+      style={{ backgroundColor: color }}
+      className={`flex w-fit items-center justify-between gap-1 rounded-xl px-4 py-2 text-center font-semibold text-white ${className}`}
     >
       {title}{' '}
-      <Tooltip className="bg-white shadow-lg" content={<div className="w-fit text-black">{tooltip}</div>}>
+      <Tooltip
+        className="bg-white shadow-lg"
+        content={
+          <div className="w-fit text-black">
+            <div>{tooltip}</div>
+            {price && <div>Giá vé: {price.toLocaleString('vi')} VNĐ</div>}
+          </div>
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

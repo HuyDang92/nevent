@@ -105,7 +105,7 @@ function LogIn() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Username hoặc email"
+                  placeholder="Email"
                   classNameInput={`w-full dark:text-cs_semi_green ${
                     isSubmitted && formik.errors.email && 'border border-red-400'
                   }`}

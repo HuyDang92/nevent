@@ -63,13 +63,13 @@ const Payment = () => {
             >
               {renderContent(activeStep)}
             </div>
-            {activeStep !== 3 && (
-              <ReviewOrder
-                event={event}
-                activeTab={activeStep}
-                className={`${activeStep !== 3 && 'hidden'} mb-10 bg-cs_light dark:bg-cs_lightDark sm:block`}
-              />
-            )}
+
+            {/* Phần thông tin đặt vé */}
+            <ReviewOrder
+              event={event}
+              activeTab={activeStep}
+              className={`mb-10 hidden bg-cs_light dark:bg-cs_lightDark ${activeStep !== 3 && 'md:block'}`}
+            />
           </div>
         </div>
       </div>
