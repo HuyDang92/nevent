@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@material-tailwind/react';
 import { theme } from './customtheme';
 import { Toaster } from 'react-hot-toast';
+import ToggleDarkMode from './components/customs/DarkMode/DarkMode';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,10 +18,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ThemeProvider value={theme}>
           <BrowserRouter>
             <App />
+            <ToggleDarkMode hidden />
             <Toaster />
           </BrowserRouter>
         </ThemeProvider>
       </PersistGate>
     </Provider>
+    ,
   </React.StrictMode>,
 );

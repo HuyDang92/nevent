@@ -9,9 +9,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Loading from '~/components/customs/Loading';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
+import useSocket from '~/hooks/useConnecrSocket';
 
 function PassTicket() {
   const navigate = useNavigate();
+  const socket = useSocket();
   const [userReceive, setUserReceive] = useState<IUserField | null>(null);
   const [idTicket, setIdTicket] = useState<string>('');
   const auth = useAppSelector((state) => state.auth.currentUser);
@@ -28,16 +30,28 @@ function PassTicket() {
       return;
     }
     await swap({ myTicketId: idTicket, userId: userReceive?._id });
+    socket.emit('send-notification', {
+      sender: auth?._id,
+      recipient: userReceive?._id,
+      content: `${auth?.fullName} đã chuyển giao vé cho bạn vé`,
+      url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
+    } as IPayloadNotify);
+    console.log('swap', {
+      sender: auth?._id,
+      recipient: userReceive?._id,
+      content: `${auth?.fullName} đã chuyển giao vé cho bạn vé`,
+      url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
+    });
   };
   useEffect(() => {
     if (result.isSuccess) {
       successNotify('Chuyển giao vé thành công');
       navigate('/user/profile/1');
-    } 
+    }
     if (result.isError) {
       errorNotify('Chuyển giao vé thất bại');
     }
-  }, [result.isSuccess, result.isError])
+  }, [result.isSuccess, result.isError]);
   return (
     <div className="space-y-5">
       {result.isLoading && <Loading />}
@@ -60,7 +74,7 @@ function PassTicket() {
           {getTickets[0]?.myTickets?.map((item: any, index: number) => {
             return (
               <option key={index} value={item?._id}>
-                {item?.type}
+                {item?.title}
               </option>
             );
           })}

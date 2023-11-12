@@ -32,9 +32,9 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
         <TabsBody className="shadow-none">
           <TabsContent index={0} className="space-y-2">
             {getTickets.isFetching && <LoadingLocal />}
-            {getTickets.data?.data?.length > 0 ? (
+            {!getTickets.isFetching && getTickets.data?.data?.length > 0 ? (
               getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
-            ) : (
+            ) : ( 
               <div className="flex justify-center py-5 text-center">
                 <div>
                   <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
