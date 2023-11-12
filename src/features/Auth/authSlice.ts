@@ -10,6 +10,7 @@ interface AuthState {
     token: string | null;
   };
   currentUser: IUserField | null;
+  notification: boolean;
 }
 
 const initialState: AuthState = {
@@ -21,6 +22,7 @@ const initialState: AuthState = {
     token: null,
   },
   currentUser: null,
+  notification: false,
 };
 
 const authSlice = createSlice({
@@ -45,6 +47,9 @@ const authSlice = createSlice({
         currentUser: action.payload,
       };
     },
+    setNotification: (state, action) => {
+      state.notification = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Xử lý logic khi endpoint login account & login Google được fulfilled
@@ -67,6 +72,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser } = authSlice.actions;
+export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

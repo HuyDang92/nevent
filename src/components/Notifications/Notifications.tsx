@@ -3,6 +3,8 @@ import { motion, Variants } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Icon from '../customs/Icon';
 import Notifycation from '~/pages/Auth/Profile/components/Notifycation';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '~/hooks/useActionRedux';
 
 const itemVariants: Variants = {
   open: {
@@ -17,7 +19,7 @@ type DropdownProps = {
 };
 const Notifycations = ({ auth }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const checkNoti = useAppSelector((state) => state.auth.notification);
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
       <motion.div whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
@@ -25,12 +27,14 @@ const Notifycations = ({ auth }: DropdownProps) => {
           variant="text"
           className="relative items-center rounded-lg text-cs_semi_green transition hover:scale-110 hover:bg-transparent"
         >
-          <div className="absolute -right-1 -top-1 z-50 h-2 w-2 rounded-full bg-red-500 text-cs_light "></div>
+          {checkNoti && (
+            <div className="absolute -right-1 -top-1 z-50 h-2 w-2 rounded-full bg-red-500 text-cs_light "></div>
+          )}
           <Icon name="notifications" className="text-2xl" />
         </IconButton>
       </motion.div>
       <motion.ul
-        className="absolute right-0 top-[140%] z-20 w-[320px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+        className="absolute right-0 top-[140%] z-20 w-[350px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -53,12 +57,14 @@ const Notifycations = ({ auth }: DropdownProps) => {
         }}
         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
-        <motion.li variants={itemVariants} className="space-y-2 py-2 pb-0 text-center">
+        <motion.li variants={itemVariants} className="h-[18rem] space-y-2 overflow-hidden py-2 pb-0 text-center">
           <Notifycation />
         </motion.li>
-        {/* <motion.li variants={itemVariants} className="space-y-2 py-2 pb-0 text-center">
-          <h3 className="">Xem</h3>
-        </motion.li> */}
+        <motion.li variants={itemVariants} className="space-y-2 pb-0 text-center">
+          <Link to="/user/profile/3" onClick={() => setIsOpen(false)} className="cursor-pointer text-sm">
+            Xem tất cả
+          </Link>
+        </motion.li>
       </motion.ul>
     </motion.nav>
   );
