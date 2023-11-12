@@ -8,12 +8,10 @@ import { useGetProfileQuery } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 const OrganizationProfile = () => {
   const userProfile = useGetProfileQuery();
-  const [selectedValue, setSelectedValue] = useState<string>(
-    userProfile?.data?.data?.businessProfile.type || 'business',
-  );
+  const [selectedValue, setSelectedValue] = useState<string>('business');
   useEffect(() => {
     if (userProfile.isSuccess) {
-      setSelectedValue(userProfile?.data?.data?.businessProfile.type || 'business');
+      setSelectedValue(userProfile?.data?.data?.businessProfile?.type || 'business');
     }
   }, [userProfile.isSuccess]);
   const auth = useAppSelector((state) => state.auth);
@@ -36,7 +34,7 @@ const OrganizationProfile = () => {
               <>
                 <span className="dark:text-cs_light">
                   Đã đăng kí ban tổ chức{' '}
-                  {userProfile?.data?.data?.businessProfile.type === 'personal' ? '(Cá nhân)' : '(Doanh nghiệp)'}
+                  {userProfile?.data?.data?.businessProfile?.type === 'personal' ? '(Cá nhân)' : '(Doanh nghiệp)'}
                 </span>{' '}
                 <br />
               </>

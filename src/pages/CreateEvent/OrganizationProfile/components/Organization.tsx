@@ -2,12 +2,13 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { useUpdateBusinessMutation } from '~/features/Business/business.service';
+import { useGetProfileQuery, useUpdateBusinessMutation } from '~/features/Business/business.service';
 import { useEffect, useMemo } from 'react';
-import { useGetProfileQuery } from '~/features/Auth/authApi.service';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import Loading from '~/components/customs/Loading';
+import { setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 
 interface IOrganizationInfo {
   organization_name: string;
@@ -26,6 +27,7 @@ interface IOrganizationInfo {
   taxCode: string;
 }
 const Organization = () => {
+  const dispatch = useAppDispatch();
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
   
@@ -89,32 +91,37 @@ const Organization = () => {
   });
   useEffect(() => {
     if (isSuccess) {
+      if (userProfile?.data && userProfile?.isSuccess) {
+        console.log(userProfile?.data?.data);
+        
+        dispatch(setAuthCurrentUser(userProfile?.data?.data));
+      }
       successNotify('Cập nhật thành công');
     }
     if (isError) {
       errorNotify('Cập nhật thất bại');
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError,userProfile]);
 
   useEffect(() => {
     if (userProfile.isSuccess && userProfile.data) {
-      const location = userProfile?.data?.data?.businessProfile.address?.split(',');
+      const location = userProfile?.data?.data?.businessProfile?.address?.split(',');
       const [address, road, district, city] = location ?? [];
       formik.setValues({
-        organization_name: userProfile?.data?.data?.businessProfile.organization_name,
-        fullName: userProfile?.data?.data?.businessProfile.name,
-        CRN: userProfile?.data?.data?.businessProfile.crn,
-        releasePlace: userProfile?.data?.data?.businessProfile.placeOfIssue,
-        releaseDate: userProfile?.data?.data?.businessProfile.dateOfIssue,
-        description: userProfile?.data?.data?.businessProfile.description,
-        phone: userProfile?.data?.data?.businessProfile.phone,
-        email: userProfile?.data?.data?.businessProfile.email,
+        organization_name: userProfile?.data?.data?.businessProfile?.organization_name,
+        fullName: userProfile?.data?.data?.businessProfile?.name,
+        CRN: userProfile?.data?.data?.businessProfile?.crn,
+        releasePlace: userProfile?.data?.data?.businessProfile?.placeOfIssue,
+        releaseDate: userProfile?.data?.data?.businessProfile?.dateOfIssue,
+        description: userProfile?.data?.data?.businessProfile?.description,
+        phone: userProfile?.data?.data?.businessProfile?.phone,
+        email: userProfile?.data?.data?.businessProfile?.email,
         city: city,
         district: district,
         road: road,
         address: address,
-        cccd: userProfile?.data?.data?.businessProfile.cccd,
-        taxCode: userProfile?.data?.data?.businessProfile.taxCode,
+        cccd: userProfile?.data?.data?.businessProfile?.cccd,
+        taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
       });
     }
   }, [userProfile, userProfile?.isSuccess]);
