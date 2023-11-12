@@ -90,7 +90,7 @@ const TicketInfor = () => {
                     <td className="border-t border-[#eee] p-4">
                       <TicketCard
                         title={ticket.title}
-                        tooltip="Tooltip here"
+                        tooltip={ticket.desc}
                         className={`${ticket.quantity === 0 && 'bg-[#ccc]'}`}
                       />
                     </td>

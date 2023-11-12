@@ -84,6 +84,11 @@ export const eventApi = createApi({
         url: `/api/tickets/event/${eventId}`,
       }),
     }),
+    getEventBusiness: builder.query<any, any>({
+      query: ({ page, limit,search }) => ({
+        url: `/api/events/business?page=${page}&limit=${limit}${search ? '&search=' + search : ''}`,
+      }),
+    })
   }),
 });
 
@@ -95,4 +100,5 @@ export const {
   useGetEventByIdQuery,
   useGetLocationsQuery,
   useGetTicketByEventIdQuery,
+  useGetEventBusinessQuery
 } = eventApi;

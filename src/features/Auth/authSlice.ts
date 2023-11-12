@@ -38,10 +38,13 @@ const authSlice = createSlice({
       loggedIn: true,
       refreshToken: action.payload,
     }),
-    setAuthCurrentUser: (state, action) => ({
-      ...state,
-      currentUser: action.payload,
-    }),
+    setAuthCurrentUser: (state, action) => {
+      console.log(action.payload);
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     // Xử lý logic khi endpoint login account & login Google được fulfilled
