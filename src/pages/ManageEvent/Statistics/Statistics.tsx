@@ -5,52 +5,11 @@ import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip } from 'chart.js';
+import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
 
 const Statistics = () => {
   const { idEvent } = useParams();
-
-  const event = {
-    _id: '652cd125fc13ae657b6c7cdf',
-    title: 'ÅÍÎÏ˝ÓÔÒÚÆ☃',
-    start_date: '2022-08-11T00:00:00.000Z',
-    location: {
-      _id: '6545c75892a98643864286e2',
-      name: 'Hồ Chí Minh',
-      code: '700000',
-    },
-    categories: [
-      {
-        _id: '652ccfbc9341999a095b76b5',
-        name: 'Âm nhạc',
-        image: '652ccf9c9341999a095b76b3',
-        createdAt: '2023-10-16T05:53:00.698Z',
-        updatedAt: '2023-10-16T05:53:00.698Z',
-        __v: 0,
-      },
-    ],
-    banner: [
-      {
-        _id: '652cd4a7911b66e0c85f305a',
-        url: 'http://res.cloudinary.com/dtvqj8h4b/image/upload/v1699107752/Nevents/nevent-1699107751118.jpg',
-        secureUrl: 'https://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
-        publicId: 'Nevents/nevent-1697436837783',
-        width: 54,
-        height: 54,
-        format: 'png',
-        type: 'image',
-        createdAt: '2023-10-16T06:13:59.316Z',
-        updatedAt: '2023-10-16T06:13:59.316Z',
-        __v: 0,
-      },
-    ],
-    desc: 'Bypass Upper Esophagus to Jejunum, Open Approach',
-    status: 'UPCOMING',
-    approve: false,
-    hot: false,
-    hotLevel: 1,
-    updatedAt: '2023-10-16T08:27:36.488Z',
-  };
-
+  const event = useGetEventByIdQuery(idEvent || '');
   // Chart JS
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip);
   const options = {
@@ -83,9 +42,9 @@ const Statistics = () => {
       </div>
       <div className="mt-2 flex items-start justify-between rounded-xl border-[1px] border-cs_semi_green p-5">
         <div className="flex items-center">
-          <img src={event.banner[0].url} alt={event.title} className="mr-4 h-[110px] w-[110px]" />
+          <img src={event?.data?.data.banner[0].url} alt={event?.data?.data.title} className="mr-4 h-[110px] w-[110px]" />
           <div className="flex flex-col gap-1 text-[14px] text-cs_grayText dark:text-cs_light">
-            <h1 className="mb-4 text-lg font-bold text-cs_dark dark:text-cs_light">{event.title}</h1>
+            <h1 className="mb-4 text-lg font-bold text-cs_dark dark:text-cs_light">{event?.data?.data?.title}</h1>
             <div className="flex items-center gap-[15px]">
               <Iconfy icon="ph:timer-bold" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
               <span className="w-[90%] dark:text-cs_light">18:00</span>
@@ -99,7 +58,7 @@ const Statistics = () => {
             <div className="flex items-center gap-[15px]">
               <Iconfy icon="carbon:location-filled" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
               <span className="w-[90%] dark:text-cs_light">
-                <span>{event.location.name}</span>
+                <span>{event?.data?.data.location.name}</span>
               </span>
             </div>
           </div>
