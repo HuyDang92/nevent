@@ -61,7 +61,7 @@ const EventInfo = () => {
       //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      console.log(value);
+      console.log(upLoad(value.file!));
 
       try {
         const bannerId = await upLoad(value.file!);
@@ -103,7 +103,7 @@ const EventInfo = () => {
                   type="file"
                   name="file"
                   id="file"
-                  className="absolute shadow-border-light left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
+                  className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0 shadow-border-light"
                   onChange={(event) => {
                     const selectedFile = event.target.files?.[0];
                     formik.setFieldValue('file', selectedFile);
