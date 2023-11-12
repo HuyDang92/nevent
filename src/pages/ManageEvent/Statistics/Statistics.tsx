@@ -52,7 +52,7 @@ const Statistics = () => {
             <div className="flex items-center gap-[15px]">
               <Iconfy icon="solar:calendar-bold" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
               <span className="w-[90%] dark:text-cs_light">
-                {moment(event.start_date).format('dddd, DD MMMM YY')}&nbsp;
+                {moment(event?.data?.data?.start_date).format('dddd, DD MMMM YY')}&nbsp;
               </span>
             </div>
             <div className="flex items-center gap-[15px]">
