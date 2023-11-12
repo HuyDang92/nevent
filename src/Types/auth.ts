@@ -18,3 +18,14 @@ interface IUserField {
   createdAt: string;
   updatedAt: string;
 }
+interface INotify {
+  _id: string;
+  sender: IUserField;
+  recipient: IUserField;
+  content: string;
+  url: null | string;
+  view: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
