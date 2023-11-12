@@ -2,9 +2,8 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { useUpdateBusinessMutation } from '~/features/Business/business.service';
+import { useGetProfileQuery, useUpdateBusinessMutation } from '~/features/Business/business.service';
 import { useEffect, useMemo } from 'react';
-import { useGetProfileQuery } from '~/features/Auth/authApi.service';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import Loading from '~/components/customs/Loading';
@@ -31,7 +30,7 @@ const Organization = () => {
   const dispatch = useAppDispatch();
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-
+  
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -93,6 +92,8 @@ const Organization = () => {
   useEffect(() => {
     if (isSuccess) {
       if (userProfile?.data && userProfile?.isSuccess) {
+        console.log(userProfile?.data?.data);
+        
         dispatch(setAuthCurrentUser(userProfile?.data?.data));
       }
       successNotify('Cập nhật thành công');
@@ -100,7 +101,7 @@ const Organization = () => {
     if (isError) {
       errorNotify('Cập nhật thất bại');
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError,userProfile]);
 
   useEffect(() => {
     if (userProfile.isSuccess && userProfile.data) {
