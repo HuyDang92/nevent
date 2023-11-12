@@ -8,6 +8,8 @@ import { useEffect, useMemo } from 'react';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
+import { setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 
 interface IPersonInfo {
   fullName: string;
@@ -22,6 +24,7 @@ interface IPersonInfo {
   address: string;
 }
 const Person = () => {
+  const dispatch = useAppDispatch();
   const [updateBusiness, { isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
   const formik = useFormik({
@@ -66,19 +69,19 @@ const Person = () => {
   });
   useEffect(() => {
     if (userProfile.isSuccess && userProfile.data) {
-      const location = userProfile?.data?.data?.businessProfile.address?.split(',');
+      const location = userProfile?.data?.data?.businessProfile?.address?.split(',');
       const [address, road, district, city] = location ?? [];
       formik.setValues({
-        fullName: userProfile?.data?.data?.businessProfile.name,
-        description: userProfile?.data?.data?.businessProfile.description,
-        phone: userProfile?.data?.data?.businessProfile.phone,
-        email: userProfile?.data?.data?.businessProfile.email,
+        fullName: userProfile?.data?.data?.businessProfile?.name,
+        description: userProfile?.data?.data?.businessProfile?.description,
+        phone: userProfile?.data?.data?.businessProfile?.phone,
+        email: userProfile?.data?.data?.businessProfile?.email,
         city: city,
         district: district,
         road: road,
         address: address,
-        cccd: userProfile?.data?.data?.businessProfile.cccd,
-        taxCode: userProfile?.data?.data?.businessProfile.taxCode,
+        cccd: userProfile?.data?.data?.businessProfile?.cccd,
+        taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
       });
     }
   }, [userProfile, userProfile?.isSuccess]);
@@ -90,6 +93,9 @@ const Person = () => {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
+      if (userProfile?.data && userProfile?.isSuccess) {
+        dispatch(setAuthCurrentUser(userProfile?.data?.data));
+      }
       successNotify('Cập nhật thành công');
     }
     if (isError) {

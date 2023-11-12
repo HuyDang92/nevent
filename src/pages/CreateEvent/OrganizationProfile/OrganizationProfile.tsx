@@ -8,12 +8,10 @@ import { useGetProfileQuery } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 const OrganizationProfile = () => {
   const userProfile = useGetProfileQuery();
-  const [selectedValue, setSelectedValue] = useState<string>(
-    userProfile?.data?.data?.businessProfile.type || 'business',
-  );
+  const [selectedValue, setSelectedValue] = useState<string>('business');
   useEffect(() => {
     if (userProfile.isSuccess) {
-      setSelectedValue(userProfile?.data?.data?.businessProfile.type || 'business');
+      setSelectedValue(userProfile?.data?.data?.businessProfile?.type || 'business');
     }
   }, [userProfile.isSuccess]);
   const auth = useAppSelector((state) => state.auth);
