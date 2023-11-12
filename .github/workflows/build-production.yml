@@ -22,6 +22,6 @@ jobs:
           script: |
             cd nevent
             git pull
-            yarn install
-            yarn build
+            npm install
+            npm run build
             pm2 restart nevent-client

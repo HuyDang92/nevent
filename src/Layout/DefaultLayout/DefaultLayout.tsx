@@ -3,9 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import Footer from '../components/Footer';
-import NavbarMobile from '~/components/NavbarMobile';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
-import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 
 function DefaultLayout() {
   const { width } = useCurrentViewportView();

@@ -1,4 +1,5 @@
 import authSlice from '~/features/Auth/authSlice';
+import ticketSlice from '~/features/Auth/ticketSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
@@ -18,7 +19,7 @@ import { paymentApi } from '~/features/Payment/paymentApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'payment'],
+  whitelist: ['auth', 'payment', 'ticket'],
 };
 
 const rootReducer = combineReducers({
@@ -27,11 +28,12 @@ const rootReducer = combineReducers({
   [eventApi.reducerPath]: eventApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
   [bankApi.reducerPath]: bankApi.reducer,
-  [paymentApi.reducerPath]: paymentApi.reducer,
   [businessApi.reducerPath]: businessApi.reducer,
+  [paymentApi.reducerPath]: paymentApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
   bussiness: businessSlice,
+  ticket: ticketSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -48,8 +50,8 @@ const store = configureStore({
       eventApi.middleware,
       uploadApi.middleware,
       bankApi.middleware,
-      paymentApi.middleware,
       businessApi.middleware,
+      paymentApi.middleware,
       rtkQueryErrorLogger,
     ),
 

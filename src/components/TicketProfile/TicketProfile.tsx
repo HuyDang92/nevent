@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import Icon from '../customs/Icon';
 import Button from '../customs/Button';
@@ -8,12 +8,16 @@ import QRCode from 'react-qr-code';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { addTicketByEvent } from '~/features/Auth/ticketSlice';
 
 interface IProps {
   data: ITicket;
+  passTicket?: boolean;
 }
 
-const TicketProfile: React.FC<IProps> = ({ data }) => {
+const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const [openTool, setOpenTool] = useState<boolean>(false);
   const [listQR, setListQR] = useState<any>([]);
@@ -22,6 +26,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
 
   const toolRef = useRef(null);
   const qrCodeRef: any = useRef(null);
+
   useClickOutside(toolRef, () => {
     setOpenTool(false);
   });
@@ -46,35 +51,51 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
     setListQR(formattedData);
   }, [data]);
 
-  const handleDownload = (typeTicket: string) => {
-    const svgData = new XMLSerializer().serializeToString(qrCodeRef.current);
-    const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
-    const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`;
-    const image = new Image();
-    image.onload = () => {
-      const width = qrCodeRef.current.getAttribute('width');
-      const height = qrCodeRef.current.getAttribute('height');
-      const canvas = document.createElement('canvas');
+  const handleDownload = useCallback(
+    (typeTicket: string, padding: number = 10) => {
+      const svgData = new XMLSerializer().serializeToString(qrCodeRef.current);
+      const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
+      const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`;
+      const image = new Image();
 
-      canvas.setAttribute('width', width);
-      canvas.setAttribute('height', height);
+      image.onload = () => {
+        const width = qrCodeRef.current.getAttribute('width');
+        const height = qrCodeRef.current.getAttribute('height');
 
-      const context: any = canvas.getContext('2d');
-      context.drawImage(image, 0, 0, width, height);
+        // Add padding to the canvas dimensions
+        const paddedWidth = parseInt(width) + 2 * padding;
+        const paddedHeight = parseInt(height) + 2 * padding;
 
-      const imageDataUrl = canvas.toDataURL('image/png');
-      console.log(imageDataUrl);
-      const link = document.createElement('a');
-      link.href = imageDataUrl;
-      link.download = `${typeTicket}.png`;
-      link.click();
-    };
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('width', paddedWidth.toString());
+        canvas.setAttribute('height', paddedHeight.toString());
 
-    image.src = svgDataUrl;
+        const context: any = canvas.getContext('2d');
 
-    setOpen(!open);
+        // Draw the image with padding
+        context.fillStyle = 'white'; // Set the padding color
+        context.fillRect(0, 0, paddedWidth, paddedHeight); // Fill the entire canvas with padding color
+        context.drawImage(image, padding, padding, width, height); // Draw the image with padding
+
+        const imageDataUrl = canvas.toDataURL('image/png');
+        console.log(imageDataUrl);
+
+        const link = document.createElement('a');
+        link.href = imageDataUrl;
+        link.download = `${typeTicket}.png`;
+        link.click();
+      };
+
+      image.src = svgDataUrl;
+
+      setOpen(!open);
+    },
+    [qrCodeRef, open],
+  );
+  const handlePass = (item: ITicket) => {
+    dispatch(addTicketByEvent(item));
+    setOpenTool(!openTool);
   };
-
   return (
     <div className="relative overflow-hidden">
       <Dialog
@@ -99,7 +120,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 <span onClick={handlePrev} className="!absolute !left-0 top-2/4 -translate-y-2/4 text-cs_dark">
                   <Icon
                     name="chevron-back-outline"
-                    className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
+                    className="rounded-full bg-[#eee] bg-opacity-50 p-1 text-sm text-cs_dark transition-all hover:scale-105"
                   />
                 </span>
               )}
@@ -107,7 +128,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 <span onClick={handleNext} className="!absolute !right-0 top-2/4 -translate-y-2/4 text-cs_dark">
                   <Icon
                     name="chevron-forward-outline"
-                    className="rounded-full bg-[#eee] p-1 text-xl text-cs_dark transition-all hover:scale-105"
+                    className="rounded-full bg-[#eee] bg-opacity-50 p-1 text-sm text-cs_dark transition-all hover:scale-105"
                   />
                 </span>
               )}
@@ -124,30 +145,36 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
                 </div>
               )}
             >
-              {data?.myTickets?.map((item: Ticket, index: number) => (
-                <>
-                  <div key={index} className="flex justify-center py-3 pb-8">
-                    <div key={index}>
-                      {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
-                      <div className="pb-2 font-bold">Vé: {item?.type}</div>
-                      <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?._id} />
+              {data?.myTickets?.map((item: Ticket, index: number) => {
+                // const code = JSON.stringify({ id: item?._id, qr: item?.qr });
+                // const qrCodeRef = useRef(null);
+                // qrCodeRefs.push(qrCodeRef);
+
+                return (
+                  <Fragment key={index}>
+                    <div className="flex justify-center py-3 pb-8">
+                      <div key={index}>
+                        {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
+                        <div className="pb-2 font-bold">Vé: {item?.type}</div>
+                        <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?.qr} />
+                      </div>
                     </div>
-                  </div>
-                  <Button
-                    value="Tải về"
-                    icon="download-outline"
-                    className="ms-[50%] -translate-x-1/2 !bg-cs_semi_green pt-2 !text-white"
-                    onClick={() => handleDownload(item?.title)}
-                  />
-                </>
-              ))}
+                    <Button
+                      value="Tải về"
+                      icon="download-outline"
+                      className="ms-[50%] -translate-x-1/2 !bg-cs_semi_green pt-2 !text-white"
+                      onClick={() => handleDownload(item?.title)}
+                    />
+                  </Fragment>
+                );
+              })}
             </Carousel>
           ) : (
             <>
               <div className="flex justify-center py-5">
                 <div>
                   <div className="pb-2 font-bold">Vé: {data?.myTickets[0]?.type}</div>
-                  <QRCode ref={qrCodeRef} id="qrcode" value={data?.myTickets[0]?._id} />
+                  <QRCode ref={qrCodeRef} id="qrcode" value={data?.myTickets[0]?.qr} />
                 </div>
               </div>
               <Button
@@ -193,14 +220,18 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
           {/* <p className="text-sm font-semibold">
             Loại vé: <span className="text-sm text-cs_semi_green">{data?.tickets[0]?.title}</span>
           </p> */}
-          <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
+          {!passTicket && (
+            <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
+          )}
         </div>
-        <div ref={toolRef} onClick={() => setOpenTool(!openTool)} className="">
-          <Icon
-            name="ellipsis-vertical-outline"
-            className="rounded-full p-1 text-xl transition-all hover:scale-110 hover:bg-[#eee] hover:text-cs_dark"
-          />
-        </div>
+        {!passTicket && (
+          <div ref={toolRef} onClick={() => setOpenTool(!openTool)} className="">
+            <Icon
+              name="ellipsis-vertical-outline"
+              className="rounded-full p-1 text-xl transition-all hover:scale-110 hover:bg-[#eee] hover:text-cs_dark"
+            />
+          </div>
+        )}
         <ul
           className={`${
             openTool ? 'h-fit w-fit p-2' : 'h-0 w-0'
@@ -215,7 +246,7 @@ const TicketProfile: React.FC<IProps> = ({ data }) => {
               <span>Tải danh sách vé</span>
             </li>
           )}
-          <li onClick={() => setOpenTool(!openTool)}>
+          <li onClick={() => handlePass(data)}>
             <Link
               to="/user/pass-event"
               className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-[#eee]"

@@ -42,8 +42,9 @@ const ChangePassword = () => {
         .required('Xác nhận mật khẩu không được bỏ trống')
         .oneOf([Yup.ref('newPassword')], 'Mật khẩu không trùng khớp'),
     }),
-    onSubmit: async (value: IChangePassword) => {
-      changePass({ oldPassword: value.oldPassword, password: value.newPassword });
+    onSubmit: async (value: IChangePassword, { resetForm }) => {
+      await changePass({ oldPassword: value.oldPassword, password: value.newPassword });
+      resetForm();
     },
   });
 

@@ -66,7 +66,7 @@ const swipePower = (offset: number, velocity: number) => {
 
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
-  const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5 });
+  // const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5  });
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 

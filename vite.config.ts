@@ -53,4 +53,10 @@ export default defineConfig({
       '~': path.resolve(__dirname, 'src'), // Đặt đường dẫn "~" tới thư mục "src"
     },
   },
+  server: {
+    port: 8080,
+  },
+  preview: {
+    port: 8080,
+  },
 });

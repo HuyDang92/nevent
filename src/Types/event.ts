@@ -51,28 +51,14 @@ interface IImage {
   updatedAt: string;
   __v: number;
 }
-// Định nghĩa một interface cho đối tượng Ticket
-interface Ticket {
-  status: string;
-  _id: string;
-  title: string;
-  type: string;
-  color: string;
-  price: number;
-}
-
-// Định nghĩa một interface cho đối tượng ITicket
-interface ITicket {
-  totalTickets: number;
-  event: IEvent;
-  myTickets: Ticket[];
-}
 interface IEventInfo {
   banner: string;
   logo: string;
   name: string;
-  location: string;
+  address: string;
+  location: ILocation | null;
   category: string;
+  categories: ICategory | null;
   description: string;
   file: null | File;
   // organization_name: string;
@@ -93,14 +79,7 @@ interface TicketListInfo {
   color: string;
   type: string;
   price: number;
-  description: string;
-  min: number;
-  max: number;
-  free: boolean;
-  beginDate: string;
-  beginTime: string;
-  endDate: string;
-  endTime: string;
+  desc: string;
 }
 interface IEventSettings {
   URL: string;
@@ -115,4 +94,33 @@ interface IPaymentInfo {
   bank: string;
   branch: string;
   VAT: boolean;
+}
+// Định nghĩa một interface cho đối tượng Ticket
+interface Ticket {
+  status: string;
+  _id: string;
+  title: string;
+  type: string;
+  color: string;
+  price: number;
+  qr: string;
+}
+
+// Định nghĩa một interface cho đối tượng ITicket
+interface ITicket {
+  totalTickets: number;
+  event: IEvent;
+  myTickets: Ticket[];
+}
+interface IPurchase {
+  _id: string;
+  tickets: Ticket[];
+  code: string | null;
+  user: string;
+  date: string;
+  status: string;
+  amount: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
