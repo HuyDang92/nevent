@@ -11,11 +11,13 @@ import { useGetEventBusinessQuery } from '~/features/Event/eventApi.service';
 import { useState } from 'react';
 import Loading from '~/components/customs/Loading';
 import { useDebounce } from '~/hooks/useDebounce';
+import { useAppSelector } from '~/hooks/useActionRedux';
 const EventManage = () => {
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
   const { searchValue } = useDebounce(keyword, 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const auth = useAppSelector((state) => state.auth);
   const event = useGetEventBusinessQuery({
     limit: limit,
     page: currentPage,
@@ -30,10 +32,10 @@ const EventManage = () => {
   };
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
   };
   const renderStatus = (status: string) => {
     switch (status) {
@@ -84,7 +86,7 @@ const EventManage = () => {
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
-          <Dropdown />
+          <Dropdown auth={auth} />
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[72%]">
