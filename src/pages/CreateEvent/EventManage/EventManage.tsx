@@ -14,7 +14,7 @@ import { useDebounce } from '~/hooks/useDebounce';
 const EventManage = () => {
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
-  const {searchValue} = useDebounce(keyword, 500);
+  const { searchValue } = useDebounce(keyword, 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
   console.log(currentPage);
   const event = useGetEventBusinessQuery({
@@ -50,10 +50,16 @@ const EventManage = () => {
               <Button type="button" className="mt-3 !bg-cs_semi_green  font-semibold text-white" value="Tạo sự kiện" />
             </Link>
             <br />
-            <Input className='w-full my-5' classNameInput='w-full' value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder='Tìm kiếm sự kiện'/>
+            <Input
+              className="my-5 w-full"
+              classNameInput="w-full"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              placeholder="Tìm kiếm sự kiện"
+            />
             {event.data?.data?.docs?.length !== 0 && (
               <div>
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                   {/* Phân trang */}
                   {event.data?.data?.docs?.length !== 0 && (
                     <div className="my-4 flex justify-center">
@@ -72,8 +78,11 @@ const EventManage = () => {
                     </div>
                   )}
                   <div className="flex items-center gap-3">
-                    <span className='dark:text-cs_light'>Hiện thị trên mỗi trang: </span>
-                    <select onChange={(e) => setLimit(Number(e.target.value))} className=" w-[50px] h-[30px] text-center rounded-xl shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white">
+                    <span className="dark:text-cs_light">Hiện thị trên mỗi trang: </span>
+                    <select
+                      onChange={(e) => setLimit(Number(e.target.value))}
+                      className=" h-[30px] w-[50px] rounded-xl text-center shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                    >
                       <option value="5">5</option>
                       <option value="10">10</option>
                       <option value="15">15</option>
@@ -85,7 +94,7 @@ const EventManage = () => {
                     <div className="my-4 rounded-xl border-[1px] border-cs_semi_green p-7" key={event._id}>
                       <div className="mb-4 flex items-start justify-between">
                         <div className="flex gap-4">
-                          <img className="h-[110px] w-[110px] object-cover" src={event.banner[0].url} alt="" />
+                          {/* <img className="h-[110px] w-[110px] object-cover" src={event.banner[0].url} alt="" /> */}
                           <div className="text-[14px] text-cs_grayText dark:text-cs_light">
                             <h1 className="text-lg font-bold text-cs_dark dark:text-cs_light">{event.title}</h1>
                             <div className="flex items-center gap-[15px]">
