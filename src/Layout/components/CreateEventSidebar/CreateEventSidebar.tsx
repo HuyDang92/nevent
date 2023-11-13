@@ -13,7 +13,7 @@ const cateList = [
     link: '/user/organization-profile',
   },
   {
-    name: 'Tạo sự kiện',
+    name: 'Quản lý sự kiện',
     link: '/organization/event-list',
   },
   {

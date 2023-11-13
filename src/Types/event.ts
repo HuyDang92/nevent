@@ -76,7 +76,7 @@ interface IImage {
   __v: number;
 }
 interface IEventInfo {
-  banner: string;
+  banner: string[];
   logo: string;
   name: string;
   address: string;
@@ -84,7 +84,7 @@ interface IEventInfo {
   category: string;
   categories: ICategory | null;
   description: string;
-  file: null | File;
+  file: null | File[];
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;
