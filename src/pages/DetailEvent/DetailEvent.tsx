@@ -37,6 +37,8 @@ function DetailEvent() {
     dispatch(refreshPayment(idEvent));
     navigate(`/user/payment/${idEvent}/0`);
   };
+  console.log(detailEventQuery?.data?.data);
+
   return (
     <div className="relative">
       {detailEventQuery.isFetching && <SkeletonDetailEvent />}
