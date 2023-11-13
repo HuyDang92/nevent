@@ -183,16 +183,16 @@ const Statistics = () => {
         </div>
         <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4">
           <div className="flex justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-            <b>Tổng thu nhập: </b>
+            <b>Lợi nhuận: </b>
             <span className="font-bold text-cs_semi_green">0 VNĐ</span>
           </div>
           <div className="my-3 flex justify-between gap-3">
             <div className="flex w-1/2 justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-              <b>Vé đã thanh toán: </b>
+              <b>Doanh số: </b>
               <span className="font-bold text-cs_semi_green">0 VNĐ</span>
             </div>
             <div className="flex w-1/2 justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-              <b>Vé giá nộp: </b>
+              <b>Hoa hồng / vé: </b>
               <span className="font-bold text-cs_semi_green">3% / vé</span>
             </div>
           </div>
