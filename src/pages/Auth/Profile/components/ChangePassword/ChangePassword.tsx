@@ -102,7 +102,7 @@ const ChangePassword = () => {
         {isSubmitted && formik.errors.rePassword && (
           <small className="px-2 text-[12px] text-red-600">{formik.errors.rePassword}</small>
         )}
-        <div className="mt-20 text-right">
+        <div className="mt-5 text-right">
           <Button
             className="w-[200px]"
             mode="dark"
