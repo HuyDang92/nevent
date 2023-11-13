@@ -87,7 +87,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
                 !open ? 'w-full' : 'w-fit'
               } ${
                 isActive
-                  ? ' bg-cs_light text-cs_semi_green shadow-border-full dark:bg-cs_lightDark  '
+                  ? ' bg-cs_light text-cs_semi_green shadow-border-light dark:bg-cs_lightDark  '
                   : 'text-cs_dark dark:bg-cs_dark dark:text-cs_light'
               }`
             }

@@ -33,8 +33,6 @@ import MyPallet from '~/pages/MyPallet/MyPallet';
 import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 
 export default function AppRoutes() {
-  const auth = useSelector((state: RootState) => state.auth.loggedIn);
-
   return (
     <>
       <Routes>
