@@ -71,7 +71,7 @@ const Profile: React.FC<ProfileProps> = () => {
         )}
         <div className="absolute ml-5 flex -translate-y-[75%] items-start gap-4 md:ml-[30px]">
           <div className="relative">
-            <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
+            <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <img
                   className="h-full w-full object-cover"

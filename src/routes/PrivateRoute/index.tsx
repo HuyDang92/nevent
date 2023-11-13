@@ -68,12 +68,8 @@
 // }
 
 // export default PrivateRoute;
-import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { logout, assignNewToken, assignNewRefreshToken } from 'features/Auth/authSlice';
-import { useLazyGetTokenFromRefreshTokenQuery } from '~/features/Auth/authApi.service';
-import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
-import jwt_decode from 'jwt-decode';
+import { Outlet, Navigate } from 'react-router-dom';
+import { useAppSelector } from '~/hooks/useActionRedux';
 
 interface PrivateRouteProps {
   allowedRoles?: string[];
@@ -84,10 +80,8 @@ interface IJwtDecode {
 function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const auth = useAppSelector((state) => state.auth);
 
-
   const authorized: boolean =
     allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
-
 
   return auth.loggedIn ? (
     authorized ? (
