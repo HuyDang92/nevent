@@ -42,6 +42,48 @@ const Statistics = () => {
     await deleteEvent(idEvent);
     setOpen(false);
   };
+
+  const renderStatus = (status: string) => {
+    switch (status) {
+      // create cases for  REVIEW, UPCOMING, HAPPENING, COMPLETED, CANCELED
+      case 'REVIEW':
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_blueGray px-3 py-1 text-cs_light">
+            Đang chờ phê duyệt
+          </div>
+        );
+      case 'UPCOMING':
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_yellow-500 px-3 py-1 text-cs_light">
+            Sắp diễn ra
+          </div>
+        );
+      case 'HAPPENING':
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_leaf-500 px-3 py-1 text-cs_light">
+            Đang diễn ra
+          </div>
+        );
+      case 'COMPLETED':
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_green px-3 py-1 text-cs_light">
+            Đã hoàn thành
+          </div>
+        );
+      case 'CANCELED':
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_red px-3 py-1 text-cs_light">
+            Đã hủy
+          </div>
+        );
+      default:
+        return (
+          <div className="mb-2 flex w-fit items-center justify-center rounded-md bg-cs_blueGray px-3 py-1 text-cs_light">
+            Đang chờ phê duyệt
+          </div>
+        );
+    }
+  };
   return (
     <>
       {isLoading && <Loading />}
@@ -99,7 +141,8 @@ const Statistics = () => {
             ))}
           </Carousel>
           <div className="absolute left-[15px] top-[15px] flex flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter">
-            <h1 className="mb-4 text-lg font-bold text-cs_light">{event?.data?.data?.title}</h1>
+            <h1 className="text-lg font-bold text-cs_light">{event?.data?.data?.title}</h1>
+            {renderStatus(event?.data?.data?.status)}
             <div className="flex items-center gap-[15px]">
               <Iconfy icon="ph:timer-bold" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
               <span className="w-[90%] dark:text-cs_light">18:00</span>
