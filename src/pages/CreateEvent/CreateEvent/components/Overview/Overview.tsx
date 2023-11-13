@@ -17,8 +17,6 @@ const OverView = () => {
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
-  console.log(isSuccess);
-  console.log(data?.data);
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -51,7 +49,6 @@ const OverView = () => {
     return new Promise((resolve, reject) => {
       const date = new Date();
       const signature = `${date.getTime()}-${Math.random()}`;
-      console.log(signature);
       fetch(url)
         .then((r) => r.blob())
         .then(
@@ -70,7 +67,6 @@ const OverView = () => {
   const handleAddEvent = async () => {
     try {
       let bannerId: any[] = [];
-      console.log(eventInfo?.banner);
       if (eventInfo?.banner) {
         bannerId = await Promise.all(eventInfo?.banner.map((url) => upLoadImg(url)))
           .then((images) => {
@@ -84,35 +80,20 @@ const OverView = () => {
             console.error('Error fetching images:', error);
             return [];
           });
-        console.log(bannerId);
-        console.log({
+          console.log(bannerId);
+          
+        await createEvent({
           title: eventInfo?.name,
           categories: [eventInfo?.categories?._id],
           location: eventInfo?.location?._id,
           start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
           desc: eventInfo?.description,
-          totalTicketIssue: ticketList.reduce(
-            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
-            0,
-          ),
+          totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
           tickets: ticketList,
           banner: bannerId,
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
-
-        // await createEvent({
-        //   title: eventInfo?.name,
-        //   categories: [eventInfo?.categories?._id],
-        //   location: eventInfo?.location?._id,
-        //   start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
-        //   desc: eventInfo?.description,
-        //   totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
-        //   tickets: ticketList,
-        //   banner: [bannerId],
-        //   salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
-        //   salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
-        // });
       }
     } catch (err) {
       console.log(err);

@@ -23,7 +23,6 @@ const EventInfo = () => {
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
-  console.log(imagePreviewUrl);
   useEffect(() => {
     if (eventInfo?.banner) {
       setImagePreviewUrl(eventInfo?.banner);
