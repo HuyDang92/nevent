@@ -1,9 +1,9 @@
 import { Carousel, IconButton } from '@material-tailwind/react';
-type myCarouselProps = {
+type MyCarouselProps = {
   className?: string;
   data: string[] | undefined;
 };
-const MyCarousel = ({ className, data }: myCarouselProps) => {
+const MyCarousel = ({ className, data }: MyCarouselProps) => {
   return (
     <>
       {data && (
