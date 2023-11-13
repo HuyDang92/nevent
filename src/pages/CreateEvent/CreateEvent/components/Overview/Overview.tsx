@@ -12,7 +12,7 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
 
 const OverView = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
@@ -29,7 +29,7 @@ const OverView = () => {
       setTimeout(() => {
         successNotify('Thêm sự kiện thành công');
       }, 1000);
-      navigate('/organization/event-list')
+      navigate('/organization/event-list');
     }
     if (isError) {
       errorNotify('Thêm sự kiện thất bại');
@@ -61,7 +61,10 @@ const OverView = () => {
           location: eventInfo?.location?._id,
           start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
           desc: eventInfo?.description,
-          totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
+          totalTicketIssue: ticketList.reduce(
+            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
+            0,
+          ),
           tickets: ticketList,
           banner: [bannerId],
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
