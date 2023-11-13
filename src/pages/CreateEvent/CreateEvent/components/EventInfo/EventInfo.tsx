@@ -31,21 +31,21 @@ const EventInfo = () => {
     initialValues: eventInfo
       ? eventInfo
       : {
-          address: '',
-          banner: '',
-          logo: '',
-          name: '',
-          location: null,
-          category: '',
-          description: '',
-          file: null,
-          categories: null,
-          // organization_name: '',
-          // organization_desc: '',
-          // organization_phone: '',
-          // organization_email: '',
-          // organization_img: Chamaleon2,
-        },
+        address: '',
+        banner: '',
+        logo: '',
+        name: '',
+        location: null,
+        category: '',
+        description: '',
+        file: null,
+        categories: null,
+        // organization_name: '',
+        // organization_desc: '',
+        // organization_phone: '',
+        // organization_email: '',
+        // organization_img: Chamaleon2,
+      },
     validationSchema: Yup.object({
       banner: Yup.mixed(),
       // logo: Yup.string().required('Logo không được bỏ trống'),
@@ -85,9 +85,9 @@ const EventInfo = () => {
       <div className="">
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
-          <div className="group relative h-[250px] w-full">
+          <div className="group relative  w-full">
             {imagePreviewUrl ? (
-              <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
+              <img src={imagePreviewUrl} alt="banner" className=" w-full min-h-[250px] max-h-[400px] rounded-xl object-cover " />
             ) : (
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
@@ -96,15 +96,13 @@ const EventInfo = () => {
               />
             )}
             <div
-              className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${
-                imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
-              }`}
+              className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
+                }`}
             ></div>
             <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
               <div
-                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
-                  imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
-                }`}
+                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
+                  }`}
               >
                 <input
                   type="file"

@@ -34,7 +34,7 @@ const OrganizationProfile = () => {
               <>
                 <span className="dark:text-cs_light">
                   Đã đăng kí ban tổ chức{' '}
-                  {userProfile?.data?.data?.businessProfile.type === 'personal' ? '(Cá nhân)' : '(Doanh nghiệp)'}
+                  {userProfile?.data?.data?.businessProfile?.type === 'personal' ? '(Cá nhân)' : '(Doanh nghiệp)'}
                 </span>{' '}
                 <br />
               </>
