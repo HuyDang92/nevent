@@ -63,7 +63,7 @@ const Pr = () => {
               https://www.nevsolit.website/
             </Link>
             <br />
-            <Button className="my-5 !bg-[#3547E4] px-32 text-xl" value="Chia sẻ lên Facebook" />
+            <Button className="my-5 !bg-[#3547E4] px-32 text-xl text-white" value="Chia sẻ lên Facebook" />
           </div>
           <div className="flex gap-5 border-b-[1px] py-5">
             <div className="w-1/2">
@@ -74,7 +74,7 @@ const Pr = () => {
               </span>
               <div className="flex justify-between gap-12">
                 <span className="dark:text-cs_light">Size: 500 x 600 px</span>
-                <div className="rounded-lg bg-cs_gray p-2.5 w-[60%]">
+                <div className="w-[60%] rounded-lg bg-cs_gray p-2.5">
                   {`<iframe frameborder="0" width="600" height="500" style="max-width:100%" src="https://ticketbox.vn/ticket-booking/88640/widget/v1?colorscheme=default"></iframe>`}
                 </div>
               </div>

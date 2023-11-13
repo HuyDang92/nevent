@@ -76,6 +76,8 @@ const EventManage = () => {
         );
     }
   };
+  console.log(event.data?.data);
+
   return (
     <>
       {event.isLoading && <Loading />}
@@ -134,8 +136,11 @@ const EventManage = () => {
                   {event.data?.data?.docs?.map((event: IEvent) => (
                     <div className="p-2" key={event._id}>
                       <div className="relative overflow-hidden rounded-xl">
-                        <img className="h-[250px] w-full object-cover" src={event.banner[0].url} alt="" />
-                        <div className="absolute top-0 px-6 py-4 text-[14px] text-cs_light">
+                        {event.banner.length > 0 && (
+                          <img className="h-[250px] w-full object-cover" src={event.banner[0].url} alt="" />
+                        )}
+                        <div className="absolute top-0 z-10 h-full w-full bg-black opacity-30"></div>
+                        <div className="absolute top-0 z-20 px-6 py-4 text-[14px] text-cs_light">
                           <h1 className="mb-4 text-2xl font-bold">{event.title}</h1>
                           {renderStatus(event?.status)}
 
@@ -167,11 +172,11 @@ const EventManage = () => {
                         </div>
                         <Button
                           mode="dark"
-                          className="absolute right-[10px] top-[10px]"
+                          className="absolute right-[10px] top-[10px] z-20"
                           value={<Iconfy className="text-2xl" icon="formkit:people" />}
                         />
                         <Link
-                          className="absolute bottom-[10px] right-[10px]"
+                          className="absolute bottom-[10px] right-[10px] z-20"
                           to={`/organization/manage-event/statistics/${event._id}`}
                         >
                           <Button value="Chi tiết"></Button>
