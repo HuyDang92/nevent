@@ -34,7 +34,7 @@ const Notifycations = ({ auth }: DropdownProps) => {
         </IconButton>
       </motion.div>
       <motion.ul
-        className="absolute right-0 top-[140%] z-20 w-[350px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+        className="absolute -right-[230%] sm:right-0 top-[140%] z-20 w-[350px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -57,11 +57,11 @@ const Notifycations = ({ auth }: DropdownProps) => {
         }}
         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
-        <motion.li variants={itemVariants} className="h-[18rem] space-y-2 overflow-hidden py-2 pb-0 text-center">
+        <motion.li variants={itemVariants} className="h-[17rem] space-y-2 overflow-hidden py-2 pb-0 text-center">
           <Notifycation />
         </motion.li>
         <motion.li variants={itemVariants} className="space-y-2 pb-0 text-center">
-          <Link to="/user/profile/3" onClick={() => setIsOpen(false)} className="cursor-pointer text-sm">
+          <Link to="/user/profile/3" onClick={() => setIsOpen(false)} className="cursor-pointer text-sm dark:text-cs_light">
             Xem tất cả
           </Link>
         </motion.li>

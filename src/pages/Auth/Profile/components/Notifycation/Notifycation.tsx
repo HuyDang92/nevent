@@ -119,9 +119,9 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                   onClick={() => handleItemClick(item)}
                   className={`${item?.view || viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
-                  } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
+                  } flex gap-2 cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
-                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 pr-8">
+                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 sm:pr-8">
                     <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
                       <span
@@ -138,7 +138,7 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                     </div>
                   </Link>
                   {popup && (
-                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
+                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="sm:px-5 text-xl sm:text-sm text-red-500" />
                   )}
                 </div>
               ))

@@ -155,7 +155,10 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     <div className="flex justify-center py-3 pb-8">
                       <div key={index}>
                         {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
-                        <div className="pb-2 font-bold">Vé: {item?.type}</div>
+                        <div className="flex justify-between pb-2 font-bold">
+                          <span>Vé: {item?.title}</span>
+                          <span>{item?.status === 'unworn' ? 'Chưa sử dụng' : 'Đã sử dụng'}</span>
+                        </div>
                         <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?.qr} />
                       </div>
                     </div>
@@ -186,18 +189,9 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
             </>
           )}
         </DialogBody>
-        {/* <DialogFooter className="flex justify-center pt-0">
-          <Button
-            value="Tải về máy"
-            icon="download-outline"
-            className="!bg-cs_semi_green !text-white"
-            onClick={handleDownload}
-          />
-        
-        </DialogFooter> */}
       </Dialog>
       <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
-      <img src={data?.event?.banner[0]?.url} alt="" className="h-[220px] w-full rounded-xl object-cover xl:h-[220px]" />
+      <img src={data?.event?.banner[0]?.url} alt="" className="h-[160px] w-full rounded-xl object-cover xl:h-[220px]" />
       <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
         <div className="xl:w-2/3">
           <Link to={`/event-detail/${data?.event?._id}`}>
@@ -210,13 +204,12 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
             <span className="text-sm "> - {data?.event?.categories[0]?.name}</span>
           </span>
           <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p>
-          <p className="text-sm font-semibold">
+          {/* <p className="text-sm font-semibold">
             Trạng thái:{' '}
             <span className="text-sm text-cs_semi_green">
-              {/* {data?.tickets[0]?.status === false ? 'Chưa sử dụng' : 'Đã sử dụng'} */}
               Chưa sử dụng
             </span>
-          </p>
+          </p> */}
           {/* <p className="text-sm font-semibold">
             Loại vé: <span className="text-sm text-cs_semi_green">{data?.tickets[0]?.title}</span>
           </p> */}

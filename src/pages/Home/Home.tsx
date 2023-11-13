@@ -13,8 +13,9 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import nothing from '~/assets/images/nothing.svg';
 
 function Home() {
-  const categories = useGetAllCategoryQuery();
   const event = useGetAllEventQuery({ page: 1, limit: 12, status: 'UPCOMING' });
+  const eventHot = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 3 });
+  const categories = useGetAllCategoryQuery();
 
   return (
     <>
@@ -24,22 +25,21 @@ function Home() {
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {!categories.isFetching &&
-            categories?.data?.data?.map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
+            categories?.data?.data
+              ?.slice(0, 6)
+              .map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
         <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
-        {event.data?.data?.docs?.length === 0 && (
-          <div className="mt-24 flex justify-center text-center">
+        {eventHot.data?.data?.docs?.length === 0 && (
+          <div className="my-24 flex justify-center text-center">
             <div>
               <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
               <h3 className="font-medium text-[#ccc]">Không có sự kiện</h3>
             </div>
           </div>
         )}
-        {event.isFetching && event.data?.data?.docs?.length === 0 ? (
-          <SkeletonEventHot />
-        ) : (
-          <Slide data={event.data?.data?.docs} />
-        )}
+        {eventHot.isFetching && <SkeletonEventHot />}
+        {eventHot.data?.data?.docs?.length !== 0 && <Slide data={eventHot.data?.data?.docs} />}
         <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
         {event.isFetching && <SkeletonEventList />}
         {event.data?.data?.docs?.length === 0 && (

@@ -128,11 +128,15 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
             {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        <Button
-          onClick={handleBuyTicket}
-          value="Thanh toán"
-          className="w-full !bg-cs_semi_green text-white !shadow-none"
-        />
+        {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0) >= 5000 ? (
+          <Button
+            onClick={handleBuyTicket}
+            value="Thanh toán"
+            className="w-full !bg-cs_semi_green text-white !shadow-none"
+          />
+        ) : (
+          <p className="pt-3 text-center text-xs text-red-500">Tổng thanh toán phải trên 5.000đ</p>
+        )}
         {/* {(activeTab === 2 || activeTab === 4) && (
         )} */}
       </div>

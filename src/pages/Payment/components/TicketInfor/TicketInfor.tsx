@@ -49,13 +49,13 @@ const TicketInfor = () => {
             const ExistedTicket = tickets.find((t) => t._id === ticket._id);
             return (
               <div key={index} className={`my-[15px] flex`}>
-                <div className="flex w-full items-center justify-between gap-5">
+                <div className="flex w-full items-center justify-between gap-2">
                   <TicketCard
-                    className={`!px-1 ${ticket.quantity > 0 ? '' : '!bg-[#eeeeee]'}`}
+                    className={`!px-2 text-sm ${ticket.quantity > 0 ? '' : '!bg-[#eeeeee]'}`}
                     title={ticket.title}
                     tooltip="Tooltip here"
                   />
-                  <span>{ticket.price?.toLocaleString('vi')} VNĐ</span>
+                  {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket.price?.toLocaleString('vi')}đ</span>}
                   <div className="flex min-w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">
                     <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
                     <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>

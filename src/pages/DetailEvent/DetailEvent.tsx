@@ -21,6 +21,7 @@ import { refreshPayment } from '~/features/Payment/paymentSlice';
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
@@ -77,7 +78,8 @@ function DetailEvent() {
                             className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                           >
                             <span className="flex justify-between">
-                              <span>{ticket?.title}:</span> <span>{ticket?.price.toLocaleString('vi')}đ</span>
+                              <span>{ticket?.title}:</span>
+                              {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
                             </span>
                           </li>
                         ))}
@@ -156,26 +158,17 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức
                   </h1>
-                  <div className="gap-4 sm:flex">
-                    <Link to="/" className="w-1/4">
+                  <div className="sm:gap-4 flex">
+                    <Link to="/" className="">
                       <img
                         src={detailEventQuery?.data?.data?.banner[0]?.url}
                         alt=""
-                        className="h-[250px] w-full rounded-lg object-cover sm:h-[150px]"
+                        className="h-[70px] w-[70px] sm:h-[120px] sm:w-[120px] rounded-lg object-cover"
                       />
                     </Link>
-                    <div className="w-3/4 pt-3 sm:pt-0">
-                      <h3 className="font-bold ">BOM ENTERTAINMENT</h3>
-                      <p className="line-clamp-5">
-                        Được thành lập từ năm 2016, Công ty TNHH Bôm Hà Nội là công ty đa ngành nghề với các lĩnh vực
-                        như xây dựng; đầu tư, cho thuê bất động sản; xuất nhập khẩu các sản phẩm y tế;…Năm 2022, BÔM Hà
-                        Nội phát triển lĩnh vực hoạt động nghệ thuật giải trí với tên gọi BOM Entertainment - mục đích
-                        là cầu nối, kết nối, quảng bá văn hóa Hàn Quốc đến khán giả Việt Nam rộng rãi hơn nữa. BOM
-                        Entertainment có mối quan hệ thân thiết với các công ty giải trí hàng đầu tại Hàn Quốc. Vào
-                        21/10/2023 tại Trung tâm Hội nghị Adora Center, 431 Hoàng Văn Thụ, Phường 4, Quận Tân Bình,
-                        TP.Hồ Chí Minh, BOM Entertainment là đơn vị tổ chức chương trình Lee Jong Suk 2023 Fanmeeting
-                        tour – “Dear.My with” trong Fanmeeting tour của diễn viên Lee Jong Suk.
-                      </p>
+                    <div className="">
+                      <h3 className="font-bold ">{detailEventQuery?.data?.data?.creator?.name}</h3>
+                      <p className="line-clamp-5">{detailEventQuery?.data?.data?.creator?.description}</p>
                     </div>
                   </div>
                 </div>
