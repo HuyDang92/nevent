@@ -22,6 +22,8 @@ module.exports = withMT({
         cs_semi_purple: '#BC9FEF',
         cs_semi_green: '#13C6B3',
         cs_purple: '#793FDF',
+        cs_red: '#cf2a27',
+        cs_blueGray: '#597eaa',
         cs_gray: '#B6B6B6',
         cs_light_gray: '#F6F2F2',
         cs_input_gray: '#EEEEEE',

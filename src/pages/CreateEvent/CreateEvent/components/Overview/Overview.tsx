@@ -9,8 +9,10 @@ import { useAppSelector } from '~/hooks/useActionRedux';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { isFetchBaseQueryError } from '~/utils/helper';
+import { useNavigate } from 'react-router-dom';
 
 const OverView = () => {
+  const navigate = useNavigate()
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
@@ -24,7 +26,10 @@ const OverView = () => {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
-      successNotify('Thêm sự kiện thành công');
+      setTimeout(() => {
+        successNotify('Thêm sự kiện thành công');
+      }, 1000);
+      navigate('/organization/event-list')
     }
     if (isError) {
       errorNotify('Thêm sự kiện thất bại');

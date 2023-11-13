@@ -42,7 +42,7 @@ const Statistics = () => {
       </div>
       <div className="mt-2 flex items-start justify-between rounded-xl border-[1px] border-cs_semi_green p-5">
         <div className="flex items-center">
-          <img src={event?.data?.data.banner[0].url} alt={event?.data?.data.title} className="mr-4 h-[110px] w-[110px]" />
+          <img src={event?.data?.data.banner[0].url} alt={event?.data?.data.title} className="mr-4 h-[110px] w-[110px] object-cover" />
           <div className="flex flex-col gap-1 text-[14px] text-cs_grayText dark:text-cs_light">
             <h1 className="mb-4 text-lg font-bold text-cs_dark dark:text-cs_light">{event?.data?.data?.title}</h1>
             <div className="flex items-center gap-[15px]">
