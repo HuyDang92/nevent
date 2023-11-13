@@ -44,7 +44,7 @@ const TicketInfor = () => {
         </h1>
       </div>
       <div className="">
-        <Card className="bg-transparent p-2 shadow-none md:hidden">
+        <div className="bg-transparent p-2 shadow-none md:hidden">
           {eventTicket?.data?.data?.map((ticket: ITicket, index: number) => {
             const ExistedTicket = tickets.find((t) => t._id === ticket._id);
             return (
@@ -65,7 +65,7 @@ const TicketInfor = () => {
               </div>
             );
           })}
-        </Card>
+        </div>
         <Card className="hidden bg-transparent shadow-none md:block">
           <table className="w-full min-w-max table-auto text-left">
             <thead>

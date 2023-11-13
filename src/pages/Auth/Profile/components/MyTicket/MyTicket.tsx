@@ -6,7 +6,6 @@ import Button from '~/components/customs/Button';
 import { Link } from 'react-router-dom';
 import { useGetMyTicketQuery } from '~/features/Auth/authApi.service';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
-
 interface UserInfoProp {
   className?: string;
   auth?: IUserField | null;
@@ -34,7 +33,7 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
             {getTickets.isFetching && <LoadingLocal />}
             {!getTickets.isFetching && getTickets.data?.data?.length > 0 ? (
               getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)
-            ) : ( 
+            ) : (
               <div className="flex justify-center py-5 text-center">
                 <div>
                   <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />

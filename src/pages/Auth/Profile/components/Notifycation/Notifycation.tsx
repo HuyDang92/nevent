@@ -71,15 +71,6 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
     if (!item?.view) {
       await viewed(item?._id);
     }
-    // setClickedItems((prevClickedItems) => {
-    //   // Kiểm tra xem mục đã tồn tại trong mảng chưa
-    //   if (!prevClickedItems.includes(item)) {
-    //     // Nếu mục chưa tồn tại, thêm nó vào mảng
-    //     return [...prevClickedItems, item];
-    //   }
-    //   // Nếu mục đã tồn tại, không thay đổi mảng
-    //   return prevClickedItems;
-    // });
   };
 
   const handleRemoveItem = (item: any) => {
@@ -93,9 +84,8 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       return prevClickedItems;
     });
     setTimeout(() => {
-      const updatedData = notificationData.filter((dataItem: any) => dataItem.id !== item.id);
-      setNotificationData(updatedData);
-    }, 300);
+      socket.emit('delete-notification', item?._id);
+    }, 100);
   };
   const handleViewedAll = async () => {
     await viewed('');
