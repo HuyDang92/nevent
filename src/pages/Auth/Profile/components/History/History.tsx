@@ -3,6 +3,7 @@ import Button from '~/components/customs/Button';
 import moment from 'moment';
 import { PopUpDetail } from './PopUpDetail';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
+import nothing from '~/assets/images/nothing.svg';
 
 interface UserInfoProp {
   className?: string;
@@ -16,6 +17,14 @@ const History = ({ className }: UserInfoProp) => {
       {getHistory.isFetching && <LoadingLocal />}
 
       <div className="space-y-3">
+        {getHistory.data?.data?.length === 0 && (
+          <div className="flex justify-center py-5 text-center">
+            <div>
+              <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
+              <h3 className="font-medium text-[#ccc]">Không có thanh toán nào</h3>
+            </div>
+          </div>
+        )}
         {!getHistory.isFetching &&
           getHistory.data?.data?.length > 0 &&
           getHistory.data?.data?.map((item: IPurchase) => (

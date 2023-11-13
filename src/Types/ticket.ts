@@ -8,3 +8,9 @@ interface ITicket {
   quantity: number;
   desc: string;
 }
+interface IPayloadNotify {
+  sender: string;
+  recipient: string;
+  content: string;
+  url: string;
+}

@@ -19,9 +19,10 @@ function Categories() {
   const locations = useGetLocationsQuery();
   const event = useGetAllEventQuery({
     page: currentPage,
-    limit: 16,
+    limit: 12,
     search: keyword,
     location: locationId,
+    status: 'UPCOMING',
     categories: filterNameCate.length === 0 ? undefined : filterNameCate.join(''),
     // start_date: selectedDate,
   });
@@ -84,7 +85,7 @@ function Categories() {
         </h1>
         <div className="mt-5 items-center justify-between xl:flex">
           {/* Cate tabs */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
@@ -103,7 +104,7 @@ function Categories() {
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select
                 onChange={(e) => setLocationId(e.target.value)}
-                className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
+                className="px-1 py-2.5 bg-cs_light text-cs_semi_green outline-none dark:bg-cs_lightDark"
               >
                 <option value="">Tất cả địa điểm</option>
                 {locations?.data?.data?.map((item: any, index: number) => (
@@ -115,7 +116,7 @@ function Categories() {
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
-              <select className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
+              <select className="px-1 py-2.5 bg-cs_light  text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option className="p-2" value="">
                   Tất cả giá vé
                 </option>
@@ -130,7 +131,7 @@ function Categories() {
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select
-                className="px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
+                className="px-1 py-2.5 bg-cs_light text-cs_semi_green outline-none dark:bg-cs_lightDark"
                 onChange={(e) => handleFilterDate(e.target.value)}
               >
                 <option className="p-2" value="">

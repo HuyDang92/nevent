@@ -32,15 +32,7 @@ const Header = ({ className }: HeaderProps) => {
       >
         <Icon name="ticket" className="text-2xl" />
       </Link>
-
-      <ToggleDarkMode>
-        <p className=" hidden text-cs_semi_green dark:block">
-          <Icon name="sunny" className="text-2xl hover:scale-110" />
-        </p>
-        <p className=" text-cs_semi_green dark:hidden">
-          <Icon name="moon" className="text-2xl hover:scale-110 dark:hidden" />
-        </p>
-      </ToggleDarkMode>
+      <ToggleDarkMode />
       <Link to="/user/organization-profile" className="hidden sm:inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
       </Link>
@@ -49,7 +41,7 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-full  dark:bg-cs_lightDark  ${className} sm:px-5`}
+      className={`sticky top-0 z-20 flex items-center justify-between rounded-none bg-cs_light px-2 py-3 shadow-border-light  dark:bg-cs_lightDark  ${className} sm:px-5`}
     >
       <div className="flex items-center gap-8">
         <Link to="/">

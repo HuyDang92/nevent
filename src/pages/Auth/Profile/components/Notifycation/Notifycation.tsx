@@ -4,6 +4,11 @@ import Icon from '~/components/customs/Icon';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import nothing from '~/assets/images/nothing.svg';
 import useSocket from '~/hooks/useConnecrSocket';
+import moment from 'moment';
+import { useCheckedViewNotifycationMutation } from '~/features/Auth/authApi.service';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { setNotification } from '~/features/Auth/authSlice';
 
 interface UserInfoProp {
   className?: string;
@@ -13,54 +18,59 @@ interface UserInfoProp {
 }
 
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
-  const { messages, sendMessage } = useSocket({ event: 'count-user' });
-  console.log('socket', messages);
-
-  const [notificationData, setNotificationData] = useState([
-    {
-      id: 1,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-    {
-      id: 2,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-    {
-      id: 3,
-      avatar:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-      name: 'Tania',
-      desc: 'send you a message',
-      time: '13 minutes',
-    },
-  ]);
-  const [clickedItems, setClickedItems] = useState<any[]>([]); // Lưu trạng thái click của từng mục
+  const socket = useSocket();
+  const dispatch = useAppDispatch();
+  const [notificationData, setNotificationData] = useState<INotify[]>([]);
   const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
+  const [viewedAll, setViewedAll] = useState<boolean>(false);
+  const [viewed, result] = useCheckedViewNotifycationMutation();
 
   useEffect(() => {
-    const unclickedItems = notificationData.filter((item, index) => !clickedItems.includes(item));
+    const unclickedItems = notificationData.filter((item, index: number) => item?.view === false);
     setUnclick(unclickedItems);
-  }, [clickedItems]);
+    if (unclickedItems?.length > 0) {
+      dispatch(setNotification(true));
+    } else {
+      dispatch(setNotification(false));
+    }
+  }, [notificationData]);
 
-  const handleItemClick = (item: any) => {
-    setClickedItems((prevClickedItems) => {
-      // Kiểm tra xem mục đã tồn tại trong mảng chưa
-      if (!prevClickedItems.includes(item)) {
-        // Nếu mục chưa tồn tại, thêm nó vào mảng
-        return [...prevClickedItems, item];
-      }
-      // Nếu mục đã tồn tại, không thay đổi mảng
-      return prevClickedItems;
-    });
+  useEffect(() => {
+    if (socket) {
+      socket.emit('get-notifications', '');
+      socket.on('get-notifications', (data) => {
+        setNotificationData(data);
+      });
+    } else {
+      console.log('Socket not connected');
+    }
+  }, []);
+  const formatTimeDifference = (timestamp: string): string => {
+    const currentTime = new Date();
+    const compareTime = new Date(timestamp);
+
+    const timeDifferenceInSeconds = Math.floor((currentTime.getTime() - compareTime.getTime()) / 1000);
+
+    const minutes = Math.floor(timeDifferenceInSeconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days} ngày trước`;
+    } else if (hours > 0) {
+      return `${hours} giờ trước`;
+    } else if (minutes > 0) {
+      return `${minutes} phút trước`;
+    } else {
+      return `Bây giờ`;
+    }
+  };
+
+  const handleItemClick = async (item: any) => {
+    if (!item?.view) {
+      await viewed(item?._id);
+    }
   };
 
   const handleRemoveItem = (item: any) => {
@@ -74,13 +84,22 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       return prevClickedItems;
     });
     setTimeout(() => {
-      const updatedData = notificationData.filter((dataItem) => dataItem.id !== item.id);
-      setNotificationData(updatedData);
-    }, 300);
+      socket.emit('delete-notification', item?._id);
+    }, 100);
+  };
+  const handleViewedAll = async () => {
+    await viewed('');
+    setViewedAll(true);
+    setUnclick([]);
   };
   return (
     <div className={`${className}`}>
-      <h1 className="text-xl font-bold dark:text-cs_light">Thông báo</h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl  font-bold dark:text-cs_light">Thông báo</h1>
+        <span onClick={handleViewedAll} className="cursor-pointer  text-sm text-cs_semi_green hover:underline">
+          Đánh dấu đã xem
+        </span>
+      </div>
       <Tabs>
         <TabsHeader className={` mt-3 p-1 shadow-none ${classNameTagHeader} `}>
           <Tab className="flex items-center justify-center" index={0}>
@@ -98,29 +117,28 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                  className={`${item?.view || viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
-                  } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
+                  } flex gap-2 cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
-                  <div className="flex items-center gap-4  py-2 pl-2 pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
+                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 sm:pr-8">
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      <span
+                        className={`${
+                          item?.view || viewedAll ? 'font-normal' : 'font-bold'
+                        } line-clamp-2 text-left text-sm text-cs_grayText`}
                       >
-                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
-                        {item.desc}
-                      </Typography>
+                        {item?.content}
+                      </span>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
-                        {item.time} ago
+                        {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
-                  </div>
+                  </Link>
                   {popup && (
-                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
+                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="sm:px-5 text-xl sm:text-sm text-red-500" />
                   )}
                 </div>
               ))
@@ -139,27 +157,26 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                  className={`${viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
                   } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
-                  <div className="flex items-center gap-4  py-2 pl-2 pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
+                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 pr-8">
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      <span
+                        className={`${
+                          viewedAll ? 'font-normal' : 'font-bold'
+                        } line-clamp-2 text-left text-sm text-cs_grayText`}
                       >
-                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
-                        {item.desc}
-                      </Typography>
+                        {item?.content}
+                      </span>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
-                        {item.time} ago
+                        {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
-                  </div>
+                  </Link>
                   {popup && (
                     <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
                   )}

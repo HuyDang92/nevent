@@ -42,8 +42,9 @@ const ChangePassword = () => {
         .required('Xác nhận mật khẩu không được bỏ trống')
         .oneOf([Yup.ref('newPassword')], 'Mật khẩu không trùng khớp'),
     }),
-    onSubmit: async (value: IChangePassword) => {
-      changePass({ oldPassword: value.oldPassword, password: value.newPassword });
+    onSubmit: async (value: IChangePassword, { resetForm }) => {
+      await changePass({ oldPassword: value.oldPassword, password: value.newPassword });
+      resetForm();
     },
   });
 
@@ -101,7 +102,7 @@ const ChangePassword = () => {
         {isSubmitted && formik.errors.rePassword && (
           <small className="px-2 text-[12px] text-red-600">{formik.errors.rePassword}</small>
         )}
-        <div className="mt-20 text-right">
+        <div className="mt-5 text-right">
           <Button
             className="w-[200px]"
             mode="dark"
