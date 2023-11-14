@@ -29,19 +29,17 @@ function PassTicket() {
       errorNotify('Vui lòng chọn loại vé');
       return;
     }
+    if (auth?.email === userReceive?.email) {
+      errorNotify('Vui lòng chọn người nhận khác');
+      return;
+    }
     await swap({ myTicketId: idTicket, userId: userReceive?._id });
     socket.emit('send-notification', {
       sender: auth?._id,
       recipient: userReceive?._id,
-      content: `${auth?.fullName} đã chuyển giao vé cho bạn vé`,
+      content: `${auth?.fullName} đã chuyển giao vé cho bạn vé! Kiểm tra ví ngay`,
       url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
     } as IPayloadNotify);
-    console.log('swap', {
-      sender: auth?._id,
-      recipient: userReceive?._id,
-      content: `${auth?.fullName} đã chuyển giao vé cho bạn vé`,
-      url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
-    });
   };
   useEffect(() => {
     if (result.isSuccess) {

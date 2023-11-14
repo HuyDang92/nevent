@@ -88,7 +88,13 @@ const PaymentStepper = ({ className }: PaymentStepperProps) => {
           {myParam === '00' ? (
             <IonIcon name={`checkmark-outline`} className="h-5 w-5  text-sm sm:text-2xl " />
           ) : (
-            <IonIcon name="close-outline" className="h-5 w-5  text-sm sm:text-2xl " />
+            <>
+              {activeStep !== 4 ? (
+                <IonIcon name="checkmark-outline" className="h-5 w-5  text-sm sm:text-2xl " />
+              ) : (
+                <IonIcon name="close-outline" className="h-5 w-5  text-sm sm:text-2xl " />
+              )}
+            </>
           )}
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography

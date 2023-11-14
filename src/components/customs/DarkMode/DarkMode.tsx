@@ -26,10 +26,10 @@ const ToggleDarkMode = ({ hidden }: any) => {
   };
 
   return (
-    <div className="px-2">
+    <div className={`px-2`}>
       <div className="check">
         <input type="checkbox" id="check" name="check" value="check" hidden checked={checked} onChange={handleToggle} />
-        <label htmlFor="check" hidden={hidden}>
+        <label htmlFor="check" hidden={hidden} className={` `}>
           <p className=" hidden text-cs_semi_green dark:block">
             <Icon name="sunny" className="text-2xl hover:scale-110" />
           </p>

@@ -99,14 +99,15 @@ export const authApi = createApi({
       }),
     }),
     checkedViewNotifycation: builder.mutation({
-      query: () => ({
-        url: '/api/notifications/view',
+      query: (notificationId) => ({
+        url: `/api/notifications/view${notificationId ? `/${notificationId}` : ''}`,
         method: 'PATCH',
         headers: {
           Accept: 'application/json',
         },
       }),
     }),
+
     swapTicket: builder.mutation({
       query: (body) => ({
         url: '/api/my-tickets/swap-ticket',
@@ -151,4 +152,5 @@ export const {
   useLazyVerifyTicketQuery,
   useLazyGetUserByEmailQuery,
   useSwapTicketMutation,
+  useCheckedViewNotifycationMutation,
 } = authApi;

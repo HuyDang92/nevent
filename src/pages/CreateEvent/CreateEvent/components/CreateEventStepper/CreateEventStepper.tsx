@@ -62,7 +62,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
             </Typography>
           </div>
         </Step>
-        <Step
+        {/* <Step
           // onClick={() => setActiveStep(activeStep >= 1 ? 2 : activeStep)}
           onClick={() => {
             if (activeStep >= 4) {
@@ -95,7 +95,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
               Thông tin banking
             </Typography>
           </div>
-        </Step>
+        </Step> */}
       </Stepper>
     </div>
   );

@@ -76,8 +76,8 @@ const Purchase = () => {
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
               <p>
-                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng thẻ Momo, xin vui lòng không tắt cửa sổ trình duyệt khi
-                đang thanh toán. Vui lòng chờ đến khi có thông báo thành công.
+                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng VNPAY, xin vui lòng không tắt cửa sổ trình duyệt khi đang
+                thanh toán. Vui lòng chờ đến khi có thông báo thành công.
               </p>
             </TabsContent>
             <TabsContent index={1} className="p-5">

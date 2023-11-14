@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logoWhite from '~/assets/images/logoWhite.png';
 import Button from '~/components/customs/Button';
+import Icon from '~/components/customs/Icon';
 type CreateEventSidebarProps = {
   className?: string;
 };
@@ -40,6 +41,18 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
       </Link>
       <div className="flex h-full flex-col items-center justify-between py-5">
         <List className={`px-4 pe-7 text-cs_semi_green`}>
+          <NavLink
+            to={`/organization/event-list`}
+            className={({ isActive }) =>
+              `} mt-2 rounded-xl transition-all hover:bg-white hover:text-cs_semi_green dark:hover:bg-cs_lightDark
+               ${isActive ? ' bg-white text-cs_semi_green dark:bg-cs_lightDark' : 'text-cs_light'}`
+            }
+          >
+            <div className={`flex items-center py-3 hover:bg-transparent font-bold`}>
+              <Icon className='mx-2' name="arrow-back-outline"></Icon>
+              <Typography className={`font-bold`}>Trở lại</Typography>
+            </div>
+          </NavLink>
           {cateList.map((item, index) => (
             <NavLink
               key={index}

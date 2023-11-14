@@ -22,6 +22,8 @@ module.exports = withMT({
         cs_semi_purple: '#BC9FEF',
         cs_semi_green: '#13C6B3',
         cs_purple: '#793FDF',
+        cs_red: '#cf2a27',
+        cs_blueGray: '#597eaa',
         cs_gray: '#B6B6B6',
         cs_light_gray: '#F6F2F2',
         cs_input_gray: '#EEEEEE',
@@ -44,7 +46,8 @@ module.exports = withMT({
         'border-blur': '0px 0px 20px 2px rgba(0,0,0,0.14)',
         'border-light': '0px 0px 8px 0px rgba(0,0,0,0.11)',
         'border-btn': '-2px 4px 6px 0px rgba(0,0,0,0.1)',
-        'border-inset': 'inset 0px 0px 8px 0px rgba(0,0,0,0.11);',
+        'border-inset': 'inset 0px 0px 8px 0px rgba(0,0,0,0.11)',
+        'border-morphism': '.3rem .3rem .6rem #c8d0e7, -.2rem -.2rem .5rem #fff',
       },
       dropShadow: {
         'box-course': '0px 0px 4px rgba(0, 0, 0, 0.25)',

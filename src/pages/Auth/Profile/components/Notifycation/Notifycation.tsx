@@ -5,6 +5,10 @@ import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs'
 import nothing from '~/assets/images/nothing.svg';
 import useSocket from '~/hooks/useConnecrSocket';
 import moment from 'moment';
+import { useCheckedViewNotifycationMutation } from '~/features/Auth/authApi.service';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { setNotification } from '~/features/Auth/authSlice';
 
 interface UserInfoProp {
   className?: string;
@@ -15,29 +19,34 @@ interface UserInfoProp {
 
 const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
   const socket = useSocket();
+  const dispatch = useAppDispatch();
   const [notificationData, setNotificationData] = useState<INotify[]>([]);
-  const [clickedItems, setClickedItems] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
   const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
+  const [viewedAll, setViewedAll] = useState<boolean>(false);
+  const [viewed, result] = useCheckedViewNotifycationMutation();
 
   useEffect(() => {
-    const unclickedItems = notificationData.filter((item, index: number) => !clickedItems.includes(item));
+    const unclickedItems = notificationData.filter((item, index: number) => item?.view === false);
     setUnclick(unclickedItems);
-  }, [clickedItems]);
+    if (unclickedItems?.length > 0) {
+      dispatch(setNotification(true));
+    } else {
+      dispatch(setNotification(false));
+    }
+  }, [notificationData]);
 
   useEffect(() => {
     if (socket) {
       socket.emit('get-notifications', '');
       socket.on('get-notifications', (data) => {
-        // Xử lý dữ liệu từ sự kiện
-        console.log('Received data:', data);
         setNotificationData(data);
       });
     } else {
       console.log('Socket not connected');
     }
   }, []);
-  function formatTimeDifference(timestamp: string): string {
+  const formatTimeDifference = (timestamp: string): string => {
     const currentTime = new Date();
     const compareTime = new Date(timestamp);
 
@@ -48,25 +57,20 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
     const days = Math.floor(hours / 24);
 
     if (days > 0) {
-      return `${days}d ago`;
+      return `${days} ngày trước`;
     } else if (hours > 0) {
-      return `${hours}h ago`;
+      return `${hours} giờ trước`;
     } else if (minutes > 0) {
-      return `${minutes}m ago`;
+      return `${minutes} phút trước`;
     } else {
-      return `Just now`;
+      return `Bây giờ`;
     }
-  }
-  const handleItemClick = (item: any) => {
-    setClickedItems((prevClickedItems) => {
-      // Kiểm tra xem mục đã tồn tại trong mảng chưa
-      if (!prevClickedItems.includes(item)) {
-        // Nếu mục chưa tồn tại, thêm nó vào mảng
-        return [...prevClickedItems, item];
-      }
-      // Nếu mục đã tồn tại, không thay đổi mảng
-      return prevClickedItems;
-    });
+  };
+
+  const handleItemClick = async (item: any) => {
+    if (!item?.view) {
+      await viewed(item?._id);
+    }
   };
 
   const handleRemoveItem = (item: any) => {
@@ -80,13 +84,22 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
       return prevClickedItems;
     });
     setTimeout(() => {
-      const updatedData = notificationData.filter((dataItem: any) => dataItem.id !== item.id);
-      setNotificationData(updatedData);
-    }, 300);
+      socket.emit('delete-notification', item?._id);
+    }, 100);
+  };
+  const handleViewedAll = async () => {
+    await viewed('');
+    setViewedAll(true);
+    setUnclick([]);
   };
   return (
     <div className={`${className}`}>
-      <h1 className="text-xl font-bold dark:text-cs_light">Thông báo</h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl  font-bold dark:text-cs_light">Thông báo</h1>
+        <span onClick={handleViewedAll} className="cursor-pointer  text-sm text-cs_semi_green hover:underline">
+          Đánh dấu đã xem
+        </span>
+      </div>
       <Tabs>
         <TabsHeader className={` mt-3 p-1 shadow-none ${classNameTagHeader} `}>
           <Tab className="flex items-center justify-center" index={0}>
@@ -104,29 +117,28 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                  className={`${item?.view || viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
-                  } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
+                  } flex gap-2 cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
-                  <div className="flex items-center gap-4  py-2 pl-2 pr-8">
+                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 sm:pr-8">
                     <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      <span
+                        className={`${
+                          item?.view || viewedAll ? 'font-normal' : 'font-bold'
+                        } line-clamp-2 text-left text-sm text-cs_grayText`}
                       >
-                        {/* <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item?.content}</span>{' '} */}
                         {item?.content}
-                      </Typography>
+                      </span>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
                         {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
-                  </div>
+                  </Link>
                   {popup && (
-                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
+                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="sm:px-5 text-xl sm:text-sm text-red-500" />
                   )}
                 </div>
               ))
@@ -145,27 +157,26 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                 <div
                   key={index}
                   onClick={() => handleItemClick(item)}
-                  className={`${clickedItems.includes(item) ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
+                  className={`${viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
                   } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
-                  <div className="flex items-center gap-4  py-2 pl-2 pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item.avatar} />
+                  <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 pr-8">
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
                     <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className={`${clickedItems.includes(item) ? 'font-normal' : 'font-bold'} `}
+                      <span
+                        className={`${
+                          viewedAll ? 'font-normal' : 'font-bold'
+                        } line-clamp-2 text-left text-sm text-cs_grayText`}
                       >
-                        <span className=" font-semibold text-blue-gray-900 dark:text-cs_light">{item.name}</span>{' '}
-                        {item.desc}
-                      </Typography>
+                        {item?.content}
+                      </span>
                       <Typography variant="small" className="flex items-center gap-1 text-xs text-gray-600">
                         <Icon name="time-outline" />
                         {formatTimeDifference(item?.createdAt)}
                       </Typography>
                     </div>
-                  </div>
+                  </Link>
                   {popup && (
                     <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="px-5 text-red-500" />
                   )}
