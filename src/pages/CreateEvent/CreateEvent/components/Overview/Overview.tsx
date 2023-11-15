@@ -9,13 +9,14 @@ import { useAppSelector } from '~/hooks/useActionRedux';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { isFetchBaseQueryError } from '~/utils/helper';
+import { useNavigate } from 'react-router-dom';
+import { Carousel, IconButton } from '@material-tailwind/react';
 
 const OverView = () => {
+  const navigate = useNavigate();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
-  console.log(isSuccess);
-  console.log(data?.data);
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -24,7 +25,10 @@ const OverView = () => {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
-      successNotify('Thêm sự kiện thành công');
+      setTimeout(() => {
+        successNotify('Thêm sự kiện thành công');
+      }, 1000);
+      navigate('/organization/event-list');
     }
     if (isError) {
       errorNotify('Thêm sự kiện thất bại');
@@ -40,16 +44,44 @@ const OverView = () => {
     const isoDateTime = newDate.toISOString();
     return isoDateTime;
   };
+
+  const upLoadImg = async (url: string) => {
+    return new Promise((resolve, reject) => {
+      const date = new Date();
+      const signature = `${date.getTime()}-${Math.random()}`;
+      fetch(url)
+        .then((r) => r.blob())
+        .then(
+          (blobFile) =>
+            new File([blobFile], `${eventInfo?.name ? eventInfo?.name + '-' + signature : 'eventImage' + signature}`, {
+              type: 'image/png',
+            }),
+        )
+        .then(async (file) => {
+          const idImg = await upLoad(file);
+          resolve(idImg);
+        })
+        .catch((err) => reject(err));
+    });
+  };
   const handleAddEvent = async () => {
     try {
+      let bannerId: any[] = [];
       if (eventInfo?.banner) {
-        const file = await fetch(eventInfo?.banner)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) =>
-              new File([blobFile], `${eventInfo?.name ? eventInfo?.name : 'eventImage'}`, { type: 'image/png' }),
-          );
-        const bannerId = await upLoad(file);
+        bannerId = await Promise.all(eventInfo?.banner.map((url) => upLoadImg(url)))
+          .then((images) => {
+            // 'images' is an array containing the results of all the promises
+            console.log('All images fetched successfully:', images);
+            return images;
+            // Further processing or rendering of images can be done here
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the fetching process
+            console.error('Error fetching images:', error);
+            return [];
+          });
+          console.log(bannerId);
+          
         await createEvent({
           title: eventInfo?.name,
           categories: [eventInfo?.categories?._id],
@@ -58,7 +90,7 @@ const OverView = () => {
           desc: eventInfo?.description,
           totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
           tickets: ticketList,
-          banner: [bannerId],
+          banner: bannerId,
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
@@ -78,7 +110,53 @@ const OverView = () => {
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
           )}
           <div className="my-5 h-[250px] w-full">
-            <img src={eventInfo?.banner} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            <Carousel
+              className="rounded-xl"
+              prevArrow={({ handlePrev }) => (
+                <IconButton
+                  variant="text"
+                  color="white"
+                  size="lg"
+                  onClick={handlePrev}
+                  className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                  </svg>
+                </IconButton>
+              )}
+              nextArrow={({ handleNext }) => (
+                <IconButton
+                  variant="text"
+                  color="white"
+                  size="lg"
+                  onClick={handleNext}
+                  className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </IconButton>
+              )}
+            >
+              {eventInfo?.banner.map((image) => (
+                <img src={image} alt="banner" className="h-full w-full rounded-xl object-cover " />
+              ))}
+            </Carousel>
           </div>
           <div>
             <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">

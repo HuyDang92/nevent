@@ -66,7 +66,7 @@ const swipePower = (offset: number, velocity: number) => {
 
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
-  // const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5 });
+  const event = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 5  });
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -172,13 +172,13 @@ const Banner = () => {
       <button onClick={goToPrevImage} className="cursor-pointer">
         <Icon
           name="chevron-back-outline"
-          className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 bg-opacity-20 p-0.5 text-[2.3rem] text-cs_light transition-all hover:scale-110 hover:bg-opacity-30"
+          className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 bg-opacity-20 p-0.5 text-[1.5rem] sm:text-[2.3rem] text-cs_light transition-all hover:scale-110 hover:bg-opacity-30"
         />
       </button>
       <button onClick={goToNextImage} className="cursor-pointer">
         <Icon
           name="chevron-forward-outline"
-          className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 bg-opacity-20 p-0.5 text-[2.3rem] text-cs_light transition-all hover:scale-110 hover:bg-opacity-30"
+          className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 bg-opacity-20 p-0.5 text-[1.5rem] sm:text-[2.3rem] text-cs_light transition-all hover:scale-110 hover:bg-opacity-30"
         />
       </button>
 

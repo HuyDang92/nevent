@@ -57,8 +57,8 @@ export function PopUpDetail({ data, children }: IPopUpDetailProps) {
               <div className="flex justify-between border-b">
                 <h3 className="pb-2 text-[#ccc] ">Danh sách vé</h3>
                 <div>
-                  {data?.tickets?.map((item: Ticket) => (
-                    <span className="font-medium" key={item._id}>
+                  {data?.tickets?.map((item: Ticket, index: number) => (
+                    <span key={index} className="font-medium">
                       {item.title},{' '}
                     </span>
                   ))}

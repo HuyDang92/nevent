@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-const ToggleDarkMode = ({ children }: any) => {
+import Icon from '../Icon';
+const ToggleDarkMode = ({ hidden }: any) => {
   const [checked, setChecked] = useState(false);
-  
+
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -25,10 +26,17 @@ const ToggleDarkMode = ({ children }: any) => {
   };
 
   return (
-    <div className="px-2">
+    <div className={`px-2`}>
       <div className="check">
         <input type="checkbox" id="check" name="check" value="check" hidden checked={checked} onChange={handleToggle} />
-        <label htmlFor="check">{children}</label>
+        <label htmlFor="check" hidden={hidden} className={` `}>
+          <p className=" hidden text-cs_semi_green dark:block">
+            <Icon name="sunny" className="text-2xl hover:scale-110" />
+          </p>
+          <p className=" text-cs_semi_green dark:hidden">
+            <Icon name="moon" className="text-2xl hover:scale-110 dark:hidden" />
+          </p>
+        </label>
       </div>
       {/* <label className="label">
             <div className="toggle">

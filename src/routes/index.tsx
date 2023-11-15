@@ -33,8 +33,6 @@ import MyPallet from '~/pages/MyPallet/MyPallet';
 import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 
 export default function AppRoutes() {
-  const auth = useSelector((state: RootState) => state.auth.loggedIn);
-
   return (
     <>
       <Routes>
@@ -76,7 +74,6 @@ export default function AppRoutes() {
           </Route>
           <Route index path="payment/:idEvent/:step" element={<Payment />} />
           <Route index path="payment/:step" element={<Payment />} />
-          <Route path="scan-ticket" element={<Scan />} />
           <Route element={<CreateEventLayout />}>
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
@@ -96,6 +93,7 @@ export default function AppRoutes() {
             <Route path="pr/:idEvent" element={<Pr />} />
             <Route path="discount/:idEvent" element={<Discount />} />
           </Route>
+          <Route path="scan-ticket" element={<Scan />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

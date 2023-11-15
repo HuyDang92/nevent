@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import * as Yup from 'yup';
 import { addUserInfor } from '~/features/Payment/paymentSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
 
 const UserInfor = () => {
   const { idEvent } = useParams();
@@ -12,7 +13,7 @@ const UserInfor = () => {
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
-  console.log(userInfor);
+  const [updateProfile, result] = useUpdateProfileMutation();
 
   const formik = useFormik({
     initialValues: userInfor
@@ -33,8 +34,8 @@ const UserInfor = () => {
     }),
     onSubmit(values) {
       console.log(values);
-
       try {
+        updateProfile({ fullName: values.fullName, phone: values.phone });
         dispatch(addUserInfor(values));
         navigate(`/user/payment/${idEvent}/1`);
       } catch (err) {
@@ -75,6 +76,7 @@ const UserInfor = () => {
               onChange={formik.handleChange}
               classNameInput="w-full"
               label="Email"
+              readonly
             />
           </div>
           <div className="relative w-full md:w-[calc(50%-8px)]">

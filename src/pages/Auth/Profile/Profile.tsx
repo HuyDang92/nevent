@@ -45,6 +45,12 @@ const Profile: React.FC<ProfileProps> = () => {
     await updateProfile({ avatar: id });
   };
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+  useEffect(() => {
     if (result.isSuccess) {
       successNotify('Cập nhật ảnh thành công');
       setImagePreviewUrl(null);
@@ -69,9 +75,9 @@ const Profile: React.FC<ProfileProps> = () => {
         {imagePreviewUrlCover && (
           <img className="h-[180px] w-full rounded-xl object-cover sm:h-[200px]" src={imagePreviewUrlCover} alt="" />
         )}
-        <div className="absolute ml-5 flex -translate-y-[75%] items-start gap-4 md:ml-[30px]">
+        <div className="absolute ml-5 flex -translate-y-[80%] sm:-translate-y-[75%] items-start gap-4 md:ml-[30px]">
           <div className="relative">
-            <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
+            <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <img
                   className="h-full w-full object-cover"

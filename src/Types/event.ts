@@ -1,5 +1,6 @@
 interface IEvent {
   _id: string;
+  creator: Creator;
   title: string;
   start_date: string;
   location: {
@@ -12,9 +13,32 @@ interface IEvent {
   hot: boolean;
   hotLevel: number;
   banner: IBanner[];
+  totalTicketIssue: number;
+  salesStartDate: string;
+  salesEndDate: string;
+  createdAt: string;
   updatedAt: string;
+  __v: number;
 }
-
+interface Creator {
+  _id: string;
+  user: IUserField;
+  type: string;
+  name: string;
+  crn: string;
+  placeOfIssue: string;
+  dateOfIssue: string;
+  address: string;
+  cccd: string;
+  taxCode: string;
+  organization_name: string;
+  description: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 interface ICategory {
   _id: string;
   name: string;
@@ -52,7 +76,7 @@ interface IImage {
   __v: number;
 }
 interface IEventInfo {
-  banner: string;
+  banner: string[];
   logo: string;
   name: string;
   address: string;
@@ -60,7 +84,7 @@ interface IEventInfo {
   category: string;
   categories: ICategory | null;
   description: string;
-  file: null | File;
+  file: null | File[];
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;
