@@ -54,7 +54,12 @@ function LogIn() {
       dispatch(assignNewToken(data?.data?.token?.accessToken));
       dispatch(assignNewRefreshToken(data?.data?.token?.refreshToken));
       dispatch(setAuthCurrentUser(data?.data?.user));
-      navigate('/');
+      if (data?.data?.user?.role?.name === 'business') {
+        // navigate('/organization/organization-profile');
+        window.location.href = '/organization/organization-profile';
+      } else {
+        navigate('/');
+      }
     }
     if (isError) {
       errorNotify('Đăng nhập thất bại');

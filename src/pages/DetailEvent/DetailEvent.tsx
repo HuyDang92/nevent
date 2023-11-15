@@ -15,13 +15,14 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
 import { useEffect } from 'react';
-import { useAppDispatch } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
+import { Carousel, IconButton } from '@material-tailwind/react';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const auth = useAppSelector((state) => state.auth.currentUser);
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
@@ -48,15 +49,60 @@ function DetailEvent() {
           <div className="flex-row-reverse gap-4 xl:flex">
             <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
               <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
-                <img
-                  src={detailEventQuery?.data?.data?.banner[0]?.url}
-                  alt="banner"
-                  className="h-[160px] w-full rounded-xl object-cover sm:h-[300px] xl:h-[160px]"
-                />
+              <Carousel
+                  className={`h-[160px]w-full rounded-xl object-cover`}
+                  prevArrow={({ handlePrev }) => (
+                    <IconButton
+                      variant="text"
+                      color="white"
+                      size="lg"
+                      onClick={handlePrev}
+                      className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                      </svg>
+                    </IconButton>
+                  )}
+                  nextArrow={({ handleNext }) => (
+                    <IconButton
+                      variant="text"
+                      color="white"
+                      size="lg"
+                      onClick={handleNext}
+                      className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </IconButton>
+                  )}
+                >
+                  {detailEventQuery?.data?.data?.banner?.map((image: any) => (
+                    <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+                  ))}
+                </Carousel>
                 <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
                     {detailEventQuery?.data?.data?.title}
                   </h1>
+                  {detailEventQuery?.data?.data?.creator?.type === 'business' && (
+                    <h1>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
+                  )}
                   <div className="flex items-center gap-[15px]">
                     <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
@@ -88,22 +134,73 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Button
-                    className="w-full"
-                    value="Đặt vé ngay"
-                    mode="dark"
-                    onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
-                  />
+                  {auth?.role?.name === 'user' ? (
+                    <Button
+                      className="w-full"
+                      value="Đặt vé ngay"
+                      mode="dark"
+                      onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                    />
+                  ) : (
+                    <span>Dùng vai trò người dùng để có thể mua vé</span>
+                  )}
                 </div>
               </div>
             </div>
             <div className="xl:w-[78%]">
               <div className="hidden xl:block">
-                <img
+                {/* <img
                   src={detailEventQuery?.data?.data?.banner[0]?.url}
                   alt=""
                   className="w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]"
-                />
+                /> */}
+                <Carousel
+                  className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]`}
+                  prevArrow={({ handlePrev }) => (
+                    <IconButton
+                      variant="text"
+                      color="white"
+                      size="lg"
+                      onClick={handlePrev}
+                      className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                      </svg>
+                    </IconButton>
+                  )}
+                  nextArrow={({ handleNext }) => (
+                    <IconButton
+                      variant="text"
+                      color="white"
+                      size="lg"
+                      onClick={handleNext}
+                      className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </IconButton>
+                  )}
+                >
+                  {detailEventQuery?.data?.data?.banner?.map((image: any) => (
+                    <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+                  ))}
+                </Carousel>
               </div>
               <div className="space-y-10 xl:py-5 ">
                 <div className=" hidden flex-col justify-between text-[12px] md:text-[18px] xl:flex">
@@ -160,12 +257,12 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức
                   </h1>
-                  <div className="sm:gap-4 flex">
+                  <div className="flex sm:gap-4">
                     <Link to="/" className="">
                       <img
                         src={detailEventQuery?.data?.data?.banner[0]?.url}
                         alt=""
-                        className="h-[70px] w-[70px] sm:h-[120px] sm:w-[120px] rounded-lg object-cover"
+                        className="h-[70px] w-[70px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
                       />
                     </Link>
                     <div className="">

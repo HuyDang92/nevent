@@ -11,8 +11,7 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
-import { Carousel, IconButton } from '@material-tailwind/react';
-
+import MyCarousel from '~/components/customs/MyCarousel';
 const EventInfo = () => {
   const dispatch = useAppDispatch();
   const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
@@ -110,53 +109,7 @@ const EventInfo = () => {
         <form onSubmit={formik.handleSubmit} className="mt-3">
           <div className="group relative h-[250px] w-full">
             {imagePreviewUrl.length > 0 ? (
-              <Carousel
-                className="rounded-xl"
-                prevArrow={({ handlePrev }) => (
-                  <IconButton
-                    variant="text"
-                    color="white"
-                    size="lg"
-                    onClick={handlePrev}
-                    className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="h-6 w-6"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                  </IconButton>
-                )}
-                nextArrow={({ handleNext }) => (
-                  <IconButton
-                    variant="text"
-                    color="white"
-                    size="lg"
-                    onClick={handleNext}
-                    className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="h-6 w-6"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </IconButton>
-                )}
-              >
-                {imagePreviewUrl.map((image) => (
-                  <img src={image} alt="banner" className="h-full w-full rounded-xl object-cover " />
-                ))}
-              </Carousel>
+              <MyCarousel data={imagePreviewUrl} />
             ) : (
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
