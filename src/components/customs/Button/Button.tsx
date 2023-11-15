@@ -24,7 +24,7 @@ const Button = ({ icon, onClick, className, value, type = 'button', mode = 'ligh
       whileTap={{ scale: 0.9 }}
       type={type}
     >
-      {icon && <IonIcon name={icon as any} className="text-2xl" />}
+      {icon && <IonIcon name={icon as any} className="text-xl pr-2" />}
       <span>{value}</span>
     </motion.button>
   );

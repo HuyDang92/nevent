@@ -75,7 +75,7 @@ const TicketInfor = () => {
                     key={head}
                     className={`${index === 0 ? 'pl-5 !text-left' : ''} ${
                       index === TABLE_HEAD.length - 1 ? 'pr-5 !text-right' : ''
-                    } w-1/4 py-5 text-center text-lg font-bold leading-none text-black opacity-70 dark:text-cs_light`}
+                    } w-[27%] py-5 text-center text-lg font-bold leading-none text-black opacity-70 dark:text-cs_light`}
                   >
                     {head}
                   </th>
@@ -102,7 +102,7 @@ const TicketInfor = () => {
                       )}
                     </td>
                     <td className="border-t border-[#eee] p-4">
-                      <div className="mx-auto flex w-[85px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
+                      <div className="mx-auto flex w-[80px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
                         <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
                         <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>
                         <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
