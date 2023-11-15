@@ -23,13 +23,13 @@ const Statistics = () => {
     if (isSuccess) {
       setTimeout(() => {
         successNotify('Xóa sự kiện thành công');
-      }, 1000);
+      }, 500);
       navigate('/organization/event-list');
     }
     if (isError) {
       errorNotify('Xóa sự kiện thất bại');
     }
-  }, [isSuccess,isError]);
+  }, [isSuccess, isError]);
 
   // Chart JS
   const chartLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
@@ -217,9 +217,9 @@ const Statistics = () => {
               <div className="flex h-8 w-32 items-center justify-center rounded-md bg-cs_green text-[14px] font-semibold text-cs_light">
                 Đã mua : 0
               </div>
-              <div className="flex h-8 w-32 items-center justify-center rounded-md bg-[#f00] text-[14px] font-semibold text-cs_light">
+              {/* <div className="flex h-8 w-32 items-center justify-center rounded-md bg-[#f00] text-[14px] font-semibold text-cs_light">
                 Đã hủy : 0
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

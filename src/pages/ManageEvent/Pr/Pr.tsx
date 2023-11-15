@@ -26,8 +26,8 @@ const Pr = () => {
         <div className="p-5">
           <div className="border-b-[1px]">
             <b className="text-xl dark:text-cs_light">Link quảng bá : </b>
-            <Link className="text-xl text-cs_semi_green" to={`/event-detail/${event._id}`}>
-              https://www.nevsolit.website/
+            <Link className="text-xl text-cs_semi_green" to={`/event-detail/${idEvent}`}>
+              https://www.nevent.io.vn/event-detail/{idEvent}
             </Link>
             <br />
             <Button className="my-5 !bg-[#3547E4] px-32 text-xl text-white" value="Chia sẻ lên Facebook" />
@@ -40,10 +40,10 @@ const Pr = () => {
                 Copy đoạn mã bên dưới để tạo widget bán vé trên blog hoặc website của bạn
               </span>
               <div className="flex justify-between gap-12">
-                <div className='flex gap-5 items-center'>
-                  <Input classNameInput='w-[100px]' value={widthIpt} onChange={(e) => setWidthIpt(e.target.value)} />
+                <div className="flex items-center gap-5">
+                  <Input classNameInput="w-[100px]" value={widthIpt} onChange={(e) => setWidthIpt(e.target.value)} />
                   <b>X</b>
-                  <Input classNameInput='w-[100px]' value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} />
+                  <Input classNameInput="w-[100px]" value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} />
                 </div>
                 <div className="w-[60%] rounded-lg bg-cs_gray p-2.5">
                   {`<iframe width="${width}" height="${height}" style="border-radius:8px" src="nevent.io.vn/pr/${idEvent}"></iframe>`}
@@ -51,7 +51,7 @@ const Pr = () => {
               </div>
             </div>
             <div className="flex w-1/2 flex-col items-center rounded-lg border-[1px] border-cs_semi_green px-7 py-9">
-              <iframe className='rounded-lg' src={`/pr/${idEvent}`} height={height} width={width}></iframe>
+              <iframe className="rounded-lg" src={`/pr/${idEvent}`} height={height} width={width}></iframe>
             </div>
           </div>
           <div className="flex flex-col items-start gap-4 pt-5">
