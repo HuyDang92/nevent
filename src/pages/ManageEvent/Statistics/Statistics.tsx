@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
-import { useDeleteEventMutation, useGetEventByIdQuery } from '~/features/Event/eventApi.service';
+import { useDeleteEventMutation, useGetEventByIdQuery, useGetTicketByEventIdQuery } from '~/features/Event/eventApi.service';
 import { Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton } from '@material-tailwind/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { LineChart } from '~/components/Chart';
@@ -19,6 +19,9 @@ const Statistics = () => {
   const auth = useAppSelector((state) => state.auth);
   const [deleteEvent, { isLoading, isSuccess, isError }] = useDeleteEventMutation();
   const event = useGetEventByIdQuery(idEvent || '');
+  const tikets = useGetTicketByEventIdQuery(idEvent || '');
+  console.log(tikets);
+
   useEffect(() => {
     if (isSuccess) {
       setTimeout(() => {
@@ -236,6 +239,7 @@ const Statistics = () => {
               <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
             </div>
             <ul>
+              {tikets}
               <li className="flex justify-between rounded-lg border-[1px] border-cs_gray px-10 py-4 font-semibold dark:text-cs_light">
                 <span className="w-[calc(100%/6)] text-center">VVIP</span>
                 <span className="w-[calc(100%/6)] text-center">Hạng 1</span>

@@ -48,7 +48,7 @@ const RsvpsManage = () => {
   const handleOnclick = (tag: any) => {
     setActiveTags(tag === activeTags ? null : tag);
   };
-  const isTagActive = (tag) => activeTags === tag;
+  const isTagActive = (tag: any) => activeTags === tag;
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
       <div className="flex justify-between">
