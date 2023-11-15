@@ -107,9 +107,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           >
             <div className={`flex items-center px-4 py-3 hover:bg-transparent`}>
               <ListItemPrefix className="mr-0">
-                <Icon name="log-out" className={`text-xl`} />
+                <Icon name="log-out" className={`text-xl dark:text-cs_light`} />
               </ListItemPrefix>
-              {!open && <Typography className={`ml-4 font-semibold`}>Đăng xuất</Typography>}
+              {!open && <Typography className={`ml-4 font-semibold dark:text-cs_light`}>Đăng xuất</Typography>}
             </div>
           </div>
         )}

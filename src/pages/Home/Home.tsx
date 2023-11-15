@@ -21,7 +21,7 @@ function Home() {
     <>
       <div className="mb-6 w-full">
         <Banner />
-        <SectionTitle value="Danh mục yêu thích" to="/event-categories" />
+        <SectionTitle value="Danh mục được yêu thích" to="/event-categories" />
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
           {!categories.isFetching &&
