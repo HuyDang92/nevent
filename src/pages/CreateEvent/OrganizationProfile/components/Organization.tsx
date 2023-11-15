@@ -9,6 +9,7 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import Loading from '~/components/customs/Loading';
 import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { useAppDispatch } from '~/hooks/useActionRedux';
+import { useNavigate } from 'react-router-dom';
 
 interface IOrganizationInfo {
   organization_name: string;
@@ -28,6 +29,7 @@ interface IOrganizationInfo {
 }
 const Organization = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
   
@@ -100,6 +102,7 @@ const Organization = () => {
     }
     if (isError) {
       errorNotify('Cập nhật thất bại');
+      navigate('/organization/organization-profile');
     }
   }, [isSuccess, isError,userProfile]);
 

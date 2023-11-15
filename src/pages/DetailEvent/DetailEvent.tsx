@@ -15,13 +15,13 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
 import { useEffect } from 'react';
-import { useAppDispatch } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const auth = useAppSelector((state) => state.auth.currentUser);
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
@@ -86,12 +86,16 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Button
-                    className="w-full"
-                    value="Đặt vé ngay"
-                    mode="dark"
-                    onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
-                  />
+                  {auth?.role?.name === 'user' ? (
+                    <Button
+                      className="w-full"
+                      value="Đặt vé ngay"
+                      mode="dark"
+                      onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                    />
+                  ) : (
+                    <span>Dùng vai trò người dùng để có thể mua vé</span>
+                  )}
                 </div>
               </div>
             </div>
@@ -158,12 +162,12 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức
                   </h1>
-                  <div className="sm:gap-4 flex">
+                  <div className="flex sm:gap-4">
                     <Link to="/" className="">
                       <img
                         src={detailEventQuery?.data?.data?.banner[0]?.url}
                         alt=""
-                        className="h-[70px] w-[70px] sm:h-[120px] sm:w-[120px] rounded-lg object-cover"
+                        className="h-[70px] w-[70px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
                       />
                     </Link>
                     <div className="">

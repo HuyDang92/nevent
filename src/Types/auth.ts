@@ -17,6 +17,7 @@ interface IUserField {
   };
   createdAt: string;
   updatedAt: string;
+  businessProfile: IBusinessField | null;
 }
 interface INotify {
   _id: string;

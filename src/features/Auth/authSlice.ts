@@ -70,6 +70,13 @@ const authSlice = createSlice({
         state.refreshToken.token = null;
       }
     });
+      // builder.addMatcher(isAnyOf(authApi.endpoints.getProfile.matchFulfilled), (state, action) => {
+      //   const response = action.payload;
+      //   if (response?.statusCode === 200) {
+      //     console.log('response', response);
+      //     state.currentUser = response?.data.user;
+      //   }
+      // });
   },
 });
 export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;

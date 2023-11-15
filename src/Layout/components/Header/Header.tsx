@@ -33,7 +33,8 @@ const Header = ({ className }: HeaderProps) => {
         <Icon name="ticket" className="text-2xl" />
       </Link>
       <ToggleDarkMode />
-      <Link to="/user/organization-profile" className="hidden sm:inline-block">
+
+      <Link to="/user/organization-profile" className="hidden :inline-block">
         <Button value="Tạo sự kiện" type="button" className="" mode="light" />
       </Link>
     </ul>

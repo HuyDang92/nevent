@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logoWhite.png';
 import { useEffect, useState } from 'react';
-import { useForgotPassWordMutation } from '~/features/Auth/authApi.service';
+import { useForgotPassWordMutation, useVerifyForgotPasswordMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { Dialog, DialogBody, DialogFooter } from '@material-tailwind/react';
 
@@ -13,11 +13,13 @@ function ForgotPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
+  const [secret, setSecret] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [openMessage, setOpenMessage] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
 
   const [changePass, result] = useForgotPassWordMutation();
+  const [verify, resultVerify] = useVerifyForgotPasswordMutation();
   const handleSubmit = async (type: string) => {
     if (!email) return;
     if (type === 'send') {
@@ -32,7 +34,7 @@ function ForgotPassword() {
       return;
     }
     if (type === 'confirm') {
-      await changePass({ email: email, code: Number(code) });
+      await verify({ email: email, code: Number(code), secret: secret });
       setOpenMessage(true);
     }
   };
@@ -43,8 +45,12 @@ function ForgotPassword() {
   useEffect(() => {
     if (result.isSuccess) {
       setOpen(false);
+      setSecret(result.data?.data?.secret);
     }
-  }, [result.isLoading]);
+    if (resultVerify.isSuccess) {
+      setOpen(false);
+    }
+  }, [result.isLoading, resultVerify.isLoading]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,7 +63,7 @@ function ForgotPassword() {
 
   return (
     <div className="">
-      {result.isLoading && <Loading />}
+      {result.isLoading || resultVerify.isLoading && <Loading />}
       <img src={bg} className="fixed -top-12 bottom-0 left-0 right-0" alt="" />
       <Dialog
         open={open}
