@@ -11,11 +11,13 @@ import { useGetEventBusinessQuery } from '~/features/Event/eventApi.service';
 import { useState } from 'react';
 import Loading from '~/components/customs/Loading';
 import { useDebounce } from '~/hooks/useDebounce';
+import { useAppSelector } from '~/hooks/useActionRedux';
 const EventManage = () => {
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
   const { searchValue } = useDebounce(keyword, 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const auth = useAppSelector((state) => state.auth);
   const event = useGetEventBusinessQuery({
     limit: limit,
     page: currentPage,
@@ -30,10 +32,10 @@ const EventManage = () => {
   };
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
   };
   const renderStatus = (status: string) => {
     switch (status) {
@@ -76,13 +78,15 @@ const EventManage = () => {
         );
     }
   };
+  console.log(event.data?.data);
+
   return (
     <>
       {event.isLoading && <Loading />}
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
-          <Dropdown />
+          <Dropdown auth={auth} />
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[72%]">
@@ -134,8 +138,11 @@ const EventManage = () => {
                   {event.data?.data?.docs?.map((event: IEvent) => (
                     <div className="p-2" key={event._id}>
                       <div className="relative overflow-hidden rounded-xl">
-                        <img className="h-[250px] w-full object-cover" src={event.banner[0].url} alt="" />
-                        <div className="absolute top-0 px-6 py-4 text-[14px] text-cs_light">
+                        {event.banner.length > 0 && (
+                          <img className="h-[250px] w-full object-cover" src={event.banner[0].url} alt="" />
+                        )}
+                        <div className="absolute top-0 z-10 h-full w-full bg-black opacity-30"></div>
+                        <div className="absolute top-0 z-20 px-6 py-4 text-[14px] text-cs_light">
                           <h1 className="mb-4 text-2xl font-bold">{event.title}</h1>
                           {renderStatus(event?.status)}
 
@@ -167,11 +174,11 @@ const EventManage = () => {
                         </div>
                         <Button
                           mode="dark"
-                          className="absolute right-[10px] top-[10px]"
+                          className="absolute right-[10px] top-[10px] z-20"
                           value={<Iconfy className="text-2xl" icon="formkit:people" />}
                         />
                         <Link
-                          className="absolute bottom-[10px] right-[10px]"
+                          className="absolute bottom-[10px] right-[10px] z-20"
                           to={`/organization/manage-event/statistics/${event._id}`}
                         >
                           <Button value="Chi tiết"></Button>

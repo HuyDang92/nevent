@@ -26,7 +26,7 @@ const OrganizationProfile = () => {
           <h1 className="text-2xl font-bold dark:text-white">
             {auth.currentUser?.role.name === 'user' ? 'Đăng ký tổ chức' : 'Hồ sơ tổ chức'}
           </h1>
-          <Dropdown />
+          <Dropdown auth={auth} />
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-full">
