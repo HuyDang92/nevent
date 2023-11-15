@@ -11,7 +11,6 @@ import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
 import SkeletonEventHot from '~/components/customs/Skeleton/SkeletonEventHot';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import nothing from '~/assets/images/nothing.svg';
-import Slides from '../../components/TicketProfile/components/SlidesTicket';
 
 function Home() {
   const event = useGetAllEventQuery({ page: 1, limit: 12, status: 'UPCOMING' });

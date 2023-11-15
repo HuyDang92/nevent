@@ -2,7 +2,6 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import moment from 'moment';
 import Icon from '../customs/Icon';
 import Button from '../customs/Button';
-import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
 import useClickOutside from '~/hooks/useClickOutside';
 import QRCode from 'react-qr-code';
 import * as FileSaver from 'file-saver';
