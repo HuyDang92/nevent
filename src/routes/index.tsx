@@ -31,6 +31,7 @@ import Pr from '~/pages/ManageEvent/Pr';
 import Discount from '~/pages/ManageEvent/Discount';
 import MyPallet from '~/pages/MyPallet/MyPallet';
 import InformationBanking from '~/pages/InformationBanking/InformationBanking';
+import PrIframe from '~/Layout/components/PrIframe';
 
 export default function AppRoutes() {
   return (
@@ -96,7 +97,7 @@ export default function AppRoutes() {
           </Route>
           <Route path="scan-ticket" element={<Scan />} />
         </Route>
-
+        <Route path="/pr/:idEvent" element={<PrIframe />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

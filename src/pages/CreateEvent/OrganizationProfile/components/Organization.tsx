@@ -94,8 +94,6 @@ const Organization = () => {
   useEffect(() => {
     if (isSuccess) {
       if (userProfile?.data && userProfile?.isSuccess) {
-        console.log(userProfile?.data?.data);
-        
         dispatch(setAuthCurrentUser(userProfile?.data?.data));
       }
       successNotify('Cập nhật thành công');
@@ -107,7 +105,7 @@ const Organization = () => {
   }, [isSuccess, isError,userProfile]);
 
   useEffect(() => {
-    if (userProfile.isSuccess && userProfile.data) {
+    if (userProfile.isSuccess && userProfile?.data?.data?.businessProfile) {
       const location = userProfile?.data?.data?.businessProfile?.address?.split(',');
       const [address, road, district, city] = location ?? [];
       formik.setValues({

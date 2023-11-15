@@ -53,7 +53,7 @@ const TicketInfor = () => {
                   <TicketCard
                     className={`!px-2 text-sm ${ticket.quantity > 0 ? '' : '!bg-[#eeeeee]'}`}
                     title={ticket.title}
-                    tooltip="Tooltip here"
+                    tooltip={ticket.desc}
                   />
                   {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket.price?.toLocaleString('vi')}đ</span>}
                   <div className="flex min-w-[85px] justify-around rounded-[5px] border font-bold text-cs_semi_green shadow-border-full md:mx-auto">

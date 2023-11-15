@@ -10,6 +10,7 @@ import PaymentInfo from './components/PaymentInfo';
 import TicketList from './components/TicketList';
 import { useParams } from 'react-router';
 import Overview from './components/Overview';
+import { useAppSelector } from '~/hooks/useActionRedux';
 
 const CreateEvent = () => {
   const [open, setOpen] = useState(true);
@@ -17,7 +18,7 @@ const CreateEvent = () => {
   const handleOpen = () => setOpen(!open);
   const { step } = useParams();
   const activeStep = Number(step);
-
+  const auth = useAppSelector(state => state.auth)
   const renderContent = (activeStep: number) => {
     //Switch case
     switch (activeStep) {
@@ -90,7 +91,7 @@ const CreateEvent = () => {
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-cs_light">Tạo sự kiện</h1>
-          <Dropdown />
+          <Dropdown auth={auth} />
         </div>
         <div className="w-[80%]">
           <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
