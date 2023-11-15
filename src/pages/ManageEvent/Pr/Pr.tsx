@@ -6,13 +6,27 @@ import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
 import { useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import Input from '~/components/customs/Input';
+import { successNotify } from '~/components/customs/Toast';
+import is from 'date-fns/locale/is/index';
 const Pr = () => {
   const { idEvent } = useParams();
   const event = useGetEventByIdQuery(idEvent || '');
-  const [widthIpt, setWidthIpt] = useState('0px');
-  const [heightIpt, setHeightIpt] = useState('0px');
+  const [widthIpt, setWidthIpt] = useState('650px');
+  const [heightIpt, setHeightIpt] = useState('350px');
   const width = useDebounce(widthIpt, 500).searchValue;
   const height = useDebounce(heightIpt, 500).searchValue;
+  const [isLayout, setIsLayout] = useState(0);
+
+  const handleCopy = () => {
+    const el = document.createElement('textarea');
+    el.value = `<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}></iframe>`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    successNotify('Copy thành công');
+  }
+
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
       <div className="flex justify-between">
@@ -39,19 +53,42 @@ const Pr = () => {
               <span className="text-cs_grayText">
                 Copy đoạn mã bên dưới để tạo widget bán vé trên blog hoặc website của bạn
               </span>
-              <div className="flex justify-between gap-12">
+              <div className="flex justify-start items-start flex-col  gap-4 mt-4">
                 <div className="flex items-center gap-5">
-                  <Input classNameInput="w-[100px]" value={widthIpt} onChange={(e) => setWidthIpt(e.target.value)} />
+                  <Input classNameInput="w-[100px]" value={widthIpt} onChange={(e) => setWidthIpt(e.target.value)} disabled={isLayout !== 0} />
                   <b>X</b>
-                  <Input classNameInput="w-[100px]" value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} />
+                  <Input classNameInput="w-[100px]" value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} disabled={isLayout !== 0} />
                 </div>
-                <div className="w-[60%] rounded-lg bg-cs_gray p-2.5">
-                  {`<iframe width="${width}" height="${height}" style="border-radius:8px" src="nevent.io.vn/pr/${idEvent}"></iframe>`}
+                <div className=" w-auto rounded-lg flex flex-col gap-4 items-start bg-[#ececec] px-4 py-4">
+                  <Button className=" text-sm py-2 px-8 font-semibold" mode="dark" value="Copy" onClick={handleCopy} />
+                  <div className='flex justify-center text-center items-center py-3 rounded-lg bg-white'>
+                    <p>{`<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}/${isLayout}></iframe>`}</p>
+                  </div>
+                </div>
+              </div>
+              <div className=' mt-4'>
+                <h1 className='font-semibold'>Mẫu sẵn</h1>
+                <div className='mt-4 flex gap-4'>
+                  <Button className={`text-sm py-2 px-8 bg-pink-200 font-semibold border-2 ${isLayout === 1 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 01" onClick={() => {
+                    setIsLayout(1)
+                    setWidthIpt('550px')
+                    setHeightIpt('850px')
+                  }} />
+                  <Button className={`text-sm py-2 px-8 bg-yellow-300 font-semibold border-2 ${isLayout === 2 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 02" onClick={() => {
+                    setIsLayout(2)
+                    setWidthIpt('550px')
+                    setHeightIpt('550px')
+                  }} />
+                  <Button className={`text-sm py-2 px-8 bg-teal-200 font-semibold border-2 ${isLayout === 3 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 03" onClick={() => {
+                    setIsLayout(3)
+                    setWidthIpt('100%')
+                    setHeightIpt('350px')
+                  }} />
                 </div>
               </div>
             </div>
             <div className="flex w-1/2 flex-col items-center rounded-lg border-[1px] border-cs_semi_green px-7 py-9">
-              <iframe className="rounded-lg" src={`/pr/${idEvent}`} height={height} width={width}></iframe>
+              <iframe className="rounded-lg" src={`/pr/${idEvent}/${isLayout}`} height={height} width={width}></iframe>
             </div>
           </div>
           <div className="flex flex-col items-start gap-4 pt-5">
