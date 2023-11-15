@@ -28,18 +28,20 @@ const ProductCard = ({ data, className, index }: ProductListProps) => {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`group relative h-[250px] sm:h-[260px] w-full overflow-hidden rounded-xl shadow-border-full ${className}`}
+          className={`group relative h-[250px] w-full overflow-hidden rounded-xl shadow-border-full sm:h-[260px] ${className}`}
         >
           <Link to={`/event-detail/${data?._id}`}>
             <img
               src={data?.banner[0]?.url}
               alt="image"
-              className="sm:h-[160px] h-[180px] w-full rounded-xl object-cover transition-all group-hover:scale-105"
+              className="h-[180px] w-full rounded-xl object-cover transition-all group-hover:scale-105 sm:h-[160px]"
             />
 
-            <div className=" z-5 sm:min-h-[110px] min-h-[90px] absolute bottom-0 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black">
-              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data?.location?.name}</span>
-              <p className={`line-clamp-2 text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm`}>
+            <div className=" z-5 absolute bottom-0 mt-5 w-full rounded-xl rounded-t-lg bg-white p-3 py-1 text-left font-bold text-cs_dark shadow-lg dark:bg-cs_icon_black sm:py-3">
+              <span className="text-[10px] font-normal dark:text-cs_light sm:text-xs">{data.location.name}</span>
+              <p
+                className={`line-clamp-2 h-auto text-xs leading-tight tracking-wide dark:text-cs_light sm:my-1.5 sm:text-sm lg:h-10`}
+              >
                 {data.title}
               </p>
               <div className="mb-1 mt-2 justify-between pr-1.5 text-xs font-normal text-cs_gray sm:flex">

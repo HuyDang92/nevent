@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
-
+import MyCarousel from '~/components/customs/MyCarousel';
 const EventInfo = () => {
   const dispatch = useAppDispatch();
   const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
@@ -21,7 +21,7 @@ const EventInfo = () => {
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
   useEffect(() => {
     if (eventInfo?.banner) {
       setImagePreviewUrl(eventInfo?.banner);
@@ -32,7 +32,7 @@ const EventInfo = () => {
       ? eventInfo
       : {
           address: '',
-          banner: '',
+          banner: [],
           logo: '',
           name: '',
           location: null,
@@ -53,10 +53,31 @@ const EventInfo = () => {
       address: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
+      // file: Yup.mixed()
+      //   .required('Yêu cầu banner sự kiện')
+      //   .test('fileSize', 'File ảnh quá lớn', (value: any) => {
+      //     return value ? value.size <= 1024000 : true; // 1MB
+      //   }),
       file: Yup.mixed()
-        .required('Yêu cầu banner sự kiện')
-        .test('fileSize', 'File ảnh quá lớn', (value: any) => {
-          return value ? value.size <= 1024000 : true; // 1MB
+        .test('filesize', 'file size is too large', (value: any) => {
+          if (value && value?.length > 0) {
+            for (let i = 0; i < value.length; i++) {
+              if (value[i].size > 5242880) {
+                return false;
+              }
+            }
+          }
+          return true;
+        })
+        .test('filetype', 'unsupported file format', (value: any) => {
+          if (value && value.length > 0) {
+            for (let i = 0; i < value.length; i++) {
+              if (value[i].type != 'image/png' && value[i].type != 'image/jpg' && value[i].type != 'image/jpeg') {
+                return false;
+              }
+            }
+          }
+          return true;
         }),
       // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
       // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
@@ -69,7 +90,8 @@ const EventInfo = () => {
       console.log(value);
       try {
         if (value.file) {
-          value.banner = URL.createObjectURL(value.file);
+          console.log(value.file);
+          // const fileArray = Array.from(selectedFile);
         }
         value.location = locations?.data?.find((item: ILocation) => item._id === value.address);
         value.categories = categories?.data?.find((item: ICategory) => item._id === value.category);
@@ -86,8 +108,8 @@ const EventInfo = () => {
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
           <div className="group relative h-[250px] w-full">
-            {imagePreviewUrl ? (
-              <img src={imagePreviewUrl} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            {imagePreviewUrl.length > 0 ? (
+              <MyCarousel data={imagePreviewUrl} />
             ) : (
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
@@ -96,27 +118,33 @@ const EventInfo = () => {
               />
             )}
             <div
-              className={`absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-50 transition ${
+              className={`pointer-events-none absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-30 transition ${
                 imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
               }`}
             ></div>
-            <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
+            <div className=" `pointer-events-none absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
               <div
                 className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
                   imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
                 }`}
               >
                 <input
+                  multiple
                   type="file"
                   name="file"
                   id="file"
-                  className="absolute shadow-border-light left-0 top-0 h-full cursor-pointer text-2xl opacity-0"
+                  className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0 shadow-border-light"
                   onChange={(event) => {
-                    const selectedFile = event.target.files?.[0];
+                    const selectedFile = event.target.files;
                     formik.setFieldValue('file', selectedFile);
                     if (selectedFile) {
                       // setSelectedFile(selectedFile);
-                      setImagePreviewUrl(URL.createObjectURL(selectedFile));
+                      const fileArray = Array.from(selectedFile);
+                      const filesURL = fileArray.map((file) => {
+                        return URL.createObjectURL(file);
+                      });
+                      setImagePreviewUrl(filesURL);
+                      formik.setFieldValue('banner', filesURL);
                     }
                   }}
                 />

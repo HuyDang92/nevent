@@ -3,30 +3,39 @@ import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logoWhite from '~/assets/images/logoWhite.png';
 import Button from '~/components/customs/Button';
+import { useAppSelector } from '~/hooks/useActionRedux';
 type CreateEventSidebarProps = {
   className?: string;
 };
 
-const cateList = [
-  {
-    name: 'Hồ sơ tổ chức',
-    link: '/user/organization-profile',
-  },
-  {
-    name: 'Tạo sự kiện',
-    link: '/organization/event-list',
-  },
-  {
-    name: 'Tài khoản ví của tôi',
-    link: '/organizer-my-pallet',
-  },
-  {
-    name: 'Thông tin ngân hàng',
-    link: '/organizer-information-banking',
-  },
-];
-
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
+  const currentAuth = useAppSelector((state) => state.auth.currentUser);
+  const cateList =
+    currentAuth?.role?.name === 'user'
+      ? [
+          {
+            name: 'Hồ sơ tổ chức',
+            link: '/user/organization-profile',
+          },
+        ]
+      : [
+          {
+            name: 'Hồ sơ tổ chức',
+            link: '/organization/organization-profile',
+          },
+          {
+            name: 'Quản lý sự kiện',
+            link: '/organization/event-list',
+          },
+          {
+            name: 'Tài khoản ví của tôi',
+            link: '/organizer-my-pallet',
+          },
+          {
+            name: 'Thông tin ngân hàng',
+            link: '/organizer-information-banking',
+          },
+        ];
   return (
     <Card
       className={`scrollbar-hide sticky top-0 flex h-[100vh] flex-col rounded-none bg-cs_semi_green pt-1 shadow-none dark:bg-cs_dark ${className}`}
