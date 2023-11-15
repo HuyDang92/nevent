@@ -3,24 +3,36 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
-import { useDeleteEventMutation, useGetEventByIdQuery, useGetTicketByEventIdQuery } from '~/features/Event/eventApi.service';
+import {
+  useDeleteEventMutation,
+  useGetEventByIdQuery,
+  useGetTicketByEventIdQuery,
+} from '~/features/Event/eventApi.service';
 import { Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton } from '@material-tailwind/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { LineChart } from '~/components/Chart';
 import { Tooltip } from '@material-tailwind/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
+import { isFetchBaseQueryError } from '~/utils/helper';
 
 const Statistics = () => {
   const { idEvent } = useParams();
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth);
-  const [deleteEvent, { isLoading, isSuccess, isError }] = useDeleteEventMutation();
+  const [deleteEvent, { isLoading, isSuccess, isError, error }] = useDeleteEventMutation();
   const event = useGetEventByIdQuery(idEvent || '');
   const tikets = useGetTicketByEventIdQuery(idEvent || '');
   console.log(tikets);
+
+  const errorForm = useMemo(() => {
+    if (isFetchBaseQueryError(error)) {
+      return error;
+    }
+    return null;
+  }, [error]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -94,6 +106,9 @@ const Statistics = () => {
           <h1 className="text-2xl font-bold dark:text-white">Thống kê sự kiện</h1>
           <Dropdown auth={auth} />
         </div>
+        {errorForm && (
+          <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
+        )}
         <div className="relative mt-8">
           <Carousel
             className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]`}
@@ -183,6 +198,10 @@ const Statistics = () => {
             </Tooltip>
           </div>
         </div>
+        <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
+          <b>Thời thiệu sự kiện: </b>
+          <p>{event?.data?.data?.desc}</p>
+        </div>
         <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4">
           <div className="flex justify-between rounded-lg bg-cs_light_gray px-4 py-3">
             <b>Lợi nhuận: </b>
@@ -218,11 +237,8 @@ const Statistics = () => {
                 Tổng : {event?.data?.data.totalTicketIssue}
               </div>
               <div className="flex h-8 w-32 items-center justify-center rounded-md bg-cs_green text-[14px] font-semibold text-cs_light">
-                Đã mua : 0
+                Đã bán : 0
               </div>
-              {/* <div className="flex h-8 w-32 items-center justify-center rounded-md bg-[#f00] text-[14px] font-semibold text-cs_light">
-                Đã hủy : 0
-              </div> */}
             </div>
           </div>
         </div>
@@ -233,21 +249,22 @@ const Statistics = () => {
             <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-10 py-4 font-bold">
               <span className="w-[calc(100%/6)] text-center text-base">Tên vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Loại vé</span>
-              <span className="w-[calc(100%/6)] text-center text-base">Giá vé</span>
+              <span className="w-[calc(100%/6)] text-center text-base">Giá vé (VNĐ) </span>
               <span className="w-[calc(100%/6)] text-center text-base">Số lượng vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Đã bán</span>
               <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
             </div>
             <ul>
-              {tikets}
-              <li className="flex justify-between rounded-lg border-[1px] border-cs_gray px-10 py-4 font-semibold dark:text-cs_light">
-                <span className="w-[calc(100%/6)] text-center">VVIP</span>
-                <span className="w-[calc(100%/6)] text-center">Hạng 1</span>
-                <span className="w-[calc(100%/6)] text-center">10.000</span>
-                <span className="w-[calc(100%/6)] text-center">100</span>
-                <span className="w-[calc(100%/6)] text-center">50</span>
-                <span className="w-[calc(100%/6)] text-center">500.000</span>
-              </li>
+              {tikets?.data?.data?.map((ticket: ITicket) => (
+                <li className="my-3 flex justify-between rounded-lg border-[1px] border-cs_gray px-10 py-4 font-semibold dark:text-cs_light">
+                  <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>
+                  <span className="w-[calc(100%/6)] text-center">{ticket?.type}</span>
+                  <span className="w-[calc(100%/6)] text-center">{ticket?.price?.toLocaleString('vi')}</span>
+                  <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
+                  <span className="w-[calc(100%/6)] text-center">50</span>
+                  <span className="w-[calc(100%/6)] text-center">500.000</span>
+                </li>
+              ))}
             </ul>
           </div>
 

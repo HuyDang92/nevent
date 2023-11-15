@@ -57,7 +57,7 @@ export const eventApi = createApi({
         body: body,
       }),
     }),
-    deleteEvent: builder.mutation({
+    deleteEvent: builder.mutation<void, any>({
       query: (eventId) => ({
         url: `/api/events/delete/${eventId}`,
         method: 'DELETE',
@@ -85,10 +85,10 @@ export const eventApi = createApi({
       }),
     }),
     getEventBusiness: builder.query<any, any>({
-      query: ({ page, limit,search }) => ({
+      query: ({ page, limit, search }) => ({
         url: `/api/events/business?page=${page}&limit=${limit}${search ? '&search=' + search : ''}`,
       }),
-    })
+    }),
   }),
 });
 
@@ -100,5 +100,5 @@ export const {
   useGetEventByIdQuery,
   useGetLocationsQuery,
   useGetTicketByEventIdQuery,
-  useGetEventBusinessQuery
+  useGetEventBusinessQuery,
 } = eventApi;
