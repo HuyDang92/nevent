@@ -19,7 +19,6 @@ const Statistics = () => {
   const auth = useAppSelector((state) => state.auth);
   const [deleteEvent, { isLoading, isSuccess, isError }] = useDeleteEventMutation();
   const event = useGetEventByIdQuery(idEvent || '');
-
   useEffect(() => {
     if (isSuccess) {
       setTimeout(() => {
@@ -30,7 +29,7 @@ const Statistics = () => {
     if (isError) {
       errorNotify('Xóa sự kiện thất bại');
     }
-  }, []);
+  }, [isSuccess,isError]);
 
   // Chart JS
   const chartLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];

@@ -10,7 +10,7 @@ import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
-import MyCarousel from '~/components/customs/myCarousel/MyCarousel';
+import MyCarousel from '~/components/customs/MyCarousel';
 
 const OverView = () => {
   const navigate = useNavigate();
