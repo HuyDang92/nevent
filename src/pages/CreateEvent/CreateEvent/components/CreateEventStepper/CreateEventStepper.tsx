@@ -21,7 +21,7 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
           activeClassName="!bg-cs_semi_green text-white"
           completedClassName="!bg-cs_semi_green text-white"
         >
-          <Icon name="person-outline" className="h-5 w-5 text-2xl" />
+          <Icon name="information-circle-outline" className="h-5 w-5 text-2xl" />
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography variant="h6" className={`${activeStep === 0 ? '!text-cs_semi_green' : 'text-cs_label_gray'}`}>
               Thông tin sự kiện
@@ -96,6 +96,23 @@ const CreateEventStepper = ({ className }: CreateEventStepperProps) => {
             </Typography>
           </div>
         </Step> */}
+        <Step
+          // onClick={() => setActiveStep(activeStep >= 1 ? 1 : activeStep)}
+          onClick={() => {
+            if (activeStep >= 4) {
+              navigate(`/organization/create-event/3`);
+            }
+          }}
+          activeClassName="!bg-cs_semi_green text-white"
+          completedClassName="!bg-cs_semi_green text-white"
+        >
+          <Icon name="checkmark-outline" className="h-5 w-5 text-2xl" />
+          <div className="absolute -bottom-[2rem] w-max text-center">
+            <Typography variant="h6" className={`${activeStep === 3 ? '!text-cs_semi_green' : 'text-cs_label_gray'}`}>
+              Xác nhận
+            </Typography>
+          </div>
+        </Step>
       </Stepper>
     </div>
   );

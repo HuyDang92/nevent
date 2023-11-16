@@ -129,8 +129,8 @@ const Organization = () => {
   return (
     <>
       {isLoading && <Loading />}
-      <div className="mt-2 flex justify-between">
-        <form onSubmit={formik.handleSubmit} className="w-[90%]">
+      <div className="mt-2">
+        <form onSubmit={formik.handleSubmit} className="">
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin nhà tổ chức</h2>
           {errorForm && (
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>

@@ -107,7 +107,7 @@ const EventInfo = () => {
       <div className="">
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
-          <div className="group relative h-[250px] w-full">
+          <div className="group relative h-[350px] w-full">
             {imagePreviewUrl.length > 0 ? (
               <MyCarousel data={imagePreviewUrl} />
             ) : (
@@ -202,7 +202,7 @@ const EventInfo = () => {
                 value={formik.values.address}
                 onChange={formik.handleChange}
               >
-                <option value={''}>Hãy chọn danh mục </option>
+                <option value={''}>Hãy chọn địa điểm </option>
                 {locations?.data?.map((location: ILocation, index: number) => (
                   <option key={index} value={location._id}>
                     {location.name}

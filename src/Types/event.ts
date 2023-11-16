@@ -127,6 +127,7 @@ interface Ticket {
   type: string;
   color: string;
   price: number;
+  desc: string;
   qr: string;
 }
 

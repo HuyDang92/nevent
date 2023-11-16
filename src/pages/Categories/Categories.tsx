@@ -88,7 +88,7 @@ function Categories() {
     }
   };
   const pageClassNames = {
-    page: 'mx-2 px-4 py-1.5 text-cs_semi_green border text-xl hover:scale-105 transition-all rounded-xl shadow-border-full font-bold',
+    page: 'mx-2 px-3.5 py-1.5 text-cs_semi_green border text-sm hover:scale-105 transition-all rounded-xl shadow-border-full font-bold',
     active: 'bg-cs_semi_green text-white',
     previous: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Previous"
     next: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Next"
@@ -199,8 +199,8 @@ function Categories() {
               breakLabel="..."
               pageCount={event.data?.data?.totalPages}
               onPageChange={handlePageChange}
-              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-xl" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
-              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-xl" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
               previousClassName={pageClassNames.previous}
               nextClassName={pageClassNames.next}
               activeClassName={pageClassNames.active}
