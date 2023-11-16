@@ -75,7 +75,7 @@ const TicketInfor = () => {
                     key={head}
                     className={`${index === 0 ? 'pl-5 !text-left' : ''} ${
                       index === TABLE_HEAD.length - 1 ? 'pr-5 !text-right' : ''
-                    } w-[27%] py-5 text-center text-lg font-bold leading-none text-black opacity-70 dark:text-cs_light`}
+                    } py-5 text-center text-lg font-bold leading-none text-black opacity-70 dark:text-cs_light`}
                   >
                     {head}
                   </th>

@@ -101,7 +101,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
     setOpenTool([-1, false]);
   };
   return (
-    <div className="relative mx-5 my-2 sm:mx-16">
+    <div className={`${data?.myTickets?.length > 5 ? ' mx-8' : 'mx-6'} relative my-2 sm:mx-16`}>
       <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper" navigation>
         {data?.myTickets?.map((item: Ticket, index: number) => {
           // const code = JSON.stringify({ id: item?._id, qr: item?.qr });
@@ -109,11 +109,11 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
           // qrCodeRefs.push(qrCodeRef);
           return (
             <SwiperSlide key={index}>
-              <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
+              <div className="absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
               <img
                 src={data?.event?.banner[0]?.url}
                 alt=""
-                className="h-[450px] w-full rounded-xl object-cover xl:h-[310px]"
+                className="h-[470px] w-full rounded-xl object-cover xl:h-[310px]"
               />
               <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
                 <div className="xl:w-2/3">
@@ -134,6 +134,9 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     Loại vé: <span className="text-sm text-cs_semi_green">{item?.title}</span>
                   </p>
                   <p className="text-sm font-semibold xl:block">
+                    Mô tả vé: <span className="text-sm text-cs_semi_green">{item?.desc}</span>
+                  </p>
+                  <p className="text-sm font-semibold xl:block">
                     Vé:{' '}
                     <span className="text-sm text-cs_semi_green">
                       {index + 1}/{data?.myTickets?.length}
@@ -145,7 +148,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                   <Button
                     value="Tải vé"
                     icon="download-outline"
-                    className="mt-5 hidden !bg-cs_semi_green !text-white xl:block"
+                    className="mt-5  hidden !bg-cs_semi_green !text-white xl:block"
                     onClick={() => handleDownload(data?.myTickets[0]?.title)}
                   />
                 </div>
@@ -181,7 +184,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     </Link>
                   </li>
                 </ul>
-                <div className="absolute right-1/2 mt-32 w-56 translate-x-1/2 xl:right-5 xl:mt-12 xl:translate-x-0">
+                <div className="absolute right-1/2 mt-36 w-56 translate-x-1/2 xl:right-5 xl:mt-12 xl:translate-x-0">
                   <div className="flex justify-center rounded-xl border bg-cs_light py-2 text-cs_dark shadow-border-light">
                     <div>
                       <div className="flex justify-between text-xs font-bold">
