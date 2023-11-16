@@ -24,7 +24,7 @@ const Button = ({ icon, onClick, disabled, className, value, type = 'button', mo
       type={type}
       disabled={disabled}
     >
-      {icon && <IonIcon name={icon as any} className="text-2xl" />}
+      {icon && <IonIcon name={icon as any} className="text-xl pr-2" />}
       <span>{value}</span>
     </motion.button>
   );

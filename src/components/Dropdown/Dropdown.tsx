@@ -40,8 +40,8 @@ const Dropdown = ({ auth }: DropdownProps) => {
     dispatch(logout());
     navigate('/login');
   };
-  const handleSwapRole = async () => {
-    if (!currentAuth?.businessProfile) {
+  const handleSwapRole = async (type: string) => {
+    if (!currentAuth?.businessProfile && type !== 'swap') {
       navigate('/user/organization-profile');
       return;
     }
@@ -117,7 +117,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
           <motion.li variants={itemVariants}>
             {currentAuth?.role?.name === 'business' && (
               <p
-                onClick={handleSwapRole}
+                onClick={() => handleSwapRole('swap')}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
@@ -145,7 +145,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
               </Link>
             ) : (
               <div
-                onClick={handleSwapRole}
+                onClick={() => handleSwapRole('swap')}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />

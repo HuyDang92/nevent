@@ -2,7 +2,6 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import moment from 'moment';
 import Icon from '../customs/Icon';
 import Button from '../customs/Button';
-import { Carousel, Dialog, DialogBody, DialogFooter, IconButton } from '@material-tailwind/react';
 import useClickOutside from '~/hooks/useClickOutside';
 import QRCode from 'react-qr-code';
 import * as FileSaver from 'file-saver';
@@ -10,6 +9,10 @@ import * as XLSX from 'xlsx';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import { addTicketByEvent } from '~/features/Auth/ticketSlice';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import { EffectCards } from 'swiper/modules';
 
 interface IProps {
   data: ITicket;
@@ -19,16 +22,17 @@ interface IProps {
 const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const [openTool, setOpenTool] = useState<boolean>(false);
+  const [openTool, setOpenTool] = useState<[number, boolean]>([-1, false]);
   const [listQR, setListQR] = useState<any>([]);
   const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
+  console.log(openTool);
 
   const toolRef = useRef(null);
   const qrCodeRef: any = useRef(null);
 
   useClickOutside(toolRef, () => {
-    setOpenTool(false);
+    setOpenTool([-1, false]);
   });
 
   const exportDSSV = () => {
@@ -37,7 +41,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(data, 'Danh sách vé sự kiện' + fileExtension);
-    setOpenTool(!openTool);
+    setOpenTool([-1, false]);
   };
   useEffect(() => {
     const formattedData = data?.myTickets?.map((item: Ticket, index: number) => {
@@ -94,162 +98,116 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
   );
   const handlePass = (item: ITicket) => {
     dispatch(addTicketByEvent(item));
-    setOpenTool(!openTool);
+    setOpenTool([-1, false]);
   };
   return (
-    <div className="relative overflow-hidden">
-      <Dialog
-        open={open}
-        handler={setOpen}
-        className="dark:bg-cs_lightDark"
-        animate={{
-          mount: { scale: 1, y: 0 },
-          unmount: { scale: 0.9, y: -100 },
-        }}
-        size="xs"
-      >
-        <DialogBody className="relative font-normal">
-          <p className="text-center text-lg font-bold uppercase text-cs_semi_green">Scan QR để check-in</p>
-          <span onClick={() => setOpen(false)}>
-            <Icon name="close" className="absolute right-4 top-4 text-2xl transition-all hover:scale-110" />
-          </span>
-          {data?.myTickets?.length > 1 ? (
-            <Carousel
-              className=""
-              prevArrow={({ handlePrev }) => (
-                <span onClick={handlePrev} className="!absolute !left-0 top-2/4 -translate-y-2/4 text-cs_dark">
-                  <Icon
-                    name="chevron-back-outline"
-                    className="rounded-full bg-[#eee] bg-opacity-50 p-1 text-sm text-cs_dark transition-all hover:scale-105"
-                  />
-                </span>
-              )}
-              nextArrow={({ handleNext }) => (
-                <span onClick={handleNext} className="!absolute !right-0 top-2/4 -translate-y-2/4 text-cs_dark">
-                  <Icon
-                    name="chevron-forward-outline"
-                    className="rounded-full bg-[#eee] bg-opacity-50 p-1 text-sm text-cs_dark transition-all hover:scale-105"
-                  />
-                </span>
-              )}
-              navigation={({ setActiveIndex, activeIndex, length }) => (
-                <div className="absolute bottom-10 left-2/4 z-30 flex -translate-x-2/4 gap-2">
-                  {new Array(length).fill('').map(
-                    (_, i) =>
-                      activeIndex === i && (
-                        <span className="cursor-pointer font-semibold" key={i} onClick={() => setActiveIndex(i)}>
-                          {activeIndex === i && `${activeIndex + 1}/${length}`}
-                        </span>
-                      ),
-                  )}
-                </div>
-              )}
-            >
-              {data?.myTickets?.map((item: Ticket, index: number) => {
-                // const code = JSON.stringify({ id: item?._id, qr: item?.qr });
-                // const qrCodeRef = useRef(null);
-                // qrCodeRefs.push(qrCodeRef);
+    <div className="relative mx-5 my-2 sm:mx-16">
+      <Swiper effect={'cards'} grabCursor={true} modules={[EffectCards]} className="mySwiper" navigation>
+        {data?.myTickets?.map((item: Ticket, index: number) => {
+          // const code = JSON.stringify({ id: item?._id, qr: item?.qr });
+          // const qrCodeRef = useRef(null);
+          // qrCodeRefs.push(qrCodeRef);
+          return (
+            <SwiperSlide key={index}>
+              <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
+              <img
+                src={data?.event?.banner[0]?.url}
+                alt=""
+                className="h-[450px] w-full rounded-xl object-cover xl:h-[310px]"
+              />
+              <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
+                <div className="xl:w-2/3">
+                  <Link to={`/event-detail/${data?.event?._id}`}>
+                    <p className=" line-clamp-2 text-xl font-bold">{data?.event?.title}</p>
+                  </Link>
+                  <span className=" gap-2 text-sm font-semibold">
+                    <span>Thời gian: </span>
+                    {moment(data?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
+                    <span className="text-sm "> - {data?.event?.categories[0]?.name}</span>
+                  </span>
+                  {/* <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p> */}
 
-                return (
-                  <Fragment key={index}>
-                    <div className="flex justify-center py-3 pb-8">
-                      <div key={index}>
-                        {/* <img src={item} alt="QRCode" className="pointer-events-none w-full object-cover" /> */}
-                        <div className="flex justify-between pb-2 font-bold">
-                          <span>Vé: {item?.title}</span>
-                          <span>{item?.status === 'unworn' ? 'Chưa sử dụng' : 'Đã sử dụng'}</span>
-                        </div>
-                        <QRCode className="bg-cs_light p-2" ref={qrCodeRef} id="qrcode" value={item?.qr} />
-                      </div>
-                    </div>
-                    <Button
-                      value="Tải về"
-                      icon="download-outline"
-                      className="ms-[50%] -translate-x-1/2 !bg-cs_semi_green pt-2 !text-white"
-                      onClick={() => handleDownload(item?.title)}
+                  <p className="hidden text-sm font-semibold xl:block">
+                    Trạng thái: <span className="text-sm text-cs_semi_green">Chưa sử dụng</span>
+                  </p>
+                  <p className="hidden text-sm font-semibold xl:block">
+                    Loại vé: <span className="text-sm text-cs_semi_green">{item?.title}</span>
+                  </p>
+                  <p className="text-sm font-semibold xl:block">
+                    Vé:{' '}
+                    <span className="text-sm text-cs_semi_green">
+                      {index + 1}/{data?.myTickets?.length}
+                    </span>
+                  </p>
+                  {/* {!passTicket && (
+                    <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
+                  )} */}
+                  <Button
+                    value="Tải vé"
+                    icon="download-outline"
+                    className="mt-5 hidden !bg-cs_semi_green !text-white xl:block"
+                    onClick={() => handleDownload(data?.myTickets[0]?.title)}
+                  />
+                </div>
+                {!passTicket && (
+                  <div ref={toolRef} onClick={() => setOpenTool([index, !openTool[0]])} className="">
+                    <Icon
+                      name="ellipsis-vertical-outline"
+                      className="rounded-full p-1 text-xl transition-all hover:scale-110 hover:bg-[#eee] hover:text-cs_dark"
                     />
-                  </Fragment>
-                );
-              })}
-            </Carousel>
-          ) : (
-            <>
-              <div className="flex justify-center py-5">
-                <div>
-                  <div className="pb-2 font-bold">Vé: {data?.myTickets[0]?.type}</div>
-                  <QRCode ref={qrCodeRef} id="qrcode" value={data?.myTickets[0]?.qr} />
+                  </div>
+                )}
+                <ul
+                  className={`${
+                    openTool[0] === index ? 'h-fit w-fit p-2' : 'h-0 w-0'
+                  } absolute right-6 top-12 z-20 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
+                >
+                  {data?.myTickets?.length > 1 && (
+                    <li
+                      onClick={exportDSSV}
+                      className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
+                    >
+                      <Icon name="download-outline" />
+                      <span>Tải danh sách vé</span>
+                    </li>
+                  )}
+                  <li onClick={() => handlePass(data)}>
+                    <Link
+                      to="/user/pass-event"
+                      className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-[#eee]"
+                    >
+                      <Icon name="send-outline" />
+                      <span>Chuyển giao vé</span>
+                    </Link>
+                  </li>
+                </ul>
+                <div className="absolute right-1/2 mt-32 w-56 translate-x-1/2 xl:right-5 xl:mt-12 xl:translate-x-0">
+                  <div className="flex justify-center rounded-xl border bg-cs_light py-2 text-cs_dark shadow-border-light">
+                    <div>
+                      <div className="flex justify-between text-xs font-bold">
+                        <span>Vé: {item?.type}</span>
+                        <span>{item?.status === 'unworn' ? 'Chưa sử dụng' : 'Đã sử dụng'}</span>
+                      </div>
+                      <QRCode
+                        className="h-52 w-52 bg-cs_light p-2 xl:h-48 xl:w-48"
+                        ref={qrCodeRef}
+                        id="qrcode"
+                        value={item?.qr}
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    value="Tải vé"
+                    icon="download-outline"
+                    className="mt-3 translate-x-1/2 !bg-cs_semi_green !text-white xl:hidden"
+                    onClick={() => handleDownload(data?.myTickets[0]?.title)}
+                  />
                 </div>
               </div>
-              <Button
-                value="Tải về"
-                icon="download-outline"
-                className="ms-[35%] !bg-cs_semi_green !text-white"
-                onClick={() => handleDownload(data?.myTickets[0]?.title)}
-              />
-            </>
-          )}
-        </DialogBody>
-      </Dialog>
-      <div className="absolute z-10 h-full w-full rounded-xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
-      <img src={data?.event?.banner[0]?.url} alt="" className="h-[160px] w-full rounded-xl object-cover xl:h-[220px]" />
-      <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
-        <div className="xl:w-2/3">
-          <Link to={`/event-detail/${data?.event?._id}`}>
-            <p className=" line-clamp-2 text-xl font-bold">{data?.event?.title}</p>
-          </Link>
-          <span className=" gap-2 text-sm font-semibold">
-            {/* <Icon name="time-outline" /> */}
-            <span>Thời gian: </span>
-            {moment(data?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
-            <span className="text-sm "> - {data?.event?.categories[0]?.name}</span>
-          </span>
-          <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p>
-          {/* <p className="text-sm font-semibold">
-            Trạng thái:{' '}
-            <span className="text-sm text-cs_semi_green">
-              Chưa sử dụng
-            </span>
-          </p> */}
-          {/* <p className="text-sm font-semibold">
-            Loại vé: <span className="text-sm text-cs_semi_green">{data?.tickets[0]?.title}</span>
-          </p> */}
-          {!passTicket && (
-            <Button onClick={() => setOpen(true)} value="Check-in" type="button" className="mt-2" mode="dark" />
-          )}
-        </div>
-        {!passTicket && (
-          <div ref={toolRef} onClick={() => setOpenTool(!openTool)} className="">
-            <Icon
-              name="ellipsis-vertical-outline"
-              className="rounded-full p-1 text-xl transition-all hover:scale-110 hover:bg-[#eee] hover:text-cs_dark"
-            />
-          </div>
-        )}
-        <ul
-          className={`${
-            openTool ? 'h-fit w-fit p-2' : 'h-0 w-0'
-          } absolute right-6 top-12 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
-        >
-          {data?.myTickets?.length > 1 && (
-            <li
-              onClick={exportDSSV}
-              className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
-            >
-              <Icon name="download-outline" />
-              <span>Tải danh sách vé</span>
-            </li>
-          )}
-          <li onClick={() => handlePass(data)}>
-            <Link
-              to="/user/pass-event"
-              className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-[#eee]"
-            >
-              <Icon name="send-outline" />
-              <span>Chuyển giao vé</span>
-            </Link>
-          </li>
-        </ul>
-      </div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
     </div>
   );
 };
