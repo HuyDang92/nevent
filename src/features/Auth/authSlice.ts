@@ -41,7 +41,6 @@ const authSlice = createSlice({
       refreshToken: action.payload,
     }),
     setAuthCurrentUser: (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         currentUser: action.payload,
