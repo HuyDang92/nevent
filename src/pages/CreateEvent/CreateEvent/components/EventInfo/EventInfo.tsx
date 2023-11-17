@@ -31,21 +31,21 @@ const EventInfo = () => {
     initialValues: eventInfo
       ? eventInfo
       : {
-          address: '',
-          banner: [],
-          logo: '',
-          name: '',
-          location: null,
-          category: '',
-          description: '',
-          file: null,
-          categories: null,
-          // organization_name: '',
-          // organization_desc: '',
-          // organization_phone: '',
-          // organization_email: '',
-          // organization_img: Chamaleon2,
-        },
+        address: '',
+        banner: [],
+        logo: '',
+        name: '',
+        location: null,
+        category: '',
+        description: '',
+        file: null,
+        categories: null,
+        // organization_name: '',
+        // organization_desc: '',
+        // organization_phone: '',
+        // organization_email: '',
+        // organization_img: Chamaleon2,
+      },
     validationSchema: Yup.object({
       banner: Yup.mixed(),
       // logo: Yup.string().required('Logo không được bỏ trống'),
@@ -118,15 +118,13 @@ const EventInfo = () => {
               />
             )}
             <div
-              className={`pointer-events-none absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-30 transition ${
-                imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
-              }`}
+              className={`pointer-events-none absolute top-0 z-10 h-full w-full rounded-xl bg-black opacity-30 transition ${imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
+                }`}
             ></div>
             <div className=" `pointer-events-none absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
               <div
-                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
-                  imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
-                }`}
+                className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
+                  }`}
               >
                 <input
                   multiple
@@ -386,9 +384,9 @@ const EventInfo = () => {
           {/* //// */}
           <div className="w-full text-right"></div>
           <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
-        </form>
+        </form >
         {/* //// */}
-      </div>
+      </div >
     </>
   );
 };

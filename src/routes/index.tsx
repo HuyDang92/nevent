@@ -98,7 +98,7 @@ export default function AppRoutes() {
           </Route>
           <Route path="scan-ticket" element={<Scan />} />
         </Route>
-        <Route path="/pr/:idEvent" element={<PrIframe />} />
+        <Route path="/pr/:idEvent/:layout" element={<PrIframe />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
