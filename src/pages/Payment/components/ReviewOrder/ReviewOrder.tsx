@@ -30,7 +30,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       };
     });
     console.log(body);
-    await buyTicket({ tickets: body });
+    await buyTicket({ eventId: idEvent, tickets: body });
     // navigate(`/user/payment/3`);
   };
   useEffect(() => {

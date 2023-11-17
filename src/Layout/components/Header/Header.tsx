@@ -34,14 +34,24 @@ const Header = ({ className }: HeaderProps) => {
         </Link>
       )}
       <ToggleDarkMode />
-      {auth?.currentUser?.role?.name === 'user' ? (
-        <Link to="/user/organization-profile" className="hidden xl:inline-block">
-          <Button value="Tạo sự kiện" type="button" className="" mode="light" />
-        </Link>
-      ) : (
+      {auth?.currentUser?.role?.name === 'business' ? (
         <Link to="/organization/event-list" className="hidden xl:inline-block">
           <Button value="Quản lí sự kiện" type="button" className="" mode="light" />
         </Link>
+      ) : (
+        <>
+          {auth?.loggedIn && auth?.currentUser?.role?.name === 'user' ? (
+            <Link to="/user/organization-profile" className="hidden xl:inline-block">
+              <Button value="Tạo sự kiện" type="button" className="" mode="light" />
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" className="hidden xl:inline-block">
+                <Button value="Tạo sự kiện" type="button" className="" mode="light" />
+              </Link>
+            </>
+          )}
+        </>
       )}
     </ul>
   );

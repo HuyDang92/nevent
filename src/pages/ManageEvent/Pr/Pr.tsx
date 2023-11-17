@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Icon from '~/components/customs/Icon';
 import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import Input from '~/components/customs/Input';
 import { successNotify } from '~/components/customs/Toast';
@@ -44,11 +44,11 @@ const Pr = () => {
               https://www.nevent.io.vn/event-detail/{idEvent}
             </Link>
             <br />
-            <Button className="my-5 !bg-[#3547E4] px-32 text-xl text-white" value="Chia sẻ lên Facebook" />
+            <Button className="my-5 !bg-[#3547E4] px-32 text-lg text-white" value="Chia sẻ lên Facebook" />
           </div>
           <div className="flex gap-5 border-b-[1px] py-5">
             <div className="w-1/2">
-              <b className="text-xl dark:text-cs_light">Chia sẻ lên Blog website</b>
+              <b className="text-lg dark:text-cs_light">Chia sẻ lên Blog website</b>
               <br />
               <span className="text-cs_grayText">
                 Copy đoạn mã bên dưới để tạo widget bán vé trên blog hoặc website của bạn
