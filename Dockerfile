@@ -1,11 +1,11 @@
 #* ✈️ Production 
-FROM node:20-alpine AS production
+FROM node:18-alpine AS production
 
 WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install -f --only=production
+RUN npm install -f
 
 COPY . .
 
