@@ -4,7 +4,6 @@ import Icon from '~/components/customs/Icon';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import nothing from '~/assets/images/nothing.svg';
 import useSocket from '~/hooks/useConnecrSocket';
-import moment from 'moment';
 import { useCheckedViewNotifycationMutation } from '~/features/Auth/authApi.service';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
@@ -17,14 +16,14 @@ interface UserInfoProp {
   popup?: boolean;
 }
 
-const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
+const Notifycation = ({ className, classNameTagHeader, popup }: UserInfoProp) => {
   const socket = useSocket();
   const dispatch = useAppDispatch();
   const [notificationData, setNotificationData] = useState<INotify[]>([]);
-  const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
-  const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
+  const [unClick, setUnclick] = useState<INotify[]>([]); // Lưu trạng thái click của từng mục
+  const [showDeleteMenu, setShowDeleteMenu] = useState<INotify[]>([]);
   const [viewedAll, setViewedAll] = useState<boolean>(false);
-  const [viewed, result] = useCheckedViewNotifycationMutation();
+  const [viewed] = useCheckedViewNotifycationMutation();
 
   useEffect(() => {
     const unclickedItems = notificationData.filter((item, index: number) => item?.view === false);
@@ -67,13 +66,13 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
     }
   };
 
-  const handleItemClick = async (item: any) => {
+  const handleItemClick = async (item: INotify) => {
     if (!item?.view) {
       await viewed(item?._id);
     }
   };
 
-  const handleRemoveItem = (item: any) => {
+  const handleRemoveItem = (item: INotify) => {
     setShowDeleteMenu((prevClickedItems) => {
       // Kiểm tra xem mục đã tồn tại trong mảng chưa
       if (!prevClickedItems.includes(item)) {
@@ -119,7 +118,7 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                   onClick={() => handleItemClick(item)}
                   className={`${item?.view || viewedAll ? 'bg-cs_light' : 'bg-[#f5f7fc] dark:bg-cs_lightDark'} ${
                     showDeleteMenu.includes(item) ? 'translate-x-[100%] transition-all' : ''
-                  } flex gap-2 cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
+                  } flex cursor-pointer items-center justify-between  gap-2 bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 sm:pr-8">
                     <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
@@ -138,7 +137,11 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
                     </div>
                   </Link>
                   {popup && (
-                    <Icon onClick={() => handleRemoveItem(item)} name="trash-outline" className="sm:px-5 text-xl sm:text-sm text-red-500" />
+                    <Icon
+                      onClick={() => handleRemoveItem(item)}
+                      name="trash-outline"
+                      className="text-xl text-red-500 sm:px-5 sm:text-sm"
+                    />
                   )}
                 </div>
               ))

@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Loading from '~/components/customs/Loading';
 import { usePayTicketMutation } from '~/features/Payment/paymentApi.service';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 interface Prop {
   className?: string;
   event?: IEvent;

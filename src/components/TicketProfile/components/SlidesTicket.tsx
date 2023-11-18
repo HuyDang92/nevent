@@ -1,4 +1,5 @@
-{/* <Dialog
+{
+  /* <Dialog
         open={open}
         handler={setOpen}
         className="dark:bg-cs_lightDark"
@@ -88,4 +89,5 @@
             </>
           )}
         </DialogBody>
-      </Dialog> */}
+      </Dialog> */
+}

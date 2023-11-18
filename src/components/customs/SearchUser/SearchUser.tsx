@@ -1,11 +1,7 @@
 import { Spinner } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
-import { useLazyGetAllEventQuery } from '~/features/Event/eventApi.service';
 import { useDebounce } from '~/hooks/useDebounce';
-import moment from 'moment';
-import Icon from '../Icon';
-import { Link, useNavigate } from 'react-router-dom';
 import useClickOutside from '~/hooks/useClickOutside';
 import { useLazyGetUserByEmailQuery } from '~/features/Auth/authApi.service';
 
@@ -33,7 +29,7 @@ const SearchUser = ({ className, size = 'md', classNameInput, setUserReceive }: 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  const handleSelectUser = (user: any) => {
+  const handleSelectUser = (user: IUserField) => {
     setUserReceive(user);
     setValue('');
   };

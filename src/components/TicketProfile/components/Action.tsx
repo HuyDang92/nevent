@@ -4,10 +4,11 @@ import useClickOutside from '~/hooks/useClickOutside';
 import Icon from '~/components/customs/Icon';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import { addTicketByEvent } from '~/features/Auth/ticketSlice';
+import { MouseEvent } from 'react';
 
 type ActionProps = {
   data: ITicket;
-  onClick?: any;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 const Action = ({ data, onClick }: ActionProps) => {
   const dispatch = useAppDispatch();
@@ -31,19 +32,19 @@ const Action = ({ data, onClick }: ActionProps) => {
           className="rounded-full p-1 text-xl transition-all hover:scale-110 hover:bg-[#eee] hover:text-cs_dark"
         />
       </div>
-      <ul
+      <div
         className={`${
           openAction ? 'h-fit w-fit p-2' : 'h-0 w-0'
         } absolute right-6 top-12 z-20 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
       >
         {data?.myTickets?.length > 1 && (
-          <li
+          <button
             onClick={onClick}
-            className="flex cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
+            className="flex w-full cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
           >
             <Icon name="download-outline" />
             <span>Tải vé</span>
-          </li>
+          </button>
         )}
         <li onClick={() => handlePass(data)}>
           <Link
@@ -54,7 +55,7 @@ const Action = ({ data, onClick }: ActionProps) => {
             <span>Chuyển giao vé</span>
           </Link>
         </li>
-      </ul>
+      </div>
     </>
   );
 };

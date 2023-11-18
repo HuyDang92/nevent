@@ -1,7 +1,3 @@
-import Button from '~/components/customs/Button';
-import { Link } from 'react-router-dom';
-import Chamaleon from '~/assets/images/chamaleon-3.svg';
-import Icon from '~/components/customs/Icon';
 import Dropdown from '~/components/Dropdown';
 
 const Discount = () => {

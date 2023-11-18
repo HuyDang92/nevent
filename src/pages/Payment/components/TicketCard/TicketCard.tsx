@@ -1,16 +1,18 @@
 import { Tooltip } from '@material-tailwind/react';
+import Icon from '~/components/customs/Icon';
 interface TicketCardProps {
   title: string;
   tooltip: string;
   className?: string;
   color?: string;
   price?: number;
+  remove?: (ticket: TicketListInfo) => void;
 }
-const TicketCard = ({ title, tooltip, className, color = '#13C6B3', price }: TicketCardProps) => {
+const TicketCard = ({ title, tooltip, className, color = '#13C6B3', price, remove }: TicketCardProps) => {
   return (
     <div
       style={{ backgroundColor: color }}
-      className={`flex w-fit items-center justify-between gap-1 rounded-xl px-4 py-2 text-center font-semibold text-white ${className}`}
+      className={`relative flex w-fit items-center justify-between gap-1 rounded-xl px-4 py-2 text-center font-semibold text-white ${className}`}
     >
       {title}{' '}
       <Tooltip
@@ -37,6 +39,11 @@ const TicketCard = ({ title, tooltip, className, color = '#13C6B3', price }: Tic
           />
         </svg>
       </Tooltip>
+      {remove && (
+        <div className="absolute right-0 top-0 flex -translate-y-1/2 translate-x-1/2 cursor-pointer items-center justify-center rounded-full border-[1px] bg-cs_semi_green ">
+          <Icon onClick={remove} name="close-outline" className="text-white" />
+        </div>
+      )}
     </div>
   );
 };

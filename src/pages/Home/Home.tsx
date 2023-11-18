@@ -20,7 +20,8 @@ function Home() {
   return (
     <>
       <div className="mb-6 w-full">
-        {!event.isFetching && <Banner data={event.data?.data?.docs} />}
+        {!event.isFetching && <Banner data={event.data?.data?.docs?.slice(0, 4)} />}
+        {eventHot.isFetching && <SkeletonEventHot />}
         <SectionTitle value="Danh mục được yêu thích" to="/event-categories" />
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
@@ -30,7 +31,7 @@ function Home() {
               .map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
         <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
-        {eventHot.data?.data?.docs?.length === 0 && (
+        {event.data?.data?.docs?.length === 0 && (
           <div className="my-24 flex justify-center text-center">
             <div>
               <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
@@ -38,8 +39,8 @@ function Home() {
             </div>
           </div>
         )}
-        {eventHot.isFetching && <SkeletonEventHot />}
-        {eventHot.data?.data?.docs?.length !== 0 && <Slide data={eventHot.data?.data?.docs} />}
+        {event.isFetching && <SkeletonCategories />}
+        {event.data?.data?.docs?.length !== 0 && <Slide data={event.data?.data?.docs} />}
         <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
         {event.isFetching && <SkeletonEventList />}
         {event.data?.data?.docs?.length === 0 && (

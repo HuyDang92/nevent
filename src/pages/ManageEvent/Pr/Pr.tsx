@@ -3,11 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Icon from '~/components/customs/Icon';
 import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import Input from '~/components/customs/Input';
 import { successNotify } from '~/components/customs/Toast';
-import is from 'date-fns/locale/is/index';
 const Pr = () => {
   const { idEvent } = useParams();
   const event = useGetEventByIdQuery(idEvent || '');
@@ -25,7 +24,7 @@ const Pr = () => {
     document.execCommand('copy');
     document.body.removeChild(el);
     successNotify('Copy thành công');
-  }
+  };
 
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
@@ -53,37 +52,68 @@ const Pr = () => {
               <span className="text-cs_grayText">
                 Copy đoạn mã bên dưới để tạo widget bán vé trên blog hoặc website của bạn
               </span>
-              <div className="flex justify-start items-start flex-col  gap-4 mt-4">
+              <div className="mt-4 flex flex-col items-start  justify-start gap-4">
                 <div className="flex items-center gap-5">
-                  <Input classNameInput="w-[100px]" value={widthIpt} onChange={(e) => setWidthIpt(e.target.value)} disabled={isLayout !== 0} />
+                  <Input
+                    classNameInput="w-[100px]"
+                    value={widthIpt}
+                    onChange={(e) => setWidthIpt(e.target.value)}
+                    disabled={isLayout !== 0}
+                  />
                   <b>X</b>
-                  <Input classNameInput="w-[100px]" value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} disabled={isLayout !== 0} />
+                  <Input
+                    classNameInput="w-[100px]"
+                    value={heightIpt}
+                    onChange={(e) => setHeightIpt(e.target.value)}
+                    disabled={isLayout !== 0}
+                  />
                 </div>
-                <div className=" w-auto rounded-lg flex flex-col gap-4 items-start bg-[#ececec] px-4 py-4">
-                  <Button className=" text-sm py-2 px-8 font-semibold" mode="dark" value="Copy" onClick={handleCopy} />
-                  <div className='flex justify-center text-center items-center py-3 rounded-lg bg-white'>
+                <div className=" flex w-auto flex-col items-start gap-4 rounded-lg bg-[#ececec] px-4 py-4">
+                  <Button className=" px-8 py-2 text-sm font-semibold" mode="dark" value="Copy" onClick={handleCopy} />
+                  <div className="flex items-center justify-center rounded-lg bg-white py-3 text-center">
                     <p>{`<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}/${isLayout}></iframe>`}</p>
                   </div>
                 </div>
               </div>
-              <div className=' mt-4'>
-                <h1 className='font-semibold'>Mẫu sẵn</h1>
-                <div className='mt-4 flex gap-4'>
-                  <Button className={`text-sm py-2 px-8 bg-pink-200 font-semibold border-2 ${isLayout === 1 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 01" onClick={() => {
-                    setIsLayout(1)
-                    setWidthIpt('550px')
-                    setHeightIpt('850px')
-                  }} />
-                  <Button className={`text-sm py-2 px-8 bg-yellow-300 font-semibold border-2 ${isLayout === 2 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 02" onClick={() => {
-                    setIsLayout(2)
-                    setWidthIpt('550px')
-                    setHeightIpt('550px')
-                  }} />
-                  <Button className={`text-sm py-2 px-8 bg-teal-200 font-semibold border-2 ${isLayout === 3 ? 'border-[#616161]' : 'border-transparent'}`} mode="dark" value="Mẫu 03" onClick={() => {
-                    setIsLayout(3)
-                    setWidthIpt('100%')
-                    setHeightIpt('350px')
-                  }} />
+              <div className=" mt-4">
+                <h1 className="font-semibold">Mẫu sẵn</h1>
+                <div className="mt-4 flex gap-4">
+                  <Button
+                    className={`border-2 bg-pink-200 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 1 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 01"
+                    onClick={() => {
+                      setIsLayout(1);
+                      setWidthIpt('550px');
+                      setHeightIpt('850px');
+                    }}
+                  />
+                  <Button
+                    className={`border-2 bg-yellow-300 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 2 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 02"
+                    onClick={() => {
+                      setIsLayout(2);
+                      setWidthIpt('550px');
+                      setHeightIpt('550px');
+                    }}
+                  />
+                  <Button
+                    className={`border-2 bg-teal-200 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 3 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 03"
+                    onClick={() => {
+                      setIsLayout(3);
+                      setWidthIpt('100%');
+                      setHeightIpt('350px');
+                    }}
+                  />
                 </div>
               </div>
             </div>

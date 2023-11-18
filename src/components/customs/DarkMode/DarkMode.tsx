@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import Icon from '../Icon';
-const ToggleDarkMode = ({ hidden }: any) => {
+type IProps = {
+  hidden?: boolean;
+};
+
+const ToggleDarkMode = ({ hidden }: IProps) => {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
@@ -29,7 +33,7 @@ const ToggleDarkMode = ({ hidden }: any) => {
     <div className={`px-2`}>
       <div className="check">
         <input type="checkbox" id="check" name="check" value="check" hidden checked={checked} onChange={handleToggle} />
-        <label htmlFor="check" hidden={hidden} className={` `}>
+        <label htmlFor="check" hidden={hidden ? true : false} className={` `}>
           <p className=" hidden text-cs_semi_green dark:block">
             <Icon name="sunny" className="text-2xl hover:scale-110" />
           </p>

@@ -61,7 +61,7 @@ function LogIn() {
         .required('Xác nhận mật khẩu không được bỏ trống')
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
-    onSubmit: async (value: ISignUp, { resetForm }) => {
+    onSubmit: async (value: ISignUp) => {
       await signUp({ email: value.email, password: value.password, fullName: value.name });
     },
   });
@@ -101,14 +101,14 @@ function LogIn() {
           }}
           className="absolute left-5 top-[15%] z-10 grid w-[90%] place-content-center rounded-xl bg-white p-5 dark:bg-cs_semiDark sm:left-1/4 sm:top-[25%] sm:w-1/2 lg:static lg:bg-transparent lg:dark:bg-transparent"
         >
-          <div className="w-full space-y-4 lg:w-[400px]">
+          <div className="w-full space-y-4 xl:w-[400px]">
             <div>
               <h1 className="text-center text-lg font-extrabold md:text-2xl">ĐĂNG KÝ TÀI KHOẢN!</h1>
               <p className="py-2 text-center text-xs text-cs_blur_black dark:text-cs_gray sm:text-xs lg:text-base">
                 Đăng ký tài khoản miễn phí để sử dụng dịch vụ của Nevent một cách nhanh chóng nào!
               </p>
             </div>
-            <form onSubmit={formik.handleSubmit} className="space-y-3">
+            <form onSubmit={formik.handleSubmit} className="space-y-3 px-2">
               {errorForm && (
                 <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
               )}

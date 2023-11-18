@@ -96,7 +96,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           >
             <div className={`flex items-center px-4 py-3 hover:bg-transparent`}>
               <ListItemPrefix className="mr-0">
-                <Icon name={item.icon as any} className={`text-xl`} />
+                <Icon name={item.icon} className={`text-xl`} />
               </ListItemPrefix>
               {!open && <Typography className={`ml-4 font-semibold`}>{item.name}</Typography>}
             </div>
@@ -125,7 +125,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
               } flex items-center rounded-xl px-4 py-3 transition-all hover:bg-cs_light hover:shadow-border-light dark:hover:bg-cs_lightDark dark:hover:text-cs_light`}
             >
               <ListItemPrefix className="mr-0">
-                <Icon name={item.icon as any} className={`text-xl`} />
+                <Icon name={item.icon} className={`text-xl`} />
               </ListItemPrefix>
               {!open && <Typography className={`ml-4 font-semibold`}>{item.name}</Typography>}
             </div>

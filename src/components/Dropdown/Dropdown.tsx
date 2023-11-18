@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import Icon from '../customs/Icon';
 import useClickOutside from '~/hooks/useClickOutside';
-import { useLazyGetProfileQuery, useSwapRoleMutation } from '~/features/Auth/authApi.service';
+import { useSwapRoleMutation } from '~/features/Auth/authApi.service';
 import Loading from '../customs/Loading';
 import { successNotify } from '../customs/Toast';
 import { setBusinessInfo } from '~/features/Business/businessSlice';
@@ -22,17 +22,15 @@ const itemVariants: Variants = {
   closed: { opacity: 0, y: 20, transition: { duration: 0.1 } },
 };
 type DropdownProps = {
-  auth?: any;
+  auth?: { currentUser: IUserField };
 };
 const Dropdown = ({ auth }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const ref = useRef(null);
-  const currentAuth = useAppSelector((state) => state.auth.currentUser);
   const currentBusiness = useAppSelector((state) => state.bussiness.businessInfo);
 
-  const [getProfile, result] = useLazyGetProfileQuery();
   const [swapRole, resultSwap] = useSwapRoleMutation();
 
   useClickOutside(ref, () => {
@@ -48,7 +46,10 @@ const Dropdown = ({ auth }: DropdownProps) => {
       navigate('/user/organization-profile');
       return;
     }
-    await swapRole({ email: currentAuth?.email, role: currentAuth?.role?.name === 'business' ? 'user' : 'business' });
+    await swapRole({
+      email: auth?.currentUser?.email,
+      role: auth?.currentUser?.role?.name === 'business' ? 'user' : 'business',
+    });
     // await getProfile();
   };
 
@@ -56,10 +57,10 @@ const Dropdown = ({ auth }: DropdownProps) => {
     if (resultSwap.isSuccess) {
       dispatch(setAuthCurrentUser(resultSwap.data?.data?.user));
       dispatch(setBusinessInfo(resultSwap.data?.data?.businessProfile));
-      if (currentAuth?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
+      if (auth?.currentUser?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
         navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');
-      } else if (currentAuth?.role?.name === 'user' && resultSwap.data?.data?.user?.role?.name === 'business') {
+      } else if (auth?.currentUser?.role?.name === 'user' && resultSwap.data?.data?.user?.role?.name === 'business') {
         navigate('/organization/event-list');
         successNotify('Đã chuyển sang vai trò ban tổ chức');
       }
@@ -68,7 +69,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
 
   return (
     <>
-      {result.isFetching || (resultSwap.isLoading && <Loading />)}
+      {resultSwap.isLoading && <Loading />}
       <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className="menu relative">
         <motion.button
           ref={ref}
@@ -119,7 +120,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             <span className="text-xs text-cs_gray">{auth?.currentUser?.email} </span>
           </motion.li>
           <motion.li variants={itemVariants}>
-            {currentAuth?.role?.name === 'business' && (
+            {auth?.currentUser?.role?.name === 'business' && (
               <p
                 onClick={() => handleSwapRole('swap')}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -128,7 +129,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 <span className="group-hover:text-cs_light">Vai trò người dùng</span>
               </p>
             )}
-            {currentAuth?.role?.name === 'user' && (
+            {auth?.currentUser?.role?.name === 'user' && (
               <Link
                 to={'/user/profile/1'}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -139,7 +140,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             )}
           </motion.li>
           <motion.li variants={itemVariants} className="hidden lg:block">
-            {currentAuth?.role?.name === 'business' && currentBusiness ? (
+            {auth?.currentUser?.role?.name === 'business' && currentBusiness ? (
               <Link
                 to={'/organization/event-list'}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -149,7 +150,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
               </Link>
             ) : (
               <>
-                {currentAuth?.role?.name === 'user' && currentBusiness ? (
+                {auth?.currentUser?.role?.name === 'user' && currentBusiness ? (
                   <div
                     onClick={() => handleSwapRole('swap')}
                     className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -170,7 +171,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             )}
           </motion.li>
           <motion.li variants={itemVariants}>
-            {currentAuth?.role?.name === 'business' ? (
+            {auth?.currentUser?.role?.name === 'business' ? (
               <Link
                 to={'/organization/organization-profile'}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -187,10 +188,10 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
               </Link>
             )}
-            {currentAuth?.role?.name === 'business' && (
+            {auth?.currentUser?.role?.name === 'business' && (
               <Link
                 to={'/user/profile/0'}
-                className="group flex cursor-pointer mt-2 items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+                className="group mt-2 flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
                 <span className="group-hover:text-cs_light">Thông tin</span>

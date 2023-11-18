@@ -104,7 +104,7 @@ const FAQ = () => {
 
         <div className="space-y-5 py-20 pb-10">
           <Accordion
-            className="rounded-xl border-none bg-cs_light dark:bg-cs_lightDark px-5 shadow-border-full"
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
             open={open === 1}
             icon={<Icon id={1} open={open} />}
           >
@@ -114,7 +114,7 @@ const FAQ = () => {
             >
               <div>
                 <p className={`${open === 1 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm dark:text-cs_light font-medium text-cs_semiDark">
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>
@@ -131,7 +131,7 @@ const FAQ = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            className="rounded-xl border-none bg-cs_light dark:bg-cs_lightDark px-5 shadow-border-full"
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
             open={open === 2}
             icon={<Icon id={2} open={open} />}
           >
@@ -141,7 +141,7 @@ const FAQ = () => {
             >
               <div>
                 <p className={`${open === 2 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm dark:text-cs_light font-medium text-cs_semiDark">
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>
@@ -158,7 +158,7 @@ const FAQ = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            className="rounded-xl border-none bg-cs_light dark:bg-cs_lightDark px-5 shadow-border-full"
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
             open={open === 3}
             icon={<Icon id={3} open={open} />}
           >
@@ -168,7 +168,7 @@ const FAQ = () => {
             >
               <div>
                 <p className={`${open === 3 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm dark:text-cs_light font-medium text-cs_semiDark">
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>

@@ -10,8 +10,6 @@ import Categories from '~/pages/Categories';
 import ForgotPassword from '~/pages/Auth/ForgotPassword';
 import Payment from '~/pages/Payment';
 import PrivateRoute from './PrivateRoute';
-import { useSelector } from 'react-redux';
-import { RootState } from '~/store/store';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import FAQ from '~/pages/FAQ';
 import CreateEventLayout from '~/Layout/CreateEventLayout';

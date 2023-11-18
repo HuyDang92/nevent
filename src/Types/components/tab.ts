@@ -2,7 +2,7 @@ export interface TabsProp {
   children: React.ReactNode;
   className?: string;
   orientation?: 'vertical' | 'horizontal';
-  availableLink?: boolean
+  availableLink?: boolean;
 }
 
 export interface TabsHeaderProp {

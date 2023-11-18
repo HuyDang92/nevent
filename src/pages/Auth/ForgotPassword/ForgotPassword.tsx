@@ -1,7 +1,6 @@
 import bg from '~/assets/images/bgForgot.webp';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logoWhite.png';
 import { useEffect, useState } from 'react';
@@ -63,7 +62,7 @@ function ForgotPassword() {
 
   return (
     <div className="">
-      {result.isLoading || resultVerify.isLoading && <Loading />}
+      {result.isLoading || (resultVerify.isLoading && <Loading />)}
       <img src={bg} className="fixed -top-12 bottom-0 left-0 right-0" alt="" />
       <Dialog
         open={open}

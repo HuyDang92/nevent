@@ -1,10 +1,7 @@
-import IonIcon from '@reacticons/ionicons';
-
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Icon from '../customs/Icon';
 import { useAppSelector } from '~/hooks/useActionRedux';
-import Dropdown from '../Dropdown';
 
 type NavbarMobileProps = {
   className?: string;
@@ -25,7 +22,7 @@ const dataNavigation = [
     link: '/search',
     icon: 'search',
     title: 'Tìm kiếm',
-  }
+  },
 ];
 
 const NavbarMobile = ({ className }: NavbarMobileProps) => {
@@ -39,7 +36,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
       >
         {dataNavigation.map((item, index) => (
           <motion.button key={index} whileTap={{ scale: 0.9 }}>
-            <NavLink to={item.link} className={(nav) => `flex items-center justify-between`}>
+            <NavLink to={item.link} className={`flex items-center justify-between`}>
               <Icon
                 name={location.pathname === item.link ? item.icon : `${item.icon}-outline`}
                 className="text-2xl text-cs_semi_green"
@@ -49,20 +46,17 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
         ))}
         {auth.loggedIn ? (
           <motion.button whileTap={{ scale: 0.9 }}>
-            <NavLink to={'/user/profile/0'} className={(nav) => `flex items-center justify-between`}>
+            <NavLink to={'/user/profile/0'} className={`flex items-center justify-between`}>
               <Icon
-                name='person-outline'
+                name={location.pathname === '/user/profile/0' ? 'person' : 'person-outline'}
                 className="text-2xl text-cs_semi_green"
               />
             </NavLink>
           </motion.button>
         ) : (
           <motion.button whileTap={{ scale: 0.9 }}>
-            <NavLink to={'/login'} className={(nav) => `flex items-center justify-between`}>
-              <Icon
-                name='person-outline'
-                className="text-2xl text-cs_semi_green"
-              />
+            <NavLink to={'/login'} className={`flex items-center justify-between`}>
+              <Icon name={`person-outline`} className="text-2xl text-cs_semi_green" />
             </NavLink>
           </motion.button>
         )}

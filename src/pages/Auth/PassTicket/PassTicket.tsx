@@ -4,7 +4,7 @@ import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import SearchUser from '~/components/customs/SearchUser';
 import { useAppSelector } from '~/hooks/useActionRedux';
-import { useSwapTicketMutation } from '~/features/Auth/authApi.service';
+import { useSwapTicketMutation, useVerifySwapTicketMutation } from '~/features/Auth/authApi.service';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Loading from '~/components/customs/Loading';
@@ -19,6 +19,7 @@ function PassTicket() {
   const auth = useAppSelector((state) => state.auth.currentUser);
   const getTickets = useAppSelector((state) => state.ticket.ticketByEvent);
   const [swap, result] = useSwapTicketMutation();
+  const [verify, resultVerify] = useVerifySwapTicketMutation();
 
   const handleSwapTicket = async () => {
     if (!userReceive) {
@@ -58,9 +59,9 @@ function PassTicket() {
         <Icon name="return-up-back-outline" />
         <span className="">Trở về</span>
       </Link>
-      <div className='mx-40 py-5'>
+      <div className="py-2 xl:mx-40">
         {getTickets.length > 0 &&
-          getTickets.map((item: any, index: number) => <TicketProfile passTicket key={index} data={item} />)}
+          getTickets.map((item: ITicket, index: number) => <TicketProfile passTicket key={index} data={item} />)}
       </div>
       <div className="items-center gap-5 space-y-2 sm:flex">
         <SearchUser setUserReceive={setUserReceive} className="rounded-lg shadow-border-light" />
@@ -71,7 +72,7 @@ function PassTicket() {
           id=""
         >
           <option>Chọn vé</option>
-          {getTickets[0]?.myTickets?.map((item: any, index: number) => {
+          {getTickets[0]?.myTickets?.map((item: Ticket, index: number) => {
             return (
               <option key={index} value={item?._id}>
                 {item?.title}

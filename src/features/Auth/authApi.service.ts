@@ -141,6 +141,16 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['profile'],
     }),
+    verifySwapTicket: builder.mutation({
+      query: (body) => ({
+        url: '/api/my-tickets/verify-swap-ticket',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
 
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
@@ -180,4 +190,5 @@ export const {
   useSwapTicketMutation,
   useSwapRoleMutation,
   useCheckedViewNotifycationMutation,
+  useVerifySwapTicketMutation,
 } = authApi;

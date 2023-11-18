@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import TicketProfile from '~/components/TicketProfile';
 import nothing from '~/assets/images/nothing.svg';
@@ -8,12 +7,11 @@ import { useGetMyTicketQuery } from '~/features/Auth/authApi.service';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 interface UserInfoProp {
   className?: string;
-  auth?: IUserField | null;
 }
 
 const code: any[] = [];
 
-const MyTicket = ({ auth, className }: UserInfoProp) => {
+const MyTicket = ({ className }: UserInfoProp) => {
   const getTickets = useGetMyTicketQuery();
 
   return (
@@ -47,7 +45,7 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
           </TabsContent>
           <TabsContent index={1} className="">
             {code.length > 0 ? (
-              code.map((item, index) => <>Có mã</>)
+              <>Có mã</>
             ) : (
               <div className="flex justify-center py-5 text-center">
                 <div>

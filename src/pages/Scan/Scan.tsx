@@ -1,11 +1,9 @@
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
-import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Swal from 'sweetalert2';
 import { useLazyVerifyTicketQuery } from '~/features/Auth/authApi.service';
 
 export default function Scan() {
-  const [value, setValue] = useState<string>('');
   const [scanSuccess, setScanSuccess] = useState(false);
   const [verifyTicket, result] = useLazyVerifyTicketQuery();
 
@@ -15,10 +13,10 @@ export default function Scan() {
       await verifyTicket(result);
       setScanSuccess(true);
       try {
-        Swal.fire('Vé hợp lệ!', '', 'success').then((e) => setScanSuccess(false));
+        Swal.fire('Vé hợp lệ!', '', 'success').then(() => setScanSuccess(false));
         return;
       } catch (e) {
-        Swal.fire('Vé không hợp lệ!', '', 'error').then((e) => setScanSuccess(false));
+        Swal.fire('Vé không hợp lệ!', '', 'error').then(() => setScanSuccess(false));
         return;
       }
     }
