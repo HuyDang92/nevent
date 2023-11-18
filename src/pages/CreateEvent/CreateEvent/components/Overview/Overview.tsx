@@ -4,17 +4,20 @@ import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
 import Loading from '~/components/customs/Loading';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
-import { useCreateEventMutation } from '~/features/Event/eventApi.service';
+import { useCreateEventMutation, useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
 import MyCarousel from '~/components/customs/MyCarousel';
+import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 
 const OverView = () => {
   const navigate = useNavigate();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
+  const { data: locations } = useGetLocationsQuery();
+  const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
   const errorForm = useMemo(() => {
@@ -84,11 +87,14 @@ const OverView = () => {
 
         await createEvent({
           title: eventInfo?.name,
-          categories: [eventInfo?.categories?._id],
-          location: eventInfo?.location?._id,
+          categories: eventInfo?.categories,
+          location: eventInfo?.location,
           start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
           desc: eventInfo?.description,
-          totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
+          totalTicketIssue: ticketList.reduce(
+            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
+            0,
+          ),
           tickets: ticketList,
           banner: bannerId,
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
@@ -117,7 +123,15 @@ const OverView = () => {
               {eventInfo?.name}
             </h1>
             <h1 className="text-[18px] font-semibold text-cs_dark dark:text-cs_light md:text-lg">
-              Danh mục: {eventInfo?.categories?.name}
+              Danh mục:{' '}
+              {categories?.data
+                .filter((cate: ICategory) => eventInfo?.categories.includes(cate._id))
+                .map((cate: ICategory, index: number, array: ICategory[]) => (
+                  <span key={cate._id} className="text-cs_semi_green">
+                    {cate.name}
+                    {index !== array.length - 1 ? ', ' : ''}
+                  </span>
+                ))}
             </h1>
             <div className="mt-[10px] flex  gap-[10px] md:gap-[20px] ">
               <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full dark:border md:h-[120px] md:w-[115px]">
@@ -145,7 +159,7 @@ const OverView = () => {
                 <div className="flex items-center gap-[15px]">
                   <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                   <span className="w-[90%] dark:text-cs_light">
-                    <span>{eventInfo?.location?.name}</span>
+                    <span>{locations?.data.find((item: ILocation) => item._id === eventInfo?.location)?.name}</span>
                   </span>
                 </div>
               </div>

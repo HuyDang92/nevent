@@ -187,6 +187,15 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
               </Link>
             )}
+            {currentAuth?.role?.name === 'business' && (
+              <Link
+                to={'/user/profile/0'}
+                className="group mt-2 flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+              >
+                <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+                <span className="group-hover:text-cs_light">Thông tin</span>
+              </Link>
+            )}
           </motion.li>
           <motion.li variants={itemVariants} className="">
             <Button onClick={handleLogOut} value="Đăng xuất" mode="dark" className="w-full" />

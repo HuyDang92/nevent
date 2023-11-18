@@ -14,6 +14,7 @@ type InputProps = {
   name?: string;
   label?: string;
   rounded_full?: boolean;
+  disabled?: boolean;
 };
 
 const Input = ({
@@ -28,6 +29,7 @@ const Input = ({
   id,
   name,
   label,
+  disabled,
   rounded_full = false,
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,6 +65,7 @@ const Input = ({
           name={name}
           onFocus={() => setIsFocused(true)}
           readOnly={readonly}
+          disabled={disabled}
           // onBlur={() => setIsFocused(false)}
         />
         {type === 'password' && isFocused && (

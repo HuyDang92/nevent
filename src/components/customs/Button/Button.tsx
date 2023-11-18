@@ -10,9 +10,19 @@ type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   mode?: 'light' | 'dark';
   rounded_full?: boolean;
+  disabled?: boolean;
 };
 
-const Button = ({ icon, onClick, className, value, type = 'button', mode = 'light', rounded_full }: ButtonProps) => {
+const Button = ({
+  icon,
+  onClick,
+  disabled,
+  className,
+  value,
+  type = 'button',
+  mode = 'light',
+  rounded_full,
+}: ButtonProps) => {
   return (
     <motion.button
       onClick={onClick}
@@ -23,6 +33,7 @@ const Button = ({ icon, onClick, className, value, type = 'button', mode = 'ligh
       }  ${className}`}
       whileTap={{ scale: 0.9 }}
       type={type}
+      disabled={disabled}
     >
       {icon && <IonIcon name={icon as any} className="text-xl" />}
       <span>{value}</span>
