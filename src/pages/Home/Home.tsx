@@ -20,10 +20,10 @@ function Home() {
   return (
     <>
       <div className="mb-6 w-full">
-        <Banner />
-        <SectionTitle value="Danh mục yêu thích" to="/event-categories" />
+        {!event.isFetching && <Banner data={event.data?.data?.docs} />}
+        <SectionTitle value="Danh mục được yêu thích" to="/event-categories" />
         {categories.isFetching && <SkeletonCategories />}
-        <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {!categories.isFetching &&
             categories?.data?.data
               ?.slice(0, 6)

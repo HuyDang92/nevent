@@ -45,7 +45,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 0,
-  tagTypes: ['ticket'],
+  tagTypes: ['ticket', 'profile'],
   endpoints: (builder) => ({
     signUpWithEmail: builder.mutation({
       query: (body) => ({
@@ -88,6 +88,16 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    verifyForgotPassword: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/verify-forgot-password',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
     changePassword: builder.mutation({
       query: (body) => ({
         url: '/api/users/change-password',
@@ -119,6 +129,19 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['ticket'],
     }),
+
+    swapRole: builder.mutation({
+      query: (body) => ({
+        url: '/api/users/swap-role',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+      invalidatesTags: ['profile'],
+    }),
+
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
     }),
@@ -130,6 +153,7 @@ export const authApi = createApi({
     }),
     getProfile: builder.query<any, void>({
       query: () => `/api/auth/profile`,
+      // providesTags: ['profile'],
     }),
     getMyTicket: builder.query<any, void>({
       query: () => `/api/my-tickets`,
@@ -144,13 +168,16 @@ export const {
   useGetTokenFromRefreshTokenQuery,
   useLazyGetTokenFromRefreshTokenQuery,
   useGetProfileQuery,
+  useLazyGetProfileQuery,
   useLogInGoogleMutation,
   useUpdateProfileMutation,
   useChangePasswordMutation,
   useForgotPassWordMutation,
+  useVerifyForgotPasswordMutation,
   useGetMyTicketQuery,
   useLazyVerifyTicketQuery,
   useLazyGetUserByEmailQuery,
   useSwapTicketMutation,
+  useSwapRoleMutation,
   useCheckedViewNotifycationMutation,
 } = authApi;

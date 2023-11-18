@@ -15,14 +15,14 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import moment from 'moment';
 import SkeletonDetailEvent from '~/components/customs/Skeleton/SkeletonDetailEvent';
 import { useEffect } from 'react';
-import { useAppDispatch } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
 import { Carousel, IconButton } from '@material-tailwind/react';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const auth = useAppSelector((state) => state.auth.currentUser);
   const event = useGetAllEventQuery({ page: 1, limit: 9 });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
@@ -50,7 +50,7 @@ function DetailEvent() {
             <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
               <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
               <Carousel
-                  className={`h-[160px]w-full rounded-xl object-cover`}
+                  className={`h-[160px] w-full rounded-xl object-cover`}
                   prevArrow={({ handlePrev }) => (
                     <IconButton
                       variant="text"
@@ -100,9 +100,9 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
                     {detailEventQuery?.data?.data?.title}
                   </h1>
-                  {detailEventQuery?.data?.data?.creator?.type === 'business' && (
-                    <h1 className='dark:text-cs_light'>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
-                  )}
+                  {/* {detailEventQuery?.data?.data?.creator?.type === 'business' && (
+                    <h1>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
+                  )} */}
                   <div className="flex items-center gap-[15px]">
                     <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
@@ -126,7 +126,7 @@ function DetailEvent() {
                             className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                           >
                             <span className="flex justify-between">
-                              <span>{ticket?.title}:</span>
+                              <span>{ticket?.title}</span>
                               {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
                             </span>
                           </li>
@@ -134,12 +134,16 @@ function DetailEvent() {
                       </ul>
                     </div>
                   </div>
-                  <Button
-                    className="w-full"
-                    value="Đặt vé ngay"
-                    mode="dark"
-                    onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
-                  />
+                  {auth?.role?.name === 'user' ? (
+                    <Button
+                      className="w-full"
+                      value="Đặt vé ngay"
+                      mode="dark"
+                      onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                    />
+                  ) : (
+                    <span>Dùng vai trò người dùng để có thể mua vé</span>
+                  )}
                 </div>
               </div>
             </div>

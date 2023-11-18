@@ -42,6 +42,7 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/event-detail/:idEvent" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
+          <Route path="/event-categories/:idCate" element={<Categories />} />
           <Route path="/event-categories/:keyword" element={<Categories />} />
           <Route path="/search" element={<SearchMobile />} />
         </Route>
@@ -68,7 +69,7 @@ export default function AppRoutes() {
         </Route>
 
         {/* user */}
-        <Route path="/user" element={<PrivateRoute allowedRoles={['user', 'business']} />}>
+        <Route path="/user" element={<PrivateRoute allowedRoles={['user']} />}>
           <Route element={<DefaultLayout />}>
             <Route index path="profile/:tab" element={<Profile />} />
             <Route index path="pass-event" element={<PassTicket />} />
@@ -87,6 +88,7 @@ export default function AppRoutes() {
           <Route element={<CreateEventLayout />}>
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
+            <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />

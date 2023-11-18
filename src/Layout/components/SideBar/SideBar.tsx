@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { logout } from '~/features/Auth/authSlice';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 import { useAppSelector } from '~/hooks/useActionRedux';
 type SideBarProp = {
   className?: string;
@@ -58,6 +59,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
 
   const handleLogOut = () => {
     dispatch(logout());
+    dispatch(setBusinessInfo(null));
     navigate('/login');
   };
   return (
@@ -107,9 +109,9 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
           >
             <div className={`flex items-center px-4 py-3 hover:bg-transparent`}>
               <ListItemPrefix className="mr-0">
-                <Icon name="log-out" className={`text-xl`} />
+                <Icon name="log-out" className={`text-xl dark:text-cs_light`} />
               </ListItemPrefix>
-              {!open && <Typography className={`ml-4 font-semibold`}>Đăng xuất</Typography>}
+              {!open && <Typography className={`ml-4 font-semibold dark:text-cs_light`}>Đăng xuất</Typography>}
             </div>
           </div>
         )}

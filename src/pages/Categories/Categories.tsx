@@ -9,8 +9,9 @@ import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import nothing from '~/assets/images/nothing.svg';
 
 function Categories() {
-  const { keyword } = useParams();
+  const { keyword, idCate } = useParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [cate, setCate] = useState<string>('');
   const [locationId, setLocationId] = useState<string>('');
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -23,7 +24,7 @@ function Categories() {
     search: keyword,
     location: locationId,
     status: 'UPCOMING',
-    categories: filterNameCate.length === 0 ? undefined : filterNameCate.join(''),
+    categories: cate,
     // start_date: selectedDate,
   });
 
@@ -35,6 +36,22 @@ function Categories() {
     });
   };
 
+  useEffect(() => {
+    if (idCate) {
+      if (filterNameCate.includes(idCate)) {
+        // Nếu có, loại bỏ nó khỏi mảng
+        setFilterNameCate(filterNameCate.filter((id) => id !== idCate));
+      } else {
+        // Nếu chưa có, thêm nó vào mảng
+        setFilterNameCate([...filterNameCate, idCate]);
+      }
+    }
+  }, [idCate]);
+  useEffect(() => {
+    if (filterNameCate.length > 0) {
+      setCate(filterNameCate.join(''));
+    }
+  }, [filterNameCate.length]);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -71,7 +88,7 @@ function Categories() {
     }
   };
   const pageClassNames = {
-    page: 'mx-2 px-4 py-1.5 text-cs_semi_green border text-xl hover:scale-105 transition-all rounded-xl shadow-border-full font-bold',
+    page: 'mx-2 px-3.5 py-1.5 text-cs_semi_green border text-sm hover:scale-105 transition-all rounded-xl shadow-border-full font-bold',
     active: 'bg-cs_semi_green text-white',
     previous: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Previous"
     next: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Next"
@@ -85,7 +102,7 @@ function Categories() {
         </h1>
         <div className="mt-5 items-center justify-between xl:flex">
           {/* Cate tabs */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2 xl:w-1/2">
             {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
@@ -104,7 +121,7 @@ function Categories() {
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select
                 onChange={(e) => setLocationId(e.target.value)}
-                className="px-1 py-2.5 bg-cs_light text-cs_semi_green outline-none dark:bg-cs_lightDark"
+                className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
               >
                 <option value="">Tất cả địa điểm</option>
                 {locations?.data?.data?.map((item: any, index: number) => (
@@ -116,7 +133,7 @@ function Categories() {
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
-              <select className="px-1 py-2.5 bg-cs_light  text-cs_semi_green outline-none dark:bg-cs_lightDark">
+              <select className="bg-cs_light px-1 py-2.5  text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option className="p-2" value="">
                   Tất cả giá vé
                 </option>
@@ -131,7 +148,7 @@ function Categories() {
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select
-                className="px-1 py-2.5 bg-cs_light text-cs_semi_green outline-none dark:bg-cs_lightDark"
+                className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
                 onChange={(e) => handleFilterDate(e.target.value)}
               >
                 <option className="p-2" value="">
@@ -182,8 +199,8 @@ function Categories() {
               breakLabel="..."
               pageCount={event.data?.data?.totalPages}
               onPageChange={handlePageChange}
-              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-xl" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
-              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-xl" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="chevron-back-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="chevron-forward-outline" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
               previousClassName={pageClassNames.previous}
               nextClassName={pageClassNames.next}
               activeClassName={pageClassNames.active}

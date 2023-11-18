@@ -18,7 +18,7 @@ const CreateEvent = () => {
   const handleOpen = () => setOpen(!open);
   const { step } = useParams();
   const activeStep = Number(step);
-  const auth = useAppSelector(state => state.auth)
+  const auth = useAppSelector((state) => state.auth);
   const renderContent = (activeStep: number) => {
     //Switch case
     switch (activeStep) {
@@ -90,7 +90,7 @@ const CreateEvent = () => {
       </div>
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-bold dark:text-cs_light">Tạo sự kiện</h1>
+          <h1 className="text-2xl font-bold dark:text-cs_light"> Tạo sự kiện</h1>
           <Dropdown auth={auth} />
         </div>
         <div className="w-[80%]">

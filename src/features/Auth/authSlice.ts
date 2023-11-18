@@ -41,7 +41,6 @@ const authSlice = createSlice({
       refreshToken: action.payload,
     }),
     setAuthCurrentUser: (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         currentUser: action.payload,
@@ -57,12 +56,13 @@ const authSlice = createSlice({
       // Lưu thông tin user vào state khi login
       const response = action.payload;
       if (response?.statusCode === 201) {
-        console.log('response', response);
-
         state.loggedIn = true;
         state.accessToken = response?.data.token.accessToken;
         state.refreshToken = response?.data.token.refreshToken;
         state.currentUser = response?.data.user;
+        if (response?.data?.user?.role?.name === 'business') {
+          window.location.href = '/organization/organization-profile';
+        }
       } else {
         state.loggedIn = false;
         state.currentUser = null;
@@ -70,6 +70,7 @@ const authSlice = createSlice({
         state.refreshToken.token = null;
       }
     });
+      
   },
 });
 export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;

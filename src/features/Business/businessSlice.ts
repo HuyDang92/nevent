@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { authApi } from '../Auth/authApi.service';
 interface BusinessState {
   businessInfo: IBusinessField | null;
   eventInfo: IEventInfo | null;
@@ -40,6 +41,19 @@ const businessSlice = createSlice({
     setPaymentInfo: (state, action) => {
       state.paymentInfo = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    // Xử lý logic khi endpoint login account & login Google được fulfilled
+    builder.addMatcher(isAnyOf(authApi.endpoints.logInGoogle.matchFulfilled), (state, action) => {
+      // Lưu thông tin user vào state khi login
+      const response = action.payload;
+      console.log(response?.data);
+      if (response?.statusCode === 201) {
+        state.businessInfo = response?.data?.businessProfile;
+      } else {
+        state.businessInfo = null;
+      }
+    });
   },
 });
 

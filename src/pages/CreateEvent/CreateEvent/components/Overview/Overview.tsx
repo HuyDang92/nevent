@@ -115,7 +115,7 @@ const OverView = () => {
           {errorForm && (
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
           )}
-          <div className="my-5 h-[250px] w-full">
+          <div className="my-5 h-[350px] w-full">
             <MyCarousel data={eventInfo?.banner} />
           </div>
           <div>
@@ -176,7 +176,7 @@ const OverView = () => {
             </div>
             <div className="my-5">
               <span className="dark:text-cs_light">Danh sách vé: </span>
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 {ticketList.map((ticket, index) => (
                   <TicketCard
                     price={ticket.price}

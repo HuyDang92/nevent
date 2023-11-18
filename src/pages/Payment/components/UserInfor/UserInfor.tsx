@@ -5,7 +5,9 @@ import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import * as Yup from 'yup';
 import { addUserInfor } from '~/features/Payment/paymentSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUpdateProfileMutation } from '~/features/Auth/authApi.service';
+import { useLazyGetProfileQuery, useUpdateProfileMutation } from '~/features/Auth/authApi.service';
+import { useEffect } from 'react';
+import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 
 const UserInfor = () => {
   const { idEvent } = useParams();
@@ -14,6 +16,7 @@ const UserInfor = () => {
   const auth = useAppSelector((state) => state.auth);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
   const [updateProfile, result] = useUpdateProfileMutation();
+  const [getProfile] = useLazyGetProfileQuery();
 
   const formik = useFormik({
     initialValues: userInfor
@@ -32,17 +35,23 @@ const UserInfor = () => {
       phone: Yup.string().required('Số điện thoại không được bỏ trống'),
       // address: Yup.string().required('Địa chỉ không được bỏ trống'),
     }),
-    onSubmit(values) {
+    onSubmit: async (values) => {
       console.log(values);
       try {
-        updateProfile({ fullName: values.fullName, phone: values.phone });
+        await updateProfile({ fullName: values.fullName, phone: values.phone });
         dispatch(addUserInfor(values));
+        // await getProfile();
         navigate(`/user/payment/${idEvent}/1`);
       } catch (err) {
         console.log(err);
       }
     },
   });
+  useEffect(() => {
+    if (result.isSuccess) {
+      dispatch(setAuthCurrentUser(result.data?.data?.userUpdated));
+    }
+  }, [result.isLoading]);
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">

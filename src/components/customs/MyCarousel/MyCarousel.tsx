@@ -50,7 +50,7 @@ const MyCarousel = ({ className, data }: MyCarouselProps) => {
             </IconButton>
           )}
         >
-          {data?.map((image: string, index) => (
+          {data?.map((image: string, index: number) => (
             <img key={index} src={image} alt="banner" className="h-full w-full rounded-xl object-cover " />
           ))}
         </Carousel>

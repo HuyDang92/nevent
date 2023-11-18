@@ -15,6 +15,7 @@ import Loading from '~/components/customs/Loading';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useAppDispatch } from '~/hooks/useActionRedux';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 interface ILogin {
   email: string;
@@ -54,7 +55,14 @@ function LogIn() {
       dispatch(assignNewToken(data?.data?.token?.accessToken));
       dispatch(assignNewRefreshToken(data?.data?.token?.refreshToken));
       dispatch(setAuthCurrentUser(data?.data?.user));
-      navigate('/');
+      dispatch(setBusinessInfo(data?.data?.businessProfile));
+
+      if (data?.data?.user?.role?.name === 'business') {
+        // navigate('/organization/organization-profile');
+        window.location.href = '/organization/organization-profile';
+      } else {
+        navigate('/');
+      }
     }
     if (isError) {
       errorNotify('Đăng nhập thất bại');
