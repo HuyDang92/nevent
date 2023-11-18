@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 import { useGetAllEventQuery, useGetLocationsQuery } from '~/features/Event/eventApi.service';
@@ -14,7 +14,7 @@ function Categories() {
   const [cate, setCate] = useState<string>('');
   const [locationId, setLocationId] = useState<string>('');
   const [filterNameCate, setFilterNameCate] = useState<string[]>([]); // Mảng lưu các mục đã chọn
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  // const [selectedDate, setSelectedDate] = useState<string>('');
 
   const categories = useGetAllCategoryQuery();
   const locations = useGetLocationsQuery();
@@ -59,23 +59,20 @@ function Categories() {
     });
   }, []);
 
-  const handleFilterDate = (value: any) => {
-    // 2. Tại đây, bạn có thể chuyển đổi giá trị `selectedDate` thành timestamp.
-    // Ví dụ, sử dụng JavaScript Date để chuyển đổi.
-
-    if (value === 'Hôm nay') {
-      const today = new Date();
-      const timestamp = today.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
-      setSelectedDate(timestamp);
-    } else if (value === 'Ngày mai') {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const timestamp = tomorrow.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
-      setSelectedDate(timestamp);
-    } else {
-      setSelectedDate('');
-    }
-  };
+  // const handleFilterDate = (value: any) => {
+  //   if (value === 'Hôm nay') {
+  //     const today = new Date();
+  //     const timestamp = today.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
+  //     setSelectedDate(timestamp);
+  //   } else if (value === 'Ngày mai') {
+  //     const tomorrow = new Date();
+  //     tomorrow.setDate(tomorrow.getDate() + 1);
+  //     const timestamp = tomorrow.toISOString(); // Lấy thời gian hiện tại dưới dạng chuỗi
+  //     setSelectedDate(timestamp);
+  //   } else {
+  //     setSelectedDate('');
+  //   }
+  // };
   const handleCategoryClick = (categoryId: string) => {
     // Kiểm tra xem categoryId đã tồn tại trong mảng filterNameCate chưa
     const cates = `&categories=${categoryId}`;
@@ -124,7 +121,7 @@ function Categories() {
                 className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
               >
                 <option value="">Tất cả địa điểm</option>
-                {locations?.data?.data?.map((item: any, index: number) => (
+                {locations?.data?.data?.map((item: ILocation, index: number) => (
                   <option key={index} className="p-2" value={item?._id}>
                     {item?.name}
                   </option>
@@ -147,10 +144,7 @@ function Categories() {
             </div>
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
-              <select
-                className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark"
-                onChange={(e) => handleFilterDate(e.target.value)}
-              >
+              <select className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option className="p-2" value="">
                   Tất cả ngày sắp tới
                 </option>

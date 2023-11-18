@@ -6,21 +6,11 @@ import { Icon as Iconfy } from '@iconify/react';
 import {
   useDeleteEventMutation,
   useGetEventAnalyticsQuery,
-  useGetEventByIdQuery,
   useGetTicketByEventIdQuery,
 } from '~/features/Event/eventApi.service';
-import {
-  Carousel,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  IconButton,
-  Progress,
-} from '@material-tailwind/react';
+import { Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton } from '@material-tailwind/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { LineChart } from '~/components/Chart';
-import { Tooltip } from '@material-tailwind/react';
 import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
@@ -113,7 +103,7 @@ const Statistics = () => {
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">Thống kê sự kiện</h1>
-          <Dropdown auth={auth} />
+          <Dropdown />
         </div>
         {deleteErr && (
           <small className="px-2 text-center text-[12px] text-red-600">{(deleteErr.data as any).message}</small>

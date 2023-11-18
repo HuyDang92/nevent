@@ -1,4 +1,3 @@
-import IonIcon from '@reacticons/ionicons';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -41,7 +40,7 @@ const Banner: React.FC<IProps> = ({ data }) => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const [isShowBanner, setIsShowBanner] = React.useState(0);
+  // const [isShowBanner, setIsShowBanner] = React.useState(0);
 
   const wrapValue = (value: number, min: number, max: number) => {
     const range = max - min + 1;
@@ -130,7 +129,7 @@ const Banner: React.FC<IProps> = ({ data }) => {
                 }`}
                 key={index}
                 onClick={() => {
-                  setIsShowBanner(index);
+                  // setIsShowBanner(index);
                   setCurrentImageIndex(index);
                   setPage([index, 0]);
                 }}
@@ -154,12 +153,12 @@ const Banner: React.FC<IProps> = ({ data }) => {
       </button>
 
       <View className="absolute right-[10px] top-[10px] z-10 flex items-center gap-[20px] lg:right-[30px] lg:top-[30px]">
-        <motion.button
+        {/* <motion.button
           className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-[#ffffff90]"
           whileTap={{ scale: 0.9 }}
         >
           <IonIcon name="help-circle-outline" className=" border-cs_semi_green text-2xl" />
-        </motion.button>
+        </motion.button> */}
         {/* <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
                     whileTap={{ scale: 0.9 }}
                 >

@@ -70,30 +70,19 @@
 // export default PrivateRoute;
 import { Outlet, Navigate } from 'react-router-dom';
 import { useAppSelector } from '~/hooks/useActionRedux';
+import Page403 from '~/pages/Page403';
 
 interface PrivateRouteProps {
   allowedRoles?: string[];
 }
-interface IJwtDecode {
-  exp: number;
-}
+
 function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
   const auth = useAppSelector((state) => state.auth);
 
   const authorized: boolean =
     allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
 
-  return auth.loggedIn ? (
-    authorized ? (
-      <Outlet />
-    ) : (
-      <div className="text-slate-500 flex min-h-screen items-center justify-center bg-cs_light">
-        <p>403 | Forbidden</p>
-      </div>
-    )
-  ) : (
-    <Navigate to="/" />
-  );
+  return auth.loggedIn ? authorized ? <Outlet /> : <Page403 /> : <Navigate to="/login" />;
 }
 
 export default PrivateRoute;

@@ -1,4 +1,3 @@
-import { Radios, Radio } from '~/components/customs/Radio';
 import Input from '~/components/customs/Input';
 import * as Yup from 'yup';
 import Button from '~/components/customs/Button';
@@ -15,6 +14,10 @@ interface UserInfoProp {
   data?: IUserField | null;
 }
 
+interface IUpdateProfile {
+  fullName: string;
+  phone: string;
+}
 const UserInfo = ({ data, className }: UserInfoProp) => {
   const dispatch = useAppDispatch();
 
@@ -31,7 +34,7 @@ const UserInfo = ({ data, className }: UserInfoProp) => {
       fullName: Yup.string().required('Họ và tên không được bỏ trống'),
       phone: Yup.string().required('Số điện thoại không được bỏ trống'),
     }),
-    onSubmit: async (value: any) => {
+    onSubmit: async (value: IUpdateProfile) => {
       await updateProfile(value);
     },
   });

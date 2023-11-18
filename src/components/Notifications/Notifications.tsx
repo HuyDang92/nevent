@@ -1,6 +1,6 @@
-import { Avatar, IconButton } from '@material-tailwind/react';
+import { IconButton } from '@material-tailwind/react';
 import { motion, Variants } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Icon from '../customs/Icon';
 import Notifycation from '~/pages/Auth/Profile/components/Notifycation';
 import { Link } from 'react-router-dom';
@@ -14,10 +14,8 @@ const itemVariants: Variants = {
   },
   closed: { opacity: 0, y: 20, transition: { duration: 0.1 } },
 };
-type DropdownProps = {
-  auth?: any;
-};
-const Notifycations = ({ auth }: DropdownProps) => {
+
+const Notifycations = () => {
   const [isOpen, setIsOpen] = useState(false);
   const checkNoti = useAppSelector((state) => state.auth.notification);
   return (

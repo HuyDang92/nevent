@@ -1,7 +1,6 @@
 import bg from '~/assets/images/bgForgot.webp';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logoWhite.png';
 import { useEffect, useState } from 'react';

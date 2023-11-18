@@ -21,7 +21,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
   const { searchValue } = useDebounce(value, 500);
   const ref = useRef(null);
 
-  const [listHistory, setListHistory] = useState<string[]>([]);
+  // const [listHistory, setListHistory] = useState<string[]>([]);
   const searchHistory = localStorage.getItem('search-history');
 
   useClickOutside(ref, () => {
@@ -61,7 +61,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
       const history = JSON.parse(searchHistory);
       const newHistory = history.filter((i: string) => i !== item);
       localStorage.setItem('search-history', JSON.stringify(newHistory));
-      setListHistory(newHistory);
+      // setListHistory(newHistory);
     }
   };
 

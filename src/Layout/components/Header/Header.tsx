@@ -74,7 +74,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="">{navList}</div>
         <div className="">
           {auth.loggedIn ? (
-            <Dropdown auth={auth} />
+            <Dropdown />
           ) : (
             <Link to="/login" className="hidden sm:inline-block">
               <Button value="Đăng nhập" type="button" className="" mode="dark" />

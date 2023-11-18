@@ -18,6 +18,12 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { refreshPayment } from '~/features/Payment/paymentSlice';
 import { Carousel, IconButton } from '@material-tailwind/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
@@ -35,10 +41,13 @@ function DetailEvent() {
     });
   }, []);
   const handlePayment = (idEvent: string) => {
+    if (!auth) {
+      navigate('/login');
+      return;
+    }
     dispatch(refreshPayment(idEvent));
     navigate(`/user/payment/${idEvent}/0`);
   };
-  console.log(detailEventQuery?.data?.data);
 
   return (
     <div className="relative">
@@ -47,55 +56,25 @@ function DetailEvent() {
         <>
           <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={detailEventQuery?.data?.data?.title} />
           <div className="flex-row-reverse gap-4 xl:flex">
-            <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
+            <div className="mb-5 h-fit xl:sticky xl:top-10 xl:w-[380px]">
               <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
-                <Carousel
-                  className={`h-[160px] w-full rounded-xl object-cover`}
-                  prevArrow={({ handlePrev }) => (
-                    <IconButton
-                      variant="text"
-                      color="white"
-                      size="lg"
-                      onClick={handlePrev}
-                      className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="h-6 w-6"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                      </svg>
-                    </IconButton>
-                  )}
-                  nextArrow={({ handleNext }) => (
-                    <IconButton
-                      variant="text"
-                      color="white"
-                      size="lg"
-                      onClick={handleNext}
-                      className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="h-6 w-6"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                      </svg>
-                    </IconButton>
-                  )}
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={15}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[Pagination]}
+                  className="mySwiper"
                 >
-                  {detailEventQuery?.data?.data?.banner?.map((image: any) => (
-                    <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+                  {detailEventQuery?.data?.data?.banner?.map((image: any, index: number) => (
+                    <SwiperSlide key={index} className={`h-[180px] w-full rounded-xl object-cover`}>
+                      <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+                    </SwiperSlide>
                   ))}
-                </Carousel>
+                </Swiper>
+
                 <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
                     {detailEventQuery?.data?.data?.title}
@@ -142,7 +121,18 @@ function DetailEvent() {
                       onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
                     />
                   ) : (
-                    <span>Dùng vai trò người dùng để có thể mua vé</span>
+                    <>
+                      {!auth ? (
+                        <Button
+                          className="w-full"
+                          value="Đặt vé ngay"
+                          mode="dark"
+                          onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                        />
+                      ) : (
+                        <span>Dùng vai trò người dùng để có thể mua vé</span>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -155,7 +145,7 @@ function DetailEvent() {
                   className="w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]"
                 /> */}
                 <Carousel
-                  className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]`}
+                  className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[410px]`}
                   prevArrow={({ handlePrev }) => (
                     <IconButton
                       variant="text"
@@ -197,8 +187,8 @@ function DetailEvent() {
                     </IconButton>
                   )}
                 >
-                  {detailEventQuery?.data?.data?.banner?.map((image: any) => (
-                    <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+                  {detailEventQuery?.data?.data?.banner?.map((image: any, index: number) => (
+                    <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
                   ))}
                 </Carousel>
               </div>
@@ -249,25 +239,31 @@ function DetailEvent() {
 
                     {detailEventQuery?.data?.data?.desc}
                   </div>
-                  <img src={des} alt="" className="w-full" />
-                  <img src={des2} alt="" className="w-full" />
+                  <Zoom>
+                    <img src={des} alt="" className="w-full" />
+                  </Zoom>
+                  <Zoom>
+                    <img src={des2} alt="" className="w-full" />
+                  </Zoom>
                 </div>
                 {/* Info bussiness */}
                 <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức
                   </h1>
-                  <div className="flex sm:gap-4">
-                    <Link to="/" className="">
+                  <div className="flex gap-4 ">
+                    <Zoom>
                       <img
                         src={detailEventQuery?.data?.data?.banner[0]?.url}
                         alt=""
-                        className="h-[70px] w-[70px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
+                        className="h-[90px] w-[90px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
                       />
-                    </Link>
-                    <div className="">
+                    </Zoom>
+                    <div className="w-[70%] sm:w-[80%]">
                       <h3 className="font-bold ">{detailEventQuery?.data?.data?.creator?.name}</h3>
-                      <p className="line-clamp-5">{detailEventQuery?.data?.data?.creator?.description}</p>
+                      <p className="line-clamp-4 text-xs sm:line-clamp-none sm:text-[16px] ">
+                        {detailEventQuery?.data?.data?.creator?.description}
+                      </p>
                     </div>
                   </div>
                 </div>

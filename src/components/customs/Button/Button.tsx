@@ -1,6 +1,6 @@
 import { ReactNode, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
-import IonIcon from '@reacticons/ionicons';
+import Icon from '../Icon';
 
 type ButtonProps = {
   icon?: string;
@@ -27,15 +27,15 @@ const Button = ({
     <motion.button
       onClick={onClick}
       className={`${value && icon && 'flex items-center justify-center'} gap-2 ${
-        rounded_full ? 'rounded-full' : 'rounded-xl'
-      } px-4 py-2 font-medium shadow-border-light transition-all ${
+        rounded_full ? 'rounded-full' : 'rounded-[10px]'
+      } px-3 py-2 font-medium shadow-border-light transition-all sm:px-4 sm:py-2 ${
         mode === 'light' ? 'bg-white text-cs_semi_green' : ' bg-cs_semi_green text-white'
-      }  ${className}`}
+      }  ${className} text-sm sm:text-[15px]`}
       whileTap={{ scale: 0.9 }}
       type={type}
       disabled={disabled}
     >
-      {icon && <IonIcon name={icon as any} className="text-xl" />}
+      {icon && <Icon name={icon} className="text-sm sm:text-xl" />}
       <span>{value}</span>
     </motion.button>
   );

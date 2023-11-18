@@ -3,12 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Icon from '~/components/customs/Icon';
 import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import Input from '~/components/customs/Input';
-import { FacebookShareButton, FacebookIcon } from 'react-share';
 import { successNotify } from '~/components/customs/Toast';
-import is from 'date-fns/locale/is/index';
 const Pr = () => {
   const { idEvent } = useParams();
   const event = useGetEventByIdQuery(idEvent || '');

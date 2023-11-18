@@ -85,7 +85,7 @@ const EventManage = () => {
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
-          <Dropdown auth={auth} />
+          <Dropdown />
         </div>
         <div className="mt-2 flex justify-between">
           <div className="w-[72%]">

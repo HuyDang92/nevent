@@ -17,6 +17,7 @@ import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 import MyTicket from './components/MyTicket';
 import History from './components/History';
 import Notifycation from './components/Notifycation';
+import ZoomComp from '~/components/customs/Zoom/Zoom';
 interface ProfileProps {
   className?: string;
 }
@@ -80,13 +81,19 @@ const Profile: React.FC<ProfileProps> = () => {
           <div className="relative">
             <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
-                <img
-                  className="h-full w-full object-cover"
-                  src={auth?.currentUser?.avatar?.url || DefaultAvatar}
-                  alt=""
-                />
+                <ZoomComp>
+                  <img
+                    className="h-full w-full object-cover"
+                    src={auth?.currentUser?.avatar?.url || DefaultAvatar}
+                    alt=""
+                  />
+                </ZoomComp>
               )}
-              {imagePreviewUrl && <img className="h-full w-full object-cover" src={imagePreviewUrl} alt="" />}
+              {imagePreviewUrl && (
+                <ZoomComp>
+                  <img className="h-full w-full object-cover" src={imagePreviewUrl} alt="" />
+                </ZoomComp>
+              )}
             </div>
             <label
               htmlFor="avatar"
@@ -139,33 +146,29 @@ const Profile: React.FC<ProfileProps> = () => {
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            {auth?.currentUser?.role?.name === 'user' && (
-              <>
-                <Tab link="/user/profile/1" className="flex items-center justify-center xl:justify-between" index={1}>
-                  <span className="!hidden xl:!block">Vé của tôi</span>
-                  <Icon name="ticket" className="text-2xl xl:text-base"></Icon>
-                </Tab>
-                <Tab link="/user/profile/2" className="flex items-center justify-center xl:justify-between" index={2}>
-                  <span className="!hidden xl:!block">Lịch sử giao dịch</span>
-                  <Icon name="time" className="text-2xl xl:text-base"></Icon>
-                </Tab>
-                <Tab link="/user/profile/3" className="flex items-center justify-center xl:justify-between" index={3}>
-                  <span className="!hidden xl:!block">Thông báo</span>
-                  <Icon name="notifications" className="text-2xl xl:text-base"></Icon>
-                </Tab>
-                <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
-                  <span className="!hidden xl:!block">Đổi mật khẩu</span>
-                  <Icon name="key" className="text-2xl xl:text-base"></Icon>
-                </Tab>
-              </>
-            )}
+            <Tab link="/user/profile/1" className="flex items-center justify-center xl:justify-between" index={1}>
+              <span className="!hidden xl:!block">Vé của tôi</span>
+              <Icon name="ticket" className="text-2xl xl:text-base"></Icon>
+            </Tab>
+            <Tab link="/user/profile/2" className="flex items-center justify-center xl:justify-between" index={2}>
+              <span className="!hidden xl:!block">Lịch sử giao dịch</span>
+              <Icon name="time" className="text-2xl xl:text-base"></Icon>
+            </Tab>
+            <Tab link="/user/profile/3" className="flex items-center justify-center xl:justify-between" index={3}>
+              <span className="!hidden xl:!block">Thông báo</span>
+              <Icon name="notifications" className="text-2xl xl:text-base"></Icon>
+            </Tab>
+            <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
+              <span className="!hidden xl:!block">Đổi mật khẩu</span>
+              <Icon name="key" className="text-2xl xl:text-base"></Icon>
+            </Tab>
           </TabsHeader>
           <TabsBody className="w-full rounded-[16px] p-[15px] xl:w-[75%]">
             <TabsContent index={0}>
               <UserInfo data={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={1}>
-              <MyTicket auth={auth?.currentUser} />
+              <MyTicket />
             </TabsContent>
             <TabsContent index={2}>
               <History />

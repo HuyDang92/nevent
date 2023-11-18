@@ -91,7 +91,7 @@ const CreateEvent = () => {
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-cs_light"> Tạo sự kiện</h1>
-          <Dropdown auth={auth} />
+          <Dropdown />
         </div>
         <div className="w-[80%]">
           <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">

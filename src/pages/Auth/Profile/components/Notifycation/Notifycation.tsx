@@ -4,7 +4,6 @@ import Icon from '~/components/customs/Icon';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import nothing from '~/assets/images/nothing.svg';
 import useSocket from '~/hooks/useConnecrSocket';
-import moment from 'moment';
 import { useCheckedViewNotifycationMutation } from '~/features/Auth/authApi.service';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
@@ -17,14 +16,14 @@ interface UserInfoProp {
   popup?: boolean;
 }
 
-const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoProp) => {
+const Notifycation = ({ className, classNameTagHeader, popup }: UserInfoProp) => {
   const socket = useSocket();
   const dispatch = useAppDispatch();
   const [notificationData, setNotificationData] = useState<INotify[]>([]);
-  const [unClick, setUnclick] = useState<any[]>([]); // Lưu trạng thái click của từng mục
-  const [showDeleteMenu, setShowDeleteMenu] = useState<any[]>([]);
+  const [unClick, setUnclick] = useState<INotify[]>([]); // Lưu trạng thái click của từng mục
+  const [showDeleteMenu, setShowDeleteMenu] = useState<INotify[]>([]);
   const [viewedAll, setViewedAll] = useState<boolean>(false);
-  const [viewed, result] = useCheckedViewNotifycationMutation();
+  const [viewed] = useCheckedViewNotifycationMutation();
 
   useEffect(() => {
     const unclickedItems = notificationData.filter((item, index: number) => item?.view === false);
@@ -67,13 +66,13 @@ const Notifycation = ({ data, className, classNameTagHeader, popup }: UserInfoPr
     }
   };
 
-  const handleItemClick = async (item: any) => {
+  const handleItemClick = async (item: INotify) => {
     if (!item?.view) {
       await viewed(item?._id);
     }
   };
 
-  const handleRemoveItem = (item: any) => {
+  const handleRemoveItem = (item: INotify) => {
     setShowDeleteMenu((prevClickedItems) => {
       // Kiểm tra xem mục đã tồn tại trong mảng chưa
       if (!prevClickedItems.includes(item)) {

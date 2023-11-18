@@ -4,11 +4,15 @@ import { MouseEvent } from 'react';
 type IconProps = {
   className?: string;
   name: string;
-  onClick?: any;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Icon = ({ className, name, onClick }: IconProps) => {
-  return <IonIcon onClick={onClick} name={name as any} className={`  ${className}`} />;
+  return (
+    <button onClick={onClick}>
+      <IonIcon name={name as any} className={`  ${className}`} />
+    </button>
+  );
 };
 
 export default Icon;
