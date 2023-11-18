@@ -28,8 +28,11 @@ const businessSlice = createSlice({
     setEventTime: (state, action) => {
       state.eventTime = action.payload;
     },
-    setTicketList: (state, action) => {
+    addTicket: (state, action) => {
       state.ticketList = [...state.ticketList, action.payload];
+    },
+    removeTicket: (state, action) => {
+      state.ticketList = [...state.ticketList.filter((ticket: TicketListInfo) => ticket.type !== action.payload.type)];
     },
     setEventSetting: (state, action) => {
       state.eventSetting = action.payload;
@@ -40,6 +43,6 @@ const businessSlice = createSlice({
   },
 });
 
-export const { setBusinessInfo, setEventInfo, setEventTime, setTicketList, setEventSetting, setPaymentInfo } =
+export const { setBusinessInfo, setEventInfo, setEventTime, addTicket, removeTicket, setEventSetting, setPaymentInfo } =
   businessSlice.actions;
 export default businessSlice.reducer;
