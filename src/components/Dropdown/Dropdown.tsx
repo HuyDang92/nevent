@@ -11,6 +11,7 @@ import useClickOutside from '~/hooks/useClickOutside';
 import { useLazyGetProfileQuery, useSwapRoleMutation } from '~/features/Auth/authApi.service';
 import Loading from '../customs/Loading';
 import { successNotify } from '../customs/Toast';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 const itemVariants: Variants = {
   open: {
@@ -29,6 +30,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
   const navigate = useNavigate();
   const ref = useRef(null);
   const currentAuth = useAppSelector((state) => state.auth.currentUser);
+  const currentBusiness = useAppSelector((state) => state.bussiness.businessInfo);
 
   const [getProfile, result] = useLazyGetProfileQuery();
   const [swapRole, resultSwap] = useSwapRoleMutation();
@@ -41,28 +43,27 @@ const Dropdown = ({ auth }: DropdownProps) => {
     navigate('/login');
   };
   const handleSwapRole = async (type: string) => {
-    if (!currentAuth?.businessProfile && type !== 'swap') {
+    if (!currentBusiness && type !== 'swap') {
       navigate('/user/organization-profile');
       return;
     }
     await swapRole({ email: currentAuth?.email, role: currentAuth?.role?.name === 'business' ? 'user' : 'business' });
-    await getProfile();
+    // await getProfile();
   };
 
   useEffect(() => {
-    if (result.isSuccess) {
-      console.log(result.data.data);
-
-      dispatch(setAuthCurrentUser(result.data.data));
-      if (currentAuth?.role?.name === 'business' && result.data?.data?.role?.name === 'user') {
+    if (resultSwap.isSuccess) {
+      dispatch(setAuthCurrentUser(resultSwap.data?.data?.user));
+      dispatch(setBusinessInfo(resultSwap.data?.data?.businessProfile));
+      if (currentAuth?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
         navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');
-      } else if (currentAuth?.role?.name === 'user' && result.data?.data?.role?.name === 'business') {
+      } else if (currentAuth?.role?.name === 'user' && resultSwap.data?.data?.user?.role?.name === 'business') {
         navigate('/organization/event-list');
         successNotify('Đã chuyển sang vai trò ban tổ chức');
       }
     }
-  }, [result.isFetching]);
+  }, [resultSwap.isLoading]);
 
   return (
     <>
@@ -152,7 +153,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
               >
                 <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
                 <span className="group-hover:text-cs_light">{`${
-                  currentAuth?.businessProfile ? 'Vai trò ban tổ chức' : 'Tạo sự kiện'
+                  currentBusiness ? 'Vai trò ban tổ chức' : 'Tạo sự kiện'
                 }`}</span>
               </div>
             )}

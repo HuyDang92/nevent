@@ -15,8 +15,8 @@ const UserInfor = () => {
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
-  const [updateProfile] = useUpdateProfileMutation();
-  const [getProfile, result] = useLazyGetProfileQuery();
+  const [updateProfile, result] = useUpdateProfileMutation();
+  const [getProfile] = useLazyGetProfileQuery();
 
   const formik = useFormik({
     initialValues: userInfor
@@ -40,7 +40,7 @@ const UserInfor = () => {
       try {
         await updateProfile({ fullName: values.fullName, phone: values.phone });
         dispatch(addUserInfor(values));
-        await getProfile();
+        // await getProfile();
         navigate(`/user/payment/${idEvent}/1`);
       } catch (err) {
         console.log(err);
@@ -49,9 +49,9 @@ const UserInfor = () => {
   });
   useEffect(() => {
     if (result.isSuccess) {
-      dispatch(setAuthCurrentUser(result.data.data));
+      dispatch(setAuthCurrentUser(result.data?.data?.userUpdated));
     }
-  }, [result.isFetching]);
+  }, [result.isLoading]);
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
