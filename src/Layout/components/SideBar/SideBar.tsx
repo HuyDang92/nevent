@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Icon from '~/components/customs/Icon';
 import { logout } from '~/features/Auth/authSlice';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 import { useAppSelector } from '~/hooks/useActionRedux';
 type SideBarProp = {
   className?: string;
@@ -58,6 +59,7 @@ const SideBar = ({ className, open, setOpen }: SideBarProp) => {
 
   const handleLogOut = () => {
     dispatch(logout());
+    dispatch(setBusinessInfo(null));
     navigate('/login');
   };
   return (

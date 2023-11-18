@@ -40,6 +40,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
   });
   const handleLogOut = () => {
     dispatch(logout());
+    dispatch(setBusinessInfo(null));
     navigate('/login');
   };
   const handleSwapRole = async (type: string) => {
@@ -138,7 +139,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             )}
           </motion.li>
           <motion.li variants={itemVariants} className="hidden lg:block">
-            {currentAuth?.role?.name === 'business' ? (
+            {currentAuth?.role?.name === 'business' && currentBusiness ? (
               <Link
                 to={'/organization/event-list'}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -147,15 +148,25 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
               </Link>
             ) : (
-              <div
-                onClick={() => handleSwapRole('swap')}
-                className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
-              >
-                <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">{`${
-                  currentBusiness ? 'Vai trò ban tổ chức' : 'Tạo sự kiện'
-                }`}</span>
-              </div>
+              <>
+                {currentAuth?.role?.name === 'user' && currentBusiness ? (
+                  <div
+                    onClick={() => handleSwapRole('swap')}
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+                  >
+                    <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+                    <span className="group-hover:text-cs_light">Vai trò ban tổ chức</span>
+                  </div>
+                ) : (
+                  <Link
+                    to={'/user/organization-profile'}
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+                  >
+                    <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+                    <span className="group-hover:text-cs_light">Tạo sự kiện</span>
+                  </Link>
+                )}
+              </>
             )}
           </motion.li>
           <motion.li variants={itemVariants}>

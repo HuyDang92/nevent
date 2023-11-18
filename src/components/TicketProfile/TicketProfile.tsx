@@ -1,6 +1,5 @@
 import React, { Fragment, createRef, useCallback, useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import Button from '../customs/Button';
 import QRCode from 'react-qr-code';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
