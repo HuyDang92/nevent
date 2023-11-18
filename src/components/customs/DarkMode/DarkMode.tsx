@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Icon from '../Icon';
 type IProps = {
-  hidden?: string;
+  hidden?: boolean;
 };
 
 const ToggleDarkMode = ({ hidden }: IProps) => {
