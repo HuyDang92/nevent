@@ -6,6 +6,7 @@ import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
 import { useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import Input from '~/components/customs/Input';
+import { FacebookShareButton, FacebookIcon } from 'react-share';
 const Pr = () => {
   const { idEvent } = useParams();
   const event = useGetEventByIdQuery(idEvent || '');
@@ -30,7 +31,17 @@ const Pr = () => {
               https://www.nevent.io.vn/event-detail/{idEvent}
             </Link>
             <br />
-            <Button className="my-5 !bg-[#3547E4] px-32 text-xl text-white" value="Chia sẻ lên Facebook" />
+            <FacebookShareButton url={'https://nevent.io.vn/event-detail/65507310b24fa6a479b9b34b'}>
+              <Button
+                className="my-5 !bg-[#3547E4] px-32 text-xl text-white"
+                value={
+                  <div className='flex items-center gap-5'>
+                    <FacebookIcon size={40} round />
+                    Chia sẻ lên Facebook
+                  </div>
+                }
+              />
+            </FacebookShareButton>
           </div>
           <div className="flex gap-5 border-b-[1px] py-5">
             <div className="w-1/2">
@@ -46,7 +57,7 @@ const Pr = () => {
                   <Input classNameInput="w-[100px]" value={heightIpt} onChange={(e) => setHeightIpt(e.target.value)} />
                 </div>
                 <div className="w-[60%] rounded-lg bg-cs_gray p-2.5">
-                  {`<iframe width="${width}" height="${height}" style="border-radius:8px" src="nevent.io.vn/pr/${idEvent}"></iframe>`}
+                  {`<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}"></iframe>`}
                 </div>
               </div>
             </div>

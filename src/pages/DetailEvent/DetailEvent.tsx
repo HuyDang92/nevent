@@ -101,7 +101,7 @@ function DetailEvent() {
                     {detailEventQuery?.data?.data?.title}
                   </h1>
                   {detailEventQuery?.data?.data?.creator?.type === 'business' && (
-                    <h1>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
+                    <h1 className='dark:text-cs_light'>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
                   )}
                   <div className="flex items-center gap-[15px]">
                     <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
