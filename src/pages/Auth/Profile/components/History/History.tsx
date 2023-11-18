@@ -63,7 +63,7 @@ const History = ({ className }: UserInfoProp) => {
               </div>
               <div className="flex justify-between xl:block">
                 <h3 className="pb-2 text-[#ccc] ">Tổng giá</h3>
-                <p className="font-medium">{item?.amount}đ</p>
+                <p className="font-medium">{item?.amount.toLocaleString('vi')}đ</p>
               </div>
               <div className="flex items-center justify-end xl:justify-center">
                 <h3 className="text-[#ccc]">

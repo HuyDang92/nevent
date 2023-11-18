@@ -48,8 +48,8 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
                ${isActive ? ' bg-white text-cs_semi_green dark:bg-cs_lightDark' : 'text-cs_light'}`
             }
           >
-            <div className={`flex items-center py-3 hover:bg-transparent font-bold`}>
-              <Icon className='mx-2' name="arrow-back-outline"></Icon>
+            <div className={`flex items-center py-3 font-bold hover:bg-transparent`}>
+              <Icon className="mx-2" name="arrow-back-outline"></Icon>
               <Typography className={`font-bold`}>Trở lại</Typography>
             </div>
           </NavLink>

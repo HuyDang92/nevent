@@ -49,7 +49,7 @@ function DetailEvent() {
           <div className="flex-row-reverse gap-4 xl:flex">
             <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
               <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
-              <Carousel
+                <Carousel
                   className={`h-[160px] w-full rounded-xl object-cover`}
                   prevArrow={({ handlePrev }) => (
                     <IconButton

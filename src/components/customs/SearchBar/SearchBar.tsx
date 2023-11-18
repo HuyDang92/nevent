@@ -120,7 +120,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
                   <span className="flex items-center gap-1">
                     <Icon name="location-outline" />
                     {event?.location?.name}
-                </span>
+                  </span>
                   <span className="flex items-center gap-1">
                     <Icon name="time-outline" />
                     {moment(event?.start_date).format('DD/MM/YYYY')}

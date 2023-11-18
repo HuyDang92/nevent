@@ -70,7 +70,6 @@ const authSlice = createSlice({
         state.refreshToken.token = null;
       }
     });
-      
   },
 });
 export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;

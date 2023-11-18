@@ -58,7 +58,7 @@ function PassTicket() {
         <Icon name="return-up-back-outline" />
         <span className="">Trở về</span>
       </Link>
-      <div className='mx-40 py-5'>
+      <div className="mx-40 py-5">
         {getTickets.length > 0 &&
           getTickets.map((item: any, index: number) => <TicketProfile passTicket key={index} data={item} />)}
       </div>

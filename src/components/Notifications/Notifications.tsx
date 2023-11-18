@@ -34,7 +34,7 @@ const Notifycations = ({ auth }: DropdownProps) => {
         </IconButton>
       </motion.div>
       <motion.ul
-        className="absolute -right-[230%] sm:right-0 top-[140%] z-20 w-[350px] space-y-2  rounded-2xl border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+        className="absolute -right-[230%] top-[140%] z-20 w-[350px] space-y-2 rounded-2xl  border-2 bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark sm:right-0"
         variants={{
           open: {
             clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -61,7 +61,11 @@ const Notifycations = ({ auth }: DropdownProps) => {
           <Notifycation />
         </motion.li>
         <motion.li variants={itemVariants} className="space-y-2 pb-0 text-center">
-          <Link to="/user/profile/3" onClick={() => setIsOpen(false)} className="cursor-pointer text-sm dark:text-cs_light">
+          <Link
+            to="/user/profile/3"
+            onClick={() => setIsOpen(false)}
+            className="cursor-pointer text-sm dark:text-cs_light"
+          >
             Xem tất cả
           </Link>
         </motion.li>

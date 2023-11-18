@@ -6,9 +6,9 @@ import { useAppSelector } from '~/hooks/useActionRedux';
 const Complete = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get('s');
-  const idEvent   = useAppSelector((state) => state.payment.idEvent);
+  const idEvent = useAppSelector((state) => state.payment.idEvent);
   console.log(idEvent);
-  
+
   return (
     <div className="px-5 py-20">
       <div className="flex justify-center">

@@ -162,7 +162,7 @@ const OverView = () => {
             </div>
             <div className="my-5">
               <span className="dark:text-cs_light">Danh sách vé: </span>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex flex-wrap gap-4">
                 {ticketList.map((ticket, index) => (
                   <TicketCard
                     price={ticket.price}

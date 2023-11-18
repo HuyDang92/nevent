@@ -63,7 +63,7 @@ const TicketList = () => {
       <div className="my-5">
         <span className="dark:text-cs_light">Danh sách vé: </span>
         {ticketInfo.length < 1 && <span className="text-cs_semi_green">Vui lòng thêm vé</span>}
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex flex-wrap gap-4">
           {ticketInfo.map((ticket, index) => (
             <TicketCard
               price={ticket.price}
