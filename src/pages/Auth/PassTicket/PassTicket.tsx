@@ -58,8 +58,10 @@ function PassTicket() {
         <Icon name="return-up-back-outline" />
         <span className="">Trở về</span>
       </Link>
-      {getTickets.length > 0 &&
-        getTickets.map((item: any, index: number) => <TicketProfile passTicket key={index} data={item} />)}
+      <div className='mx-40 py-5'>
+        {getTickets.length > 0 &&
+          getTickets.map((item: any, index: number) => <TicketProfile passTicket key={index} data={item} />)}
+      </div>
       <div className="items-center gap-5 space-y-2 sm:flex">
         <SearchUser setUserReceive={setUserReceive} className="rounded-lg shadow-border-light" />
         <select

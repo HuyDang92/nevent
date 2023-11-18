@@ -51,11 +51,13 @@ const Dropdown = ({ auth }: DropdownProps) => {
 
   useEffect(() => {
     if (result.isSuccess) {
+      console.log(result.data.data);
+
       dispatch(setAuthCurrentUser(result.data.data));
-      if (currentAuth?.role?.name === 'business') {
+      if (currentAuth?.role?.name === 'business' && result.data?.data?.role?.name === 'user') {
         navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');
-      } else {
+      } else if (currentAuth?.role?.name === 'user' && result.data?.data?.role?.name === 'business') {
         navigate('/organization/event-list');
         successNotify('Đã chuyển sang vai trò ban tổ chức');
       }
@@ -80,7 +82,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
           />
         </motion.button>
         <motion.ul
-          className="absolute right-0 top-[140%] z-20 w-[240px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+          className="absolute right-0 top-[140%] z-20 w-[260px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
           variants={{
             open: {
               clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -121,7 +123,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Mua vé sự kiện</span>
+                <span className="group-hover:text-cs_light">Vai trò người dùng</span>
               </p>
             )}
             {currentAuth?.role?.name === 'user' && (
@@ -149,7 +151,9 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
+                <span className="group-hover:text-cs_light">{`${
+                  currentAuth?.businessProfile ? 'Vai trò ban tổ chức' : 'Tạo sự kiện'
+                }`}</span>
               </div>
             )}
           </motion.li>
