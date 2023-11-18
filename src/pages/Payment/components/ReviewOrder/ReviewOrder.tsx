@@ -92,9 +92,9 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
                 <TicketCard title={ticket.title} tooltip="Tooltip here" className="w-full" />
                 <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
               </div>
-              <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
+              {/* <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
                 {(ticket.orderQuantity * ticket.price).toLocaleString('vi')}đ
-              </span>
+              </span> */}
             </div>
           );
         })}

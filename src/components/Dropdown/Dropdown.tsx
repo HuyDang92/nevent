@@ -11,6 +11,7 @@ import useClickOutside from '~/hooks/useClickOutside';
 import { useLazyGetProfileQuery, useSwapRoleMutation } from '~/features/Auth/authApi.service';
 import Loading from '../customs/Loading';
 import { successNotify } from '../customs/Toast';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 const itemVariants: Variants = {
   open: {
@@ -29,6 +30,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
   const navigate = useNavigate();
   const ref = useRef(null);
   const currentAuth = useAppSelector((state) => state.auth.currentUser);
+  const currentBusiness = useAppSelector((state) => state.bussiness.businessInfo);
 
   const [getProfile, result] = useLazyGetProfileQuery();
   const [swapRole, resultSwap] = useSwapRoleMutation();
@@ -38,29 +40,31 @@ const Dropdown = ({ auth }: DropdownProps) => {
   });
   const handleLogOut = () => {
     dispatch(logout());
+    dispatch(setBusinessInfo(null));
     navigate('/login');
   };
   const handleSwapRole = async (type: string) => {
-    if (!currentAuth?.businessProfile && type !== 'swap') {
+    if (!currentBusiness && type !== 'swap') {
       navigate('/user/organization-profile');
       return;
     }
     await swapRole({ email: currentAuth?.email, role: currentAuth?.role?.name === 'business' ? 'user' : 'business' });
-    await getProfile();
+    // await getProfile();
   };
 
   useEffect(() => {
-    if (result.isSuccess) {
-      dispatch(setAuthCurrentUser(result.data.data));
-      if (currentAuth?.role?.name === 'business') {
+    if (resultSwap.isSuccess) {
+      dispatch(setAuthCurrentUser(resultSwap.data?.data?.user));
+      dispatch(setBusinessInfo(resultSwap.data?.data?.businessProfile));
+      if (currentAuth?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
         navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');
-      } else {
+      } else if (currentAuth?.role?.name === 'user' && resultSwap.data?.data?.user?.role?.name === 'business') {
         navigate('/organization/event-list');
         successNotify('Đã chuyển sang vai trò ban tổ chức');
       }
     }
-  }, [result.isFetching]);
+  }, [resultSwap.isLoading]);
 
   return (
     <>
@@ -80,7 +84,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
           />
         </motion.button>
         <motion.ul
-          className="absolute right-0 top-[140%] z-20 w-[240px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+          className="absolute right-0 top-[140%] z-20 w-[260px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
           variants={{
             open: {
               clipPath: 'inset(0% 0% 0% 0% round 10px)',
@@ -121,7 +125,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="ticket" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Mua vé sự kiện</span>
+                <span className="group-hover:text-cs_light">Vai trò người dùng</span>
               </p>
             )}
             {currentAuth?.role?.name === 'user' && (
@@ -135,7 +139,7 @@ const Dropdown = ({ auth }: DropdownProps) => {
             )}
           </motion.li>
           <motion.li variants={itemVariants} className="hidden lg:block">
-            {currentAuth?.role?.name === 'business' ? (
+            {currentAuth?.role?.name === 'business' && currentBusiness ? (
               <Link
                 to={'/organization/event-list'}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
@@ -144,13 +148,25 @@ const Dropdown = ({ auth }: DropdownProps) => {
                 <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
               </Link>
             ) : (
-              <div
-                onClick={() => handleSwapRole('swap')}
-                className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
-              >
-                <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Sự kiện đã tạo</span>
-              </div>
+              <>
+                {currentAuth?.role?.name === 'user' && currentBusiness ? (
+                  <div
+                    onClick={() => handleSwapRole('swap')}
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+                  >
+                    <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+                    <span className="group-hover:text-cs_light">Vai trò ban tổ chức</span>
+                  </div>
+                ) : (
+                  <Link
+                    to={'/user/organization-profile'}
+                    className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
+                  >
+                    <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
+                    <span className="group-hover:text-cs_light">Tạo sự kiện</span>
+                  </Link>
+                )}
+              </>
             )}
           </motion.li>
           <motion.li variants={itemVariants}>

@@ -50,7 +50,7 @@ function DetailEvent() {
             <div className="mb-5 h-fit md:top-[80px] xl:sticky xl:block xl:w-[380px]">
               <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
               <Carousel
-                  className={`h-[160px]w-full rounded-xl object-cover`}
+                  className={`h-[160px] w-full rounded-xl object-cover`}
                   prevArrow={({ handlePrev }) => (
                     <IconButton
                       variant="text"
@@ -100,9 +100,9 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
                     {detailEventQuery?.data?.data?.title}
                   </h1>
-                  {detailEventQuery?.data?.data?.creator?.type === 'business' && (
+                  {/* {detailEventQuery?.data?.data?.creator?.type === 'business' && (
                     <h1>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
-                  )}
+                  )} */}
                   <div className="flex items-center gap-[15px]">
                     <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
                     <span className="w-[90%] dark:text-cs_light">
@@ -126,7 +126,7 @@ function DetailEvent() {
                             className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                           >
                             <span className="flex justify-between">
-                              <span>{ticket?.title}:</span>
+                              <span>{ticket?.title}</span>
                               {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
                             </span>
                           </li>

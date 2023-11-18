@@ -24,7 +24,7 @@ const Header = ({ className }: HeaderProps) => {
       {/* <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link> */}
-      <Notifications />
+      {auth?.currentUser?.role?.name === 'user' && <Notifications />}
       {auth?.currentUser?.role?.name === 'user' && (
         <Link
           to="/user/profile/1"
