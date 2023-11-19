@@ -1,1 +1,1 @@
-export * from './ChartParemeters'
+export * from './ChartParemeters';

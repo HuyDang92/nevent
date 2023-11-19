@@ -4,6 +4,7 @@ import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import useClickOutside from '~/hooks/useClickOutside';
 import { useLazyGetUserByEmailQuery } from '~/features/Auth/authApi.service';
+import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 
 type SearchBarProps = {
   className?: string;
@@ -79,7 +80,11 @@ const SearchUser = ({ className, size = 'md', classNameInput, setUserReceive }: 
             onClick={() => handleSelectUser(result.data?.data?.user)}
             className="flex cursor-pointer gap-2 rounded-lg p-1 transition-all hover:bg-[#eee] dark:hover:bg-cs_formDark"
           >
-            <img src={result.data?.data?.user?.avatar?.url} alt="" className="h-16 w-16 rounded-full object-cover" />
+            <img
+              src={result.data?.data?.user?.avatar?.url ?? DefaultAvatar}
+              alt=""
+              className="h-16 w-16 rounded-full object-cover"
+            />
             <div className="">
               <p className="text-lg font-semibold dark:text-cs_light">{result.data?.data?.user?.fullName}</p>
               <p className=" text-cs_grayText">{result.data?.data?.user?.email}</p>

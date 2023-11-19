@@ -35,15 +35,13 @@ const Profile: React.FC<ProfileProps> = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
-  const { upLoad, loading } = useUploadFile();
+  const { upLoad, loading, error } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
-    console.log(selectedFile);
-
     const id = await upLoad(selectedFile!);
-    await updateProfile({ avatar: id });
+    id && (await updateProfile({ avatar: id }));
   };
   useEffect(() => {
     window.scrollTo({
@@ -52,7 +50,7 @@ const Profile: React.FC<ProfileProps> = () => {
     });
   }, []);
   useEffect(() => {
-    if (result.isSuccess) {
+    if (result.isSuccess && error === false) {
       successNotify('Cập nhật ảnh thành công');
       setImagePreviewUrl(null);
       dispatch(setAuthCurrentUser(result?.data?.data?.userUpdated));
@@ -141,7 +139,7 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className=" mt-12 dark:text-cs_light sm:mt-14">
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
         <Tabs availableLink={true} orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
-          <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%]">
+          <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%] ">
             <Tab link="/user/profile/0" className="flex items-center justify-center xl:justify-between" index={0}>
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
