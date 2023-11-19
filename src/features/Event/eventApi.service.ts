@@ -85,8 +85,10 @@ export const eventApi = createApi({
       }),
     }),
     getEventBusiness: builder.query<any, any>({
-      query: ({ page, limit, search }) => ({
-        url: `/api/events/business?page=${page}&limit=${limit}${search ? '&search=' + search : ''}`,
+      query: ({ page, limit, search, status }) => ({
+        url: `/api/events/business?page=${page}&limit=${limit}${search ? '&search=' + search : ''}${
+          status ? '&status=' + status : ''
+        }`,
       }),
     }),
     getEventAnalytics: builder.query<any, any>({
