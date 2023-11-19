@@ -1,16 +1,16 @@
-import Dropdown from "~/components/Dropdown";
-import ManageEventParameters from "./components/ManageEventParameters/ManageEventParameters";
-import { useGetEventBusinessQuery } from "~/features/Event/eventApi.service";
-import { useState } from "react";
-import { useDebounce } from "~/hooks/useDebounce";
-import ChartParemeters from "./components/ChartParameters/ChartParemeters";
-import { Tab, Tabs, TabsHeader } from "@material-tailwind/react";
-import Input from "~/components/customs/Input";
-import moment from "moment";
-import IonIcon from "@reacticons/ionicons";
-import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
-import Icon from "~/components/customs/Icon";
+import Dropdown from '~/components/Dropdown';
+import ManageEventParameters from './components/ManageEventParameters/ManageEventParameters';
+import { useGetEventBusinessQuery } from '~/features/Event/eventApi.service';
+import { useState } from 'react';
+import { useDebounce } from '~/hooks/useDebounce';
+import ChartParemeters from './components/ChartParameters/ChartParemeters';
+import { Tab, Tabs, TabsHeader } from '@material-tailwind/react';
+import Input from '~/components/customs/Input';
+import moment from 'moment';
+import IonIcon from '@reacticons/ionicons';
+import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
+import Icon from '~/components/customs/Icon';
 
 const TABS = [
   {
@@ -40,7 +40,6 @@ const TABS = [
 ];
 
 const EventManage = () => {
-
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
   const { searchValue } = useDebounce(keyword, 500);
@@ -71,7 +70,6 @@ const EventManage = () => {
 
   console.log(event?.data?.data?.docs);
 
-
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
       <div className="flex justify-between">
@@ -79,23 +77,19 @@ const EventManage = () => {
         <Dropdown />
       </div>
       <div className=" mt-8 flex gap-4">
-        <div className="bg-white rounded-2xl shadow-border-light p-4 flex-1 flex flex-col gap-4 max-w-[28rem]">
-          <h1 className="font-bold text-xl text-[#474747]">Sự kiện</h1>
+        <div className="flex max-w-[28rem] flex-1 flex-col gap-4 rounded-2xl bg-white p-4 shadow-border-light">
+          <h1 className="text-xl font-bold text-[#474747]">Sự kiện</h1>
           <ManageEventParameters dataEvent={event?.data?.data?.docs} />
         </div>
-        <div className="bg-white rounded-2xl shadow-border-light p-4 flex-1 ">
+        <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light ">
           <ChartParemeters />
         </div>
       </div>
-      <div className="mt-7 bg-white flex justify-between items-center gap-7">
-        <Tabs value=""
-          className="w-full max-w-[50rem]">
+      <div className="mt-7 flex items-center justify-between gap-7 bg-white">
+        <Tabs value="" className="w-full max-w-[50rem]">
           <TabsHeader>
             {TABS.map(({ label, value }) => (
-              <Tab key={value} value={value}
-                className='text-sm py-2 max-w-content'
-                onClick={() => setStatus(value)}
-              >
+              <Tab key={value} value={value} className="max-w-content py-2 text-sm" onClick={() => setStatus(value)}>
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
               </Tab>
             ))}
@@ -109,80 +103,99 @@ const EventManage = () => {
           placeholder="Tìm kiếm sự kiện"
         />
       </div>
-      <div className={`grid gap-7 mt-7 ${(event && event?.data?.data?.docs.length > 0) ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {
-          event ? (
-            event?.data?.data?.docs.length > 0 ? (
-              event.data?.data?.docs?.map((event: any) => (
-                <div className=" h-[16vw] rounded-2xl overflow-hidden relative" key={event?._id}>
-                  <img src={event?.banner[0]?.url} alt="" className="w-full h-full object-cover" />
-                  <div className="absolute text-white top-0 left-0 w-full h-full p-4 bg-gradient-to-r from-[#000000c9]">
-                    <h1 className="font-bold text-xl">{event?.title}</h1>
-                    <div className="flex flex-col gap-2 mt-4 text-sm">
-                      <div className="flex items-center gap-2 font-medium">
-                        <IonIcon name="time-outline" className="text-xl -translate-y-[0.1rem]" />
-                        <span className="w-[90%] dark:text-cs_light">
-                          {moment(event.start_date).format('HH:mm')}&nbsp;
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 font-medium">
-                        <IonIcon name="calendar-outline" className="text-xl -translate-y-[0.1rem]" />
-                        <span className="w-[90%] dark:text-cs_light">
-                          {moment(event.start_date).format('dddd, DD MMMM YY')}&nbsp;
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 font-medium">
-                        <IonIcon name="location-outline" className="text-xl -translate-y-[0.1rem]" />
-                        <span className="w-[90%] dark:text-cs_light">
-                          {event?.location?.name}&nbsp;
-                        </span>
-                      </div>
+      <div className={`mt-7 grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {event ? (
+          event?.data?.data?.docs.length > 0 ? (
+            event.data?.data?.docs?.map((event: any) => (
+              <div className=" relative h-[16vw] overflow-hidden rounded-2xl" key={event?._id}>
+                <img src={event?.banner[0]?.url} alt="" className="h-full w-full object-cover" />
+                <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-[#000000c9] p-4 text-white">
+                  <h1 className="text-xl font-bold">{event?.title}</h1>
+                  <div className="mt-4 flex flex-col gap-2 text-sm">
+                    <div className="flex items-center gap-2 font-medium">
+                      <IonIcon name="time-outline" className="-translate-y-[0.1rem] text-xl" />
+                      <span className="w-[90%] dark:text-cs_light">
+                        {moment(event.start_date).format('HH:mm')}&nbsp;
+                      </span>
                     </div>
+                    <div className="flex items-center gap-2 font-medium">
+                      <IonIcon name="calendar-outline" className="-translate-y-[0.1rem] text-xl" />
+                      <span className="w-[90%] dark:text-cs_light">
+                        {moment(event.start_date).format('dddd, DD MMMM YY')}&nbsp;
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 font-medium">
+                      <IonIcon name="location-outline" className="-translate-y-[0.1rem] text-xl" />
+                      <span className="w-[90%] dark:text-cs_light">{event?.location?.name}&nbsp;</span>
+                    </div>
+                  </div>
 
-                    <Link to={`/organization/manage-event/statistics/${event._id}`}>
-                      <button className="flex justify-center items-center py-2 px-4 rounded-lg bg-white text-cs_semi_green font-semibold absolute bottom-4 left-4">
-                        <span className="text-sm">Xem chi tiết</span>
-                      </button>
-                    </Link>
-                    <span className={`absolute top-4 right-4 text-sm font-semibold text-white py-1 px-4 rounded-full ${event?.status === 'REVIEW' ? 'bg-cs_blueGray' : event?.status === 'UPCOMING' ? 'bg-cs_yellow-500' : event?.status === 'HAPPENING' ? 'bg-cs_leaf-500' : event?.status === 'COMPLETED' ? 'bg-cs_green' : 'bg-cs_red'
-                      }`}>
-                      {
-                        event?.status === 'REVIEW' ? 'Đang chờ duyệt' : event?.status === 'UPCOMING' ? 'Sắp diễn ra' : event?.status === 'HAPPENING' ? 'Đang diễn ra' : event?.status === 'COMPLETED' ? 'Đã kết thúc' : 'Đã hủy'
-                      }
-                    </span>
-                  </div>
-                  <div className="absolute top-0 right-[30%] flex flex-col justify-between items-center h-full z-10">
-                    <div className="w-[2rem] h-[2rem] rounded-full bg-white translate-y-[-50%]"></div>
-                    <div className="absolute  h-full  border-r-4 border-white border-dashed"></div>
-                    <div className="w-[2rem] h-[2rem] rounded-full bg-white translate-y-[50%]"></div>
-                  </div>
+                  <Link to={`/organization/manage-event/statistics/${event._id}`}>
+                    <button className="absolute bottom-4 left-4 flex items-center justify-center rounded-lg bg-white px-4 py-2 font-semibold text-cs_semi_green">
+                      <span className="text-sm">Xem chi tiết</span>
+                    </button>
+                  </Link>
+                  <span
+                    className={`absolute right-4 top-4 rounded-full px-4 py-1 text-sm font-semibold text-white ${
+                      event?.status === 'REVIEW'
+                        ? 'bg-cs_blueGray'
+                        : event?.status === 'UPCOMING'
+                        ? 'bg-cs_yellow-500'
+                        : event?.status === 'HAPPENING'
+                        ? 'bg-cs_leaf-500'
+                        : event?.status === 'COMPLETED'
+                        ? 'bg-cs_green'
+                        : 'bg-cs_red'
+                    }`}
+                  >
+                    {event?.status === 'REVIEW'
+                      ? 'Đang chờ duyệt'
+                      : event?.status === 'UPCOMING'
+                      ? 'Sắp diễn ra'
+                      : event?.status === 'HAPPENING'
+                      ? 'Đang diễn ra'
+                      : event?.status === 'COMPLETED'
+                      ? 'Đã kết thúc'
+                      : 'Đã hủy'}
+                  </span>
                 </div>
-              ))
-            ) : (
-              <div className="bg-white w-full">
-                <div className='w-full flex justify-center relative'>
-                  <div className='w-[10rem] h-[10rem] overflow-hidden'>
-                    <img src='https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif' className='w-full h-full object-cover' />
-                  </div>
-                  <div className='absolute left-1/2 -bottom-2 -translate-x-1/2 bg-white'>
-                    <p className='text-lg font-semibold'>Không có sự kiện nào</p>
-                  </div>
+                <div className="absolute right-[30%] top-0 z-10 flex h-full flex-col items-center justify-between">
+                  <div className="h-[2rem] w-[2rem] translate-y-[-50%] rounded-full bg-white"></div>
+                  <div className="absolute  h-full  border-r-4 border-dashed border-white"></div>
+                  <div className="h-[2rem] w-[2rem] translate-y-[50%] rounded-full bg-white"></div>
                 </div>
               </div>
-            )
+            ))
           ) : (
-            <div className="bg-white w-full">
-              <div className='w-full flex justify-center relative'>
-                <div className='w-[10rem] h-[10rem] overflow-hidden'>
-                  <img src='https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif' className='w-full h-full object-cover' />
+            <div className="w-full bg-white">
+              <div className="relative flex w-full justify-center">
+                <div className="h-[10rem] w-[10rem] overflow-hidden">
+                  <img
+                    src="https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
-                <div className='absolute left-1/2 -bottom-2 -translate-x-1/2 bg-white'>
-                  <p className='text-lg font-semibold'>Không có sự kiện nào</p>
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white">
+                  <p className="text-lg font-semibold">Không có sự kiện nào</p>
                 </div>
               </div>
             </div>
           )
-        }
+        ) : (
+          <div className="w-full bg-white">
+            <div className="relative flex w-full justify-center">
+              <div className="h-[10rem] w-[10rem] overflow-hidden">
+                <img
+                  src="https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white">
+                <p className="text-lg font-semibold">Không có sự kiện nào</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div className="mt-7">
         <div className="flex items-center justify-between">
@@ -215,46 +228,8 @@ const EventManage = () => {
           </div>
         </div>
       </div>
-    </div >
-  )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
+  );
 
   // const [limit, setLimit] = useState<number>(5);
   // const [keyword, setKeyword] = useState<string>('');
@@ -323,42 +298,6 @@ const EventManage = () => {
   //   }
   // };
   // console.log(event.data?.data);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //   return (
   //     <>

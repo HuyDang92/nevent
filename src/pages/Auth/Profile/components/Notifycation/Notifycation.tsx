@@ -8,6 +8,7 @@ import { useCheckedViewNotifycationMutation } from '~/features/Auth/authApi.serv
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import { setNotification } from '~/features/Auth/authSlice';
+import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 
 interface UserInfoProp {
   className?: string;
@@ -121,7 +122,7 @@ const Notifycation = ({ className, classNameTagHeader, popup }: UserInfoProp) =>
                   } flex cursor-pointer items-center justify-between  gap-2 bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 sm:pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url ?? DefaultAvatar} />
                     <div className="flex flex-col gap-1">
                       <span
                         className={`${
@@ -165,7 +166,7 @@ const Notifycation = ({ className, classNameTagHeader, popup }: UserInfoProp) =>
                   } flex cursor-pointer items-center  justify-between bg-[#f5f7fc] dark:bg-cs_dark`}
                 >
                   <Link to={item?.url ?? '/user/profile/3'} className="flex items-center gap-4  py-2 pl-2 pr-8">
-                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url} />
+                    <Avatar variant="circular" alt="tania andrew" src={item?.sender?.avatar?.url ?? DefaultAvatar} />
                     <div className="flex flex-col gap-1">
                       <span
                         className={`${

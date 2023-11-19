@@ -22,8 +22,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
+import Zoom from '~/components/customs/Zoom';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
@@ -50,91 +49,91 @@ function DetailEvent() {
   };
 
   return (
-    <div className="relative">
+    <div className="">
       {detailEventQuery.isFetching && <SkeletonDetailEvent />}
       {!detailEventQuery.isFetching && (
         <>
           <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={detailEventQuery?.data?.data?.title} />
-          <div className="flex-row-reverse gap-4 xl:flex">
-            <div className="mb-5 h-fit xl:sticky xl:top-10 xl:w-[380px]">
-              <div className="rounded-xl p-3 text-[14px] shadow-border-blur dark:border">
-                <Swiper
-                  slidesPerView={1}
-                  spaceBetween={15}
-                  loop={true}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  modules={[Pagination]}
-                  className="mySwiper"
-                >
-                  {detailEventQuery?.data?.data?.banner?.map((image: any, index: number) => (
-                    <SwiperSlide key={index} className={`h-[180px] w-full rounded-xl object-cover`}>
-                      <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+          <div className="flex-row-reverse gap-4 xl:flex ">
+            <div className="mb-5 h-fit rounded-xl p-3 text-[14px] shadow-border-blur dark:border xl:sticky xl:top-10 xl:mb-0 xl:w-[350px]">
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={15}
+                loop={true}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+              >
+                {detailEventQuery?.data?.data?.banner?.map((image: any, index: number) => (
+                  <SwiperSlide key={index} className={`h-[180px] w-full rounded-xl object-cover`}>
+                    <Zoom>
+                      <img src={image.url} alt="banner" className="h-[180px] w-full rounded-xl object-cover " />
+                    </Zoom>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
 
-                <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
-                  <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
-                    {detailEventQuery?.data?.data?.title}
-                  </h1>
-                  {/* {detailEventQuery?.data?.data?.creator?.type === 'business' && (
+              <div className="space-y-3  p-1 pt-2 sm:px-28 xl:px-1">
+                <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light">
+                  {detailEventQuery?.data?.data?.title}
+                </h1>
+                {/* {detailEventQuery?.data?.data?.creator?.type === 'business' && (
                     <h1>Ban tổ chức: {detailEventQuery?.data?.data?.creator?.organization_name}</h1>
                   )} */}
-                  <div className="flex items-center gap-[15px]">
-                    <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
-                    <span className="w-[90%] dark:text-cs_light">
-                      {moment(detailEventQuery?.data?.data?.start_date).format('HH:mm - DD/MM/YYYY')}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-[15px]">
-                    <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
-                    <span className="w-[90%] dark:text-cs_light">
-                      <span>{detailEventQuery?.data?.data?.location?.name}</span>
-                    </span>
-                  </div>
-                  <div className="">
-                    <span className="w-[90%] dark:text-cs_light">Giá vé:</span>
-                    <div className="py-2">
-                      <ul className="space-y-1 font-medium">
-                        {eventTickets?.data?.data?.map((ticket: ITicket) => (
-                          <li
-                            key={ticket?._id}
-                            style={{ backgroundColor: ticket?.color }}
-                            className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
-                          >
-                            <span className="flex justify-between">
-                              <span>{ticket?.title}</span>
-                              {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  {auth?.role?.name === 'user' ? (
-                    <Button
-                      className="w-full"
-                      value="Đặt vé ngay"
-                      mode="dark"
-                      onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
-                    />
-                  ) : (
-                    <>
-                      {!auth ? (
-                        <Button
-                          className="w-full"
-                          value="Đặt vé ngay"
-                          mode="dark"
-                          onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
-                        />
-                      ) : (
-                        <span>Dùng vai trò người dùng để có thể mua vé</span>
-                      )}
-                    </>
-                  )}
+                <div className="flex items-center gap-[15px]">
+                  <Icon name="timer-outline" className="w-[10%] text-xl dark:text-cs_light" />
+                  <span className="w-[90%] dark:text-cs_light">
+                    {moment(detailEventQuery?.data?.data?.start_date).format('HH:mm - DD/MM/YYYY')}
+                  </span>
                 </div>
+                <div className="flex items-center gap-[15px]">
+                  <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
+                  <span className="w-[90%] dark:text-cs_light">
+                    <span>{detailEventQuery?.data?.data?.location?.name}</span>
+                  </span>
+                </div>
+                <div className="">
+                  <span className="w-[90%] dark:text-cs_light">Giá vé:</span>
+                  <div className="py-2">
+                    <ul className="space-y-1 font-medium">
+                      {eventTickets?.data?.data?.map((ticket: ITicket) => (
+                        <li
+                          key={ticket?._id}
+                          style={{ backgroundColor: ticket?.color }}
+                          className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
+                        >
+                          <span className="flex justify-between">
+                            <span>{ticket?.title}</span>
+                            {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                {auth?.role?.name === 'user' ? (
+                  <Button
+                    className="w-full"
+                    value="Đặt vé ngay"
+                    mode="dark"
+                    onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                  />
+                ) : (
+                  <>
+                    {!auth ? (
+                      <Button
+                        className="w-full"
+                        value="Đặt vé ngay"
+                        mode="dark"
+                        onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
+                      />
+                    ) : (
+                      <span>Dùng vai trò người dùng để có thể mua vé</span>
+                    )}
+                  </>
+                )}
               </div>
             </div>
             <div className="xl:w-[78%]">
@@ -276,9 +275,9 @@ function DetailEvent() {
                       <ProductCard key={index} data={item} index={index} />
                     ))}
                 </div>
-                <div className="my-4 flex justify-center pb-4">
+                <Link to="/event-categories" className="my-4 flex justify-center pb-4">
                   <Button className="" value="Xem thêm" mode="dark" />
-                </div>
+                </Link>
               </div>
             </div>
           </div>

@@ -62,7 +62,7 @@ function ForgotPassword() {
 
   return (
     <div className="">
-      {result.isLoading || (resultVerify.isLoading && <Loading />)}
+      {(result.isLoading || resultVerify.isLoading) && <Loading />}
       <img src={bg} className="fixed -top-12 bottom-0 left-0 right-0" alt="" />
       <Dialog
         open={open}
@@ -96,7 +96,12 @@ function ForgotPassword() {
           </p>
         </DialogBody>
         <DialogFooter className="flex justify-center pt-0">
-          <Button value="Xác nhận" className="!bg-cs_semi_green !text-white" onClick={() => handleSubmit('confirm')} />
+          <Button
+            disabled={!code}
+            value="Xác nhận"
+            className={` !text-white ${code ? '!bg-cs_semi_green' : 'cursor-not-allowed bg-cs_grayText'}`}
+            onClick={() => handleSubmit('confirm')}
+          />
         </DialogFooter>
       </Dialog>
       <Dialog

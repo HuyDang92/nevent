@@ -169,6 +169,9 @@ export const authApi = createApi({
       query: () => `/api/my-tickets`,
       providesTags: ['ticket'],
     }),
+    getCodeVerifySwapTicket: builder.query<any, void>({
+      query: () => `/api/my-tickets/swap-ticket`,
+    }),
   }),
 });
 
@@ -191,4 +194,5 @@ export const {
   useSwapRoleMutation,
   useCheckedViewNotifycationMutation,
   useVerifySwapTicketMutation,
+  useLazyGetCodeVerifySwapTicketQuery,
 } = authApi;
