@@ -76,20 +76,24 @@ const EventManage = () => {
       </div>
       <Link
         to={'/organization/create-event/0'}
-        className="rounded-lg bg-cs_semi_green px-8 py-2 font-semibold text-white"
+        className="flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
       >
+        <Icon name="add-circle" className="text-xl" />
         <button>Tạo sự kiện</button>
       </Link>
-      <div className=" mt-8 flex flex-col gap-8">
-        <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
-          <h1 className="text-xl font-bold text-[#474747] dark:text-white">Sự kiện</h1>
-          <ManageEventParameters dataEvent={event?.data?.data?.docs} />
+      <div className=" mt-5 flex flex-col gap-8">
+        <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
+          <ManageEventParameters title={'Title 1'} count={1} border />
+          <ManageEventParameters title={'Title 1'} count={1} border />
+          <ManageEventParameters title={'Title 1'} count={1} border />
+          <ManageEventParameters title={'Title 1'} count={1} />
         </div>
-        <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c] ">
+
+        {/* <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c] ">
           <ChartParemeters />
-        </div>
+        </div> */}
       </div>
-      <div className="mt-7  flex items-center justify-between gap-7">
+      <div className="mt-5  flex items-center justify-between gap-7">
         <Tabs value="" className="w-full max-w-[50rem] dark:bg-[#3f3c3c] ">
           <TabsHeader>
             {TABS.map(({ label, value }) => (
@@ -137,7 +141,7 @@ const EventManage = () => {
           </div>
         </div>
       </div>
-      <div className={`mt-8 grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      <div className={`grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {event ? (
           event?.data?.data?.docs.length > 0 ? (
             event.data?.data?.docs?.map((event: any) => (
