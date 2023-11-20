@@ -73,10 +73,15 @@ const EventManage = () => {
 
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-8">
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
+      <Link to={'/organization/create-event/0'} className="py-2 px-8 rounded-lg font-semibold bg-cs_semi_green text-white">
+        <button>
+          Tạo sự kiện
+        </button>
+      </Link>
       <div className=" mt-8 flex flex-col gap-8">
         <div className="bg-white dark:bg-[#3f3c3c] rounded-2xl shadow-border-light p-4 flex-1 flex flex-col gap-4">
           <h1 className="font-bold text-xl text-[#474747] dark:text-white">Sự kiện</h1>
