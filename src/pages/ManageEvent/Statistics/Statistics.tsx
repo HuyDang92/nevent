@@ -15,16 +15,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
 import { isFetchBaseQueryError } from '~/utils/helper';
+import ManageEventParameters from '~/pages/CreateEvent/EventManage/components/ManageEventParameters/ManageEventParameters';
+import ChartBar from '~/components/Bar/Bar';
 
 const Statistics = () => {
   const { idEvent } = useParams();
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.auth);
   const [deleteEvent, { isLoading, isSuccess, isError, error }] = useDeleteEventMutation();
-  const tikets = useGetTicketByEventIdQuery(idEvent || '');
   const event = useGetEventAnalyticsQuery(idEvent || '');
-  console.log(event);
 
   const deleteErr = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -108,45 +107,30 @@ const Statistics = () => {
         {deleteErr && (
           <small className="px-2 text-center text-[12px] text-red-600">{(deleteErr.data as any).message}</small>
         )}
-        <div className="mt-8 flex gap-10">
-          <div className="w-1/4 rounded-xl p-3 shadow-border-full dark:text-cs_light">
-            <span className="font-semibold">Số vé bán được</span>
-            <div className="mt-4">
-              <b className="text-2xl text-cs_semi_green">
-                {event?.data?.data?.analytics?.totalTicketPurchases.toLocaleString('vi')}
-              </b>
-              <span className="text-xs"> / {event?.data?.data?.event.totalTicketIssue.toLocaleString('vi')} vé</span>
-            </div>
-          </div>
-          <div className="w-1/4 rounded-xl p-3 shadow-border-full dark:text-cs_light">
-            <span className="font-semibold">Doanh thu</span>
-            <div className="mt-4">
-              <b className="text-2xl text-cs_semi_green">
-                {event?.data?.data?.analytics?.totalTicketPurchases.toLocaleString('vi')}
-              </b>
-              <span className="text-xs"> / vnđ</span>
-            </div>
-          </div>
-          <div className="w-1/4 rounded-xl p-3 shadow-border-full dark:text-cs_light">
-            <span className="font-semibold">Tổng số khách hàng</span>
-            <div className="mt-4">
-              <b className="text-2xl text-cs_semi_green">
-                {event?.data?.data?.analytics?.revenue.toLocaleString('vi')}
-              </b>
-              <span className="text-xs"> / Người</span>
-            </div>
-          </div>
-          <div className="w-1/4 rounded-xl p-3 shadow-border-full dark:text-cs_light">
-            <span className="font-semibold">Tổng phí dịch vụ</span>
-            <div className="mt-4">
-              <b className="text-2xl text-cs_semi_green">{event?.data?.data?.analytics?.fee.toLocaleString('vi')}</b>
-              <span className="text-xs"> / vnđ</span>
-            </div>
-          </div>
+
+        <div className="my-5 flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
+          <ManageEventParameters
+            title={'Số vé bán được'}
+            count={event?.data?.data?.analytics?.totalTicketPurchases}
+            border
+          />
+          <ManageEventParameters
+            title={'Doanh thu (VND)'}
+            count={event?.data?.data?.analytics?.revenue.toLocaleString('vi')}
+            border
+          />
+          <ManageEventParameters
+            title={'Tổng số khách hàng'}
+            count={event?.data?.data?.analytics?.numberOfCustomers}
+            border
+          />
+          <ManageEventParameters title={'Tổng phí dịch vụ'} count={event?.data?.data?.analytics?.fee} />
         </div>
+        <ChartBar />
+
         <div className="relative mt-8">
           <Carousel
-            className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[600px]`}
+            className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
             prevArrow={({ handlePrev }) => (
               <IconButton
                 variant="text"
@@ -278,7 +262,7 @@ const Statistics = () => {
           <b className="mb-5 block dark:text-cs_light">Tóm tắt vé</b>
           {/* Div box */}
           <div className="text-[14px]">
-            <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-10 py-4 font-bold">
+            <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-4 py-4 font-bold">
               <span className="w-[calc(100%/6)] text-center text-base">Tên vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Loại vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Giá vé (VNĐ) </span>
@@ -287,16 +271,19 @@ const Statistics = () => {
               <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
             </div>
             <ul>
-              {tikets?.data?.data?.map((ticket: ITicket) => (
-                <li className="my-3 flex justify-between rounded-lg border-[1px] border-cs_gray px-10 py-4 font-semibold dark:text-cs_light">
-                  <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>
-                  <span className="w-[calc(100%/6)] text-center">{ticket?.type}</span>
-                  <span className="w-[calc(100%/6)] text-center">{ticket?.price?.toLocaleString('vi')}</span>
-                  <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
-                  <span className="w-[calc(100%/6)] text-center">50</span>
-                  <span className="w-[calc(100%/6)] text-center">500.000</span>
-                </li>
-              ))}
+              {event.data?.data?.tickets?.map((ticket: ITicket) => {
+                console.log(ticket);
+                return (
+                  <li className="my-2 flex justify-between gap-3 rounded-lg border-[1px] border-cs_gray px-4 py-4 font-semibold dark:text-cs_light">
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.type}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.price?.toLocaleString('vi')}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.sold}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.revenue.toLocaleString('vi')}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -326,10 +313,10 @@ const Statistics = () => {
           </table> */}
         </div>
         <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
-          <b>Thời thiệu sự kiện </b>
+          <b>Ghới thiệu sự kiện </b>
           <p>{event?.data?.data?.event?.desc}</p>
         </div>
-        <LineChart title="Thống kê số lượng vé bán được" labels={chartLabels} data={chartData} />
+        {/* <LineChart title="Thống kê số lượng vé bán được" labels={chartLabels} data={chartData} /> */}
         <Dialog open={open} handler={setOpen} size="xs">
           <DialogHeader>Cảnh báo</DialogHeader>
           <DialogBody className="text-center">Bạn chắc chắn muốn xóa sự kiện này</DialogBody>

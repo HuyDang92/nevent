@@ -136,6 +136,8 @@ interface ITicket {
   totalTickets: number;
   event: IEvent;
   myTickets: Ticket[];
+  sold: number;
+  revenue: number;
 }
 interface IPurchase {
   _id: string;
