@@ -4,8 +4,9 @@ interface Props {
   title?: string;
   labels: unknown[];
   data: number[];
+  className?: string;
 }
-const LineChart = ({ title, labels, data }: Props) => {
+const LineChart = ({ title, labels, data, className }: Props) => {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip);
   const options = {
     responsive: true,
@@ -26,7 +27,7 @@ const LineChart = ({ title, labels, data }: Props) => {
       },
     ],
   };
-  return <Line options={options} data={ChartData} />;
+  return <Line className={className} options={options} data={ChartData} />;
 };
 
 export default LineChart;
