@@ -57,7 +57,7 @@ const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab 
               ? `translateY(${activeTab && activeTab * 100}%)`
               : `translateX(calc(${activeTab && activeTab * 100}%)`,
         }}
-        className={`absolute flex h-10 w-fit bg-cs_light items-center justify-center rounded-[12px] shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
+        className={`absolute flex h-10 w-fit items-center justify-center rounded-[12px] bg-cs_light shadow-border-light transition-all dark:bg-cs_lightDark md:h-12`}
       ></li>
     </ul>
   );

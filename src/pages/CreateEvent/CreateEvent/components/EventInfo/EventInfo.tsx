@@ -11,8 +11,7 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
-import { Carousel, IconButton } from '@material-tailwind/react';
-
+import MyCarousel from '~/components/customs/MyCarousel';
 const EventInfo = () => {
   const dispatch = useAppDispatch();
   const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
@@ -23,24 +22,18 @@ const EventInfo = () => {
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // console.log(selectedFile);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
-  useEffect(() => {
-    if (eventInfo?.banner) {
-      setImagePreviewUrl(eventInfo?.banner);
-    }
-  }, []);
+  const [categoryIpt, setCategoryIpt] = useState<string>('');
+  const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const formik = useFormik({
     initialValues: eventInfo
       ? eventInfo
       : {
-          address: '',
           banner: [],
-          logo: '',
           name: '',
-          location: null,
-          category: '',
+          location: '',
+          categories: [],
           description: '',
           file: null,
-          categories: null,
           // organization_name: '',
           // organization_desc: '',
           // organization_phone: '',
@@ -51,8 +44,15 @@ const EventInfo = () => {
       banner: Yup.mixed(),
       // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
-      address: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
-      category: Yup.string().required('Danh mục sự kiện không được bỏ trống'),
+      location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
+      categories: Yup.mixed()
+        .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
+          if (value && value?.length > 0) {
+            return true;
+          }
+          return false;
+        })
+        .required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
       // file: Yup.mixed()
       //   .required('Yêu cầu banner sự kiện')
@@ -60,7 +60,7 @@ const EventInfo = () => {
       //     return value ? value.size <= 1024000 : true; // 1MB
       //   }),
       file: Yup.mixed()
-        .test('filesize', 'file size is too large', (value: any) => {
+        .test('filesize', 'File quá lớn', (value: any) => {
           if (value && value?.length > 0) {
             for (let i = 0; i < value.length; i++) {
               if (value[i].size > 5242880) {
@@ -70,7 +70,7 @@ const EventInfo = () => {
           }
           return true;
         })
-        .test('filetype', 'unsupported file format', (value: any) => {
+        .test('filetype', 'Không hỗ trợ kiểu file này', (value: any) => {
           if (value && value.length > 0) {
             for (let i = 0; i < value.length; i++) {
               if (value[i].type != 'image/png' && value[i].type != 'image/jpg' && value[i].type != 'image/jpeg') {
@@ -79,7 +79,8 @@ const EventInfo = () => {
             }
           }
           return true;
-        }),
+        })
+        .required('Yêu cầu banner sự kiện'),
       // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
       // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
       // organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
@@ -94,8 +95,6 @@ const EventInfo = () => {
           console.log(value.file);
           // const fileArray = Array.from(selectedFile);
         }
-        value.location = locations?.data?.find((item: ILocation) => item._id === value.address);
-        value.categories = categories?.data?.find((item: ICategory) => item._id === value.category);
         dispatch(setEventInfo(value));
         navigate(`/organization/create-event/1`);
       } catch (err) {
@@ -103,60 +102,34 @@ const EventInfo = () => {
       }
     },
   });
+  console.log(categoryArr);
+  console.log(eventInfo?.categories);
+
+  useEffect(() => {
+    if (eventInfo?.banner) {
+      setImagePreviewUrl(eventInfo?.banner);
+    }
+  }, []);
+  useEffect(() => {
+    if (eventInfo?.categories) {
+      const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
+      console.log(cateArr);
+      setCategoryArr(cateArr);
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    const cateList = categoryArr?.map((cate: ICategory) => cate._id);
+    formik.setFieldValue('categories', cateList);
+  }, [categoryArr]);
   return (
     <>
       <div className="">
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
-          <div className="group relative h-[250px] w-full">
+          <div className="group relative h-[350px] w-full">
             {imagePreviewUrl.length > 0 ? (
-              <Carousel
-                className="rounded-xl"
-                prevArrow={({ handlePrev }) => (
-                  <IconButton
-                    variant="text"
-                    color="white"
-                    size="lg"
-                    onClick={handlePrev}
-                    className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="h-6 w-6"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                  </IconButton>
-                )}
-                nextArrow={({ handleNext }) => (
-                  <IconButton
-                    variant="text"
-                    color="white"
-                    size="lg"
-                    onClick={handleNext}
-                    className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="h-6 w-6"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </IconButton>
-                )}
-              >
-                {imagePreviewUrl.map((image) => (
-                  <img src={image} alt="banner" className="h-full w-full rounded-xl object-cover " />
-                ))}
-              </Carousel>
+              <MyCarousel data={imagePreviewUrl} />
             ) : (
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-man-wearing-vr-glasses_23-2149126949.jpg?w=1060&t=st=1699186131~exp=1699186731~hmac=9b55cc41f50452febc175954dbc59a7a19eb60e6cc3bd19e65822d2dad11d941"
@@ -233,9 +206,9 @@ const EventInfo = () => {
               />
             </div>
             <div className="relative pt-3">
-              {formik.errors.address && (
-                <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.address}
+              {formik.errors.location && (
+                <small className="absolute left-[70px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.location}
                 </small>
               )}
               <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
@@ -243,13 +216,13 @@ const EventInfo = () => {
               </label>
               <br />
               <select
-                name="address"
-                id="address"
+                name="location"
+                id="location"
                 className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
-                value={formik.values.address}
+                value={formik.values.location}
                 onChange={formik.handleChange}
               >
-                <option value={''}>Hãy chọn danh mục </option>
+                <option value={''}>Hãy chọn địa chỉ </option>
                 {locations?.data?.map((location: ILocation, index: number) => (
                   <option key={index} value={location._id}>
                     {location.name}
@@ -258,38 +231,52 @@ const EventInfo = () => {
               </select>
             </div>
             <div className="relative pt-3">
-              {formik.errors.category && (
+              {formik.errors.categories && (
                 <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.category}
+                  {formik.errors.categories}
                 </small>
               )}
-              {/* <Input
-                name="category"
-                id="category"
-                label="Danh mục sự kiện"
-                classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!w-full"
-                value={formik.values.category}
-                onChange={formik.handleChange}
-              /> */}
               <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
                 Danh mục sự kiện
               </label>
               <br />
-              <select
-                name="category"
-                id="category"
-                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
-                value={formik.values.category}
-                onChange={formik.handleChange}
-              >
-                <option value={''}>Hãy chọn danh mục </option>
-                {categories?.data?.map((category: ICategory, index: number) => (
-                  <option key={index} value={category._id}>
-                    {category.name}
-                  </option>
+              <Input value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
+              {categoryIpt !== '' && (
+                <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
+                  {categories.data
+                    ?.filter((cate: ICategory) => cate.name.includes(categoryIpt))
+                    .map((cate: ICategory, index: number) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setCategoryIpt('');
+                          if (!categoryArr.includes(cate)) {
+                            setCategoryArr([...categoryArr, cate]);
+                          }
+                        }}
+                        className="my-1 cursor-pointer rounded-lg p-1 pl-3 hover:bg-cs_semi_green"
+                      >
+                        {cate.name}
+                      </div>
+                    ))}
+                </div>
+              )}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {categoryArr?.map((cate: ICategory, index: number) => (
+                  <div
+                    key={index}
+                    className="my-1 flex w-fit cursor-pointer items-center justify-between gap-1 rounded-lg bg-cs_semi_green p-1 pl-3 font-semibold text-cs_light dark:text-cs_light"
+                  >
+                    <span>{cate.name}</span>
+                    <Icon
+                      name="close"
+                      onClick={() => {
+                        setCategoryArr(categoryArr.filter((item) => item !== cate));
+                      }}
+                    />
+                  </div>
                 ))}
-              </select>
+              </div>
             </div>
           </div>
           <div className="relative mt-5">

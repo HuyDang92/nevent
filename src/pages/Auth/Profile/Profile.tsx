@@ -17,6 +17,7 @@ import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 import MyTicket from './components/MyTicket';
 import History from './components/History';
 import Notifycation from './components/Notifycation';
+import ZoomComp from '~/components/customs/Zoom/Zoom';
 interface ProfileProps {
   className?: string;
 }
@@ -34,15 +35,13 @@ const Profile: React.FC<ProfileProps> = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [imagePreviewUrlCover, setImagePreviewUrlCover] = useState<string | null>(null);
-  const { upLoad, loading } = useUploadFile();
+  const { upLoad, loading, error } = useUploadFile();
   const [updateProfile, result] = useUpdateProfileMutation();
 
   const isMdBreakpoint = useCurrentViewportView();
   const handleUploadFile = async () => {
-    console.log(selectedFile);
-
     const id = await upLoad(selectedFile!);
-    await updateProfile({ avatar: id });
+    id && (await updateProfile({ avatar: id }));
   };
   useEffect(() => {
     window.scrollTo({
@@ -51,7 +50,7 @@ const Profile: React.FC<ProfileProps> = () => {
     });
   }, []);
   useEffect(() => {
-    if (result.isSuccess) {
+    if (result.isSuccess && error === false) {
       successNotify('Cập nhật ảnh thành công');
       setImagePreviewUrl(null);
       dispatch(setAuthCurrentUser(result?.data?.data?.userUpdated));
@@ -60,6 +59,7 @@ const Profile: React.FC<ProfileProps> = () => {
       errorNotify('Cập nhật ảnh thất bại');
     }
   }, [result.isSuccess, result.isError]);
+
   return (
     <div>
       {(result.isLoading || loading) && <Loading />}
@@ -75,17 +75,23 @@ const Profile: React.FC<ProfileProps> = () => {
         {imagePreviewUrlCover && (
           <img className="h-[180px] w-full rounded-xl object-cover sm:h-[200px]" src={imagePreviewUrlCover} alt="" />
         )}
-        <div className="absolute ml-5 flex -translate-y-[80%] sm:-translate-y-[75%] items-start gap-4 md:ml-[30px]">
+        <div className="absolute ml-5 flex -translate-y-[80%] items-start gap-4 sm:-translate-y-[75%] md:ml-[30px]">
           <div className="relative">
             <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
-                <img
-                  className="h-full w-full object-cover"
-                  src={auth?.currentUser?.avatar?.url || DefaultAvatar}
-                  alt=""
-                />
+                <ZoomComp>
+                  <img
+                    className="h-full w-full object-cover"
+                    src={auth?.currentUser?.avatar?.url || DefaultAvatar}
+                    alt=""
+                  />
+                </ZoomComp>
               )}
-              {imagePreviewUrl && <img className="h-full w-full object-cover" src={imagePreviewUrl} alt="" />}
+              {imagePreviewUrl && (
+                <ZoomComp>
+                  <img className="h-full w-full object-cover" src={imagePreviewUrl} alt="" />
+                </ZoomComp>
+              )}
             </div>
             <label
               htmlFor="avatar"
@@ -133,7 +139,7 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className=" mt-12 dark:text-cs_light sm:mt-14">
         {imagePreviewUrl && <Button onClick={handleUploadFile} value="Lưu ảnh" className="mb-5 w-[230px]" />}
         <Tabs availableLink={true} orientation={isMdBreakpoint.width > 1024 ? 'horizontal' : 'vertical'}>
-          <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%]">
+          <TabsHeader className="w-full p-[15px] shadow-border-inset xl:w-[25%] ">
             <Tab link="/user/profile/0" className="flex items-center justify-center xl:justify-between" index={0}>
               <span className="!hidden xl:!block">Thông tin tài khoản</span>
               <Icon name="newspaper" className="text-2xl xl:text-base"></Icon>
@@ -160,7 +166,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <UserInfo data={auth?.currentUser} />
             </TabsContent>
             <TabsContent index={1}>
-              <MyTicket auth={auth?.currentUser} />
+              <MyTicket />
             </TabsContent>
             <TabsContent index={2}>
               <History />

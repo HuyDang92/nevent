@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useMemo } from 'react';
+import { io } from 'socket.io-client';
 import { useAppSelector } from './useActionRedux';
 
 const useSocket = () => {

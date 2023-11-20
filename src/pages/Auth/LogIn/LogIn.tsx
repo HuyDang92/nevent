@@ -15,6 +15,7 @@ import Loading from '~/components/customs/Loading';
 import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useAppDispatch } from '~/hooks/useActionRedux';
+import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 interface ILogin {
   email: string;
@@ -54,7 +55,14 @@ function LogIn() {
       dispatch(assignNewToken(data?.data?.token?.accessToken));
       dispatch(assignNewRefreshToken(data?.data?.token?.refreshToken));
       dispatch(setAuthCurrentUser(data?.data?.user));
-      navigate('/');
+      dispatch(setBusinessInfo(data?.data?.businessProfile));
+
+      if (data?.data?.user?.role?.name === 'business') {
+        // navigate('/organization/organization-profile');
+        window.location.href = '/organization/organization-profile';
+      } else {
+        navigate('/');
+      }
     }
     if (isError) {
       errorNotify('Đăng nhập thất bại');
@@ -84,7 +92,7 @@ function LogIn() {
           }}
           className="absolute left-5 top-[15%] z-10 grid w-[90%] place-content-center rounded-xl bg-white p-5 dark:bg-cs_semiDark sm:left-1/4 sm:top-[25%] sm:w-1/2 lg:static lg:bg-transparent lg:dark:bg-transparent"
         >
-          <div className="w-full space-y-5 p-3 sm:w-[400px]">
+          <div className="w-full space-y-5 p-3 xl:w-[400px]">
             <div>
               <h1 className="text-center text-lg font-extrabold text-cs_semi_green md:text-2xl">
                 CHÀO MỪNG ĐẾN NEVENT!
@@ -93,7 +101,7 @@ function LogIn() {
                 Đăng nhập nhanh để có thể sử dụng dịch vụ của Nevent một cách hoàn toàn miễn phí.
               </p>
             </div>
-            <form onSubmit={formik.handleSubmit} className="space-y-2">
+            <form onSubmit={formik.handleSubmit} className="space-y-2 px-2">
               {errorForm && (
                 <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
               )}
@@ -144,9 +152,9 @@ function LogIn() {
               />
             </form>
             <div className="relative flex items-center justify-center gap-4">
-              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
+              <span className="h-[0.5px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
               <span className="dark:text-cs_gray">hoặc</span>
-              <span className="h-[1px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
+              <span className="h-[0.5px] w-32 rounded-full bg-cs_dark dark:bg-cs_gray "></span>
             </div>
             <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
               <GoogleOAuthProvider clientId="131707393120-pqm30aenjo1rhd4hchg4frkce200hjh1.apps.googleusercontent.com">

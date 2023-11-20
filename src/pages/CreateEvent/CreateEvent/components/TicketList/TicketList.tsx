@@ -4,7 +4,7 @@ import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate } from 'react-router-dom';
-import { setTicketList } from '~/features/Business/businessSlice';
+import { addTicket, removeTicket } from '~/features/Business/businessSlice';
 import { useState } from 'react';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { errorNotify } from '~/components/customs/Toast';
@@ -30,7 +30,11 @@ const TicketList = () => {
     },
     validationSchema: Yup.object({
       title: Yup.string().required('Tên loại vé không được bỏ trống'),
-      type: Yup.string().required('Loại vé không được bỏ trống'),
+      type: Yup.string()
+        .required('Loại vé không được bỏ trống')
+        .test('exsist', 'Đã tồn tại loại vé', (value) => {
+          return !ticketInfo.find((item) => item.type === value);
+        }),
       price: Yup.number().required('Giá vé không được bỏ trống'),
       quantity: Yup.number().moreThan(0, 'SL vé phải lớn hơn 0').required('SL vé không được bỏ trống'),
       color: Yup.string(),
@@ -43,7 +47,7 @@ const TicketList = () => {
     onSubmit: (values: TicketListInfo, { resetForm }) => {
       console.log(values);
       try {
-        dispatch(setTicketList(values));
+        dispatch(addTicket(values));
         resetForm();
       } catch (err) {
         console.log(err);
@@ -58,12 +62,15 @@ const TicketList = () => {
       navigate('/organization/create-event/5');
     }
   };
+  const handleRemoveTicket = (ticket: TicketListInfo) => {
+    dispatch(removeTicket(ticket));
+  };
   return (
     <>
       <div className="my-5">
         <span className="dark:text-cs_light">Danh sách vé: </span>
         {ticketInfo.length < 1 && <span className="text-cs_semi_green">Vui lòng thêm vé</span>}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           {ticketInfo.map((ticket, index) => (
             <TicketCard
               price={ticket.price}
@@ -71,6 +78,7 @@ const TicketList = () => {
               key={index}
               title={ticket.title}
               tooltip={ticket.desc}
+              remove={() => handleRemoveTicket(ticket)}
             />
           ))}
         </div>

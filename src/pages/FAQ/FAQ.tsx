@@ -80,41 +80,41 @@ const FAQ = () => {
       <Header />
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col items-center space-y-4 py-20">
-          <h1 className="text-4xl font-bold  ">Trung tâm hỗ trợ</h1>
-          <p className="">
+          <h1 className="text-4xl font-bold dark:text-cs_light ">Trung tâm hỗ trợ</h1>
+          <p className=" dark:text-cs_light">
             Chúng tôi luôn luôn tạo mọi điều kiện để quy trình mua bán vé trở nên thuận tiện và an toàn hơn. <br /> Vì
             vậy chúng tôi liệt kê ra đây những câu hỏi mà chúng tôi thường nhận được từ khách hàng.
           </p>
           <SearchBar size="lg" className="ms-5 hidden rounded-xl shadow-border-light xl:block" />
         </div>
         <div className="grid grid-cols-3 gap-5">
-          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full">
+          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full dark:bg-cs_lightDark">
             <IconGuide className="w-16" />
-            <span className="text-lg font-bold">Hướng dẫn mua vé</span>
+            <span className="text-lg font-bold   dark:text-cs_light">Hướng dẫn mua vé</span>
           </div>
-          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full">
+          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full dark:bg-cs_lightDark">
             <IconFAQ className="w-16" />
-            <span className="text-lg font-bold">FAQ</span>
+            <span className="text-lg font-bold  dark:text-cs_light">FAQ</span>
           </div>
-          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full">
+          <div className="flex flex-col items-center justify-between rounded-xl bg-cs_light py-8 shadow-border-full dark:bg-cs_lightDark">
             <IconCommunity className="w-16" />
-            <span className="text-lg font-bold">Hướng dẫn mua vé</span>
+            <span className="text-lg font-bold  dark:text-cs_light">Hướng dẫn mua vé</span>
           </div>
         </div>
 
         <div className="space-y-5 py-20 pb-10">
           <Accordion
-            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full"
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
             open={open === 1}
             icon={<Icon id={1} open={open} />}
           >
             <AccordionHeader
-              className={`${open === 1 ? 'border-b' : 'border-none'} py-7 text-cs_semiDark hover:text-cs_semi_green`}
+              className={`${open === 1 ? 'border-b' : 'border-none'}  py-7 text-cs_semiDark hover:text-cs_semi_green`}
               onClick={() => handleOpen(1)}
             >
               <div>
-                <p className={`${open === 1 && 'text-cs_semi_green'}`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm font-medium text-cs_semiDark">
+                <p className={`${open === 1 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>
@@ -131,17 +131,17 @@ const FAQ = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full"
-            open={open === 1}
-            icon={<Icon id={1} open={open} />}
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
+            open={open === 2}
+            icon={<Icon id={2} open={open} />}
           >
             <AccordionHeader
-              className={`${open === 1 ? 'border-b' : 'border-none'} py-7 text-cs_semiDark hover:text-cs_semi_green`}
-              onClick={() => handleOpen(1)}
+              className={`${open === 2 ? 'border-b' : 'border-none'}  py-7 text-cs_semiDark hover:text-cs_semi_green`}
+              onClick={() => handleOpen(2)}
             >
               <div>
-                <p className={`${open === 1 && 'text-cs_semi_green'}`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm font-medium text-cs_semiDark">
+                <p className={`${open === 2 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>
@@ -158,17 +158,17 @@ const FAQ = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full"
-            open={open === 1}
-            icon={<Icon id={1} open={open} />}
+            className="rounded-xl border-none bg-cs_light px-5 shadow-border-full dark:bg-cs_lightDark"
+            open={open === 3}
+            icon={<Icon id={3} open={open} />}
           >
             <AccordionHeader
-              className={`${open === 1 ? 'border-b' : 'border-none'} py-7 text-cs_semiDark hover:text-cs_semi_green`}
-              onClick={() => handleOpen(1)}
+              className={`${open === 3 ? 'border-b' : 'border-none'}  py-7 text-cs_semiDark hover:text-cs_semi_green`}
+              onClick={() => handleOpen(3)}
             >
               <div>
-                <p className={`${open === 1 && 'text-cs_semi_green'}`}>Thắc mắc về việc đặt vé</p>
-                <p className="text-sm font-medium text-cs_semiDark">
+                <p className={`${open === 3 && 'text-cs_semi_green '} dark:text-cs_light`}>Thắc mắc về việc đặt vé</p>
+                <p className="text-sm font-medium text-cs_semiDark dark:text-cs_light">
                   Thắc mắc về việc đặt vé, thời hạn đặt vé, hình thức thanh toán và những câu hỏi khác
                 </p>
               </div>

@@ -19,12 +19,26 @@ const EventTime = () => {
           endDate: '',
           beginTime: '',
           endTime: '',
+          happendDate: '',
+          happendTime: '',
         },
     validationSchema: Yup.object({
-      beginDate: Yup.string().required('Ngày bắt đầu không được bỏ trống'),
+      beginDate: Yup.date().required('Ngày bắt đầu không được bỏ trống'),
       beginTime: Yup.string().required('Thời gian bắt đầu không được bỏ trống'),
-      endDate: Yup.string().required('Ngày kết thúc không được bỏ trống'),
+      endDate: Yup.date()
+        .required('Ngày kết thúc không được bỏ trống')
+        .when(
+          'beginDate',
+          (beginDate, yup) => beginDate && yup.min(beginDate, 'Ngày kết thúc không thể trước thời gian bắt đầu'),
+        ),
       endTime: Yup.string().required('Thời gian kết thúc không được bỏ trống'),
+      happendDate: Yup.date()
+        .required('Ngày tổ chức không được bỏ trống')
+        .when(
+          'endDate',
+          (endDate, yup) => endDate && yup.min(endDate, 'Ngày tổ chức không thể trước thời gian bắt đầu'),
+        ),
+      happendTime: Yup.string().required('Thời thời gian tổ chức không được bỏ trống'),
     }),
     onSubmit: (values: IAddTimeline) => {
       console.log(values);
@@ -54,7 +68,7 @@ const EventTime = () => {
               }}
               className="flex flex-col gap-[18px] font-semibold text-cs_grayText"
             >
-              <h1 className="font-semibold text-cs_semi_green">Ngày tổ chức</h1>
+              <h1 className="font-semibold text-cs_semi_green">Thời gian bán vé</h1>
               <div className="flex flex-wrap justify-between gap-[40px]">
                 <div className="flex w-[calc(50%-30px)] items-center justify-between">
                   <span className="w-1/5 dark:text-gray-400">Bắt đầu:</span>
@@ -124,6 +138,45 @@ const EventTime = () => {
                       className="!w-full"
                       name="endTime"
                       value={formik.values.endTime}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <h1 className="font-semibold text-cs_semi_green">Ngày tổ chức sự kiện</h1>
+              <div className="flex flex-wrap justify-between gap-[40px]">
+                <div className="flex w-[calc(50%-30px)] items-center justify-between">
+                  <span className="w-1/5 dark:text-gray-400">Ngày:</span>
+                  <div className="relative w-4/5">
+                    {formik.errors.happendDate && (
+                      <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
+                        {formik.errors.happendDate}
+                      </small>
+                    )}
+                    <Input
+                      classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                      className="!w-full"
+                      type="date"
+                      name="happendDate"
+                      value={formik.values.happendDate}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="flex w-[calc(50%-30px)] items-center justify-between">
+                  <span className="w-1/5 dark:text-gray-400">Thời gian:</span>
+                  <div className="relative w-4/5">
+                    {formik.errors.happendTime && (
+                      <small className="absolute -top-[20px] z-10 px-2 text-[12px] font-light text-red-600">
+                        {formik.errors.happendTime}
+                      </small>
+                    )}
+                    <Input
+                      type="time"
+                      classNameInput="w-full border-2 shadow-none border-[#cccccc] dark:border-none"
+                      className="!w-full"
+                      name="happendTime"
+                      value={formik.values.happendTime}
                       onChange={formik.handleChange}
                     />
                   </div>

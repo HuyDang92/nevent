@@ -8,7 +8,7 @@ function Organizer() {
       <Header />
       <main className="min-h-screen dark:bg-cs_dark">
         <img src={Image_1} alt="" className="w-full" />
-        <div className="max-w-[1265px] mx-auto my-20">
+        <div className="mx-auto my-20 max-w-[1265px]">
           <img src={Image_2} alt="" className="w-full" />
         </div>
       </main>

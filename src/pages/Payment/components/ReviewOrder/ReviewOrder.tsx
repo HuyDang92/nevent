@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Loading from '~/components/customs/Loading';
 import { usePayTicketMutation } from '~/features/Payment/paymentApi.service';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 interface Prop {
   className?: string;
   event?: IEvent;
@@ -30,7 +30,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       };
     });
     console.log(body);
-    await buyTicket({ tickets: body });
+    await buyTicket({ eventId: idEvent, tickets: body });
     // navigate(`/user/payment/3`);
   };
   useEffect(() => {
@@ -92,9 +92,9 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
                 <TicketCard title={ticket.title} tooltip="Tooltip here" className="w-full" />
                 <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
               </div>
-              <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
+              {/* <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
                 {(ticket.orderQuantity * ticket.price).toLocaleString('vi')}đ
-              </span>
+              </span> */}
             </div>
           );
         })}

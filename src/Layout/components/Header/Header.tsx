@@ -24,18 +24,35 @@ const Header = ({ className }: HeaderProps) => {
       {/* <Link to="/" className=" items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110">
         <Icon name="notifications" className="text-2xl hover:scale-110" />
       </Link> */}
-      <Notifications />
-
-      <Link
-        to="/user/profile/1"
-        className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
-      >
-        <Icon name="ticket" className="text-2xl" />
-      </Link>
+      {auth?.currentUser?.role?.name === 'user' && <Notifications />}
+      {auth?.currentUser?.role?.name === 'user' && (
+        <Link
+          to="/user/profile/1"
+          className="hidden items-center rounded-lg px-2 text-cs_semi_green transition hover:scale-110 sm:inline-block"
+        >
+          <Icon name="ticket" className="text-2xl" />
+        </Link>
+      )}
       <ToggleDarkMode />
-      <Link to="/user/organization-profile" className="hidden sm:inline-block">
-        <Button value="Tạo sự kiện" type="button" className="" mode="light" />
-      </Link>
+      {auth?.currentUser?.role?.name === 'business' ? (
+        <Link to="/organization/event-list" className="hidden xl:inline-block">
+          <Button value="Quản lí sự kiện" type="button" className="" mode="light" />
+        </Link>
+      ) : (
+        <>
+          {auth?.loggedIn && auth?.currentUser?.role?.name === 'user' ? (
+            <Link to="/user/organization-profile" className="hidden xl:inline-block">
+              <Button value="Tạo sự kiện" type="button" className="" mode="light" />
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" className="hidden xl:inline-block">
+                <Button value="Tạo sự kiện" type="button" className="" mode="light" />
+              </Link>
+            </>
+          )}
+        </>
+      )}
     </ul>
   );
 
@@ -57,7 +74,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="">{navList}</div>
         <div className="">
           {auth.loggedIn ? (
-            <Dropdown auth={auth} />
+            <Dropdown />
           ) : (
             <Link to="/login" className="hidden sm:inline-block">
               <Button value="Đăng nhập" type="button" className="" mode="dark" />

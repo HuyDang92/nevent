@@ -1,49 +1,29 @@
 import Button from '~/components/customs/Button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
-import Chamaleon from '~/assets/images/chamaleon-3.svg';
 import Icon from '~/components/customs/Icon';
+import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
+import { useState } from 'react';
+import { useDebounce } from '~/hooks/useDebounce';
+import Input from '~/components/customs/Input';
+import { successNotify } from '~/components/customs/Toast';
 const Pr = () => {
-  const event = {
-    _id: '652cd125fc13ae657b6c7cdf',
-    title: 'ÅÍÎÏ˝ÓÔÒÚÆ☃',
-    start_date: '2022-08-11T00:00:00.000Z',
-    location: {
-      _id: '6545c75892a98643864286e2',
-      name: 'Hồ Chí Minh',
-      code: '700000',
-    },
-    categories: [
-      {
-        _id: '652ccfbc9341999a095b76b5',
-        name: 'Âm nhạc',
-        image: '652ccf9c9341999a095b76b3',
-        createdAt: '2023-10-16T05:53:00.698Z',
-        updatedAt: '2023-10-16T05:53:00.698Z',
-        __v: 0,
-      },
-    ],
-    banner: [
-      {
-        _id: '652cd4a7911b66e0c85f305a',
-        url: 'http://res.cloudinary.com/dtvqj8h4b/image/upload/v1699107752/Nevents/nevent-1699107751118.jpg',
-        secureUrl: 'https://res.cloudinary.com/dtvqj8h4b/image/upload/v1697436836/Nevents/nevent-1697436837783.png',
-        publicId: 'Nevents/nevent-1697436837783',
-        width: 54,
-        height: 54,
-        format: 'png',
-        type: 'image',
-        createdAt: '2023-10-16T06:13:59.316Z',
-        updatedAt: '2023-10-16T06:13:59.316Z',
-        __v: 0,
-      },
-    ],
-    desc: 'Bypass Upper Esophagus to Jejunum, Open Approach',
-    status: 'UPCOMING',
-    approve: false,
-    hot: false,
-    hotLevel: 1,
-    updatedAt: '2023-10-16T08:27:36.488Z',
+  const { idEvent } = useParams();
+  const event = useGetEventByIdQuery(idEvent || '');
+  const [widthIpt, setWidthIpt] = useState('650px');
+  const [heightIpt, setHeightIpt] = useState('350px');
+  const width = useDebounce(widthIpt, 500).searchValue;
+  const height = useDebounce(heightIpt, 500).searchValue;
+  const [isLayout, setIsLayout] = useState(0);
+
+  const handleCopy = () => {
+    const el = document.createElement('textarea');
+    el.value = `<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}></iframe>`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    successNotify('Copy thành công');
   };
 
   return (
@@ -54,36 +34,91 @@ const Pr = () => {
       </div>
       <div className="mt-8 overflow-hidden rounded-xl border-[1px] border-cs_semi_green">
         <div className="bg-cs_semi_green p-5">
-          <h1 className="text-xl font-bold text-cs_light">{event.title}</h1>
+          <h1 className="text-xl font-bold text-cs_light">{event?.data?.data?.title}</h1>
         </div>
         <div className="p-5">
           <div className="border-b-[1px]">
             <b className="text-xl dark:text-cs_light">Link quảng bá : </b>
-            <Link className="text-xl text-cs_semi_green" to={`/event-detail/${event._id}`}>
-              https://www.nevsolit.website/
+            <Link className="text-xl text-cs_semi_green" to={`/event-detail/${idEvent}`}>
+              https://www.nevent.io.vn/event-detail/{idEvent}
             </Link>
             <br />
-            <Button className="my-5 !bg-[#3547E4] px-32 text-xl" value="Chia sẻ lên Facebook" />
+            <Button className="my-5 !bg-[#3547E4] px-32 text-lg text-white" value="Chia sẻ lên Facebook" />
           </div>
           <div className="flex gap-5 border-b-[1px] py-5">
             <div className="w-1/2">
-              <b className="text-xl dark:text-cs_light">Chia sẻ lên Blog website</b>
+              <b className="text-lg dark:text-cs_light">Chia sẻ lên Blog website</b>
               <br />
               <span className="text-cs_grayText">
                 Copy đoạn mã bên dưới để tạo widget bán vé trên blog hoặc website của bạn
               </span>
-              <div className="flex justify-between gap-12">
-                <span className="dark:text-cs_light">Size: 500 x 600 px</span>
-                <div className="rounded-lg bg-cs_gray p-2.5 w-[60%]">
-                  {`<iframe frameborder="0" width="600" height="500" style="max-width:100%" src="https://ticketbox.vn/ticket-booking/88640/widget/v1?colorscheme=default"></iframe>`}
+              <div className="mt-4 flex flex-col items-start  justify-start gap-4">
+                <div className="flex items-center gap-5">
+                  <Input
+                    classNameInput="w-[100px]"
+                    value={widthIpt}
+                    onChange={(e) => setWidthIpt(e.target.value)}
+                    disabled={isLayout !== 0}
+                  />
+                  <b>X</b>
+                  <Input
+                    classNameInput="w-[100px]"
+                    value={heightIpt}
+                    onChange={(e) => setHeightIpt(e.target.value)}
+                    disabled={isLayout !== 0}
+                  />
+                </div>
+                <div className=" flex w-auto flex-col items-start gap-4 rounded-lg bg-[#ececec] px-4 py-4">
+                  <Button className=" px-8 py-2 text-sm font-semibold" mode="dark" value="Copy" onClick={handleCopy} />
+                  <div className="flex items-center justify-center rounded-lg bg-white py-3 text-center">
+                    <p>{`<iframe width="${width}" height="${height}" style="border-radius:8px" src="https://nevent.io.vn/pr/${idEvent}/${isLayout}></iframe>`}</p>
+                  </div>
+                </div>
+              </div>
+              <div className=" mt-4">
+                <h1 className="font-semibold">Mẫu sẵn</h1>
+                <div className="mt-4 flex gap-4">
+                  <Button
+                    className={`border-2 bg-pink-200 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 1 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 01"
+                    onClick={() => {
+                      setIsLayout(1);
+                      setWidthIpt('550px');
+                      setHeightIpt('850px');
+                    }}
+                  />
+                  <Button
+                    className={`border-2 bg-yellow-300 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 2 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 02"
+                    onClick={() => {
+                      setIsLayout(2);
+                      setWidthIpt('550px');
+                      setHeightIpt('550px');
+                    }}
+                  />
+                  <Button
+                    className={`border-2 bg-teal-200 px-8 py-2 text-sm font-semibold ${
+                      isLayout === 3 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mẫu 03"
+                    onClick={() => {
+                      setIsLayout(3);
+                      setWidthIpt('100%');
+                      setHeightIpt('350px');
+                    }}
+                  />
                 </div>
               </div>
             </div>
             <div className="flex w-1/2 flex-col items-center rounded-lg border-[1px] border-cs_semi_green px-7 py-9">
-              <h1 className="text-xl font-bold text-cs_semi_green">
-                Rất tiếc, trang bạn đang tìm kiếm không được tìm thấy.
-              </h1>
-              <img src={Chamaleon} alt="" />
+              <iframe className="rounded-lg" src={`/pr/${idEvent}/${isLayout}`} height={height} width={width}></iframe>
             </div>
           </div>
           <div className="flex flex-col items-start gap-4 pt-5">

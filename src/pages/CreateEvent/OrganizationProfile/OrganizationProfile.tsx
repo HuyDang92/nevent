@@ -20,7 +20,7 @@ const OrganizationProfile = () => {
   };
   return (
     <>
-      {userProfile.isFetching && <Loading />}
+      {/* {userProfile.isFetching && <Loading />} */}
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">
@@ -29,7 +29,7 @@ const OrganizationProfile = () => {
           <Dropdown />
         </div>
         <div className="mt-2 flex justify-between">
-          <div className="w-full">
+          <div className="w-[72%]">
             {auth?.currentUser?.role.name === 'business' && (
               <>
                 <span className="dark:text-cs_light">
@@ -59,10 +59,12 @@ const OrganizationProfile = () => {
               </>
             )}
 
-            {selectedValue === 'business' && <Organization />}
-            {selectedValue === 'personal' && <Person />}
+            <div>
+              {selectedValue === 'business' && <Organization />}
+              {selectedValue === 'personal' && <Person />}
+            </div>
           </div>
-          <div className="flex w-[30%] flex-col gap-10">
+          <div className="w-[25%] space-y-10">
             <RecommendCard title="Gói đề xuất sự kiện" sale="30" price={9000000} theme_color="green" />
             <RecommendCard title="Gói tiêu diệt đối thủ" sale="80" price={12000000} theme_color="yellow" />
           </div>

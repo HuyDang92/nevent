@@ -77,12 +77,10 @@ interface IImage {
 }
 interface IEventInfo {
   banner: string[];
-  logo: string;
+  // logo: string;
   name: string;
-  address: string;
-  location: ILocation | null;
-  category: string;
-  categories: ICategory | null;
+  location: string;
+  categories: string[];
   description: string;
   file: null | File[];
   // organization_name: string;
@@ -96,6 +94,8 @@ interface IAddTimeline {
   endDate: string;
   beginTime: string;
   endTime: string;
+  happendDate: string;
+  happendTime: string;
 }
 interface TicketListInfo {
   title: string;
@@ -127,6 +127,7 @@ interface Ticket {
   type: string;
   color: string;
   price: number;
+  desc: string;
   qr: string;
 }
 

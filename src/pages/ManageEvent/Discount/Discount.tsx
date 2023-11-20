@@ -1,7 +1,3 @@
-import Button from '~/components/customs/Button';
-import { Link } from 'react-router-dom';
-import Chamaleon from '~/assets/images/chamaleon-3.svg';
-import Icon from '~/components/customs/Icon';
 import Dropdown from '~/components/Dropdown';
 
 const Discount = () => {
@@ -120,8 +116,13 @@ const Discount = () => {
               </select>
             </div>
           </div>
-          <div className="mt-3 w-full rounded-xl border-2 border-cs_semi_green p-4 text-center text-cs_semi_green">
-            Chưa có vé nào được bán
+          <div className="mt-3 flex w-full flex-col items-center justify-center rounded-xl border-2 border-cs_semi_green p-4 text-center text-cs_semi_green">
+            <img
+              src="https://i.pinimg.com/originals/d1/7b/48/d17b48444021c047dd006dd632da4955.gif"
+              alt=""
+              className="w-[10rem]"
+            />
+            <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1>
           </div>
         </div>
       </div>

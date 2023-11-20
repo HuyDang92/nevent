@@ -1,11 +1,11 @@
-import { AnyAction, Middleware, MiddlewareAPI, isRejectedWithValue } from '@reduxjs/toolkit';
+import { AnyAction, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 
-function isPayloadAction(payload: unknown): payload is {
-  data: Object;
-  status: number;
-} {
-  return payload !== undefined;
-}
+// function isPayloadAction(payload: unknown): payload is {
+//   data: Object;
+//   status: number;
+// } {
+//   return payload !== undefined;
+// }
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action: AnyAction) => {
   //   console.log(action.payload);

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import TicketProfile from '~/components/TicketProfile';
 import nothing from '~/assets/images/nothing.svg';
@@ -8,12 +7,11 @@ import { useGetMyTicketQuery } from '~/features/Auth/authApi.service';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 interface UserInfoProp {
   className?: string;
-  auth?: IUserField | null;
 }
 
 const code: any[] = [];
 
-const MyTicket = ({ auth, className }: UserInfoProp) => {
+const MyTicket = ({ className }: UserInfoProp) => {
   const getTickets = useGetMyTicketQuery();
 
   return (
@@ -29,11 +27,11 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
           </Tab>
         </TabsHeader>
         <TabsBody className="shadow-none">
-          <TabsContent index={0} className="space-y-2">
+          <TabsContent index={0} className="space-y-4">
             {getTickets.isFetching && <LoadingLocal />}
             {getTickets.data?.data?.length > 0 &&
               getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)}
-            {getTickets.data?.data?.length < 0 && (
+            {getTickets.data?.data?.length === 0 && (
               <div className="flex justify-center py-5 text-center">
                 <div>
                   <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
@@ -47,7 +45,7 @@ const MyTicket = ({ auth, className }: UserInfoProp) => {
           </TabsContent>
           <TabsContent index={1} className="">
             {code.length > 0 ? (
-              code.map((item, index) => <>Có mã</>)
+              <>Có mã</>
             ) : (
               <div className="flex justify-center py-5 text-center">
                 <div>

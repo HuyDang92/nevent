@@ -4,17 +4,20 @@ import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
 import Loading from '~/components/customs/Loading';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
-import { useCreateEventMutation } from '~/features/Event/eventApi.service';
+import { useCreateEventMutation, useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
-import { Carousel, IconButton } from '@material-tailwind/react';
+import MyCarousel from '~/components/customs/MyCarousel';
+import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 
 const OverView = () => {
   const navigate = useNavigate();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
+  const { data: locations } = useGetLocationsQuery();
+  const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
   const errorForm = useMemo(() => {
@@ -80,15 +83,18 @@ const OverView = () => {
             console.error('Error fetching images:', error);
             return [];
           });
-          console.log(bannerId);
-          
+        console.log(bannerId);
+
         await createEvent({
           title: eventInfo?.name,
-          categories: [eventInfo?.categories?._id],
-          location: eventInfo?.location?._id,
+          categories: eventInfo?.categories,
+          location: eventInfo?.location,
           start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
           desc: eventInfo?.description,
-          totalTicketIssue: ticketList.reduce((accumulator, ticket) => accumulator + ticket.quantity, 0),
+          totalTicketIssue: ticketList.reduce(
+            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
+            0,
+          ),
           tickets: ticketList,
           banner: bannerId,
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
@@ -109,61 +115,23 @@ const OverView = () => {
           {errorForm && (
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
           )}
-          <div className="my-5 h-[250px] w-full">
-            <Carousel
-              className="rounded-xl"
-              prevArrow={({ handlePrev }) => (
-                <IconButton
-                  variant="text"
-                  color="white"
-                  size="lg"
-                  onClick={handlePrev}
-                  className="!absolute left-4 top-2/4 z-40 -translate-y-2/4"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="h-6 w-6"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                  </svg>
-                </IconButton>
-              )}
-              nextArrow={({ handleNext }) => (
-                <IconButton
-                  variant="text"
-                  color="white"
-                  size="lg"
-                  onClick={handleNext}
-                  className="!absolute !right-4 top-2/4 z-40 -translate-y-2/4"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="h-6 w-6"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </IconButton>
-              )}
-            >
-              {eventInfo?.banner.map((image) => (
-                <img src={image} alt="banner" className="h-full w-full rounded-xl object-cover " />
-              ))}
-            </Carousel>
+          <div className="my-5 h-[350px] w-full">
+            <MyCarousel data={eventInfo?.banner} />
           </div>
           <div>
             <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">
               {eventInfo?.name}
             </h1>
             <h1 className="text-[18px] font-semibold text-cs_dark dark:text-cs_light md:text-lg">
-              Danh mục: {eventInfo?.categories?.name}
+              Danh mục:{' '}
+              {categories?.data
+                .filter((cate: ICategory) => eventInfo?.categories.includes(cate._id))
+                .map((cate: ICategory, index: number, array: ICategory[]) => (
+                  <span key={cate._id} className="text-cs_semi_green">
+                    {cate.name}
+                    {index !== array.length - 1 ? ', ' : ''}
+                  </span>
+                ))}
             </h1>
             <div className="mt-[10px] flex  gap-[10px] md:gap-[20px] ">
               <div className="h-[70px] w-[120px] overflow-hidden rounded-[5px] shadow-border-full dark:border md:h-[120px] md:w-[115px]">
@@ -191,7 +159,7 @@ const OverView = () => {
                 <div className="flex items-center gap-[15px]">
                   <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                   <span className="w-[90%] dark:text-cs_light">
-                    <span>{eventInfo?.location?.name}</span>
+                    <span>{locations?.data.find((item: ILocation) => item._id === eventInfo?.location)?.name}</span>
                   </span>
                 </div>
               </div>
@@ -208,7 +176,7 @@ const OverView = () => {
             </div>
             <div className="my-5">
               <span className="dark:text-cs_light">Danh sách vé: </span>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 {ticketList.map((ticket, index) => (
                   <TicketCard
                     price={ticket.price}

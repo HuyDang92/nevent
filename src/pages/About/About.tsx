@@ -10,7 +10,7 @@ function About() {
       <Header />
       <main className="min-h-screen pt-5 dark:bg-cs_dark ">
         <div className="relative grid place-items-center">
-          <h1 className="z-10 my-12 sm:my-20 text-3xl font-bold text-cs_light sm:text-5xl">NEVENT</h1>
+          <h1 className="z-10 my-12 text-3xl font-bold text-cs_light sm:my-20 sm:text-5xl">NEVENT</h1>
           <img
             src={AboutImage1}
             className=" absolute top-0 h-[15rem] w-full rounded-[4rem] object-cover px-5 sm:h-[25rem]"
