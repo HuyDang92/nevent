@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import { EffectCards, Pagination } from 'swiper/modules';
 import domToImage from 'dom-to-image';
 import Action from './components/Action';
+import Zoom from '../customs/Zoom';
 
 interface IProps {
   data: ITicket;
@@ -68,7 +69,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
   // }, [data]);
 
   return (
-    <div className={` relative my-5 sm:mx-10`}>
+    <div className={` relative sm:mx-10`}>
       <Swiper
         // effect={effect}
         // direction={'vertical'}
@@ -143,11 +144,13 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                           <span>Vé: {item?.type}</span>
                           <span>{item?.status === 'unworn' ? 'Chưa sử dụng' : 'Đã sử dụng'}</span>
                         </div> */}
-                        <QRCode
-                          className="h- w- border-2 border-cs_dark bg-cs_light p-2 xl:h-40 xl:w-40"
-                          id="qrcode"
-                          value={item?.qr}
-                        />
+                        <Zoom>
+                          <QRCode
+                            className="h- w- border-2 border-cs_dark bg-cs_light p-2 xl:h-40 xl:w-40"
+                            id="qrcode"
+                            value={item?.qr}
+                          />
+                        </Zoom>
                       </div>
                     </div>
                   </div>

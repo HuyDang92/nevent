@@ -27,7 +27,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
           </Tab>
         </TabsHeader>
         <TabsBody className="shadow-none">
-          <TabsContent index={0} className="space-y-2">
+          <TabsContent index={0} className="space-y-4">
             {getTickets.isFetching && <LoadingLocal />}
             {getTickets.data?.data?.length > 0 &&
               getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)}
