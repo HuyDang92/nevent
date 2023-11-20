@@ -19,7 +19,7 @@ import { paymentApi } from '~/features/Payment/paymentApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'payment', 'ticket'],
+  whitelist: ['auth', 'payment', 'ticket', 'business'],
 };
 
 const rootReducer = combineReducers({
