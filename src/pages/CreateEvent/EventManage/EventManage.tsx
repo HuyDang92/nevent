@@ -69,7 +69,6 @@ const EventManage = () => {
     next: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-lg shadow-border-full', // Thêm lớp CSS cho nút "Next"
   };
 
-  console.log(event?.data?.data?.docs);
 
 
   return (
@@ -79,17 +78,17 @@ const EventManage = () => {
         <Dropdown />
       </div>
       <div className=" mt-8 flex flex-col gap-8">
-        <div className="bg-white rounded-2xl shadow-border-light p-4 flex-1 flex flex-col gap-4">
-          <h1 className="font-bold text-xl text-[#474747]">Sự kiện</h1>
+        <div className="bg-white dark:bg-[#3f3c3c] rounded-2xl shadow-border-light p-4 flex-1 flex flex-col gap-4">
+          <h1 className="font-bold text-xl text-[#474747] dark:text-white">Sự kiện</h1>
           <ManageEventParameters dataEvent={event?.data?.data?.docs} />
         </div>
-        <div className="bg-white rounded-2xl shadow-border-light p-4 flex-1 ">
+        <div className="bg-white dark:bg-[#3f3c3c] rounded-2xl shadow-border-light p-4 flex-1 ">
           <ChartParemeters />
         </div>
       </div>
-      <div className="mt-7 bg-white flex justify-between items-center gap-7">
+      <div className="mt-7  flex justify-between items-center gap-7">
         <Tabs value=""
-          className="w-full max-w-[50rem]">
+          className="w-full max-w-[50rem] dark:bg-[#3f3c3c] ">
           <TabsHeader>
             {TABS.map(({ label, value }) => (
               <Tab key={value} value={value}
@@ -186,19 +185,19 @@ const EventManage = () => {
                 </div>
               ))
             ) : (
-              <div className="bg-white w-full">
+              <div className="bg-white dark:bg-[#3f3c3c] py-4 rounded-xl  w-full">
                 <div className='w-full flex justify-center relative'>
                   <div className='w-[10rem] h-[10rem] overflow-hidden'>
                     <img src='https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif' className='w-full h-full object-cover' />
                   </div>
-                  <div className='absolute left-1/2 -bottom-2 -translate-x-1/2 bg-white'>
-                    <p className='text-lg font-semibold'>Không có sự kiện nào</p>
+                  <div className='absolute left-1/2 -bottom-2 -translate-x-1/2 bg-white dark:bg-transparent'>
+                    <p className='text-lg font-semibold dark:text-white'>Không có sự kiện nào</p>
                   </div>
                 </div>
               </div>
             )
           ) : (
-            <div className="bg-white w-full">
+            <div className="bg-white dark:bg-[#3f3c3c] rounded-xl w-full p-4">
               <div className='w-full flex justify-center relative'>
                 <div className='w-[10rem] h-[10rem] overflow-hidden'>
                   <img src='https://i.pinimg.com/originals/9c/6d/32/9c6d3237f5b994007cc513fafeb0cc07.gif' className='w-full h-full object-cover' />
