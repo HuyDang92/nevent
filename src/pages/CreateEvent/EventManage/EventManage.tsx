@@ -76,8 +76,8 @@ const EventManage = () => {
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
-      <div className=" mt-8 flex gap-4">
-        <div className="flex max-w-[28rem] flex-1 flex-col gap-4 rounded-2xl bg-white p-4 shadow-border-light">
+      <div className=" mt-8 flex flex-col gap-8">
+        <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-4 shadow-border-light">
           <h1 className="text-xl font-bold text-[#474747]">Sự kiện</h1>
           <ManageEventParameters dataEvent={event?.data?.data?.docs} />
         </div>
@@ -95,6 +95,8 @@ const EventManage = () => {
             ))}
           </TabsHeader>
         </Tabs>
+      </div>
+      <div className="flex w-full items-center justify-between">
         <Input
           className="my-5 w-full max-w-[30rem]"
           classNameInput="w-full"
@@ -102,8 +104,36 @@ const EventManage = () => {
           onChange={(e) => setKeyword(e.target.value)}
           placeholder="Tìm kiếm sự kiện"
         />
+        <div className="flex items-center justify-between gap-4">
+          {event.data?.data?.docs?.length !== 0 && (
+            <div className="my-4 flex justify-center">
+              <ReactPaginate
+                className="flex items-center"
+                breakLabel="..."
+                pageCount={event.data?.data?.totalPages}
+                onPageChange={handlePageChange}
+                previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="play-back-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+                nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="play-forward-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+                previousClassName={pageClassNames.previous}
+                nextClassName={pageClassNames.next}
+                activeClassName={pageClassNames.active}
+                pageClassName={pageClassNames.page}
+              />
+            </div>
+          )}
+          <div className="flex items-center gap-3">
+            <select
+              onChange={(e) => setLimit(Number(e.target.value))}
+              className=" h-[30px] w-[50px] rounded-lg border border-cs_semi_green text-center shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div className={`mt-7 grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      <div className={`mt-8 grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {event ? (
           event?.data?.data?.docs.length > 0 ? (
             event.data?.data?.docs?.map((event: any) => (
@@ -159,11 +189,6 @@ const EventManage = () => {
                       : 'Đã hủy'}
                   </span>
                 </div>
-                <div className="absolute right-[30%] top-0 z-10 flex h-full flex-col items-center justify-between">
-                  <div className="h-[2rem] w-[2rem] translate-y-[-50%] rounded-full bg-white"></div>
-                  <div className="absolute  h-full  border-r-4 border-dashed border-white"></div>
-                  <div className="h-[2rem] w-[2rem] translate-y-[50%] rounded-full bg-white"></div>
-                </div>
               </div>
             ))
           ) : (
@@ -196,37 +221,6 @@ const EventManage = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="mt-7">
-        <div className="flex items-center justify-between">
-          {event.data?.data?.docs?.length !== 0 && (
-            <div className="my-4 flex justify-center">
-              <ReactPaginate
-                className="flex items-center"
-                breakLabel="..."
-                pageCount={event.data?.data?.totalPages}
-                onPageChange={handlePageChange}
-                previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="play-back-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
-                nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="play-forward-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
-                previousClassName={pageClassNames.previous}
-                nextClassName={pageClassNames.next}
-                activeClassName={pageClassNames.active}
-                pageClassName={pageClassNames.page}
-              />
-            </div>
-          )}
-          <div className="flex items-center gap-3">
-            <span className="dark:text-cs_light">Hiện thị trên mỗi trang: </span>
-            <select
-              onChange={(e) => setLimit(Number(e.target.value))}
-              className=" h-[30px] w-[50px] rounded-xl text-center shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </div>
-        </div>
       </div>
     </div>
   );
