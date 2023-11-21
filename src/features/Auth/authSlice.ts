@@ -61,7 +61,7 @@ const authSlice = createSlice({
         state.refreshToken = response?.data.token.refreshToken;
         state.currentUser = response?.data.user;
         if (response?.data?.user?.role?.name === 'business') {
-          window.location.href = '/organization/organization-profile';
+          window.location.href = '/organization/event-list';
         }
       } else {
         state.loggedIn = false;

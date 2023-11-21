@@ -14,7 +14,7 @@ import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
 const EventInfo = () => {
   const dispatch = useAppDispatch();
-  const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
+  const eventInfo = useAppSelector((state) => state.business.eventInfo);
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
   const navigate = useNavigate();

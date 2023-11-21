@@ -15,7 +15,7 @@ import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service'
 
 const OverView = () => {
   const navigate = useNavigate();
-  const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
+  const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.business);
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();

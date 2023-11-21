@@ -28,7 +28,7 @@ function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth.currentUser);
-  const event = useGetAllEventQuery({ page: 1, limit: 9 });
+  const event = useGetAllEventQuery({ page: 1, limit: 9, status: 'UPCOMING' });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
