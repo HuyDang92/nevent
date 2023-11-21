@@ -9,7 +9,7 @@ import { setPaymentInfo } from '~/features/Business/businessSlice';
 
 const PaymentInfo = () => {
   const dispatch = useAppDispatch();
-  const paymentInfo = useAppSelector((state) => state.bussiness.paymentInfo);
+  const paymentInfo = useAppSelector((state) => state.business.paymentInfo);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: paymentInfo

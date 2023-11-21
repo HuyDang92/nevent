@@ -3,11 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Dropdown from '~/components/Dropdown';
 import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
-import {
-  useDeleteEventMutation,
-  useGetEventAnalyticsQuery,
-  useGetTicketByEventIdQuery,
-} from '~/features/Event/eventApi.service';
+import { useDeleteEventMutation, useGetEventAnalyticsQuery } from '~/features/Event/eventApi.service';
 import { Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton } from '@material-tailwind/react';
 import { useAppSelector } from '~/hooks/useActionRedux';
 import { LineChart } from '~/components/Chart';
@@ -43,11 +39,15 @@ const Statistics = () => {
       errorNotify('Xóa sự kiện thất bại');
     }
   }, [isSuccess, isError]);
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
   // Chart JS
   const chartLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
   const chartData = [1, 3, 4, 5, 7, 11, 13, 15, 15, 15, 23, 24, 25, 26, 32, 35, 35, 35, 38, 41, 41, 45, 47, 45, 35];
-  // ===========================
 
   // Functions
   const handleDeleteEvent = async () => {

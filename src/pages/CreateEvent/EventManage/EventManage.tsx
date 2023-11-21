@@ -3,14 +3,14 @@ import ManageEventParameters from './components/ManageEventParameters/ManageEven
 import { useGetEventBusinessQuery } from '~/features/Event/eventApi.service';
 import { useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
-import ChartParemeters from './components/ChartParameters/ChartParemeters';
-import { Tab, Tabs, TabsHeader } from '@material-tailwind/react';
+import { IconButton, Tab, Tabs, TabsHeader, Tooltip, Typography } from '@material-tailwind/react';
 import Input from '~/components/customs/Input';
 import moment from 'moment';
-import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import Icon from '~/components/customs/Icon';
+import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
+import ChartBarAverage from '~/components/BarAverage/BarAverage';
 
 const TABS = [
   {
@@ -39,6 +39,8 @@ const TABS = [
   },
 ];
 
+const TABLE_HEAD = ['STT', 'Tên sự kiện', 'Hình ảnh', 'Trạng thái', 'Thời gian', 'Địa điểm', 'Danh mục', 'Thao tác'];
+
 const EventManage = () => {
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
@@ -55,10 +57,6 @@ const EventManage = () => {
 
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
   };
 
   const pageClassNames = {
@@ -74,18 +72,12 @@ const EventManage = () => {
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
-      <Link
-        to={'/organization/create-event/0'}
-        className="flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
-      >
-        <Icon name="add-circle" className="text-xl" />
-        <button>Tạo sự kiện</button>
-      </Link>
+
       <div className=" mt-5 flex flex-col gap-8">
         <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
-          <ManageEventParameters title={'Title 1'} count={1} border />
-          <ManageEventParameters title={'Title 1'} count={1} border />
-          <ManageEventParameters title={'Title 1'} count={1} border />
+          <ManageEventParameters title={'Tổng sự kiện'} count={1} border />
+          <ManageEventParameters title={'Đang chờ duyệt'} count={1} border />
+          <ManageEventParameters title={'Tổng doanh thu'} count={1} border />
           <ManageEventParameters title={'Title 1'} count={1} />
         </div>
 
@@ -112,23 +104,168 @@ const EventManage = () => {
           onChange={(e) => setKeyword(e.target.value)}
           placeholder="Tìm kiếm sự kiện"
         />
-        <div className="flex items-center justify-between gap-4">
-          {event.data?.data?.docs?.length !== 0 && (
-            <div className="my-4 flex justify-center">
-              <ReactPaginate
-                className="flex items-center"
-                breakLabel="..."
-                pageCount={event.data?.data?.totalPages}
-                onPageChange={handlePageChange}
-                previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="play-back-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
-                nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="play-forward-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
-                previousClassName={pageClassNames.previous}
-                nextClassName={pageClassNames.next}
-                activeClassName={pageClassNames.active}
-                pageClassName={pageClassNames.page}
-              />
-            </div>
-          )}
+        <Link
+          to={'/organization/create-event/0'}
+          className="flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
+        >
+          <Icon name="add-circle" className="text-xl" />
+          <button>Tạo sự kiện</button>
+        </Link>
+      </div>
+      {event.isFetching ? (
+        <div className="p-10 py-20">
+          <LoadingLocal />
+        </div>
+      ) : (
+        <div className="overflow-hidden rounded-lg border border-blue-gray-100">
+          <table className="w-full min-w-max table-auto rounded-lg  text-left">
+            <thead>
+              <tr className="">
+                {TABLE_HEAD.map((head) => (
+                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {event?.data?.data?.docs.length > 0 ? (
+                (event?.data?.data?.docs).map((item: any, index: number) => {
+                  const isLast = index === event?.data?.data?.docs.length - 1;
+                  const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+
+                  return (
+                    <tr key={item._id}>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {index + 1}
+                        </Typography>
+                      </td>
+                      <td className={`w-56 ${classes}`}>
+                        <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
+                          {item.title}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <img src={item?.banner[0]?.url} alt="Image" className="h-16 w-32 rounded-lg object-cover" />
+                      </td>
+                      <td className={`w-36 ${classes}`}>
+                        <div className="flex items-center gap-2">
+                          <div
+                            className={`h-3 w-3 rounded-full ${
+                              item.status === 'REVIEW'
+                                ? 'bg-yellow-500'
+                                : item.status === 'UPCOMING'
+                                ? 'bg-blue-500'
+                                : item.status === 'HAPPENING'
+                                ? 'bg-orange-500'
+                                : item.status === 'COMPLETED'
+                                ? 'bg-green-500'
+                                : 'bg-red-500'
+                            }`}
+                          ></div>
+                          <span
+                            className={`text-sm font-semibold ${
+                              item.status === 'REVIEW'
+                                ? 'text-yellow-500'
+                                : item.status === 'UPCOMING'
+                                ? 'text-blue-500'
+                                : item.status === 'HAPPENING'
+                                ? 'text-orange-500'
+                                : item.status === 'COMPLETED'
+                                ? 'text-green-500'
+                                : 'text-red-500'
+                            }`}
+                          >
+                            {item.status === 'REVIEW'
+                              ? 'Chờ duyệt'
+                              : item.status === 'UPCOMING'
+                              ? 'Sắp diễn ra'
+                              : item.status === 'HAPPENING'
+                              ? 'Đang diễn ra'
+                              : item.status === 'COMPLETED'
+                              ? 'Đã kết thúc'
+                              : 'Đã hủy'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <span className="w-[90%] dark:text-cs_light">
+                          {moment(item?.start_date).format('HH:mm - DD MMMM YY')}
+                        </span>
+                      </td>
+                      <td className={classes}>
+                        <span className="w-[90%] dark:text-cs_light">{item?.location?.name}&nbsp;</span>
+                      </td>
+                      <td className={`w-36 ${classes}`}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="flex max-w-[28rem] flex-wrap items-center gap-2 font-normal"
+                        >
+                          {item.categories.map((cate: any, index: number) => (
+                            <span key={index} className="rounded-full bg-[#f5f5f5] px-4 py-1 text-sm">
+                              {cate.name}
+                            </span>
+                          ))}
+                        </Typography>
+                      </td>
+                      <td className={` ${classes}`}>
+                        <Tooltip content="Sửa sự kiện">
+                          <IconButton variant="text">
+                            <Icon name="pencil-outline" className="text-xl" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Xem chi tiết">
+                          <Link to={`/organization/manage-event/statistics/${item?._id}`}>
+                            <IconButton variant="text">
+                              <Icon name="eye-outline" className="text-xl" />
+                            </IconButton>
+                          </Link>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={8} className=" py-10">
+                    <div className="relative flex w-full justify-center">
+                      <div className="h-[10rem] w-[10rem] overflow-hidden">
+                        <img
+                          src="https://i.pinimg.com/originals/16/f1/d6/16f1d6eadfa1ccd785c91f64b535aabb.gif"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white">
+                        <p className="text-lg font-semibold">Không có sự kiện nào</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {event.data?.data?.docs?.length !== 0 && (
+        <div className="my-5 flex flex-row-reverse items-center justify-center gap-4">
+          <div className="my-4 flex justify-center">
+            <ReactPaginate
+              className="flex items-center"
+              breakLabel="..."
+              pageCount={event.data?.data?.totalPages}
+              onPageChange={handlePageChange}
+              previousLabel={<Icon className="px-2.5 pb-1 pt-2.5  text-sm" name="play-back-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Previous"
+              nextLabel={<Icon className="px-2.5 pb-1 pt-2.5 text-sm" name="play-forward-sharp" />} // Sử dụng icon và lớp CSS tùy chỉnh cho "Next"
+              previousClassName={pageClassNames.previous}
+              nextClassName={pageClassNames.next}
+              activeClassName={pageClassNames.active}
+              pageClassName={pageClassNames.page}
+            />
+          </div>
           <div className="flex items-center gap-3">
             <select
               onChange={(e) => setLimit(Number(e.target.value))}
@@ -140,8 +277,9 @@ const EventManage = () => {
             </select>
           </div>
         </div>
-      </div>
-      <div className={`grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      )}
+      <ChartBarAverage />
+      {/* <div className={`grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {event ? (
           event?.data?.data?.docs.length > 0 ? (
             event.data?.data?.docs?.map((event: any) => (
@@ -229,7 +367,7 @@ const EventManage = () => {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -59,7 +59,7 @@ function LogIn() {
 
       if (data?.data?.user?.role?.name === 'business') {
         // navigate('/organization/organization-profile');
-        window.location.href = '/organization/organization-profile';
+        window.location.href = '/organization/event-list';
       } else {
         navigate('/');
       }
