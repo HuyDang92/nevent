@@ -30,6 +30,7 @@ import Discount from '~/pages/ManageEvent/Discount';
 import MyPallet from '~/pages/MyPallet/MyPallet';
 import InformationBanking from '~/pages/InformationBanking/InformationBanking';
 import PrIframe from '~/Layout/components/PrIframe';
+import EditEvent from '~/pages/EditEvent';
 
 export default function AppRoutes() {
   return (
@@ -86,6 +87,7 @@ export default function AppRoutes() {
           <Route element={<CreateEventLayout />}>
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
+            <Route path="edit-event/:idEvent/:step" element={<EditEvent />} />
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>

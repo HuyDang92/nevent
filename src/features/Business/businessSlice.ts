@@ -29,11 +29,18 @@ const businessSlice = createSlice({
     setEventTime: (state, action) => {
       state.eventTime = action.payload;
     },
+    setTicketInfo: (state, action) => {
+      state.ticketList = action.payload;
+    },
     addTicket: (state, action) => {
       state.ticketList = [...state.ticketList, action.payload];
     },
     removeTicket: (state, action) => {
       state.ticketList = [...state.ticketList.filter((ticket: TicketListInfo) => ticket.type !== action.payload.type)];
+    },
+    editTicket: (state, action) => {
+      state.ticketList = [...state.ticketList.filter((ticket: TicketListInfo) => ticket._id !== action.payload._id)];
+      state.ticketList = [...state.ticketList, action.payload];
     },
     setEventSetting: (state, action) => {
       state.eventSetting = action.payload;
@@ -57,6 +64,15 @@ const businessSlice = createSlice({
   },
 });
 
-export const { setBusinessInfo, setEventInfo, setEventTime, addTicket, removeTicket, setEventSetting, setPaymentInfo } =
-  businessSlice.actions;
+export const {
+  setBusinessInfo,
+  setEventInfo,
+  setEventTime,
+  setTicketInfo,
+  addTicket,
+  removeTicket,
+  setEventSetting,
+  setPaymentInfo,
+  editTicket,
+} = businessSlice.actions;
 export default businessSlice.reducer;

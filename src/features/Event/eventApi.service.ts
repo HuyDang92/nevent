@@ -63,7 +63,6 @@ export const eventApi = createApi({
         method: 'DELETE',
       }),
     }),
-
     getAllEvent: builder.query<any, any>({
       query: ({ page, limit, search, status, categories, hotLevel, start_date, location }) =>
         `/api/events/get-all?page=${page}&limit=${limit}${search ? '&search=' + search : ''}${
@@ -72,7 +71,6 @@ export const eventApi = createApi({
           start_date ? '&start_date=' + start_date : ''
         }${location ? '&location=' + location : ''}`,
     }),
-
     getEventById: builder.query<any, string>({
       query: (eventId) => `/api/events/detail/${eventId}`,
     }),
@@ -96,6 +94,33 @@ export const eventApi = createApi({
         url: `/api/events/overview/${eventId}`,
       }),
     }),
+    updateEvent: builder.mutation({
+      query: ({ eventId, body }) => ({
+        url: `/api/events/update/${eventId}`,
+        method: 'PATCH',
+        body: body,
+      }),
+    }),
+    addTicket: builder.mutation({
+      query: (body) => ({
+        url: '/api/tickets',
+        method: 'POST',
+        body: body,
+      }),
+    }),
+    deleteTicket: builder.mutation({
+      query: (ticketId) => ({
+        url: `/api/tickets/${ticketId}`,
+        method: 'DELETE',
+      }),
+    }),
+    updateTicket: builder.mutation({
+      query: ({ ticketId, body }) => ({
+        url: `/api/tickets/${ticketId}`,
+        method: 'PATCH',
+        body: body,
+      }),
+    }),
   }),
 });
 
@@ -109,4 +134,8 @@ export const {
   useGetTicketByEventIdQuery,
   useGetEventBusinessQuery,
   useGetEventAnalyticsQuery,
+  useUpdateEventMutation,
+  useAddTicketMutation,
+  useDeleteTicketMutation,
+  useUpdateTicketMutation,
 } = eventApi;

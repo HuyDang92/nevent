@@ -55,7 +55,6 @@ const Statistics = () => {
     await deleteEvent(idEvent);
     setOpen(false);
   };
-
   const renderStatus = (status: string) => {
     switch (status) {
       // create cases for  REVIEW, UPCOMING, HAPPENING, COMPLETED, CANCELED
@@ -221,7 +220,7 @@ const Statistics = () => {
             <Button mode="dark" value="Check in" />
           </Link>
           <div className="absolute bottom-[15px] right-[15px] flex gap-4">
-            <Link to={`/manage-event/edit/${idEvent}`}>
+            <Link to={`/organization/edit-event/${idEvent}/0`}>
               <Button
                 className="!bg-cs_yellow-500 !p-2"
                 value={<Iconfy icon="bxs:edit" className="text-2xl text-cs_light" />}
