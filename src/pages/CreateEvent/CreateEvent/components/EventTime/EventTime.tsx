@@ -9,7 +9,7 @@ import { setEventTime } from '~/features/Business/businessSlice';
 
 const EventTime = () => {
   const dispatch = useAppDispatch();
-  const eventTime = useAppSelector((state) => state.bussiness.eventTime);
+  const eventTime = useAppSelector((state) => state.business.eventTime);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: eventTime

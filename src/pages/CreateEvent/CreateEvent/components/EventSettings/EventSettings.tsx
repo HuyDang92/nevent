@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EventSettings = () => {
   const dispatch = useAppDispatch();
-  const eventSetting = useAppSelector((state) => state.bussiness.eventSetting);
+  const eventSetting = useAppSelector((state) => state.business.eventSetting);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: eventSetting

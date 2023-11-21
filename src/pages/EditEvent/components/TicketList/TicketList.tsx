@@ -22,7 +22,6 @@ import Loading from '~/components/customs/Loading';
 const TicketList = () => {
   const dispatch = useAppDispatch();
   const { idEvent } = useParams();
-  const ticketInfo = useAppSelector((state) => state.bussiness.ticketList);
   const tickets = useGetTicketByEventIdQuery(idEvent || '');
   const [freeTicketCheckbox, setFreeTicketCheckBox] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -95,7 +94,7 @@ const TicketList = () => {
             });
             return check;
           } else {
-            return !ticketInfo.find((item) => item.type === value);
+            return !tickets?.data?.data?.find((item: TicketListInfo) => item.type === value);
           }
         }),
       price: Yup.number().required('Giá vé không được bỏ trống'),

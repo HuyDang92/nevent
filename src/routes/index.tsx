@@ -1,40 +1,42 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DefaultLayout from '~/Layout/DefaultLayout';
-import Home from '~/pages/Home';
-import LogIn from '~/pages/Auth/LogIn';
-import NotFound from '~/pages/NotFound';
-import SignUp from '~/pages/Auth/SignUp';
-import DetailEvent from '~/pages/DetailEvent';
-import About from '~/pages/About';
-import Categories from '~/pages/Categories';
-import ForgotPassword from '~/pages/Auth/ForgotPassword';
-import Payment from '~/pages/Payment';
 import PrivateRoute from './PrivateRoute';
 import { NotLoggedMiddleware } from './RouteMiddleware';
+import LoadingPage from '~/pages/LoadingPage';
+import DefaultLayout from '~/Layout/DefaultLayout';
 import FAQ from '~/pages/FAQ';
-import CreateEventLayout from '~/Layout/CreateEventLayout';
-import Profile from '~/pages/Auth/Profile';
-//Trang tạo sự kiện
-import OrganizationProfile from '~/pages/CreateEvent/OrganizationProfile';
-import EventManage from '~/pages/CreateEvent/EventManage';
-import CreateEvent from '~/pages/CreateEvent/CreateEvent';
-import Organizer from '~/pages/Organizer';
-import SearchMobile from '~/pages/SearchMobile';
-import Scan from '~/pages/Scan/Scan';
-import PassTicket from '~/pages/Auth/PassTicket';
 import ManageEventLayout from '~/Layout/ManageEventLayout';
-import Statistics from '~/pages/ManageEvent/Statistics';
-import RsvpsManage from '~/pages/ManageEvent/RsvpsManage';
-import Pr from '~/pages/ManageEvent/Pr';
-import Discount from '~/pages/ManageEvent/Discount';
-import MyPallet from '~/pages/MyPallet/MyPallet';
-import InformationBanking from '~/pages/InformationBanking/InformationBanking';
-import PrIframe from '~/Layout/components/PrIframe';
+import NotFound from '~/pages/NotFound';
+import DetailEvent from '~/pages/DetailEvent';
+import About from '~/pages/About';
 import EditEvent from '~/pages/EditEvent';
 
-export default function AppRoutes() {
+const Home = lazy(() => import('~/pages/Home'));
+const LogIn = lazy(() => import('~/pages/Auth/LogIn'));
+const SignUp = lazy(() => import('~/pages/Auth/SignUp'));
+const Categories = lazy(() => import('~/pages/Categories'));
+const ForgotPassword = lazy(() => import('~/pages/Auth/ForgotPassword'));
+const Payment = lazy(() => import('~/pages/Payment'));
+const CreateEventLayout = lazy(() => import('~/Layout/CreateEventLayout'));
+const Profile = lazy(() => import('~/pages/Auth/Profile'));
+const OrganizationProfile = lazy(() => import('~/pages/CreateEvent/OrganizationProfile'));
+const EventManage = lazy(() => import('~/pages/CreateEvent/EventManage'));
+const CreateEvent = lazy(() => import('~/pages/CreateEvent/CreateEvent'));
+const Organizer = lazy(() => import('~/pages/Organizer'));
+const SearchMobile = lazy(() => import('~/pages/SearchMobile'));
+const Scan = lazy(() => import('~/pages/Scan/Scan'));
+const PassTicket = lazy(() => import('~/pages/Auth/PassTicket'));
+const Statistics = lazy(() => import('~/pages/ManageEvent/Statistics'));
+const RsvpsManage = lazy(() => import('~/pages/ManageEvent/RsvpsManage'));
+const Pr = lazy(() => import('~/pages/ManageEvent/Pr'));
+const Discount = lazy(() => import('~/pages/ManageEvent/Discount'));
+const MyPallet = lazy(() => import('~/pages/MyPallet/MyPallet'));
+const InformationBanking = lazy(() => import('~/pages/InformationBanking/InformationBanking'));
+const PrIframe = lazy(() => import('~/Layout/components/PrIframe'));
+
+const AppRoutes = () => {
   return (
-    <>
+    <Suspense fallback={<LoadingPage />}>
       <Routes>
         {/* public */}
         <Route element={<DefaultLayout />}>
@@ -81,8 +83,6 @@ export default function AppRoutes() {
         </Route>
 
         {/* Tạo sự kiện */}
-        <Route></Route>
-        {/* Tạo sự kiện */}
         <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
           <Route element={<CreateEventLayout />}>
             <Route path="event-list" element={<EventManage />} />
@@ -101,6 +101,7 @@ export default function AppRoutes() {
         <Route path="/pr/:idEvent/:layout" element={<PrIframe />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </Suspense>
   );
-}
+};
+export default AppRoutes;

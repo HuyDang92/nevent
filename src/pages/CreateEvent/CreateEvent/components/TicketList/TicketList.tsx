@@ -10,7 +10,7 @@ import TicketCard from '~/pages/Payment/components/TicketCard';
 import { errorNotify } from '~/components/customs/Toast';
 const TicketList = () => {
   const dispatch = useAppDispatch();
-  const ticketInfo = useAppSelector((state) => state.bussiness.ticketList);
+  const ticketInfo = useAppSelector((state) => state.business.ticketList);
   const [freeTicketCheckbox, setFreeTicketCheckBox] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
