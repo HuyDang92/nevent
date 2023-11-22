@@ -62,6 +62,7 @@ const TicketList = () => {
 
   const handleRemoveTicket = async (ticket: TicketListInfo) => {
     await deleteTicketMutation(ticket._id);
+    tickets.refetch();
     setOpen(false);
   };
 
@@ -111,11 +112,14 @@ const TicketList = () => {
       try {
         if (currentTicket) {
           await updateTicketMutation({
-            ticketId: idEvent,
+            ticketId: currentTicket._id,
             body: values,
           });
+          setCurrentTicket(null);
+          tickets.refetch();
         } else {
-          await addTicketMutation(values);
+          await addTicketMutation({ ...values, event: idEvent });
+          tickets.refetch();
         }
         resetForm();
       } catch (err) {
@@ -187,11 +191,11 @@ const TicketList = () => {
           )}
         </div>
         <span className="dark:text-cs_light">Danh sách vé: </span>
-        {tickets?.data?.data?.length < 1 ? (
+        {tickets?.data?.data.length < 1 ? (
           <span className="text-cs_semi_green">Vui lòng thêm vé</span>
         ) : (
           <div className="flex flex-wrap gap-4">
-            {tickets?.data?.data?.map((ticket: TicketListInfo, index: number) => (
+            {tickets?.data?.data.map((ticket: TicketListInfo, index: number) => (
               <div key={index} className="relative">
                 <div className="cursor-pointer" onClick={() => setCurrentTicket(ticket)}>
                   <TicketCard price={ticket.price} color={ticket.color} title={ticket.title} tooltip={ticket.desc} />

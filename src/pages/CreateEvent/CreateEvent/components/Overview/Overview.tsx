@@ -40,7 +40,7 @@ const OverView = () => {
   const mergeDate = (date: string, time: string) => {
     const newDate = new Date(date);
     const [hour, minutes] = time.split(':');
-    newDate.setHours(Number(hour));
+    newDate.setHours(Number(hour) + 7);
     newDate.setMinutes(Number(minutes));
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
