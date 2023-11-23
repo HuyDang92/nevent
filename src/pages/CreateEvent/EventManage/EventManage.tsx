@@ -73,7 +73,7 @@ const EventManage = () => {
         <Dropdown />
       </div>
 
-      <div className=" mt-5 flex flex-col gap-8">
+      <div className=" my-5 flex flex-col gap-8">
         <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
           <ManageEventParameters title={'Tổng sự kiện'} count={1} border />
           <ManageEventParameters title={'Đang chờ duyệt'} count={1} border />
@@ -85,6 +85,7 @@ const EventManage = () => {
           <ChartParemeters />
         </div> */}
       </div>
+      <ChartBarAverage />
       <div className="mt-5  flex items-center justify-between gap-7">
         <Tabs value="" className="w-full max-w-[50rem] dark:bg-[#3f3c3c] ">
           <TabsHeader>
@@ -278,7 +279,7 @@ const EventManage = () => {
           </div>
         </div>
       )}
-      <ChartBarAverage />
+
       {/* <div className={`grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {event ? (
           event?.data?.data?.docs.length > 0 ? (

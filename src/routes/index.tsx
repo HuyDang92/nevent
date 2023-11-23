@@ -27,7 +27,7 @@ const SearchMobile = lazy(() => import('~/pages/SearchMobile'));
 const Scan = lazy(() => import('~/pages/Scan/Scan'));
 const PassTicket = lazy(() => import('~/pages/Auth/PassTicket'));
 const Statistics = lazy(() => import('~/pages/ManageEvent/Statistics'));
-const RsvpsManage = lazy(() => import('~/pages/ManageEvent/RsvpsManage'));
+const CustomersManage = lazy(() => import('~/pages/ManageEvent/CustomersManage'));
 const Pr = lazy(() => import('~/pages/ManageEvent/Pr'));
 const Discount = lazy(() => import('~/pages/ManageEvent/Discount'));
 const MyPallet = lazy(() => import('~/pages/MyPallet/MyPallet'));
@@ -92,7 +92,7 @@ const AppRoutes = () => {
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
-            <Route path="rsvps/:idEvent" element={<RsvpsManage />} />
+            <Route path="customer/:idEvent" element={<CustomersManage />} />
             <Route path="pr/:idEvent" element={<Pr />} />
             <Route path="discount/:idEvent" element={<Discount />} />
           </Route>

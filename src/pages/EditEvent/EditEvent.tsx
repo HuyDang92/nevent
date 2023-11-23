@@ -5,11 +5,8 @@ import Button from '~/components/customs/Button';
 import EditEventStepper from './components/EditEventStepper';
 import EventInfo from './components/EventInfo';
 import EventTime from './components/EventTime';
-import EventSettings from './components/EventSettings';
-import PaymentInfo from './components/PaymentInfo';
 import TicketList from './components/TicketList';
 import { useParams } from 'react-router';
-import Overview from './components/Overview';
 import { useAppSelector } from '~/hooks/useActionRedux';
 
 const EditEvent = () => {
@@ -31,15 +28,6 @@ const EditEvent = () => {
       case 2: {
         return <TicketList />;
       }
-      // case 3: {
-      //   return <EventSettings />;
-      // }
-      // case 4: {
-      //   return <PaymentInfo />;
-      // }
-      // case 5: {
-      //   return <Overview />;
-      // }
       default: {
         return <h1>Not found</h1>;
       }
@@ -90,7 +78,7 @@ const EditEvent = () => {
       </div>
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-bold dark:text-cs_light"> Tạo sự kiện</h1>
+          <h1 className="text-2xl font-bold dark:text-cs_light"> Chỉnh sửa sự kiện</h1>
           <Dropdown />
         </div>
         <div className="w-[80%]">
