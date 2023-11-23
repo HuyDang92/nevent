@@ -5,8 +5,6 @@ import Button from '~/components/customs/Button';
 import { Icon as Iconfy } from '@iconify/react';
 import { useDeleteEventMutation, useGetEventAnalyticsQuery } from '~/features/Event/eventApi.service';
 import { Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton } from '@material-tailwind/react';
-import { useAppSelector } from '~/hooks/useActionRedux';
-import { LineChart } from '~/components/Chart';
 import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
@@ -45,9 +43,6 @@ const Statistics = () => {
       behavior: 'smooth',
     });
   }, []);
-  // Chart JS
-  const chartLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-  const chartData = [1, 3, 4, 5, 7, 11, 13, 15, 15, 15, 23, 24, 25, 26, 32, 35, 35, 35, 38, 41, 41, 45, 47, 45, 35];
 
   // Functions
   const handleDeleteEvent = async () => {
@@ -200,7 +195,7 @@ const Statistics = () => {
               </span>
             </div>
           </div>
-          <Link className="absolute right-[15px] top-[15px]" to={`/organization/scan-ticket`}>
+          <Link className="absolute right-[15px] top-[15px]" to={`/organization/manage-event/scan-ticket/${idEvent}`}>
             <Button mode="dark" value="Check in" />
           </Link>
           <div className="absolute bottom-[15px] right-[15px] flex gap-4">
@@ -315,7 +310,6 @@ const Statistics = () => {
           <b>Ghới thiệu sự kiện </b>
           <p>{event?.data?.data?.event?.desc}</p>
         </div>
-        {/* <LineChart title="Thống kê số lượng vé bán được" labels={chartLabels} data={chartData} /> */}
         <Dialog open={open} handler={setOpen} size="xs">
           <DialogHeader>Cảnh báo</DialogHeader>
           <DialogBody className="text-center">Bạn chắc chắn muốn xóa sự kiện này</DialogBody>
