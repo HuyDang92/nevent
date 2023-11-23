@@ -95,8 +95,8 @@ const AppRoutes = () => {
             <Route path="customer/:idEvent" element={<CustomersManage />} />
             <Route path="pr/:idEvent" element={<Pr />} />
             <Route path="discount/:idEvent" element={<Discount />} />
+            <Route path="scan-ticket/:idEvent" element={<Scan />} />
           </Route>
-          <Route path="scan-ticket" element={<Scan />} />
         </Route>
         <Route path="/pr/:idEvent/:layout" element={<PrIframe />} />
         <Route path="*" element={<NotFound />} />

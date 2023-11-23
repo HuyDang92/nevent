@@ -1,1 +1,1 @@
-export { default as LineChart } from './BarAverage';
+export { default } from './BarAverage';
