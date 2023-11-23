@@ -20,6 +20,7 @@ const businessSlice = createSlice({
   name: 'business',
   initialState,
   reducers: {
+    resetForm: () => initialState,
     setBusinessInfo: (state, action) => {
       state.businessInfo = action.payload;
     },
@@ -74,5 +75,6 @@ export const {
   setEventSetting,
   setPaymentInfo,
   editTicket,
+  resetForm,
 } = businessSlice.actions;
 export default businessSlice.reducer;

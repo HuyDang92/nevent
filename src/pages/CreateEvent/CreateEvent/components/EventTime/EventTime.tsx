@@ -11,6 +11,8 @@ const EventTime = () => {
   const dispatch = useAppDispatch();
   const eventTime = useAppSelector((state) => state.business.eventTime);
   const navigate = useNavigate();
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
   const formik = useFormik({
     initialValues: eventTime
       ? eventTime
@@ -23,21 +25,17 @@ const EventTime = () => {
           happendTime: '',
         },
     validationSchema: Yup.object({
-      beginDate: Yup.date().required('Ngày bắt đầu không được bỏ trống'),
+      beginDate: Yup.date()
+        .required('Ngày bắt đầu không được bỏ trống')
+        .min(date, 'Ngày bắt đầu bán vé không thể trước hôm nay'),
       beginTime: Yup.string().required('Thời gian bắt đầu không được bỏ trống'),
       endDate: Yup.date()
         .required('Ngày kết thúc không được bỏ trống')
-        .when(
-          'beginDate',
-          (beginDate, yup) => beginDate && yup.min(beginDate, 'Ngày kết thúc không thể trước thời gian bắt đầu'),
-        ),
+        .min(Yup.ref('beginDate'), 'Ngày kết thúc phải sau ngày bắt đầu'),
       endTime: Yup.string().required('Thời gian kết thúc không được bỏ trống'),
       happendDate: Yup.date()
         .required('Ngày tổ chức không được bỏ trống')
-        .when(
-          'endDate',
-          (endDate, yup) => endDate && yup.min(endDate, 'Ngày tổ chức không thể trước thời gian bắt đầu'),
-        ),
+        .min(Yup.ref('endDate'), 'Ngày tổ chức phải sau ngày kết thúc bán vé'),
       happendTime: Yup.string().required('Thời thời gian tổ chức không được bỏ trống'),
     }),
     onSubmit: (values: IAddTimeline) => {

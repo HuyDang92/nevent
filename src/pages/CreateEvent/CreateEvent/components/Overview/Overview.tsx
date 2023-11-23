@@ -12,9 +12,12 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
 import MyCarousel from '~/components/customs/MyCarousel';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
+import { useDispatch } from 'react-redux';
+import { resetForm } from '~/features/Business/businessSlice';
 
 const OverView = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.business);
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
@@ -100,6 +103,7 @@ const OverView = () => {
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
+        dispatch(resetForm());
       }
     } catch (err) {
       console.log(err);
