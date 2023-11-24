@@ -20,7 +20,9 @@ const businessSlice = createSlice({
   name: 'business',
   initialState,
   reducers: {
-    resetForm: () => initialState,
+    resetForm: (state) => {
+      (state.eventInfo = null), (state.eventTime = null), (state.ticketList = []);
+    },
     setBusinessInfo: (state, action) => {
       state.businessInfo = action.payload;
     },
