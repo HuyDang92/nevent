@@ -30,7 +30,7 @@ const EventInfo = () => {
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
 
-  const quillRef = useRef(null);
+  const quillRef = useRef<any>(null);
   // console.log(quillRef.current);
 
   useEffect(() => {

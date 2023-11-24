@@ -84,7 +84,7 @@ interface IEventInfo {
   categories: string[];
   description: string;
   file: null | File[];
-  description_img: string[];
+  description_img?: string[];
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;

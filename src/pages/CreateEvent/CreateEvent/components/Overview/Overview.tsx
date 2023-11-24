@@ -179,10 +179,12 @@ const OverView = () => {
 
           // Thay thế URL cũ bằng URL mới trong new_desc
           newImageURLs.forEach((newImageURL, index) => {
-            const oldImageData = eventInfo?.description_img[index];
-            console.log(oldImageData);
-            if (typeof newImageURL === 'string') {
-              new_desc = new_desc?.replace(oldImageData, newImageURL);
+            if (eventInfo?.description_img) {
+              const oldImageData = eventInfo?.description_img[index];
+              console.log(oldImageData);
+              if (typeof newImageURL === 'string') {
+                new_desc = new_desc?.replace(oldImageData, newImageURL);
+              }
             }
           });
         }
