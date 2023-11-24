@@ -57,7 +57,10 @@ export const paymentApi = createApi({
     getHistory: builder.query<any, void>({
       query: () => `/api/payments/history`,
     }),
+    payBackTicket: builder.query<any, string>({
+      query: (paymentId) => `/api/payments/vnpay/repayment/${paymentId}`,
+    }),
   }),
 });
 
-export const { usePayTicketMutation, useGetHistoryQuery } = paymentApi;
+export const { usePayTicketMutation, useGetHistoryQuery, useLazyPayBackTicketQuery } = paymentApi;
