@@ -5,7 +5,7 @@ import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 // import banner3 from '~/assets/images/banner3.jpg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
@@ -17,6 +17,9 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useUploadDesc } from '~/hooks/useUploadDesc';
 const EventInfo = () => {
   const { idEvent } = useParams();
   const dispatch = useAppDispatch();
@@ -25,6 +28,7 @@ const EventInfo = () => {
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
   const { upLoad, loading } = useUploadFile();
+  const { upLoadDesc, loadingDesc } = useUploadDesc();
   const navigate = useNavigate();
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -33,8 +37,8 @@ const EventInfo = () => {
   const [categoryIpt, setCategoryIpt] = useState<string>('');
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const [updateEvent, { isLoading, isSuccess, isError, error }] = useUpdateEventMutation();
-  console.log(event);
-  console.log(categories);
+  const [imageData, setImageData] = useState<string[]>([]);
+  const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -66,6 +70,103 @@ const EventInfo = () => {
         .catch((err) => reject(err));
     });
   };
+
+  const uploadDescImg = async (url: string) => {
+    return new Promise((resolve, reject) => {
+      const date = new Date();
+      const signature = `${date.getTime()}-${Math.random()}`;
+      fetch(url)
+        .then((r) => r.blob())
+        .then(
+          (blobFile) =>
+            new File(
+              [blobFile],
+              `${event?.data?.data?.title ? event?.data?.data?.title + '-' + signature : 'eventImage' + signature}`,
+              {
+                type: 'image/png',
+              },
+            ),
+        )
+        .then(async (file) => {
+          const urlImg = await upLoadDesc(file);
+          resolve(urlImg);
+        })
+        .catch((err) => reject(err));
+    });
+    // return new Promise((resolve, reject) => {
+    //   const date = new Date();
+    //   const signature = `${date.getTime()}-${Math.random()}`;
+
+    //   // Nếu URL là base64, không cần tải lại
+    //   if (url.startsWith('data:image')) {
+    //     const blob = dataURLtoBlob(url);
+    //     fetch(blob)
+    //     .then((r) => r.blob())
+    //     .then(
+    //       (blobFile) =>
+    //         new File([blobFile], `${eventInfo?.name ? eventInfo?.name + '-' + signature : 'eventImage' + signature}`, {
+    //           type: 'image/png',
+    //         }),
+    //     )
+    //     .then(async (file) => {
+    //       const idImg = await upLoad(file);
+    //       resolve(idImg);
+    //     })
+    //     .catch((err) => reject(err));
+    //   } else {
+    //     // Nếu URL không phải là base64, tải ảnh từ URL và chuyển thành File
+    //     fetch(url)
+    //       .then((r) => r.blob())
+    //       .then(
+    //         (blobFile) =>
+    //           new File(
+    //             [blobFile],
+    //             `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
+    //             {
+    //               type: 'image/png',
+    //             },
+    //           ),
+    //       )
+    //       .then(async (file) => {
+    //         await upLoad(file);
+    //         resolve(urlImg);
+    //       })
+    //       .catch((err) => reject(err));
+    //   }
+    // });
+  };
+
+  const quillRef = useRef<any>(null);
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6] }],
+      [{ size: ['small', false, 'large', 'huge'] }],
+
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link', 'image'],
+      [{ align: [] }],
+      ['clean'],
+    ],
+  };
+
+  useEffect(() => {
+    if (quillRef.current) {
+      const quill = quillRef.current?.getEditor();
+      quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
+        if (source === 'user') {
+          const insertedImage = delta.ops.find((op: any) => op.insert && op.insert.image);
+          if (insertedImage) {
+            const imageData = insertedImage.insert.image;
+            // console.log(imageData);
+            if (!imagesUploaded) {
+              setImageData((prevData: any) => [...prevData, imageData]);
+            }
+          }
+        }
+      });
+    }
+  }, [imagesUploaded]);
 
   const formik = useFormik({
     initialValues: {
@@ -135,6 +236,29 @@ const EventInfo = () => {
     }),
     onSubmit: async (value: IEventInfo) => {
       try {
+        setImagesUploaded(true);
+        if (imageData.length > 0) {
+          const old_desc_img = imageData.filter(function (item, index) {
+            return imageData.indexOf(item) == index;
+          });
+          const new_desc_img = await Promise.all((old_desc_img || []).map((url) => uploadDescImg(url)))
+            .then((images) => {
+              console.log('All images fetched successfully:', images);
+              return images;
+            })
+            .catch((error) => {
+              console.error('Error fetching images:', error);
+              return [];
+            });
+          new_desc_img.forEach((newImageURL, index) => {
+            if (old_desc_img) {
+              const oldImageData = old_desc_img[index];
+              if (typeof newImageURL === 'string') {
+                value.description = value.description?.replace(oldImageData, newImageURL);
+              }
+            }
+          });
+        }
         const checkNewBanner = value.banner.find((banner) => banner.includes('blob:http://localhost:8080/'));
         if (checkNewBanner) {
           const bannerId = await Promise.all(value.banner.map((url) => upLoadImg(url)))
@@ -223,9 +347,7 @@ const EventInfo = () => {
   }, [categoryArr]);
   return (
     <>
-      {event.isLoading && <Loading />}
-      {isLoading && <Loading />}
-      {loading && <Loading />}
+      {(event.isLoading || loadingDesc || isLoading || loading) && <Loading />}
       <div className="">
         {errorForm && (
           <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
@@ -410,13 +532,17 @@ const EventInfo = () => {
             <label htmlFor="description" className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400">
               Giới thiệu sự kiện
             </label>
-            <textarea
-              name="description"
+            <ReactQuill
               id="description"
-              className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light  focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
-              placeholder="Nhập giới thiệu về sự kiện"
-              onChange={formik.handleChange}
+              // name="description"
+              theme="snow"
               value={formik.values.description}
+              onChange={(value) => {
+                formik.setFieldValue('description', value);
+              }}
+              className="mb-8"
+              modules={modules}
+              ref={quillRef}
             />
           </div>
           {/* //// */}

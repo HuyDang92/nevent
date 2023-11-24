@@ -32,7 +32,6 @@ function DetailEvent() {
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -236,10 +235,11 @@ function DetailEvent() {
                       I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "
                       <span className="font-semibold">{detailEventQuery?.data?.data?.title}</span>"
                     </h3>
-
-                    {detailEventQuery?.data?.data?.desc}
+                    {detailEventQuery?.data?.data?.desc && (
+                      <div dangerouslySetInnerHTML={{ __html: detailEventQuery?.data?.data?.desc }} />
+                    )}
                   </div>
-                  <Zoom>
+                  {/* <Zoom>
                     <img src={des} alt="" className="w-full" />
                   </Zoom>
                   <Zoom>
