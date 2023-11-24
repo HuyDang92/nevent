@@ -14,8 +14,8 @@ const cateList = [
     link: '/organization/manage-event/statistics',
   },
   {
-    name: 'Quản lý RSVPs',
-    link: '/organization/manage-event/rsvps',
+    name: 'Quản lý khách hàng',
+    link: '/organization/manage-event/customer',
   },
   {
     name: 'Quảng bá',

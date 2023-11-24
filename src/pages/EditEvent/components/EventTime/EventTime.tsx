@@ -1,29 +1,55 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 // import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import Button from '~/components/customs/Button';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventTime } from '~/features/Business/businessSlice';
-
+import { useGetEventByIdQuery, useUpdateEventMutation } from '~/features/Event/eventApi.service';
+import { useParams, useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import Loading from '~/components/customs/Loading';
+import { errorNotify, successNotify } from '~/components/customs/Toast';
+import { isFetchBaseQueryError } from '~/utils/helper';
 const EventTime = () => {
+  const { idEvent } = useParams();
   const dispatch = useAppDispatch();
-  const eventTime = useAppSelector((state) => state.business.eventTime);
+  const event = useGetEventByIdQuery(idEvent || '');
+  const [updateEvent, { isLoading, isSuccess, isError, error }] = useUpdateEventMutation();
   const navigate = useNavigate();
   const date = new Date();
   date.setDate(date.getDate() - 1);
+  const errorForm = useMemo(() => {
+    if (isFetchBaseQueryError(error)) {
+      return error;
+    }
+    return null;
+  }, [error]);
+
+  const mergeDate = (date: string, time: string) => {
+    const newDate = new Date(date);
+    const [hour, minutes] = time.split(':');
+    newDate.setHours(Number(hour) + 7);
+    newDate.setMinutes(Number(minutes));
+    newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
+    console.log(newDate);
+    const isoDateTime = newDate.toISOString();
+    console.log(isoDateTime);
+    return isoDateTime;
+  };
+
   const formik = useFormik({
-    initialValues: eventTime
-      ? eventTime
-      : {
-          beginDate: '',
-          endDate: '',
-          beginTime: '',
-          endTime: '',
-          happendDate: '',
-          happendTime: '',
-        },
+    initialValues: {
+      beginDate: '',
+      endDate: '',
+      beginTime: '',
+      endTime: '',
+      happendDate: '',
+      happendTime: '',
+    },
     validationSchema: Yup.object({
       beginDate: Yup.date()
         .required('Ngày bắt đầu không được bỏ trống')
@@ -38,20 +64,60 @@ const EventTime = () => {
         .min(Yup.ref('endDate'), 'Ngày tổ chức phải sau ngày kết thúc bán vé'),
       happendTime: Yup.string().required('Thời thời gian tổ chức không được bỏ trống'),
     }),
-    onSubmit: (values: IAddTimeline) => {
+    onSubmit: async (values: IAddTimeline) => {
+      const data = {
+        start_date: mergeDate(values?.happendDate, values?.happendTime),
+        salesStartDate: mergeDate(values?.beginDate, values?.beginTime),
+        salesEndDate: mergeDate(values?.endDate, values?.endTime),
+      };
       console.log(values);
+
+      console.log(data);
+
+      await updateEvent({
+        eventId: idEvent,
+        body: {
+          start_date: mergeDate(values?.happendDate, values?.happendTime),
+          salesStartDate: mergeDate(values?.beginDate, values?.beginTime),
+          salesEndDate: mergeDate(values?.endDate, values?.endTime),
+        },
+      });
       try {
-        dispatch(setEventTime(values));
-        navigate(`/organization/create-event/2`);
       } catch (err) {
         console.log(err);
       }
-      // Handle event timeline form submission
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      successNotify('Cập nhật thành công');
+    }
+    if (isError) {
+      errorNotify('Cập nhật thất bại');
+    }
+  }, [isError, isSuccess]);
+
+  // Set old value
+  useEffect(() => {
+    if (event?.data?.data) {
+      const state_date = new Date(event?.data?.data?.start_date).toISOString().split('T') || ['', ''];
+      const salesStartDate = new Date(event?.data?.data.salesStartDate).toISOString().split('T');
+      const salesEndDate = new Date(event?.data?.data.salesEndDate).toISOString().split('T');
+      formik.setValues({
+        beginDate: salesStartDate[0],
+        endDate: salesEndDate[0],
+        beginTime: salesStartDate[1].split('.')[0],
+        endTime: salesEndDate[1].split('.')[0],
+        happendDate: state_date[0],
+        happendTime: state_date[1].split('.')[0],
+      });
+    }
+  }, [event.isSuccess]);
   return (
     <>
+      {isLoading && <Loading />}
+      {event.isLoading && <Loading />}
       <div className="w-full overflow-hidden">
         <div className="rounded-lg border-2 border-cs_semi_green">
           <div className="flex items-center justify-between bg-cs_semi_green px-5 py-3 text-cs_light">
@@ -59,6 +125,9 @@ const EventTime = () => {
             {/* <Icon className="text-2xl" name="trash-sharp" /> */}
           </div>
           <div className="p-5">
+            {errorForm && (
+              <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
+            )}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -180,10 +249,17 @@ const EventTime = () => {
                   </div>
                 </div>
               </div>
-              <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
+              <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Lưu thông tin" />
             </form>
           </div>
         </div>
+        <Button
+          onClick={() => navigate(`/organization/edit-event/${idEvent}/2`)}
+          className="md:w mt-5 w-full"
+          type="submit"
+          mode="dark"
+          value="Tiếp tục"
+        />
       </div>
     </>
   );

@@ -27,7 +27,7 @@ const Dropdown = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const ref = useRef(null);
-  const currentBusiness = useAppSelector((state) => state.bussiness.businessInfo);
+  const currentBusiness = useAppSelector((state) => state.business.businessInfo);
   const auth = useAppSelector((state) => state.auth.currentUser);
 
   const [swapRole, resultSwap] = useSwapRoleMutation();
@@ -84,7 +84,7 @@ const Dropdown = () => {
           />
         </motion.button>
         <motion.ul
-          className="absolute right-0 top-[140%] z-20 w-[260px] space-y-2 rounded-2xl bg-cs_light p-2 shadow-border-btn dark:border dark:bg-cs_lightDark"
+          className="absolute right-0 top-[140%] z-20 w-[260px] space-y-2 rounded-2xl border bg-cs_light p-2 shadow-border-full dark:border dark:bg-cs_lightDark"
           variants={{
             open: {
               clipPath: 'inset(0% 0% 0% 0% round 10px)',

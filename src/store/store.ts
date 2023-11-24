@@ -19,7 +19,7 @@ import { paymentApi } from '~/features/Payment/paymentApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'payment', 'ticket'],
+  whitelist: ['auth', 'payment', 'ticket', 'business'],
 };
 
 const rootReducer = combineReducers({
@@ -32,8 +32,8 @@ const rootReducer = combineReducers({
   [paymentApi.reducerPath]: paymentApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
-  bussiness: businessSlice,
   ticket: ticketSlice,
+  business: businessSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

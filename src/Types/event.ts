@@ -99,6 +99,7 @@ interface IAddTimeline {
   happendTime: string;
 }
 interface TicketListInfo {
+  _id?: string;
   title: string;
   quantity: number;
   color: string;
@@ -137,6 +138,8 @@ interface ITicket {
   totalTickets: number;
   event: IEvent;
   myTickets: Ticket[];
+  sold: number;
+  revenue: number;
 }
 interface IPurchase {
   _id: string;

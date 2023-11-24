@@ -61,6 +61,10 @@ export const businessApi = createApi({
       query: () => `/api/auth/profile`,
       providesTags: ['Business'],
     }),
+    analyticsBusiness: builder.query<any, void>({
+      query: () => `/api/events/overview`,
+      providesTags: ['Business'],
+    }),
   }),
 });
-export const { useUpdateBusinessMutation, useGetProfileQuery } = businessApi;
+export const { useUpdateBusinessMutation, useGetProfileQuery, useAnalyticsBusinessQuery } = businessApi;

@@ -12,10 +12,13 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
 import MyCarousel from '~/components/customs/MyCarousel';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
+import { useDispatch } from 'react-redux';
+import { resetForm } from '~/features/Business/businessSlice';
 
 const OverView = () => {
   const navigate = useNavigate();
-  const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.bussiness);
+  const dispatch = useDispatch();
+  const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.business);
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
@@ -40,7 +43,7 @@ const OverView = () => {
   const mergeDate = (date: string, time: string) => {
     const newDate = new Date(date);
     const [hour, minutes] = time.split(':');
-    newDate.setHours(Number(hour));
+    newDate.setHours(Number(hour) + 7);
     newDate.setMinutes(Number(minutes));
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
@@ -170,8 +173,8 @@ const OverView = () => {
           title: eventInfo?.name,
           categories: eventInfo?.categories,
           location: eventInfo?.location,
-          start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
-          desc: new_desc,
+          start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
+          desc: eventInfo?.description,
           totalTicketIssue: ticketList.reduce(
             (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
             0,
@@ -181,6 +184,7 @@ const OverView = () => {
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
+        dispatch(resetForm());
       }
     } catch (err) {
       console.log(err);

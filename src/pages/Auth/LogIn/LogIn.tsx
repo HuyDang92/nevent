@@ -23,7 +23,6 @@ interface ILogin {
 }
 function LogIn() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [login, { data, isError, isLoading, error, isSuccess }] = useLogInWithEmailMutation();
   const [loginGoogle] = useLogInGoogleMutation();
@@ -59,16 +58,13 @@ function LogIn() {
 
       if (data?.data?.user?.role?.name === 'business') {
         // navigate('/organization/organization-profile');
-        window.location.href = '/organization/organization-profile';
-      } else {
-        navigate('/');
+        window.location.href = '/organization/event-list';
       }
     }
     if (isError) {
       errorNotify('Đăng nhập thất bại');
     }
   }, [isSuccess, isError]);
-
   return (
     <>
       {isLoading && <Loading />}
@@ -103,7 +99,11 @@ function LogIn() {
             </div>
             <form onSubmit={formik.handleSubmit} className="space-y-2 px-2">
               {errorForm && (
-                <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
+                <small className="px-2 text-center text-[12px] text-red-600">
+                  {(errorForm.data as any).message === 'Unauthorized'
+                    ? 'Tài khoản mật khẩu không chính xác'
+                    : (errorForm.data as any).message}
+                </small>
               )}
               <div className="space-y-1">
                 {isSubmitted && formik.errors.email && (

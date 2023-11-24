@@ -5,21 +5,26 @@ import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 // import banner3 from '~/assets/images/banner3.jpg';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventInfo } from '~/features/Business/businessSlice';
-import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
+import { useGetEventByIdQuery, useGetLocationsQuery, useUpdateEventMutation } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-
+import Loading from '~/components/customs/Loading';
+import { isFetchBaseQueryError } from '~/utils/helper';
+import { errorNotify, successNotify } from '~/components/customs/Toast';
+import { uploadApi } from '~/features/Upload/uploadApi.service';
+import { useUploadFile } from '~/hooks/useUpLoadFile';
 const EventInfo = () => {
+  const { idEvent } = useParams();
   const dispatch = useAppDispatch();
-  const eventInfo = useAppSelector((state) => state.business.eventInfo);
+  // const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
+  const event = useGetEventByIdQuery(idEvent || '');
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
+  const { upLoad, loading } = useUploadFile();
   const navigate = useNavigate();
   // console.log(categories);
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -27,43 +32,56 @@ const EventInfo = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
   const [categoryIpt, setCategoryIpt] = useState<string>('');
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
-  const [imageData, setImageData] = useState<string[]>([]);
-  const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
+  const [updateEvent, { isLoading, isSuccess, isError, error }] = useUpdateEventMutation();
 
-  const quillRef = useRef(null);
-  // console.log(quillRef.current);
-
-  useEffect(() => {
-    if (quillRef.current) {
-      const quill = quillRef.current!.getEditor();
-      quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
-        if (source === 'user') {
-          const insertedImage = delta.ops.find((op: any) => op.insert && op.insert.image);
-          if (insertedImage) {
-            const imageData = insertedImage.insert.image;
-            if (!imagesUploaded) {
-              setImageData((prevData: any) => [...prevData, imageData]);
-            }
-          }
-        }
-      });
+  const errorForm = useMemo(() => {
+    if (isFetchBaseQueryError(error)) {
+      return error;
     }
-  }, [imagesUploaded]);
+    return null;
+  }, [error]);
+
+  const upLoadImg = async (url: string) => {
+    return new Promise((resolve, reject) => {
+      const date = new Date();
+      const signature = `${date.getTime()}-${Math.random()}`;
+      fetch(url)
+        .then((r) => r.blob())
+        .then(
+          (blobFile) =>
+            new File(
+              [blobFile],
+              `${event?.data?.data?.title ? event?.data?.data?.title + '-' + signature : 'eventImage' + signature}`,
+              {
+                type: 'image/png',
+              },
+            ),
+        )
+        .then(async (file) => {
+          const idImg = await upLoad(file);
+          resolve(idImg);
+        })
+        .catch((err) => reject(err));
+    });
+  };
 
   const formik = useFormik({
-    initialValues: eventInfo
-      ? eventInfo
-      : {
-          banner: [],
-          name: '',
-          location: '',
-          categories: [],
-          description: '',
-          file: null,
-          description_img: [],
-        },
+    initialValues: {
+      banner: [],
+      name: '',
+      location: '',
+      categories: [],
+      description: '',
+      file: null,
+      // organization_name: '',
+      // organization_desc: '',
+      // organization_phone: '',
+      // organization_email: '',
+      // organization_img: Chamaleon2,
+    },
     validationSchema: Yup.object({
       banner: Yup.mixed(),
+      // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       categories: Yup.mixed()
@@ -75,6 +93,11 @@ const EventInfo = () => {
         })
         .required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
+      // file: Yup.mixed()
+      //   .required('Yêu cầu banner sự kiện')
+      //   .test('fileSize', 'File ảnh quá lớn', (value: any) => {
+      //     return value ? value.size <= 1024000 : true; // 1MB
+      //   }),
       file: Yup.mixed()
         .test('filesize', 'File quá lớn', (value: any) => {
           if (value && value?.length > 0) {
@@ -96,16 +119,53 @@ const EventInfo = () => {
           }
           return true;
         })
-        .required('Yêu cầu banner sự kiện'),
+        .notRequired(),
+      // .required('Yêu cầu banner sự kiện'),
+      // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
+      // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
+      // organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
+      // organization_email: Yup.string()
+      //   .required('Email không được bỏ trống')
+      //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      value.description_img = [...imageData];
-      console.log(value);
-
       try {
-        setImagesUploaded(true);
-        dispatch(setEventInfo(value));
-        navigate(`/organization/create-event/1`);
+        const checkNewBanner = value.banner.find((banner) => banner.includes('blob:http://localhost:8080/'));
+        if (checkNewBanner) {
+          const bannerId = await Promise.all(value.banner.map((url) => upLoadImg(url)))
+            .then((images) => {
+              // 'images' is an array containing the results of all the promises
+              console.log('All images fetched successfully:', images);
+              return images;
+              // Further processing or rendering of images can be done here
+            })
+            .catch((error) => {
+              // Handle any errors that occurred during the fetching process
+              console.error('Error fetching images:', error);
+              return [];
+            });
+          console.log(bannerId);
+          await updateEvent({
+            eventId: idEvent,
+            body: {
+              title: value.name,
+              location: value.location,
+              categories: value.categories,
+              desc: value.description,
+              banner: bannerId,
+            },
+          });
+        } else {
+          await updateEvent({
+            eventId: idEvent,
+            body: {
+              title: value.name,
+              location: value.location,
+              categories: value.categories,
+              desc: value.description,
+            },
+          });
+        }
       } catch (err) {
         console.log(err);
       }
@@ -113,41 +173,63 @@ const EventInfo = () => {
   });
 
   useEffect(() => {
-    if (eventInfo?.banner) {
-      setImagePreviewUrl(eventInfo?.banner);
+    if (isSuccess) {
+      successNotify('Cập nhật thành công');
     }
-  }, []);
+    if (isError) {
+      errorNotify('Cập nhật thất bại');
+    }
+  }, [isError, isSuccess]);
+
+  // Set old value
   useEffect(() => {
-    if (eventInfo?.categories) {
-      const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
-      setCategoryArr(cateArr);
-    }
-  }, [categories]);
+    const bannerUrls = event?.data?.data?.banner.map((banner: IBanner) => banner.url);
+    const currentCates = event?.data?.data?.categories.map((cate: ICategory) => cate._id);
+    const cateArr = categories?.data.filter((cate: ICategory) => currentCates?.includes(cate._id));
+
+    setCategoryArr(cateArr);
+    setImagePreviewUrl(bannerUrls);
+
+    formik.setValues({
+      banner: bannerUrls,
+      name: event?.data?.data?.title,
+      location: event?.data?.data?.location._id,
+      categories: currentCates,
+      description: event?.data?.data?.desc,
+      file: null,
+    });
+  }, [event.isSuccess, categories]);
+
+  // useEffect(() => {
+  //   if (eventInfo?.banner) {
+  //     setImagePreviewUrl(eventInfo?.banner);
+  //   }
+  // }, [eventInfo]);
+  // useEffect(() => {
+  //   if (eventInfo?.categories) {
+  //     const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
+  //     console.log(cateArr);
+  //     setCategoryArr(cateArr);
+  //   }
+  // }, [categories, eventInfo]);
 
   useEffect(() => {
     const cateList = categoryArr?.map((cate: ICategory) => cate._id);
     formik.setFieldValue('categories', cateList);
   }, [categoryArr]);
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, 6] }],
-      [{ size: ['small', false, 'large', 'huge'] }],
-
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['link', 'image'],
-      [{ align: [] }],
-      ['clean'],
-    ],
-  };
   return (
     <>
+      {event.isLoading && <Loading />}
+      {isLoading && <Loading />}
+      {loading && <Loading />}
       <div className="">
+        {errorForm && (
+          <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
+        )}
         {/* Banner sự kiện */}
         <form onSubmit={formik.handleSubmit} className="mt-3">
           <div className="group relative h-[350px] w-full">
-            {imagePreviewUrl.length > 0 ? (
+            {imagePreviewUrl?.length > 0 ? (
               <MyCarousel data={imagePreviewUrl} />
             ) : (
               <img
@@ -161,7 +243,7 @@ const EventInfo = () => {
                 imagePreviewUrl && '!opacity-0 group-hover:!opacity-50'
               }`}
             ></div>
-            <div className=" absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
+            <div className="absolute top-0 flex h-full w-full cursor-pointer items-center justify-center ">
               <div
                 className={`relative z-20 w-[250px] overflow-hidden rounded-xl border-2 border-white text-center text-sm text-white  transition hover:scale-105 ${
                   imagePreviewUrl && '!opacity-0 group-hover:!opacity-100'
@@ -174,6 +256,7 @@ const EventInfo = () => {
                   id="file"
                   className="absolute left-0 top-0 h-full cursor-pointer text-2xl opacity-0 shadow-border-light"
                   onChange={(event) => {
+                    console.log('asda');
                     const selectedFile = event.target.files;
                     formik.setFieldValue('file', selectedFile);
                     if (selectedFile) {
@@ -307,27 +390,14 @@ const EventInfo = () => {
             <label htmlFor="description" className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400">
               Giới thiệu sự kiện
             </label>
-            {/* <textarea
+            <textarea
               name="description"
               id="description"
               className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light  focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
               placeholder="Nhập giới thiệu về sự kiện"
               onChange={formik.handleChange}
               value={formik.values.description}
-            /> */}
-            <ReactQuill
-              id="description"
-              // name="description"
-              theme="snow"
-              value={formik.values.description}
-              onChange={(value) => {
-                formik.setFieldValue('description', value);
-              }}
-              className="mb-8 h-[300px]"
-              modules={modules}
-              ref={quillRef}
             />
-            {/* <div className="">{value}</div> */}
           </div>
           {/* //// */}
           {/* <div className="">
@@ -451,8 +521,15 @@ const EventInfo = () => {
           </div> */}
           {/* //// */}
           <div className="w-full text-right"></div>
-          <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Tiếp tục" />
+          <Button className="md:w mt-5 w-full" type="submit" mode="dark" value="Lưu thay đổi" />
         </form>
+        <Button
+          onClick={() => navigate(`/organization/edit-event/${idEvent}/1`)}
+          className="md:w mt-5 w-full"
+          type="button"
+          mode="dark"
+          value="Tiếp tục"
+        />
         {/* //// */}
       </div>
     </>
