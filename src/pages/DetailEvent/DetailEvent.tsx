@@ -130,7 +130,7 @@ function DetailEvent() {
                         onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
                       />
                     ) : (
-                      <span>Dùng vai trò người dùng để có thể mua vé</span>
+                      <span className="dark:text-cs_light">Dùng vai trò người dùng để có thể mua vé</span>
                     )}
                   </>
                 )}

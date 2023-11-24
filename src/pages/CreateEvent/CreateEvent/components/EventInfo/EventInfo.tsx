@@ -89,7 +89,6 @@ const EventInfo = () => {
       //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      console.log(value);
       try {
         if (value.file) {
           console.log(value.file);
@@ -102,8 +101,6 @@ const EventInfo = () => {
       }
     },
   });
-  console.log(categoryArr);
-  console.log(eventInfo?.categories);
 
   useEffect(() => {
     if (eventInfo?.banner) {
@@ -113,7 +110,6 @@ const EventInfo = () => {
   useEffect(() => {
     if (eventInfo?.categories) {
       const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
-      console.log(cateArr);
       setCategoryArr(cateArr);
     }
   }, [categories]);

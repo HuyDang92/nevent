@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function MyPallet() {
   return (
-    <section className="min-h-screen rounded-xl bg-white p-8">
+    <section className="min-h-screen rounded-xl bg-white p-8 dark:bg-cs_lightDark">
       <h1 className="text-2xl font-semibold">
         Tài khoản ví: <span className="ml-2 text-cs_semi_green">1.223.000.000 USD</span>
       </h1>
