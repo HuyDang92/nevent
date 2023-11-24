@@ -23,9 +23,7 @@ const businessSlice = createSlice({
     resetForm: (state) => {
       (state.eventInfo = null), (state.eventTime = null), (state.ticketList = []);
     },
-    setBusinessInfo: (state, action) => {
-      state.businessInfo = action.payload;
-    },
+
     setEventInfo: (state, action) => {
       state.eventInfo = action.payload;
     },
@@ -52,23 +50,22 @@ const businessSlice = createSlice({
       state.paymentInfo = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    // Xử lý logic khi endpoint login account & login Google được fulfilled
-    builder.addMatcher(isAnyOf(authApi.endpoints.logInGoogle.matchFulfilled), (state, action) => {
-      // Lưu thông tin user vào state khi login
-      const response = action.payload;
-      console.log(response?.data);
-      if (response?.statusCode === 201) {
-        state.businessInfo = response?.data?.businessProfile;
-      } else {
-        state.businessInfo = null;
-      }
-    });
-  },
+  // extraReducers: (builder) => {
+  //   // Xử lý logic khi endpoint login account & login Google được fulfilled
+  //   builder.addMatcher(isAnyOf(authApi.endpoints.logInGoogle.matchFulfilled), (state, action) => {
+  //     // Lưu thông tin user vào state khi login
+  //     const response = action.payload;
+  //     console.log(response?.data);
+  //     if (response?.statusCode === 201) {
+  //       state.businessInfo = response?.data?.businessProfile;
+  //     } else {
+  //       state.businessInfo = null;
+  //     }
+  //   });
+  // },
 });
 
 export const {
-  setBusinessInfo,
   setEventInfo,
   setEventTime,
   setTicketInfo,

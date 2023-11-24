@@ -85,7 +85,7 @@ const EventManage = () => {
             count={analytics.data?.data?.totalRevenue.toLocaleString('vi')}
             border
           />
-          <ManageEventParameters title={'Tổng vé'} count={analytics.data?.data?.totalTickets} />
+          <ManageEventParameters title={'Tổng vé đã bán'} count={analytics.data?.data?.totalTickets} />
         </div>
 
         {/* <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c] ">
@@ -97,7 +97,7 @@ const EventManage = () => {
         <Tabs value="" className="w-full max-w-[50rem] ">
           <TabsHeader
             indicatorProps={{
-              className: 'text-black dark:text-white bg-cs_lightDark',
+              className: 'text-black dark:text-white dark:bg-cs_lightDark',
             }}
             className="dark:bg-cs_dark"
           >
@@ -167,7 +167,7 @@ const EventManage = () => {
                       </td>
                       <td className={`w-56 ${classes}`}>
                         <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
-                          {item.title}
+                          <Link to={`/event-detail/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
                       <td className={classes}>
