@@ -80,6 +80,7 @@ interface IEventInfo {
   // logo: string;
   name: string;
   location: string;
+  address: string;
   categories: string[];
   description: string;
   file: null | File[];

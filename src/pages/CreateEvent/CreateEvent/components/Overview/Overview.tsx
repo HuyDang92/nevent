@@ -188,22 +188,23 @@ const OverView = () => {
         }
         console.log(new_desc);
 
-        // await createEvent({
-        //   title: eventInfo?.name,
-        //   categories: eventInfo?.categories,
-        //   location: eventInfo?.location,
-        //   start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
-        //   desc: new_desc,
-        //   totalTicketIssue: ticketList.reduce(
-        //     (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
-        //     0,
-        //   ),
-        //   tickets: ticketList,
-        //   banner: bannerId,
-        //   salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
-        //   salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
-        // });
-        // dispatch(resetForm());
+        await createEvent({
+          title: eventInfo?.name,
+          categories: eventInfo?.categories,
+          location: eventInfo?.location,
+          address: eventInfo?.address,
+          start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
+          desc: new_desc,
+          totalTicketIssue: ticketList.reduce(
+            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
+            0,
+          ),
+          tickets: ticketList,
+          banner: bannerId,
+          salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
+          salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
+        });
+        dispatch(resetForm());
       }
     } catch (err) {
       console.log(err);
