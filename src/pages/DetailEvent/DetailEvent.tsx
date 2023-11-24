@@ -230,7 +230,8 @@ function DetailEvent() {
                 {/* description  */}
                 <div className="space-y-4 px-2 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
-                  <div className=" leading-8">
+                  <div dangerouslySetInnerHTML={{ __html: detailEventQuery?.data?.data?.desc }} />
+                  {/* <div className=" leading-8">
                     <h3>
                       I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "
                       <span className="font-semibold">{detailEventQuery?.data?.data?.title}</span>"
@@ -243,7 +244,7 @@ function DetailEvent() {
                   </Zoom>
                   <Zoom>
                     <img src={des2} alt="" className="w-full" />
-                  </Zoom>
+                  </Zoom> */}
                 </div>
                 {/* Info bussiness */}
                 <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">

@@ -8,21 +8,23 @@ import { useCreateEventMutation, useGetLocationsQuery } from '~/features/Event/e
 import { useAppSelector } from '~/hooks/useActionRedux';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
+import { useUploadDesc } from '~/hooks/useUploadDesc';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { useNavigate } from 'react-router-dom';
 import MyCarousel from '~/components/customs/MyCarousel';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '~/hooks/useActionRedux';
 import { resetForm } from '~/features/Business/businessSlice';
 
 const OverView = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { eventInfo, eventTime, ticketList } = useAppSelector((state) => state.business);
   const { data: locations } = useGetLocationsQuery();
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
+  const { upLoadDesc, loadingDesc } = useUploadDesc();
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -75,42 +77,61 @@ const OverView = () => {
     return new Promise((resolve, reject) => {
       const date = new Date();
       const signature = `${date.getTime()}-${Math.random()}`;
-
-      // Nếu URL là base64, không cần tải lại
-      if (url.startsWith('data:image')) {
-        const blob = dataURLtoBlob(url);
-        const file = new File(
-          [blob],
-          `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
-          {
-            type: 'image/png',
-          },
-        );
-
-        upLoad(file)
-          .then((idImg) => resolve(idImg))
-          .catch((err) => reject(err));
-      } else {
-        // Nếu URL không phải là base64, tải ảnh từ URL và chuyển thành File
-        fetch(url)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) =>
-              new File(
-                [blobFile],
-                `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
-                {
-                  type: 'image/png',
-                },
-              ),
-          )
-          .then(async (file) => {
-            const idImg = await upLoad(file);
-            resolve(idImg);
-          })
-          .catch((err) => reject(err));
-      }
+      fetch(url)
+        .then((r) => r.blob())
+        .then(
+          (blobFile) =>
+            new File([blobFile], `${eventInfo?.name ? eventInfo?.name + '-' + signature : 'eventImage' + signature}`, {
+              type: 'image/png',
+            }),
+        )
+        .then(async (file) => {
+          const urlImg = await upLoadDesc(file);
+          resolve(urlImg);
+        })
+        .catch((err) => reject(err));
     });
+    // return new Promise((resolve, reject) => {
+    //   const date = new Date();
+    //   const signature = `${date.getTime()}-${Math.random()}`;
+
+    //   // Nếu URL là base64, không cần tải lại
+    //   if (url.startsWith('data:image')) {
+    //     const blob = dataURLtoBlob(url);
+    //     fetch(blob)
+    //     .then((r) => r.blob())
+    //     .then(
+    //       (blobFile) =>
+    //         new File([blobFile], `${eventInfo?.name ? eventInfo?.name + '-' + signature : 'eventImage' + signature}`, {
+    //           type: 'image/png',
+    //         }),
+    //     )
+    //     .then(async (file) => {
+    //       const idImg = await upLoad(file);
+    //       resolve(idImg);
+    //     })
+    //     .catch((err) => reject(err));
+    //   } else {
+    //     // Nếu URL không phải là base64, tải ảnh từ URL và chuyển thành File
+    //     fetch(url)
+    //       .then((r) => r.blob())
+    //       .then(
+    //         (blobFile) =>
+    //           new File(
+    //             [blobFile],
+    //             `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
+    //             {
+    //               type: 'image/png',
+    //             },
+    //           ),
+    //       )
+    //       .then(async (file) => {
+    //         await upLoad(file);
+    //         resolve(urlImg);
+    //       })
+    //       .catch((err) => reject(err));
+    //   }
+    // });
   };
   const dataURLtoBlob = (dataURL: string) => {
     const arr = dataURL.split(',');
@@ -129,7 +150,7 @@ const OverView = () => {
   const handleAddEvent = async () => {
     try {
       let bannerId: any[] = [];
-      let new_desc: string | undefined = eventInfo?.description;
+      let new_desc = eventInfo?.description;
       if (eventInfo?.banner) {
         bannerId = await Promise.all(eventInfo?.banner.map((url) => upLoadImg(url)))
           .then((images) => {
@@ -158,11 +179,11 @@ const OverView = () => {
 
           // Thay thế URL cũ bằng URL mới trong new_desc
           newImageURLs.forEach((newImageURL, index) => {
-            const oldImageData = eventInfo?.description_img[index];
-            if (oldImageData !== undefined) {
-              // Kiểm tra xem new_desc có phải là string không
-              if (typeof new_desc === 'string') {
-                new_desc = new_desc.replace(oldImageData, newImageURL);
+            if (eventInfo?.description_img) {
+              const oldImageData = eventInfo?.description_img[index];
+              console.log(oldImageData);
+              if (typeof newImageURL === 'string') {
+                new_desc = new_desc?.replace(oldImageData, newImageURL);
               }
             }
           });
@@ -173,8 +194,9 @@ const OverView = () => {
           title: eventInfo?.name,
           categories: eventInfo?.categories,
           location: eventInfo?.location,
+          address: eventInfo?.address,
           start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
-          desc: eventInfo?.description,
+          desc: new_desc,
           totalTicketIssue: ticketList.reduce(
             (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
             0,
@@ -192,8 +214,7 @@ const OverView = () => {
   };
   return (
     <>
-      {loading && <Loading />}
-      {isLoading && <Loading />}
+      {(loading || isLoading || loadingDesc) && <Loading />}
       <div>
         <div>
           <h1 className="text-center text-3xl font-bold dark:text-cs_light">Thông tin sự kiện</h1>
@@ -255,7 +276,7 @@ const OverView = () => {
                 <h3>
                   I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "<span className="font-semibold">{eventInfo?.name}</span>"
                 </h3>
-                <div dangerouslySetInnerHTML={{ __html: eventInfo?.description }} />
+                {eventInfo?.description && <div dangerouslySetInnerHTML={{ __html: eventInfo?.description }} />}
                 {/* {eventInfo?.description} */}
               </div>
             </div>

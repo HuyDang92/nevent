@@ -30,17 +30,18 @@ const EventInfo = () => {
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
 
-  const quillRef: any = useRef(null);
+  const quillRef = useRef<any>(null);
   // console.log(quillRef.current);
 
   useEffect(() => {
     if (quillRef.current) {
-      const quill = quillRef.current!.getEditor();
+      const quill = quillRef.current?.getEditor();
       quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
         if (source === 'user') {
           const insertedImage = delta.ops.find((op: any) => op.insert && op.insert.image);
           if (insertedImage) {
             const imageData = insertedImage.insert.image;
+            // console.log(imageData);
             if (!imagesUploaded) {
               setImageData((prevData: any) => [...prevData, imageData]);
             }
@@ -57,6 +58,7 @@ const EventInfo = () => {
           banner: [],
           name: '',
           location: '',
+          address: '',
           categories: [],
           description: '',
           file: null,
@@ -66,6 +68,7 @@ const EventInfo = () => {
       banner: Yup.mixed(),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
+      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       categories: Yup.mixed()
         .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
           if (value && value?.length > 0) {
@@ -99,7 +102,9 @@ const EventInfo = () => {
         .required('Yêu cầu banner sự kiện'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      value.description_img = [...imageData];
+      value.description_img = imageData.filter(function (item, index) {
+        return imageData.indexOf(item) == index;
+      });
       console.log(value);
 
       try {
@@ -248,6 +253,22 @@ const EventInfo = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="relative">
+              {formik.errors.address && (
+                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa chỉ cụ thể"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+              />
             </div>
             <div className="relative pt-3">
               {formik.errors.categories && (

@@ -33,6 +33,8 @@ const EventInfo = () => {
   const [categoryIpt, setCategoryIpt] = useState<string>('');
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const [updateEvent, { isLoading, isSuccess, isError, error }] = useUpdateEventMutation();
+  console.log(event);
+  console.log(categories);
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -72,6 +74,8 @@ const EventInfo = () => {
       location: '',
       categories: [],
       description: '',
+      address: '',
+      description_img: [],
       file: null,
       // organization_name: '',
       // organization_desc: '',
@@ -83,6 +87,7 @@ const EventInfo = () => {
       banner: Yup.mixed(),
       // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
+      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       categories: Yup.mixed()
         .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
@@ -186,10 +191,8 @@ const EventInfo = () => {
     const bannerUrls = event?.data?.data?.banner.map((banner: IBanner) => banner.url);
     const currentCates = event?.data?.data?.categories.map((cate: ICategory) => cate._id);
     const cateArr = categories?.data.filter((cate: ICategory) => currentCates?.includes(cate._id));
-
     setCategoryArr(cateArr);
     setImagePreviewUrl(bannerUrls);
-
     formik.setValues({
       banner: bannerUrls,
       name: event?.data?.data?.title,
@@ -197,6 +200,7 @@ const EventInfo = () => {
       categories: currentCates,
       description: event?.data?.data?.desc,
       file: null,
+      address: event?.data?.data?.address,
     });
   }, [event.isSuccess, categories]);
 
@@ -331,6 +335,22 @@ const EventInfo = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="relative">
+              {formik.errors.address && (
+                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa chỉ cụ thể"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+              />
             </div>
             <div className="relative pt-3">
               {formik.errors.categories && (
