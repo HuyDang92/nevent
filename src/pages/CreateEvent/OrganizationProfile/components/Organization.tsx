@@ -82,22 +82,20 @@ const Organization = () => {
       taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
-      console.log(value);
-
-      // await updateBusiness({
-      //   type: 'business',
-      //   address: `${value.address},${value.road},${value.district},${value.city}`,
-      //   cccd: value.cccd,
-      //   crn: value.CRN,
-      //   dateOfIssue: value.releaseDate,
-      //   name: value.fullName,
-      //   placeOfIssue: value.releasePlace,
-      //   taxCode: value.taxCode,
-      //   organization_name: value.organization_name,
-      //   description: value.description,
-      //   phone: value.phone,
-      //   email: value.email,
-      // });
+      await updateBusiness({
+        type: 'business',
+        address: `${value.address},${value.road},${value.district},${value.city}`,
+        cccd: value.cccd,
+        crn: value.CRN,
+        dateOfIssue: value.releaseDate,
+        name: value.fullName,
+        placeOfIssue: value.releasePlace,
+        taxCode: value.taxCode,
+        organization_name: value.organization_name,
+        description: value.description,
+        phone: value.phone,
+        email: value.email,
+      });
     },
   });
   useEffect(() => {
@@ -106,12 +104,13 @@ const Organization = () => {
         dispatch(setAuthCurrentUser(userProfile?.data?.data));
       }
       successNotify('Cập nhật thành công');
+      navigate('/organization/organization-profile');
     }
     if (isError) {
       errorNotify('Cập nhật thất bại');
       navigate('/organization/organization-profile');
     }
-  }, [isSuccess, isError, userProfile]);
+  }, [isLoading]);
 
   useEffect(() => {
     if (userProfile.isSuccess && userProfile?.data?.data?.businessProfile) {
