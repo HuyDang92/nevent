@@ -67,9 +67,66 @@ const OverView = () => {
         .catch((err) => reject(err));
     });
   };
+
+  const uploadDescImg = async (url: string) => {
+    return new Promise((resolve, reject) => {
+      const date = new Date();
+      const signature = `${date.getTime()}-${Math.random()}`;
+
+      // Nếu URL là base64, không cần tải lại
+      if (url.startsWith('data:image')) {
+        const blob = dataURLtoBlob(url);
+        const file = new File(
+          [blob],
+          `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
+          {
+            type: 'image/png',
+          },
+        );
+
+        upLoad(file)
+          .then((idImg) => resolve(idImg))
+          .catch((err) => reject(err));
+      } else {
+        // Nếu URL không phải là base64, tải ảnh từ URL và chuyển thành File
+        fetch(url)
+          .then((r) => r.blob())
+          .then(
+            (blobFile) =>
+              new File(
+                [blobFile],
+                `${eventInfo?.name ? 'desc_' + eventInfo?.name + '-' + signature : 'desc_' + 'eventImage' + signature}`,
+                {
+                  type: 'image/png',
+                },
+              ),
+          )
+          .then(async (file) => {
+            const idImg = await upLoad(file);
+            resolve(idImg);
+          })
+          .catch((err) => reject(err));
+      }
+    });
+  };
+  const dataURLtoBlob = (dataURL: string) => {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], { type: mime });
+  };
+
   const handleAddEvent = async () => {
     try {
       let bannerId: any[] = [];
+      let new_desc: string | undefined = eventInfo?.description;
       if (eventInfo?.banner) {
         bannerId = await Promise.all(eventInfo?.banner.map((url) => upLoadImg(url)))
           .then((images) => {
@@ -84,13 +141,37 @@ const OverView = () => {
             return [];
           });
         console.log(bannerId);
+        if (new_desc !== undefined) {
+          // Sử dụng Promise.all để đợi tất cả các promises hoàn thành
+          const newImageURLs = await Promise.all((eventInfo?.description_img || []).map((url) => uploadDescImg(url)))
+            .then((images) => {
+              console.log('All images fetched successfully:', images);
+              return images;
+            })
+            .catch((error) => {
+              console.error('Error fetching images:', error);
+              return [];
+            });
+
+          // Thay thế URL cũ bằng URL mới trong new_desc
+          newImageURLs.forEach((newImageURL, index) => {
+            const oldImageData = eventInfo?.description_img[index];
+            if (oldImageData !== undefined) {
+              // Kiểm tra xem new_desc có phải là string không
+              if (typeof new_desc === 'string') {
+                new_desc = new_desc.replace(oldImageData, newImageURL);
+              }
+            }
+          });
+        }
+        console.log(new_desc);
 
         await createEvent({
           title: eventInfo?.name,
           categories: eventInfo?.categories,
           location: eventInfo?.location,
           start_date: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
-          desc: eventInfo?.description,
+          desc: new_desc,
           totalTicketIssue: ticketList.reduce(
             (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
             0,
@@ -170,8 +251,8 @@ const OverView = () => {
                 <h3>
                   I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "<span className="font-semibold">{eventInfo?.name}</span>"
                 </h3>
-
-                {eventInfo?.description}
+                <div dangerouslySetInnerHTML={{ __html: eventInfo?.description }} />
+                {/* {eventInfo?.description} */}
               </div>
             </div>
             <div className="my-5">

@@ -5,13 +5,16 @@ import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import Chamaleon2 from '~/assets/images/chamaleon-2.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 // import banner3 from '~/assets/images/banner3.jpg';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const EventInfo = () => {
   const dispatch = useAppDispatch();
   const eventInfo = useAppSelector((state) => state.bussiness.eventInfo);
@@ -24,6 +27,29 @@ const EventInfo = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
   const [categoryIpt, setCategoryIpt] = useState<string>('');
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
+  const [imageData, setImageData] = useState<string[]>([]);
+  const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
+
+  const quillRef = useRef(null);
+  // console.log(quillRef.current);
+
+  useEffect(() => {
+    if (quillRef.current) {
+      const quill = quillRef.current!.getEditor();
+      quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
+        if (source === 'user') {
+          const insertedImage = delta.ops.find((op: any) => op.insert && op.insert.image);
+          if (insertedImage) {
+            const imageData = insertedImage.insert.image;
+            if (!imagesUploaded) {
+              setImageData((prevData: any) => [...prevData, imageData]);
+            }
+          }
+        }
+      });
+    }
+  }, [imagesUploaded]);
+
   const formik = useFormik({
     initialValues: eventInfo
       ? eventInfo
@@ -34,15 +60,10 @@ const EventInfo = () => {
           categories: [],
           description: '',
           file: null,
-          // organization_name: '',
-          // organization_desc: '',
-          // organization_phone: '',
-          // organization_email: '',
-          // organization_img: Chamaleon2,
+          description_img: [],
         },
     validationSchema: Yup.object({
       banner: Yup.mixed(),
-      // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       categories: Yup.mixed()
@@ -54,11 +75,6 @@ const EventInfo = () => {
         })
         .required('Danh mục sự kiện không được bỏ trống'),
       description: Yup.string().required('Mô tả sự kiện không được bỏ trống'),
-      // file: Yup.mixed()
-      //   .required('Yêu cầu banner sự kiện')
-      //   .test('fileSize', 'File ảnh quá lớn', (value: any) => {
-      //     return value ? value.size <= 1024000 : true; // 1MB
-      //   }),
       file: Yup.mixed()
         .test('filesize', 'File quá lớn', (value: any) => {
           if (value && value?.length > 0) {
@@ -81,20 +97,13 @@ const EventInfo = () => {
           return true;
         })
         .required('Yêu cầu banner sự kiện'),
-      // organization_name: Yup.string().required('Tên tổ chức không được bỏ trống'),
-      // organization_phone: Yup.string().required('Hotline tổ chức không được bỏ trống'),
-      // organization_desc: Yup.string().required('Mô tả tổ chức không được bỏ trống'),
-      // organization_email: Yup.string()
-      //   .required('Email không được bỏ trống')
-      //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
     }),
     onSubmit: async (value: IEventInfo) => {
+      value.description_img = [...imageData];
       console.log(value);
+
       try {
-        if (value.file) {
-          console.log(value.file);
-          // const fileArray = Array.from(selectedFile);
-        }
+        setImagesUploaded(true);
         dispatch(setEventInfo(value));
         navigate(`/organization/create-event/1`);
       } catch (err) {
@@ -102,8 +111,6 @@ const EventInfo = () => {
       }
     },
   });
-  console.log(categoryArr);
-  console.log(eventInfo?.categories);
 
   useEffect(() => {
     if (eventInfo?.banner) {
@@ -113,7 +120,6 @@ const EventInfo = () => {
   useEffect(() => {
     if (eventInfo?.categories) {
       const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
-      console.log(cateArr);
       setCategoryArr(cateArr);
     }
   }, [categories]);
@@ -122,6 +128,19 @@ const EventInfo = () => {
     const cateList = categoryArr?.map((cate: ICategory) => cate._id);
     formik.setFieldValue('categories', cateList);
   }, [categoryArr]);
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6] }],
+      [{ size: ['small', false, 'large', 'huge'] }],
+
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link', 'image'],
+      [{ align: [] }],
+      ['clean'],
+    ],
+  };
   return (
     <>
       <div className="">
@@ -288,14 +307,27 @@ const EventInfo = () => {
             <label htmlFor="description" className=" ml-2 !text-sm font-medium text-cs_label_gray dark:text-gray-400">
               Giới thiệu sự kiện
             </label>
-            <textarea
+            {/* <textarea
               name="description"
               id="description"
               className="mt-2 !h-[200px] !w-full rounded-xl p-2 text-sm shadow-border-light  focus:outline-cs_semi_green dark:bg-cs_formDark dark:text-white dark:outline-none"
               placeholder="Nhập giới thiệu về sự kiện"
               onChange={formik.handleChange}
               value={formik.values.description}
+            /> */}
+            <ReactQuill
+              id="description"
+              // name="description"
+              theme="snow"
+              value={formik.values.description}
+              onChange={(value) => {
+                formik.setFieldValue('description', value);
+              }}
+              className="mb-8 h-[300px]"
+              modules={modules}
+              ref={quillRef}
             />
+            {/* <div className="">{value}</div> */}
           </div>
           {/* //// */}
           {/* <div className="">
