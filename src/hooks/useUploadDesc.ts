@@ -4,13 +4,12 @@ import { useUploadSingleFileMutation } from '~/features/Upload/uploadApi.service
 
 const MAX_FILE_SIZE_MB = 1;
 
-export const useUploadFile = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+export const useUploadDesc = () => {
+  const [loadingDesc, setLoadingDesc] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [upLoadFile] = useUploadSingleFileMutation();
-  const [urlImg, setUrlImg] = useState<string | null>(null);
 
-  const upLoad = async (selectedFile: File) => {
+  const upLoadDesc = async (selectedFile: File) => {
     if (!selectedFile) {
       console.log('Chưa chọn ảnh');
       return null;
@@ -23,7 +22,7 @@ export const useUploadFile = () => {
       return null;
     }
 
-    setLoading(true);
+    setLoadingDesc(true);
 
     const formDataFormat = new FormData();
     formDataFormat.append('file', selectedFile);
@@ -31,21 +30,20 @@ export const useUploadFile = () => {
     try {
       const res = await upLoadFile(formDataFormat).unwrap();
       if (res?.statusCode === 201) {
-        setLoading(false);
+        setLoadingDesc(false);
         setError(false);
-        setUrlImg(res?.data?.url);
-        return res?.data?._id;
+        return res?.data?.url;
       } else {
-        setLoading(false);
+        setLoadingDesc(false);
         setError(true);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      setLoading(false);
+      setLoadingDesc(false);
       setError(true);
       return null;
     }
   };
 
-  return { upLoad, loading, error, urlImg };
+  return { upLoadDesc, loadingDesc, error };
 };

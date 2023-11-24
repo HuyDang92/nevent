@@ -35,12 +35,13 @@ const EventInfo = () => {
 
   useEffect(() => {
     if (quillRef.current) {
-      const quill = quillRef.current!.getEditor();
+      const quill = quillRef.current?.getEditor();
       quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
         if (source === 'user') {
           const insertedImage = delta.ops.find((op: any) => op.insert && op.insert.image);
           if (insertedImage) {
             const imageData = insertedImage.insert.image;
+            // console.log(imageData);
             if (!imagesUploaded) {
               setImageData((prevData: any) => [...prevData, imageData]);
             }
@@ -99,7 +100,9 @@ const EventInfo = () => {
         .required('Yêu cầu banner sự kiện'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      value.description_img = [...imageData];
+      value.description_img = imageData.filter(function (item, index) {
+        return imageData.indexOf(item) == index;
+      });
       console.log(value);
 
       try {
