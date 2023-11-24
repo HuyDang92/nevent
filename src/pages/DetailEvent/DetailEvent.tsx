@@ -238,12 +238,12 @@ function DetailEvent() {
                       <div dangerouslySetInnerHTML={{ __html: detailEventQuery?.data?.data?.desc }} />
                     )}
                   </div>
-                  <Zoom>
+                  {/* <Zoom>
                     <img src={des} alt="" className="w-full" />
                   </Zoom>
                   <Zoom>
                     <img src={des2} alt="" className="w-full" />
-                  </Zoom>
+                  </Zoom> */}
                 </div>
                 {/* Info bussiness */}
                 <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">

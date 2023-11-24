@@ -221,9 +221,11 @@ const EventManage = () => {
                       </td>
                       <td className={` ${classes}`}>
                         <Tooltip content="Sửa sự kiện">
-                          <IconButton variant="text">
-                            <Icon name="pencil-outline" className="text-xl" />
-                          </IconButton>
+                          <Link to={`/organization/edit-event/${item?._id}/0`}>
+                            <IconButton variant="text">
+                              <Icon name="pencil-outline" className="text-xl" />
+                            </IconButton>
+                          </Link>
                         </Tooltip>
                         <Tooltip content="Xem chi tiết">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>
