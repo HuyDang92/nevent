@@ -5,10 +5,14 @@ import moment from 'moment';
 interface IPopUpDetailProps {
   data: IPurchase;
   children: React.ReactNode;
+  onClick: any;
 }
-export function PopUpDetail({ data, children }: IPopUpDetailProps) {
+export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
   const [open, setOpen] = useState<boolean>(false);
-
+  const handleClick = (id: string) => {
+    setOpen(false);
+    onClick(id);
+  };
   return (
     <>
       <div onClick={() => setOpen(true)}>{children}</div>
@@ -22,7 +26,7 @@ export function PopUpDetail({ data, children }: IPopUpDetailProps) {
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc]">Khách hàng</h3>
-              <p className="line-clamp-2 font-semibold">{data?.user}</p>
+              <p className="line-clamp-2 font-semibold">{data?.user?.fullName}</p>
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc]">Mô tả</h3>
@@ -77,7 +81,7 @@ export function PopUpDetail({ data, children }: IPopUpDetailProps) {
         </DialogBody>
         <DialogFooter>
           {data?.status === 'pending' ? (
-            <Button onClick={() => setOpen(false)}>
+            <Button onClick={() => handleClick(data?._id)}>
               <span>Thanh toán ngay</span>
             </Button>
           ) : (

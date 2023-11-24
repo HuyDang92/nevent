@@ -12,10 +12,9 @@ import { useLogInGoogleMutation, useLogInWithEmailMutation } from '~/features/Au
 import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
-import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser, setBusinessProfile } from '~/features/Auth/authSlice';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useAppDispatch } from '~/hooks/useActionRedux';
-import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 interface ILogin {
   email: string;
@@ -54,7 +53,7 @@ function LogIn() {
       dispatch(assignNewToken(data?.data?.token?.accessToken));
       dispatch(assignNewRefreshToken(data?.data?.token?.refreshToken));
       dispatch(setAuthCurrentUser(data?.data?.user));
-      dispatch(setBusinessInfo(data?.data?.businessProfile));
+      dispatch(setBusinessProfile(data?.data?.businessProfile));
 
       if (data?.data?.user?.role?.name === 'business') {
         // navigate('/organization/organization-profile');

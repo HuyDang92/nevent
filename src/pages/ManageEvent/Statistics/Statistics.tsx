@@ -307,8 +307,10 @@ const Statistics = () => {
           </table> */}
         </div>
         <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
-          <b>Ghới thiệu sự kiện </b>
-          <p>{event?.data?.data?.event?.desc}</p>
+          <b>Giới thiệu sự kiện </b>
+          {event?.data?.data?.event?.desc && (
+            <div dangerouslySetInnerHTML={{ __html: event?.data?.data?.event?.desc }} />
+          )}
         </div>
         <Dialog open={open} handler={setOpen} size="xs">
           <DialogHeader>Cảnh báo</DialogHeader>

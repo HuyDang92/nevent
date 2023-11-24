@@ -12,6 +12,7 @@ import Icon from '~/components/customs/Icon';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 import ChartBarAverage from '~/components/BarAverage/BarAverage';
 import { useAnalyticsBusinessQuery } from '~/features/Business/business.service';
+import nothing from '~/assets/images/nothing.svg';
 
 const TABS = [
   {
@@ -76,7 +77,7 @@ const EventManage = () => {
       </div>
 
       <div className=" my-5 flex flex-col gap-8">
-        <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
+        <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-cs_dark">
           <ManageEventParameters title={'Tổng sự kiện'} count={analytics.data?.data?.totalEvents} border />
           <ManageEventParameters title={'Đang chờ duyệt'} count={analytics.data?.data?.totalEventReviews} border />
           <ManageEventParameters
@@ -84,7 +85,7 @@ const EventManage = () => {
             count={analytics.data?.data?.totalRevenue.toLocaleString('vi')}
             border
           />
-          <ManageEventParameters title={'Tổng vé'} count={analytics.data?.data?.totalTickets} />
+          <ManageEventParameters title={'Tổng vé đã bán'} count={analytics.data?.data?.totalTickets} />
         </div>
 
         {/* <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c] ">
@@ -93,10 +94,20 @@ const EventManage = () => {
       </div>
       <ChartBarAverage />
       <div className="mt-5  flex items-center justify-between gap-7">
-        <Tabs value="" className="w-full max-w-[50rem] dark:bg-[#3f3c3c] ">
-          <TabsHeader>
+        <Tabs value="" className="w-full max-w-[50rem] ">
+          <TabsHeader
+            indicatorProps={{
+              className: 'text-black dark:text-white dark:bg-cs_lightDark',
+            }}
+            className="dark:bg-cs_dark"
+          >
             {TABS.map(({ label, value }) => (
-              <Tab key={value} value={value} className="max-w-content py-2 text-sm" onClick={() => setStatus(value)}>
+              <Tab
+                key={value}
+                value={value}
+                className="max-w-content py-2 text-sm dark:text-cs_light"
+                onClick={() => setStatus(value)}
+              >
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
               </Tab>
             ))}
@@ -129,8 +140,12 @@ const EventManage = () => {
             <thead>
               <tr className="">
                 {TABLE_HEAD.map((head) => (
-                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                    <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
+                  <th key={head} className="border-b  border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70 dark:text-cs_light"
+                    >
                       {head}
                     </Typography>
                   </th>
@@ -152,7 +167,7 @@ const EventManage = () => {
                       </td>
                       <td className={`w-56 ${classes}`}>
                         <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
-                          {item.title}
+                          <Link to={`/event-detail/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -221,9 +236,11 @@ const EventManage = () => {
                       </td>
                       <td className={` ${classes}`}>
                         <Tooltip content="Sửa sự kiện">
-                          <IconButton variant="text">
-                            <Icon name="pencil-outline" className="text-xl" />
-                          </IconButton>
+                          <Link to={`/organization/edit-event/${item?._id}/0`}>
+                            <IconButton variant="text">
+                              <Icon name="pencil-outline" className="text-xl" />
+                            </IconButton>
+                          </Link>
                         </Tooltip>
                         <Tooltip content="Xem chi tiết">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>
@@ -239,7 +256,13 @@ const EventManage = () => {
               ) : (
                 <tr>
                   <td colSpan={8} className=" py-10">
-                    <div className="relative flex w-full justify-center">
+                    <div className="flex justify-center py-5 text-center">
+                      <div>
+                        <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
+                        <h3 className="font-medium text-[#ccc]">Không có vé</h3>
+                      </div>
+                    </div>
+                    {/* <div className="relative flex w-full justify-center">
                       <div className="h-[10rem] w-[10rem] overflow-hidden">
                         <img
                           src="https://i.pinimg.com/originals/16/f1/d6/16f1d6eadfa1ccd785c91f64b535aabb.gif"
@@ -249,7 +272,7 @@ const EventManage = () => {
                       <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white">
                         <p className="text-lg font-semibold">Không có sự kiện nào</p>
                       </div>
-                    </div>
+                    </div> */}
                   </td>
                 </tr>
               )}

@@ -2,12 +2,16 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
-import { useGetProfileQuery, useUpdateBusinessMutation } from '~/features/Business/business.service';
+import {
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+  useUpdateBusinessMutation,
+} from '~/features/Business/business.service';
 import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import Loading from '~/components/customs/Loading';
-import { setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { setAuthCurrentUser, setBusinessProfile } from '~/features/Auth/authSlice';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
@@ -38,6 +42,7 @@ const Organization = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
+  const [getProfile] = useLazyGetProfileQuery();
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -96,19 +101,33 @@ const Organization = () => {
         phone: value.phone,
         email: value.email,
       });
+      const user = await getProfile().unwrap();
+      console.log('user', user);
     },
   });
   useEffect(() => {
-    if (isSuccess) {
-      if (userProfile?.data && userProfile?.isSuccess) {
+    if (userProfile?.isSuccess) {
+      if (userProfile?.data?.data?.role?.name === 'user') {
+        navigate('/user/organization-profile');
+      } else {
         dispatch(setAuthCurrentUser(userProfile?.data?.data));
+        dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
+        navigate('/organization/organization-profile');
       }
+    }
+  }, [userProfile.isFetching]);
+  useEffect(() => {
+    // if (userProfile?.isSuccess) {
+    //   dispatch(setAuthCurrentUser(userProfile?.data?.data));
+    //   dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
+    // }
+    if (isSuccess) {
       successNotify('Cập nhật thành công');
-      navigate('/organization/organization-profile');
+      // navigate('/user/organization-profile');
     }
     if (isError) {
       errorNotify('Cập nhật thất bại');
-      navigate('/organization/organization-profile');
+      // navigate('/user/organization-profile');
     }
   }, [isLoading]);
 

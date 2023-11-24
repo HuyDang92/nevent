@@ -80,9 +80,11 @@ interface IEventInfo {
   // logo: string;
   name: string;
   location: string;
+  address: string;
   categories: string[];
   description: string;
   file: null | File[];
+  description_img?: string[];
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;
@@ -143,8 +145,8 @@ interface ITicket {
 interface IPurchase {
   _id: string;
   tickets: Ticket[];
-  code: string | null;
-  user: string;
+  code: string;
+  user: IUserField;
   date: string;
   status: string;
   amount: number;
