@@ -31,6 +31,7 @@ const EventInfo = () => {
           banner: [],
           name: '',
           location: '',
+          address: '',
           categories: [],
           description: '',
           file: null,
@@ -45,6 +46,7 @@ const EventInfo = () => {
       // logo: Yup.string().required('Logo không được bỏ trống'),
       name: Yup.string().required('Tên sự kiện không được bỏ trống'),
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
+      address: Yup.string().required('Địa chỉ không được bỏ trống'),
       categories: Yup.mixed()
         .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
           if (value && value?.length > 0) {
@@ -229,6 +231,22 @@ const EventInfo = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="relative">
+              {formik.errors.address && (
+                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.address}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa chỉ cụ thể"
+                classNameLabel="!text-cs_label_gray !text-sm"
+                classNameInput="!w-full"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+              />
             </div>
             <div className="relative pt-3">
               {formik.errors.categories && (

@@ -92,6 +92,7 @@ const OverView = () => {
           title: eventInfo?.name,
           categories: eventInfo?.categories,
           location: eventInfo?.location,
+          address: eventInfo?.address,
           start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
           desc: eventInfo?.description,
           totalTicketIssue: ticketList.reduce(
@@ -111,8 +112,7 @@ const OverView = () => {
   };
   return (
     <>
-      {loading && <Loading />}
-      {isLoading && <Loading />}
+      {(loading || isLoading) && <Loading />}
       <div>
         <div>
           <h1 className="text-center text-3xl font-bold dark:text-cs_light">Thông tin sự kiện</h1>
