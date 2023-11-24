@@ -20,9 +20,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   const navigate = (window as any).navigate;
   const refheshToken = (api.getState() as RootState).auth?.refreshToken?.token;
   let result = await baseQuery(args, api, extraOptions);
-
   // Kiểm tra xem yêu cầu có trả về lỗi và mã trạng thái là 401 hay không
-  if (result.error && result.error.status === 401) {
+  if (result.error && result.error.status === 401 && (result.error?.data as any)?.path !== '/api/auth/login') {
     // Thử lấy token mới thông qua yêu cầu '/refreshToken'
     const refreshResult: any = await baseQuery(`/api/auth/refresh/${refheshToken}`, api, extraOptions);
 
