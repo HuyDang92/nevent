@@ -151,12 +151,19 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    verifyTicket: builder.mutation({
+      query: (body) => ({
+        url: '/api/signatures/verify',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
 
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
-    }),
-    verifyTicket: builder.query<any, string>({
-      query: (signature) => `/api/signatures/verify?${signature}`,
     }),
     getUserByEmail: builder.query<any, string>({
       query: (email) => `/api/users/email/${email}`,
@@ -188,7 +195,7 @@ export const {
   useForgotPassWordMutation,
   useVerifyForgotPasswordMutation,
   useGetMyTicketQuery,
-  useLazyVerifyTicketQuery,
+  useVerifyTicketMutation,
   useLazyGetUserByEmailQuery,
   useSwapTicketMutation,
   useSwapRoleMutation,

@@ -11,6 +11,7 @@ import ReactPaginate from 'react-paginate';
 import Icon from '~/components/customs/Icon';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 import ChartBarAverage from '~/components/BarAverage/BarAverage';
+import { useAnalyticsBusinessQuery } from '~/features/Business/business.service';
 
 const TABS = [
   {
@@ -47,6 +48,7 @@ const EventManage = () => {
   const { searchValue } = useDebounce(keyword, 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [status, setStatus] = useState<string>('');
+  const analytics = useAnalyticsBusinessQuery();
 
   const event = useGetEventBusinessQuery({
     limit: limit,
@@ -73,18 +75,23 @@ const EventManage = () => {
         <Dropdown />
       </div>
 
-      <div className=" mt-5 flex flex-col gap-8">
+      <div className=" my-5 flex flex-col gap-8">
         <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
-          <ManageEventParameters title={'Tổng sự kiện'} count={1} border />
-          <ManageEventParameters title={'Đang chờ duyệt'} count={1} border />
-          <ManageEventParameters title={'Tổng doanh thu'} count={1} border />
-          <ManageEventParameters title={'Title 1'} count={1} />
+          <ManageEventParameters title={'Tổng sự kiện'} count={analytics.data?.data?.totalEvents} border />
+          <ManageEventParameters title={'Đang chờ duyệt'} count={analytics.data?.data?.totalEventReviews} border />
+          <ManageEventParameters
+            title={'Tổng doanh thu (VNĐ)'}
+            count={analytics.data?.data?.totalRevenue.toLocaleString('vi')}
+            border
+          />
+          <ManageEventParameters title={'Tổng vé'} count={analytics.data?.data?.totalTickets} />
         </div>
 
         {/* <div className="flex-1 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c] ">
           <ChartParemeters />
         </div> */}
       </div>
+      <ChartBarAverage />
       <div className="mt-5  flex items-center justify-between gap-7">
         <Tabs value="" className="w-full max-w-[50rem] dark:bg-[#3f3c3c] ">
           <TabsHeader>
@@ -278,7 +285,7 @@ const EventManage = () => {
           </div>
         </div>
       )}
-      <ChartBarAverage />
+
       {/* <div className={`grid gap-7 ${event && event?.data?.data?.docs.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {event ? (
           event?.data?.data?.docs.length > 0 ? (

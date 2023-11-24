@@ -1,24 +1,30 @@
 import { QrScanner } from '@yudiel/react-qr-scanner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useLazyVerifyTicketQuery } from '~/features/Auth/authApi.service';
+import { useVerifyTicketMutation } from '~/features/Auth/authApi.service';
 
 export default function Scan() {
+  const { idEvent } = useParams();
   const [scanSuccess, setScanSuccess] = useState(false);
-  const [verifyTicket, result] = useLazyVerifyTicketQuery();
+  const [verifyTicket, result] = useVerifyTicketMutation();
+
+  useEffect(() => {
+    if (result.error) {
+      Swal.fire((result.error as any).data.message, '', 'error').then(() => setScanSuccess(false));
+      return;
+    }
+    if (result.isSuccess) {
+      console.log(result.data.message);
+      Swal.fire('Vé hợp lệ!', '', 'success').then(() => setScanSuccess(false));
+      return;
+    }
+  }, [result.isLoading]);
 
   const handleScan = async (result: string | null) => {
-    if (result) {
-      console.log(result);
-      await verifyTicket(result);
+    if (result && scanSuccess === false) {
+      await verifyTicket({ signature: result, event: idEvent });
       setScanSuccess(true);
-      try {
-        Swal.fire('Vé hợp lệ!', '', 'success').then(() => setScanSuccess(false));
-        return;
-      } catch (e) {
-        Swal.fire('Vé không hợp lệ!', '', 'error').then(() => setScanSuccess(false));
-        return;
-      }
     }
   };
 
@@ -30,7 +36,7 @@ export default function Scan() {
           <QrScanner
             onDecode={(result) => handleScan(result)}
             onError={(error) => console.log(error?.message)}
-            scanDelay={300}
+            scanDelay={500}
           />
         )}
       </div>

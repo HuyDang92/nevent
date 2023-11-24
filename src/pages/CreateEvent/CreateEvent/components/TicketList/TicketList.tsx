@@ -8,6 +8,7 @@ import { addTicket, removeTicket } from '~/features/Business/businessSlice';
 import { useState } from 'react';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { errorNotify } from '~/components/customs/Toast';
+import Icon from '~/components/customs/Icon';
 const TicketList = () => {
   const dispatch = useAppDispatch();
   const ticketInfo = useAppSelector((state) => state.business.ticketList);
@@ -72,14 +73,12 @@ const TicketList = () => {
         {ticketInfo.length < 1 && <span className="text-cs_semi_green">Vui lòng thêm vé</span>}
         <div className="flex flex-wrap gap-4">
           {ticketInfo.map((ticket, index) => (
-            <TicketCard
-              price={ticket.price}
-              color={ticket.color}
-              key={index}
-              title={ticket.title}
-              tooltip={ticket.desc}
-              remove={() => handleRemoveTicket(ticket)}
-            />
+            <div key={index} className="relative">
+              <TicketCard price={ticket.price} color={ticket.color} title={ticket.title} tooltip={ticket.desc} />
+              <div className="absolute right-0 top-0 flex -translate-y-1/2 translate-x-1/2 cursor-pointer items-center justify-center rounded-full border-[1px] bg-cs_semi_green ">
+                <Icon onClick={() => handleRemoveTicket(ticket)} name="close-outline" className="text-white" />
+              </div>
+            </div>
           ))}
         </div>
       </div>

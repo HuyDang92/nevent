@@ -98,6 +98,7 @@ interface IAddTimeline {
   happendTime: string;
 }
 interface TicketListInfo {
+  _id?: string;
   title: string;
   quantity: number;
   color: string;

@@ -3,16 +3,20 @@ import { useFormik } from 'formik';
 import Button from '~/components/customs/Button';
 import Input from '~/components/customs/Input';
 import { useGetProfileQuery, useUpdateBusinessMutation } from '~/features/Business/business.service';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import Loading from '~/components/customs/Loading';
 import { setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import { useNavigate } from 'react-router-dom';
+import DefaultAvatar from '~/assets/images/default-avatar.jpg';
+import ZoomComp from '~/components/customs/Zoom/Zoom';
+import Icon from '~/components/customs/Icon';
 
 interface IOrganizationInfo {
   organization_name: string;
+  organization_avatar: string;
   fullName: string;
   CRN: string;
   releasePlace: string;
@@ -30,6 +34,8 @@ interface IOrganizationInfo {
 const Organization = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
 
@@ -42,6 +48,7 @@ const Organization = () => {
   const formik = useFormik({
     initialValues: {
       organization_name: '',
+      organization_avatar: '',
       fullName: '',
       CRN: '',
       releasePlace: '',
@@ -75,20 +82,22 @@ const Organization = () => {
       taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
-      await updateBusiness({
-        type: 'business',
-        address: `${value.address},${value.road},${value.district},${value.city}`,
-        cccd: value.cccd,
-        crn: value.CRN,
-        dateOfIssue: value.releaseDate,
-        name: value.fullName,
-        placeOfIssue: value.releasePlace,
-        taxCode: value.taxCode,
-        organization_name: value.organization_name,
-        description: value.description,
-        phone: value.phone,
-        email: value.email,
-      });
+      console.log(value);
+
+      // await updateBusiness({
+      //   type: 'business',
+      //   address: `${value.address},${value.road},${value.district},${value.city}`,
+      //   cccd: value.cccd,
+      //   crn: value.CRN,
+      //   dateOfIssue: value.releaseDate,
+      //   name: value.fullName,
+      //   placeOfIssue: value.releasePlace,
+      //   taxCode: value.taxCode,
+      //   organization_name: value.organization_name,
+      //   description: value.description,
+      //   phone: value.phone,
+      //   email: value.email,
+      // });
     },
   });
   useEffect(() => {
@@ -110,6 +119,7 @@ const Organization = () => {
       const [address, road, district, city] = location ?? [];
       formik.setValues({
         organization_name: userProfile?.data?.data?.businessProfile?.organization_name,
+        organization_avatar: userProfile?.data?.data?.businessProfile?.organization_avatar,
         fullName: userProfile?.data?.data?.businessProfile?.name,
         CRN: userProfile?.data?.data?.businessProfile?.crn,
         releasePlace: userProfile?.data?.data?.businessProfile?.placeOfIssue,
@@ -250,8 +260,47 @@ const Organization = () => {
               />
             </div>
           </div>
-
-          <div className="relative mt-5">
+          <div className="relative my-5 w-fit">
+            <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
+              {!imagePreviewUrl && (
+                <ZoomComp>
+                  <img
+                    className="h-full w-full object-cover"
+                    src={formik.values.organization_avatar || DefaultAvatar}
+                    alt=""
+                  />
+                </ZoomComp>
+              )}
+              {imagePreviewUrl && (
+                <ZoomComp>
+                  <img
+                    className="h-[90px] w-[90px]  object-cover sm:h-[120px] sm:w-[120px]"
+                    src={imagePreviewUrl}
+                    alt=""
+                  />
+                </ZoomComp>
+              )}
+            </div>
+            <label
+              htmlFor="avatar"
+              className="absolute left-[calc(100%/6*5)] top-[calc(100%/6*5)] grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[1px] border-cs_semi_green bg-cs_light shadow-border-light shadow-cs_light"
+            >
+              <Icon name="pencil-outline" />
+            </label>
+            <input
+              type="file"
+              hidden
+              id="avatar"
+              onChange={(event) => {
+                const selectedFile = event.target.files?.[0];
+                if (selectedFile) {
+                  setSelectedFile(selectedFile);
+                  setImagePreviewUrl(URL.createObjectURL(selectedFile));
+                }
+              }}
+            />
+          </div>
+          <div className="relative">
             {formik.errors.description && (
               <small className="absolute left-[170px] top-[4px] z-10 px-2 text-[12px] text-red-600">
                 {formik.errors.description}
