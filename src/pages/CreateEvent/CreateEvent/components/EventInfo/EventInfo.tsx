@@ -256,7 +256,7 @@ const EventInfo = () => {
             </div>
             <div className="relative">
               {formik.errors.address && (
-                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[110px] top-[9px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.address}
                 </small>
               )}
