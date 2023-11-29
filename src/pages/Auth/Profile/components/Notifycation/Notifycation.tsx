@@ -91,6 +91,7 @@ const Notifycation = ({ className, classNameTagHeader, popup }: UserInfoProp) =>
     await viewed('');
     setViewedAll(true);
     setUnclick([]);
+    dispatch(setNotification(false));
   };
   return (
     <div className={`${className}`}>

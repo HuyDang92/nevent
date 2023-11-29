@@ -3,6 +3,7 @@ import { authApi } from './authApi.service';
 
 interface AuthState {
   loggedIn: boolean;
+  typeLogin: string;
   accessToken: {
     token: string | null;
   };
@@ -16,6 +17,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   loggedIn: false,
+  typeLogin: 'google',
   accessToken: {
     token: null,
   },
@@ -54,6 +56,9 @@ const authSlice = createSlice({
     setBusinessProfile: (state, action) => {
       state.businessInfo = action.payload;
     },
+    setTypeLoggin: (state, action) => {
+      state.typeLogin = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Xử lý logic khi endpoint login account & login Google được fulfilled
@@ -86,6 +91,7 @@ export const {
   setAuthCurrentUser,
   setNotification,
   setBusinessProfile,
+  setTypeLoggin,
 } = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

@@ -6,7 +6,7 @@ const SkeletonDetailEvent = () => {
     <>
       <div className="w-full">
         {/* modal right */}
-        <div className="right-0 top-[35px] w-full rounded-lg p-3 shadow-border-full lg:absolute lg:w-[28%]">
+        <div className="right-0 top-[100px] w-full rounded-lg p-3 shadow-border-full lg:absolute lg:w-[380px]">
           <Skeleton borderRadius={'15px'} className="h-[250px] w-full animate-pulse lg:h-[180px]" />
           <Skeleton borderRadius={'15px'} className="mt-4 h-[25px] w-1/2 animate-pulse" />
           <Skeleton height={'20px'} width={'30%'} borderRadius={'15px'} className="mt-2 h-[20px] w-1/3 animate-pulse" />
@@ -19,7 +19,7 @@ const SkeletonDetailEvent = () => {
           <Skeleton borderRadius={'15px'} className="mt-4 h-[30px] w-full animate-pulse" />
         </div>
         {/* main */}
-        <div className="w-full lg:w-[70%]">
+        <div className="w-full xl:w-[70%]">
           <div className="hidden lg:block">
             <Skeleton borderRadius={'15px'} className="h-[450px] w-full animate-pulse" />
             <Skeleton borderRadius={'15px'} className="mt-3 h-[30px] w-1/2 animate-pulse" />
