@@ -156,10 +156,12 @@ const Profile: React.FC<ProfileProps> = () => {
               <span className="!hidden xl:!block">Thông báo</span>
               <Icon name="notifications" className="text-2xl xl:text-base"></Icon>
             </Tab>
-            <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
-              <span className="!hidden xl:!block">Đổi mật khẩu</span>
-              <Icon name="key" className="text-2xl xl:text-base"></Icon>
-            </Tab>
+            {auth?.typeLogin === 'password' && (
+              <Tab link="/user/profile/4" className="flex items-center justify-center xl:justify-between" index={4}>
+                <span className="!hidden xl:!block">Đổi mật khẩu</span>
+                <Icon name="key" className="text-2xl xl:text-base"></Icon>
+              </Tab>
+            )}
           </TabsHeader>
           <TabsBody className="w-full rounded-[16px] p-[15px] xl:w-[75%]">
             <TabsContent index={0}>

@@ -7,6 +7,7 @@ interface IEvent {
     name: string;
   };
   desc: string;
+  address: string;
   categories: ICategory[];
   status: string;
   approve: boolean;
