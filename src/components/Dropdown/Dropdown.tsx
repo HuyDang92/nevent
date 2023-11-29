@@ -3,7 +3,7 @@ import avtDefault from '~/assets/images/default-avatar.jpg';
 import { motion, Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../customs/Button';
-import { logout, setAuthCurrentUser } from '~/features/Auth/authSlice';
+import { logout, setAuthCurrentUser, setBusinessProfile } from '~/features/Auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import Icon from '../customs/Icon';
@@ -11,7 +11,6 @@ import useClickOutside from '~/hooks/useClickOutside';
 import { useSwapRoleMutation } from '~/features/Auth/authApi.service';
 import Loading from '../customs/Loading';
 import { successNotify } from '../customs/Toast';
-import { setBusinessInfo } from '~/features/Business/businessSlice';
 
 const itemVariants: Variants = {
   open: {
@@ -27,7 +26,7 @@ const Dropdown = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const ref = useRef(null);
-  const currentBusiness = useAppSelector((state) => state.business.businessInfo);
+  const currentBusiness = useAppSelector((state) => state.auth.businessInfo);
   const auth = useAppSelector((state) => state.auth.currentUser);
 
   const [swapRole, resultSwap] = useSwapRoleMutation();
@@ -37,7 +36,7 @@ const Dropdown = () => {
   });
   const handleLogOut = () => {
     dispatch(logout());
-    dispatch(setBusinessInfo(null));
+    dispatch(setBusinessProfile(null));
     navigate('/login');
   };
   const handleSwapRole = async (type: string) => {
@@ -55,7 +54,7 @@ const Dropdown = () => {
   useEffect(() => {
     if (resultSwap.isSuccess) {
       dispatch(setAuthCurrentUser(resultSwap.data?.data?.user));
-      dispatch(setBusinessInfo(resultSwap.data?.data?.businessProfile));
+      dispatch(setBusinessProfile(resultSwap.data?.data?.businessProfile));
       if (auth?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
         navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');

@@ -10,6 +10,7 @@ interface AuthState {
     token: string | null;
   };
   currentUser: IUserField | null;
+  businessInfo: IBusinessField | null;
   notification: boolean;
 }
 
@@ -22,6 +23,7 @@ const initialState: AuthState = {
     token: null,
   },
   currentUser: null,
+  businessInfo: null,
   notification: false,
 };
 
@@ -49,6 +51,9 @@ const authSlice = createSlice({
     setNotification: (state, action) => {
       state.notification = action.payload;
     },
+    setBusinessProfile: (state, action) => {
+      state.businessInfo = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Xử lý logic khi endpoint login account & login Google được fulfilled
@@ -60,6 +65,7 @@ const authSlice = createSlice({
         state.accessToken = response?.data.token.accessToken;
         state.refreshToken = response?.data.token.refreshToken;
         state.currentUser = response?.data.user;
+        state.businessInfo = response?.data?.businessProfile;
         if (response?.data?.user?.role?.name === 'business') {
           window.location.href = '/organization/event-list';
         }
@@ -68,10 +74,18 @@ const authSlice = createSlice({
         state.currentUser = null;
         state.accessToken.token = null;
         state.refreshToken.token = null;
+        state.businessInfo = null;
       }
     });
   },
 });
-export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;
+export const {
+  logout,
+  assignNewToken,
+  assignNewRefreshToken,
+  setAuthCurrentUser,
+  setNotification,
+  setBusinessProfile,
+} = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

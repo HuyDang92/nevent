@@ -37,15 +37,13 @@ const Action = ({ data, onClick }: ActionProps) => {
           openAction ? 'h-fit w-fit p-2' : 'h-0 w-0'
         } absolute right-6 top-12 z-20 overflow-hidden rounded-lg bg-cs_light text-sm  text-cs_grayText transition-all`}
       >
-        {data?.myTickets?.length > 1 && (
-          <button
-            onClick={onClick}
-            className="flex w-full cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
-          >
-            <Icon name="download-outline" />
-            <span>Tải vé</span>
-          </button>
-        )}
+        <button
+          onClick={onClick}
+          className="flex w-full cursor-pointer items-center gap-2  rounded-md p-2 transition-all hover:bg-[#eee]"
+        >
+          <Icon name="download-outline" />
+          <span>Tải vé</span>
+        </button>
         <li onClick={() => handlePass(data)}>
           <Link
             to="/user/pass-event"

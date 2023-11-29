@@ -145,8 +145,8 @@ interface ITicket {
 interface IPurchase {
   _id: string;
   tickets: Ticket[];
-  code: string | null;
-  user: string;
+  code: string;
+  user: IUserField;
   date: string;
   status: string;
   amount: number;

@@ -67,4 +67,4 @@ export const businessApi = createApi({
     }),
   }),
 });
-export const { useUpdateBusinessMutation, useGetProfileQuery, useAnalyticsBusinessQuery } = businessApi;
+export const { useUpdateBusinessMutation, useGetProfileQuery, useLazyGetProfileQuery, useAnalyticsBusinessQuery } = businessApi;
