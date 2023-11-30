@@ -81,6 +81,11 @@ const AppRoutes = () => {
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
         </Route>
+        <Route path="/organization" element={<PrivateRoute allowedRoles={['user', 'business']} />}>
+          <Route element={<CreateEventLayout />}>
+            <Route path="organization-profile" element={<OrganizationProfile />} />
+          </Route>
+        </Route>
 
         {/* Tạo sự kiện */}
         <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
@@ -88,7 +93,6 @@ const AppRoutes = () => {
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
             <Route path="edit-event/:idEvent/:step" element={<EditEvent />} />
-            <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
