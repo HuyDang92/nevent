@@ -13,7 +13,10 @@ import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
 import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+
+Quill.register('modules/imageResize', ImageResize);
 
 const EventInfo = () => {
   const dispatch = useAppDispatch();
@@ -145,6 +148,10 @@ const EventInfo = () => {
       [{ align: [] }],
       ['clean'],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize'],
+    },
   };
   return (
     <>

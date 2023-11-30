@@ -24,7 +24,7 @@ const OverView = () => {
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
-  const { upLoadDesc, loadingDesc } = useUploadDesc();
+  const { upLoadDesc, loadingDesc, error: errorDesc } = useUploadDesc();
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -36,6 +36,7 @@ const OverView = () => {
       setTimeout(() => {
         successNotify('Thêm sự kiện thành công');
       }, 1000);
+      dispatch(resetForm());
       navigate('/organization/event-list');
     }
     if (isError) {
@@ -86,6 +87,10 @@ const OverView = () => {
             }),
         )
         .then(async (file) => {
+          if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+            errorNotify(`File vượt quá 1MB`);
+            return null;
+          }
           const urlImg = await upLoadDesc(file);
           resolve(urlImg);
         })
@@ -206,7 +211,6 @@ const OverView = () => {
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
-        dispatch(resetForm());
       }
     } catch (err) {
       console.log(err);
