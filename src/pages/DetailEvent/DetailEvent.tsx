@@ -28,11 +28,10 @@ function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useAppSelector((state) => state.auth.currentUser);
-  const event = useGetAllEventQuery({ page: 1, limit: 9 });
+  const event = useGetAllEventQuery({ page: 1, limit: 9, status: 'UPCOMING' });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -51,11 +50,11 @@ function DetailEvent() {
   return (
     <div className="">
       {detailEventQuery.isFetching && <SkeletonDetailEvent />}
+      <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={detailEventQuery?.data?.data?.title} />
       {!detailEventQuery.isFetching && (
         <>
-          <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={detailEventQuery?.data?.data?.title} />
           <div className="flex-row-reverse gap-4 xl:flex ">
-            <div className="mb-5 h-fit rounded-xl p-3 text-[14px] shadow-border-blur dark:border xl:sticky xl:top-10 xl:mb-0 xl:w-[350px]">
+            <div className="mb-5 h-fit rounded-xl bg-cs_light p-3 text-[14px] shadow-border-blur dark:border xl:sticky xl:top-20 xl:mb-0 xl:w-[350px]">
               <Swiper
                 slidesPerView={1}
                 spaceBetween={15}
@@ -91,7 +90,9 @@ function DetailEvent() {
                 <div className="flex items-center gap-[15px]">
                   <Icon name="location-outline" className="w-[10%] text-xl dark:text-cs_light" />
                   <span className="w-[90%] dark:text-cs_light">
-                    <span>{detailEventQuery?.data?.data?.location?.name}</span>
+                    <span>
+                      {detailEventQuery?.data?.data?.address} {detailEventQuery?.data?.data?.location?.name}
+                    </span>
                   </span>
                 </div>
                 <div className="">
@@ -130,19 +131,14 @@ function DetailEvent() {
                         onClick={() => handlePayment(detailEventQuery?.data?.data?._id)}
                       />
                     ) : (
-                      <span>Dùng vai trò người dùng để có thể mua vé</span>
+                      <span className="dark:text-cs_light">Dùng vai trò người dùng để có thể mua vé</span>
                     )}
                   </>
                 )}
               </div>
             </div>
-            <div className="xl:w-[78%]">
+            <div className="xl:w-[71%]">
               <div className="hidden xl:block">
-                {/* <img
-                  src={detailEventQuery?.data?.data?.banner[0]?.url}
-                  alt=""
-                  className="w-full rounded-xl object-cover sm:h-[320px] xl:h-[400px]"
-                /> */}
                 <Carousel
                   className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[410px]`}
                   prevArrow={({ handlePrev }) => (
@@ -191,7 +187,7 @@ function DetailEvent() {
                   ))}
                 </Carousel>
               </div>
-              <div className="space-y-10 xl:py-5 ">
+              <div className="space-y-10 overflow-hidden xl:py-5">
                 <div className=" hidden flex-col justify-between text-[12px] md:text-[18px] xl:flex">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">
                     {detailEventQuery?.data?.data?.title}
@@ -221,7 +217,9 @@ function DetailEvent() {
                       <div className="flex items-center gap-[15px]">
                         <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                         <span className="w-[90%] dark:text-cs_light">
-                          <span>{detailEventQuery?.data?.data?.location?.name}</span>
+                          <span>
+                            {detailEventQuery?.data?.data?.address} {detailEventQuery?.data?.data?.location?.name}
+                          </span>
                         </span>
                       </div>
                     </div>
@@ -230,22 +228,8 @@ function DetailEvent() {
                 {/* description  */}
                 <div className="space-y-4 px-2 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
-                  <div className=" leading-8">
-                    <h3>
-                      I. THÔNG TIN CHI TIẾT VỀ SỰ KIỆN "
-                      <span className="font-semibold">{detailEventQuery?.data?.data?.title}</span>"
-                    </h3>
-
-                    {detailEventQuery?.data?.data?.desc}
-                  </div>
-                  <Zoom>
-                    <img src={des} alt="" className="w-full" />
-                  </Zoom>
-                  <Zoom>
-                    <img src={des2} alt="" className="w-full" />
-                  </Zoom>
+                  <div dangerouslySetInnerHTML={{ __html: detailEventQuery?.data?.data?.desc }} />
                 </div>
-                {/* Info bussiness */}
                 <div className="space-y-4 rounded-xl p-4 shadow-border-blur dark:text-cs_light">
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức

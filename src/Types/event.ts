@@ -7,6 +7,7 @@ interface IEvent {
     name: string;
   };
   desc: string;
+  address: string;
   categories: ICategory[];
   status: string;
   approve: boolean;
@@ -80,9 +81,11 @@ interface IEventInfo {
   // logo: string;
   name: string;
   location: string;
+  address: string;
   categories: string[];
   description: string;
   file: null | File[];
+  description_img?: string[];
   // organization_name: string;
   // organization_desc: string;
   // organization_phone: string;
@@ -98,6 +101,7 @@ interface IAddTimeline {
   happendTime: string;
 }
 interface TicketListInfo {
+  _id?: string;
   title: string;
   quantity: number;
   color: string;
@@ -136,12 +140,14 @@ interface ITicket {
   totalTickets: number;
   event: IEvent;
   myTickets: Ticket[];
+  sold: number;
+  revenue: number;
 }
 interface IPurchase {
   _id: string;
   tickets: Ticket[];
-  code: string | null;
-  user: string;
+  code: string;
+  user: IUserField;
   date: string;
   status: string;
   amount: number;

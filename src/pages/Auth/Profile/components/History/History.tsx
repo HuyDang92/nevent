@@ -1,9 +1,10 @@
-import { useGetHistoryQuery } from '~/features/Payment/paymentApi.service';
+import { useGetHistoryQuery, useLazyPayBackTicketQuery } from '~/features/Payment/paymentApi.service';
 import Button from '~/components/customs/Button';
 import moment from 'moment';
 import { PopUpDetail } from './PopUpDetail';
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 import nothing from '~/assets/images/nothing.svg';
+import { useEffect } from 'react';
 
 interface UserInfoProp {
   className?: string;
@@ -11,6 +12,17 @@ interface UserInfoProp {
 
 const History = ({ className }: UserInfoProp) => {
   const getHistory = useGetHistoryQuery();
+  const [getPayment, result] = useLazyPayBackTicketQuery();
+  // useEffect(() => {
+  //   console.log(result.data);
+  //   if (result.isSuccess) {
+  //     window.location.href = result.data?.data;
+  //   }
+  // }, [result.isFetching]);
+  const handleGetPayment = async (id: string) => {
+    const data = await getPayment(id).unwrap();
+    window.location.href = data?.data;
+  };
   return (
     <div className={`${className}`}>
       <h1 className="pb-5 text-xl font-bold">Lịch sử giao dịch</h1>
@@ -67,7 +79,7 @@ const History = ({ className }: UserInfoProp) => {
               </div>
               <div className="flex items-center justify-end xl:justify-center">
                 <h3 className="text-[#ccc]">
-                  <PopUpDetail data={item}>
+                  <PopUpDetail data={item} onClick={handleGetPayment}>
                     <Button value="Chi tiết" mode="dark" className="" />
                   </PopUpDetail>
                 </h3>

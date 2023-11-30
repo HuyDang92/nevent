@@ -20,9 +20,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   const navigate = (window as any).navigate;
   const refheshToken = (api.getState() as RootState).auth?.refreshToken?.token;
   let result = await baseQuery(args, api, extraOptions);
-
   // Kiểm tra xem yêu cầu có trả về lỗi và mã trạng thái là 401 hay không
-  if (result.error && result.error.status === 401) {
+  if (result.error && result.error.status === 401 && (result.error?.data as any)?.path !== '/api/auth/login') {
     // Thử lấy token mới thông qua yêu cầu '/refreshToken'
     const refreshResult: any = await baseQuery(`/api/auth/refresh/${refheshToken}`, api, extraOptions);
 
@@ -151,12 +150,19 @@ export const authApi = createApi({
         body: body,
       }),
     }),
+    verifyTicket: builder.mutation({
+      query: (body) => ({
+        url: '/api/signatures/verify',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
+    }),
 
     getTokenFromRefreshToken: builder.query<any, string>({
       query: (refreshToken) => `/api/auth/refresh/${refreshToken}`,
-    }),
-    verifyTicket: builder.query<any, string>({
-      query: (signature) => `/api/signatures/verify?${signature}`,
     }),
     getUserByEmail: builder.query<any, string>({
       query: (email) => `/api/users/email/${email}`,
@@ -188,7 +194,7 @@ export const {
   useForgotPassWordMutation,
   useVerifyForgotPasswordMutation,
   useGetMyTicketQuery,
-  useLazyVerifyTicketQuery,
+  useVerifyTicketMutation,
   useLazyGetUserByEmailQuery,
   useSwapTicketMutation,
   useSwapRoleMutation,

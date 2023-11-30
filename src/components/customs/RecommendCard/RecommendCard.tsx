@@ -21,7 +21,7 @@ const RecommendCard = ({ className, theme_color = 'green', title, sale, price }:
           <h3 className="mt-1 font-bold text-white">{title}</h3>
           <span className="text-5xl font-bold text-white">{sale}%</span>
         </div>
-        <p className="mb-6 mt-2 text-xl text-white">{price.toLocaleString()}đ</p>
+        <p className="mb-6 mt-2 text-xl text-white">{price.toLocaleString('vi')}đ</p>
         <Link to="/">
           <Button
             value="Mua ngay"

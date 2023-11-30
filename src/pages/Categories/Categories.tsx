@@ -128,7 +128,7 @@ function Categories() {
                 ))}
               </select>
             </div>
-            <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
+            {/* <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="cash" />
               <select className="bg-cs_light px-1 py-2.5  text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option className="p-2" value="">
@@ -141,7 +141,7 @@ function Categories() {
                   Có phí
                 </option>
               </select>
-            </div>
+            </div> */}
             <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">

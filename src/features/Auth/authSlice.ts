@@ -3,6 +3,7 @@ import { authApi } from './authApi.service';
 
 interface AuthState {
   loggedIn: boolean;
+  typeLogin: string;
   accessToken: {
     token: string | null;
   };
@@ -10,11 +11,13 @@ interface AuthState {
     token: string | null;
   };
   currentUser: IUserField | null;
+  businessInfo: IBusinessField | null;
   notification: boolean;
 }
 
 const initialState: AuthState = {
   loggedIn: false,
+  typeLogin: 'google',
   accessToken: {
     token: null,
   },
@@ -22,6 +25,7 @@ const initialState: AuthState = {
     token: null,
   },
   currentUser: null,
+  businessInfo: null,
   notification: false,
 };
 
@@ -49,6 +53,12 @@ const authSlice = createSlice({
     setNotification: (state, action) => {
       state.notification = action.payload;
     },
+    setBusinessProfile: (state, action) => {
+      state.businessInfo = action.payload;
+    },
+    setTypeLoggin: (state, action) => {
+      state.typeLogin = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Xử lý logic khi endpoint login account & login Google được fulfilled
@@ -60,18 +70,28 @@ const authSlice = createSlice({
         state.accessToken = response?.data.token.accessToken;
         state.refreshToken = response?.data.token.refreshToken;
         state.currentUser = response?.data.user;
+        state.businessInfo = response?.data?.businessProfile;
         if (response?.data?.user?.role?.name === 'business') {
-          window.location.href = '/organization/organization-profile';
+          window.location.href = '/organization/event-list';
         }
       } else {
         state.loggedIn = false;
         state.currentUser = null;
         state.accessToken.token = null;
         state.refreshToken.token = null;
+        state.businessInfo = null;
       }
     });
   },
 });
-export const { logout, assignNewToken, assignNewRefreshToken, setAuthCurrentUser, setNotification } = authSlice.actions;
+export const {
+  logout,
+  assignNewToken,
+  assignNewRefreshToken,
+  setAuthCurrentUser,
+  setNotification,
+  setBusinessProfile,
+  setTypeLoggin,
+} = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

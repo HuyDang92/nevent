@@ -8,6 +8,7 @@ export const useUploadFile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [upLoadFile] = useUploadSingleFileMutation();
+  const [urlImg, setUrlImg] = useState<string | null>(null);
 
   const upLoad = async (selectedFile: File) => {
     if (!selectedFile) {
@@ -32,6 +33,7 @@ export const useUploadFile = () => {
       if (res?.statusCode === 201) {
         setLoading(false);
         setError(false);
+        setUrlImg(res?.data?.url);
         return res?.data?._id;
       } else {
         setLoading(false);
@@ -45,5 +47,5 @@ export const useUploadFile = () => {
     }
   };
 
-  return { upLoad, loading, error };
+  return { upLoad, loading, error, urlImg };
 };
