@@ -71,7 +71,7 @@ const Header = ({ className }: HeaderProps) => {
         <SearchBar className="hidden rounded-xl border shadow-border-light xl:block" />
       </div>
       <div className="flex items-center justify-end gap-3">
-        <div className="">{navList}</div>
+        {auth?.currentUser?.role?.name !== 'admin' && <div className="">{navList}</div>}
         <div className="">
           {auth.loggedIn ? (
             <Dropdown />

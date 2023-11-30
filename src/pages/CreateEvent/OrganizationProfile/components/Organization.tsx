@@ -136,25 +136,18 @@ const Organization = () => {
       if (userProfile?.data?.data?.role?.name === 'user') {
         navigate('/user/organization-profile');
       } else {
-        dispatch(setAuthCurrentUser(userProfile?.data?.data));
-        dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
         navigate('/organization/organization-profile');
+        console.log(user);
       }
     }
   }, [userProfile.isFetching]);
 
   useEffect(() => {
-    // if (userProfile?.isSuccess) {
-    //   dispatch(setAuthCurrentUser(userProfile?.data?.data));
-    //   dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
-    // }
     if (isSuccess) {
       successNotify('Cập nhật thành công');
-      // navigate('/user/organization-profile');
     }
     if (isError) {
       errorNotify('Cập nhật thất bại');
-      // navigate('/user/organization-profile');
     }
   }, [isSuccess, isError]);
 

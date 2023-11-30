@@ -107,7 +107,9 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     <span className=" gap-2 text-sm font-semibold">
                       <span>Thời gian: </span>
                       {moment(data?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
-                      <span className="text-sm "> - {data?.event?.categories[0]?.name}</span>
+                      <span className="text-sm ">
+                        - {data?.event?.address} {data?.event?.location?.name}
+                      </span>
                     </span>
                     {/* <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p> */}
 
