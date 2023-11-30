@@ -45,7 +45,9 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
                     data?.status === 'pending' && 'text-yellow-600'
                   } ${data?.status === 'success' && 'text-cs_semi_green'} `}
                 >
-                  {data?.status}
+                  {data?.status === 'success' && 'Thành công'}
+                  {data?.status === 'pending' && 'Chờ thanh toán'}
+                  {data?.status === 'failure' && 'Thất bại'}
                 </span>
               </p>
             </div>
@@ -55,15 +57,17 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
             </div>
             <div>
               <div className="flex justify-between border-b">
-                <h3 className="pb-2 text-[#ccc] ">Số lượng vé</h3>
-                <p className="font-medium">{data?.tickets?.length}</p>
+                <h3 className="pb-2 text-[#ccc] ">Tổng số lượng vé</h3>
+                <p className="font-medium">
+                  {data?.tickets?.reduce((accumulator, ticket) => accumulator + ticket.totalPurchase, 0)}
+                </p>
               </div>
               <div className="flex justify-between border-b">
                 <h3 className="pb-2 text-[#ccc] ">Danh sách vé</h3>
                 <div>
                   {data?.tickets?.map((item: Ticket, index: number) => (
                     <span key={index} className="font-medium">
-                      {item.title},{' '}
+                      {item.title} ({item?.totalPurchase}),{' '}
                     </span>
                   ))}
                 </div>

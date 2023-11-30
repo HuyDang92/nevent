@@ -42,7 +42,7 @@ const Organization = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-  const [getProfile] = useLazyGetProfileQuery();
+  const [getProfile, resultUser] = useLazyGetProfileQuery();
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -102,20 +102,17 @@ const Organization = () => {
         email: value.email,
       });
       const user = await getProfile().unwrap();
+      console.log(user);
       dispatch(setAuthCurrentUser(user?.data));
       dispatch(setBusinessProfile(user?.data?.setBusinessProfile));
-      if (user?.data?.role?.name === 'user') {
-        navigate('/user/organization-profile');
-      } else {
-        navigate('/organization/organization-profile');
-        console.log(user);
-      }
+      // window.location.reload();
     },
   });
   // useEffect(() => {
   //   if (userProfile?.isSuccess) {
   //   }
   // }, [userProfile.isFetching]);
+
   useEffect(() => {
     if (isSuccess) {
       successNotify('Cập nhật thành công');
@@ -330,7 +327,12 @@ const Organization = () => {
               value={formik.values.description}
             />
           </div>
-          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin liên lạc</h2>
+          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">
+            Thông tin liên lạc{' '}
+            <span className="text-xs text-[#ccc]">
+              (Thông tin này chỉ dùng cho việc liên hệ giữa Nevent và Ban tổ chức, sẽ không được hiên thị trên website)
+            </span>
+          </h2>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="relative">
               {formik.errors.phone && (
