@@ -137,7 +137,6 @@ const Organization = () => {
         navigate('/user/organization-profile');
       } else {
         navigate('/organization/organization-profile');
-        console.log(user);
       }
     }
   }, [userProfile.isFetching]);
