@@ -105,8 +105,8 @@ const EventInfo = () => {
         })
         .required('Yêu cầu banner sự kiện'),
     }),
-    validateOnChange: false, // this one
-    validateOnBlur: false, // and this one
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: async (value: IEventInfo) => {
       value.description_img = imageData;
       try {
