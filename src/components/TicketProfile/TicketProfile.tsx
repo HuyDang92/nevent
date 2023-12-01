@@ -33,6 +33,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
       domToImage
         .toPng(qrCodeDom)
         .then((dataUrl) => {
+          console.log(dataUrl);
           const link = document.createElement('a');
           link.href = dataUrl;
           link.download = `${typeTicket}.png`; // Tên file khi tải về
@@ -93,7 +94,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                 <span className="absolute -right-3 top-48 z-20 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:hidden"></span>
                 <span className="absolute top-[12.8rem] z-10 h-1 w-full rounded-full  border-b-2 border-dashed border-cs_light bg-transparent dark:bg-cs_dark xl:hidden"></span>
                 <img
-                  src={dataSummary?.event?.banner[0]?.url}
+                  src={dataSummary?.event?.banner[0]?.secureUrl}
                   alt=""
                   className="h-[520px] w-full rounded-xl object-cover xl:h-[250px]"
                 />
@@ -134,7 +135,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                   </div>
                   {!passTicket && <Action data={dataSummary} onClick={() => handleDownload(item?.title, index)} />}
                   <div className="absolute right-1/2 top-60 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-8 xl:translate-x-0">
-                    <p className="text-center text-sm py-2 font-semibold xl:block">
+                    <p className="py-2 text-center text-sm font-semibold xl:block">
                       Vé: <span className=" text-sm">{item?.title}</span>
                     </p>
                     <div className="flex justify-center bg-cs_light text-cs_dark shadow-border-light">

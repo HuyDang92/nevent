@@ -38,7 +38,11 @@ const MyTicket = ({ className }: UserInfoProp) => {
             {getTickets.isFetching && <LoadingLocal />}
             {getTickets.data?.data?.length > 0 &&
               getTickets.data?.data?.map((item: any, index: number) => (
-                <Accordion className="rounded-xl border-none  p-0 dark:bg-cs_lightDark" open={open === index}>
+                <Accordion
+                  key={index}
+                  className="rounded-xl border-none  p-0 dark:bg-cs_lightDark"
+                  open={open === index}
+                >
                   <AccordionHeader
                     className={`${
                       open === index ? 'border-none' : 'border-none'
@@ -48,7 +52,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
                     <div className="relative">
                       <div className="round-2xl absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
                       <img
-                        src={item?.event?.banner[0]?.url}
+                        src={item?.event?.banner[0]?.secureUrl}
                         alt=""
                         className=" h-[180px] w-[100vw] rounded-xl object-cover xl:h-[200px]"
                       />
@@ -76,18 +80,12 @@ const MyTicket = ({ className }: UserInfoProp) => {
                   <AccordionBody>
                     <div className="max-h-[60vh] overflow-y-scroll rounded-xl xl:max-h-[40vh]">
                       {Object.entries(item?.myTickets).map(([key, element]: any, index: number) => {
-                        return (
-                          <>
-                            <TicketProfile key={index} data={element} dataSummary={item} />
-                          </>
-                        );
+                        return <TicketProfile key={index} data={element} dataSummary={item} />;
                       })}
                     </div>
                   </AccordionBody>
                 </Accordion>
               ))}
-            {/* {getTickets.data?.data?.length > 0 &&
-              getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)} */}
             {getTickets.data?.data?.length === 0 && (
               <div className="flex justify-center py-5 text-center">
                 <div>

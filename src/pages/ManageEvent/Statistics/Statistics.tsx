@@ -166,8 +166,8 @@ const Statistics = () => {
               </IconButton>
             )}
           >
-            {event?.data?.data?.event?.banner?.map((image: any) => (
-              <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            {event?.data?.data?.event?.banner?.map((image: any, index: number) => (
+              <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
             ))}
           </Carousel>
           <div className="absolute left-[15px] top-[15px] flex flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter">
@@ -266,7 +266,6 @@ const Statistics = () => {
             </div>
             <ul>
               {event.data?.data?.tickets?.map((ticket: ITicket) => {
-                console.log(ticket);
                 return (
                   <li className="my-2 flex justify-between gap-3 rounded-lg border-[1px] border-cs_gray px-4 py-4 font-semibold dark:text-cs_light">
                     <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>

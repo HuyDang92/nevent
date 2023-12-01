@@ -42,7 +42,6 @@ const Organization = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-  const [getProfile] = useLazyGetProfileQuery();
   const getLocation = useGetLocationsQuery();
   const { upLoad, loading } = useUploadFile();
 
@@ -125,13 +124,18 @@ const Organization = () => {
           email: value.email,
         });
       }
-      const user = await getProfile().unwrap();
-      console.log('user', user);
-       dispatch(setAuthCurrentUser(user?.data));
-      dispatch(setBusinessProfile(user?.data?.setBusinessProfile));
-      // window.location.reload();
+      // const user = await getProfile().unwrap();
     },
   });
+
+  useEffect(() => {
+    if (userProfile.isSuccess) {
+      dispatch(setAuthCurrentUser(userProfile.data?.data));
+    }
+    if (userProfile.data?.data?.businessProfile) {
+      dispatch(setBusinessProfile(userProfile.data?.data?.businessProfile));
+    }
+  }, [userProfile.isFetching]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -219,6 +223,7 @@ const Organization = () => {
                 classNameInput="!w-full"
                 value={formik.values.fullName || userProfile?.data?.data.fullName}
                 onChange={formik.handleChange}
+                disabled
               />
             </div>
             <div className="relative">
@@ -376,7 +381,7 @@ const Organization = () => {
                 label="Số điện thoại"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.phone}
+                value={formik.values.phone || ''}
                 onChange={formik.handleChange}
               />
             </div>
@@ -392,8 +397,9 @@ const Organization = () => {
                 label="Email"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.email}
+                value={formik.values.email || ''}
                 onChange={formik.handleChange}
+                disabled
               />
             </div>
             {/* <div className="relative">

@@ -1,14 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import LoadingPage from '~/pages/LoadingPage';
-import DefaultLayout from '~/Layout/DefaultLayout';
-import FAQ from '~/pages/FAQ';
-import ManageEventLayout from '~/Layout/ManageEventLayout';
 import NotFound from '~/pages/NotFound';
-import About from '~/pages/About';
 
+const FAQ = lazy(() => import('~/pages/FAQ'));
+const PrivateRoute = lazy(() => import('./PrivateRoute'));
+const DefaultLayout = lazy(() => import('~/Layout/DefaultLayout'));
+const ManageEventLayout = lazy(() => import('~/Layout/ManageEventLayout'));
+const About = lazy(() => import('~/pages/About'));
 const DetailEvent = lazy(() => import('~/pages/DetailEvent'));
 const EditEvent = lazy(() => import('~/pages/EditEvent'));
 const Home = lazy(() => import('~/pages/Home'));
