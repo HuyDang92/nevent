@@ -41,7 +41,7 @@ const Header = ({ className }: HeaderProps) => {
       ) : (
         <>
           {auth?.loggedIn && auth?.currentUser?.role?.name === 'user' ? (
-            <Link to="/user/organization-profile" className="hidden xl:inline-block">
+            <Link to="/organization/organization-profile" className="hidden xl:inline-block">
               <Button value="Tạo sự kiện" type="button" className="" mode="light" />
             </Link>
           ) : (

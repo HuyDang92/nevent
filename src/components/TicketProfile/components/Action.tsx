@@ -14,7 +14,6 @@ const Action = ({ data, onClick }: ActionProps) => {
   const dispatch = useAppDispatch();
   const [openAction, setOpenAction] = useState<boolean>(false);
   const toolRef: any = useRef(null);
-  //   console.log(toolRef);
 
   useClickOutside(toolRef, () => {
     setOpenAction(false);

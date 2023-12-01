@@ -42,7 +42,6 @@ const Organization = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-  const [getProfile] = useLazyGetProfileQuery();
   const getLocation = useGetLocationsQuery();
   const { upLoad, loading } = useUploadFile();
 
@@ -125,19 +124,16 @@ const Organization = () => {
           email: value.email,
         });
       }
-      const user = await getProfile().unwrap();
-      console.log('user', user);
+      // const user = await getProfile().unwrap();
     },
   });
-  console.log(userProfile);
 
   useEffect(() => {
-    if (userProfile?.isSuccess) {
-      if (userProfile?.data?.data?.role?.name === 'user') {
-        navigate('/user/organization-profile');
-      } else {
-        navigate('/organization/organization-profile');
-      }
+    if (userProfile.isSuccess) {
+      dispatch(setAuthCurrentUser(userProfile.data?.data));
+    }
+    if (userProfile.data?.data?.businessProfile) {
+      dispatch(setBusinessProfile(userProfile.data?.data?.businessProfile));
     }
   }, [userProfile.isFetching]);
 
@@ -227,6 +223,7 @@ const Organization = () => {
                 classNameInput="!w-full"
                 value={formik.values.fullName || userProfile?.data?.data.fullName}
                 onChange={formik.handleChange}
+                disabled
               />
             </div>
             <div className="relative">
@@ -365,7 +362,12 @@ const Organization = () => {
               value={formik.values.description}
             />
           </div>
-          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin liên lạc</h2>
+          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">
+            Thông tin liên lạc{' '}
+            <span className="text-xs text-[#ccc]">
+              (Thông tin này chỉ dùng cho việc liên hệ giữa Nevent và Ban tổ chức, sẽ không được hiên thị trên website)
+            </span>
+          </h2>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="relative">
               {formik.errors.phone && (
@@ -379,7 +381,7 @@ const Organization = () => {
                 label="Số điện thoại"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.phone}
+                value={formik.values.phone || ''}
                 onChange={formik.handleChange}
               />
             </div>
@@ -395,8 +397,9 @@ const Organization = () => {
                 label="Email"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.email}
+                value={formik.values.email || ''}
                 onChange={formik.handleChange}
+                disabled
               />
             </div>
             {/* <div className="relative">

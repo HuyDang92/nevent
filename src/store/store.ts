@@ -14,8 +14,10 @@ import { bankApi } from '~/features/Payment/bankApi.service';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 import { businessApi } from '~/features/Business/business.service';
 import businessSlice from '~/features/Business/businessSlice';
+import otpSlice from '~/features/OTP/otpSlice';
 import { paymentApi } from '~/features/Payment/paymentApi.service';
 import { locationApi } from '~/features/location/location.service';
+import { otpApi } from '~/features/OTP/otpApi.service';
 
 const persistConfig = {
   key: 'root',
@@ -32,10 +34,12 @@ const rootReducer = combineReducers({
   [businessApi.reducerPath]: businessApi.reducer,
   [paymentApi.reducerPath]: paymentApi.reducer,
   [locationApi.reducerPath]: locationApi.reducer,
+  [otpApi.reducerPath]: otpApi.reducer,
   auth: authSlice,
   payment: paymentSlice,
   ticket: ticketSlice,
   business: businessSlice,
+  otp: otpSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -55,6 +59,7 @@ const store = configureStore({
       businessApi.middleware,
       paymentApi.middleware,
       locationApi.middleware,
+      otpApi.middleware,
       rtkQueryErrorLogger,
     ),
 

@@ -131,6 +131,7 @@ interface Ticket {
   type: string;
   color: string;
   price: number;
+  totalPurchase: number;
   desc: string;
   qr: string;
 }

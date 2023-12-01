@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 0,
+  keepUnusedDataFor: 10,
   tagTypes: ['ticket', 'profile'],
   endpoints: (builder) => ({
     signUpWithEmail: builder.mutation({
@@ -77,26 +77,7 @@ export const authApi = createApi({
         body: body,
       }),
     }),
-    forgotPassWord: builder.mutation({
-      query: (body) => ({
-        url: '/api/users/forgot-password',
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: body,
-      }),
-    }),
-    verifyForgotPassword: builder.mutation({
-      query: (body) => ({
-        url: '/api/users/verify-forgot-password',
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: body,
-      }),
-    }),
+
     changePassword: builder.mutation({
       query: (body) => ({
         url: '/api/users/change-password',
@@ -117,18 +98,6 @@ export const authApi = createApi({
       }),
     }),
 
-    swapTicket: builder.mutation({
-      query: (body) => ({
-        url: '/api/my-tickets/swap-ticket',
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: body,
-      }),
-      invalidatesTags: ['ticket'],
-    }),
-
     swapRole: builder.mutation({
       query: (body) => ({
         url: '/api/users/swap-role',
@@ -140,16 +109,7 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['profile'],
     }),
-    verifySwapTicket: builder.mutation({
-      query: (body) => ({
-        url: '/api/my-tickets/verify-swap-ticket',
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: body,
-      }),
-    }),
+
     verifyTicket: builder.mutation({
       query: (body) => ({
         url: '/api/signatures/verify',
@@ -175,9 +135,6 @@ export const authApi = createApi({
       query: () => `/api/my-tickets`,
       providesTags: ['ticket'],
     }),
-    getCodeVerifySwapTicket: builder.query<any, void>({
-      query: () => `/api/my-tickets/swap-ticket`,
-    }),
   }),
 });
 
@@ -191,14 +148,9 @@ export const {
   useLogInGoogleMutation,
   useUpdateProfileMutation,
   useChangePasswordMutation,
-  useForgotPassWordMutation,
-  useVerifyForgotPasswordMutation,
   useGetMyTicketQuery,
   useVerifyTicketMutation,
   useLazyGetUserByEmailQuery,
-  useSwapTicketMutation,
   useSwapRoleMutation,
   useCheckedViewNotifycationMutation,
-  useVerifySwapTicketMutation,
-  useLazyGetCodeVerifySwapTicketQuery,
 } = authApi;

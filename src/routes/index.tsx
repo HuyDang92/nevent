@@ -1,16 +1,16 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import LoadingPage from '~/pages/LoadingPage';
-import DefaultLayout from '~/Layout/DefaultLayout';
-import FAQ from '~/pages/FAQ';
-import ManageEventLayout from '~/Layout/ManageEventLayout';
 import NotFound from '~/pages/NotFound';
-import DetailEvent from '~/pages/DetailEvent';
-import About from '~/pages/About';
-import EditEvent from '~/pages/EditEvent';
 
+const FAQ = lazy(() => import('~/pages/FAQ'));
+const PrivateRoute = lazy(() => import('./PrivateRoute'));
+const DefaultLayout = lazy(() => import('~/Layout/DefaultLayout'));
+const ManageEventLayout = lazy(() => import('~/Layout/ManageEventLayout'));
+const About = lazy(() => import('~/pages/About'));
+const DetailEvent = lazy(() => import('~/pages/DetailEvent'));
+const EditEvent = lazy(() => import('~/pages/EditEvent'));
 const Home = lazy(() => import('~/pages/Home'));
 const LogIn = lazy(() => import('~/pages/Auth/LogIn'));
 const SignUp = lazy(() => import('~/pages/Auth/SignUp'));
@@ -81,6 +81,11 @@ const AppRoutes = () => {
             <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
         </Route>
+        <Route path="/organization" element={<PrivateRoute allowedRoles={['user', 'business']} />}>
+          <Route element={<CreateEventLayout />}>
+            <Route path="organization-profile" element={<OrganizationProfile />} />
+          </Route>
+        </Route>
 
         {/* Tạo sự kiện */}
         <Route path="/organization" element={<PrivateRoute allowedRoles={['business']} />}>
@@ -88,7 +93,6 @@ const AppRoutes = () => {
             <Route path="event-list" element={<EventManage />} />
             <Route path="create-event/:step" element={<CreateEvent />} />
             <Route path="edit-event/:idEvent/:step" element={<EditEvent />} />
-            <Route path="organization-profile" element={<OrganizationProfile />} />
           </Route>
           <Route path="manage-event" element={<ManageEventLayout />}>
             <Route path="statistics/:idEvent" element={<Statistics />} />
