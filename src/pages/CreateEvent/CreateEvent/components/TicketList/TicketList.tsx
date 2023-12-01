@@ -122,7 +122,7 @@ const TicketList = () => {
           <div className="flex h-[140px] rounded-xl border-[1px] border-[#e8e8e8] bg-cs_light p-5 dark:border-none dark:bg-[#30302f]">
             <div className="flex w-1/4 flex-col justify-between px-3">
               <span className="dark:text-gray-400">Giá (VND)</span>
-              <div>
+              {/* <div>
                 <input
                   checked={freeTicketCheckbox}
                   onClick={() => setFreeTicketCheckBox(!freeTicketCheckbox)}
@@ -132,7 +132,7 @@ const TicketList = () => {
                 <label className="ml-2.5 dark:text-gray-400" htmlFor="freeTicket">
                   Vé miễn phí
                 </label>
-              </div>
+              </div> */}
               <div className="relative">
                 {formik.errors.price && (
                   <small className="absolute -bottom-[20px] z-10 px-2 text-[12px] text-red-600">

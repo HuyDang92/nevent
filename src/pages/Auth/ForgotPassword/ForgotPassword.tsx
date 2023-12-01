@@ -4,12 +4,16 @@ import Input from '~/components/customs/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logoWhite.png';
 import { useEffect, useState } from 'react';
-import { useForgotPassWordMutation, useVerifyForgotPasswordMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { Dialog, DialogBody, DialogFooter } from '@material-tailwind/react';
+import { useForgotPassWordMutation, useSendOtpNoLoginMutation } from '~/features/OTP/otpApi.service';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { addCode, addSecret } from '~/features/OTP/otpSlice';
+import { errorNotify } from '~/components/customs/Toast';
 
 function ForgotPassword() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const [secret, setSecret] = useState<string>('');
@@ -17,8 +21,8 @@ function ForgotPassword() {
   const [openMessage, setOpenMessage] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
 
-  const [changePass, result] = useForgotPassWordMutation();
-  const [verify, resultVerify] = useVerifyForgotPasswordMutation();
+  const [verify, resultVerify] = useForgotPassWordMutation();
+  const [sendOtp, result] = useSendOtpNoLoginMutation();
   const handleSubmit = async (type: string) => {
     if (!email) return;
     if (type === 'send') {
@@ -26,15 +30,16 @@ function ForgotPassword() {
         setOpen(true);
         return;
       }
-      await changePass({ email: email });
+      await sendOtp({ email: email });
       setCount(count + 60);
       setOpen(true);
-
+      setCode('');
       return;
     }
     if (type === 'confirm') {
-      await verify({ email: email, code: Number(code), secret: secret });
-      setOpenMessage(true);
+      dispatch(addCode(code));
+      dispatch(addSecret(secret));
+      await verify({ email: email });
     }
   };
   const handleDone = () => {
@@ -42,14 +47,22 @@ function ForgotPassword() {
     setOpenMessage(false);
   };
   useEffect(() => {
+    if (resultVerify.isSuccess) {
+      setOpen(false);
+      setOpenMessage(true);
+    }
+    if (resultVerify.isError) {
+      errorNotify((resultVerify.error as any)?.data?.message);
+      setOpen(false);
+    }
+  }, [resultVerify.isLoading]);
+
+  useEffect(() => {
     if (result.isSuccess) {
       setOpen(false);
       setSecret(result.data?.data?.secret);
     }
-    if (resultVerify.isSuccess) {
-      setOpen(false);
-    }
-  }, [result.isLoading, resultVerify.isLoading]);
+  }, [result.isLoading]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -99,7 +112,7 @@ function ForgotPassword() {
           <Button
             disabled={!code}
             value="Xác nhận"
-            className={` !text-white ${code ? '!bg-cs_semi_green' : 'cursor-not-allowed bg-cs_grayText'}`}
+            className={`  ${code ? '!bg-cs_semi_green !text-white' : 'cursor-not-allowed bg-gray-500 !text-gray-400'}`}
             onClick={() => handleSubmit('confirm')}
           />
         </DialogFooter>

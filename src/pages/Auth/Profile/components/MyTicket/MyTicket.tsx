@@ -14,25 +14,7 @@ interface UserInfoProp {
   className?: string;
 }
 const code: any[] = [];
-const data = [
-  {
-    title: 'Tôi phải làm sao để mua vé tham gia sự kiện?',
-    description: `Đầu tiên, bạn chọn sự kiện mà bạn muốn tham gia trên website, chọn nút "Đặt vé ngay" ở bên trái,
-    chọn số lượng vé, trả lời các câu hỏi được yêu cầu từ Ban tổ chức, điền thông tin thanh toán, chọn
-    phương tiện thanh toán và thanh toán`,
-  },
-  {
-    title: 'Khi nào là hết hạn để đặt vé?',
-    description: ` Ngay khi nhập thông tin mua vé, bạn có thể chọn trả bằng thẻ ngân hàng nội địa ATM, hoăc thẻ thanh
-    toán quốc tế Visa, Mastercard hoặc bằng tiền mặt. Ticketbox được tích hợp hoàn toàn với Cybersource
-    và 123pay.vn`,
-  },
-  {
-    title: 'Tôi sẽ thanh toán đơn hàng như thế nào?',
-    description: ` Ngay khi nhập thông tin mua vé, bạn có thể chọn trả bằng thẻ ngân hàng nội địa ATM, hoăc thẻ thanh toán quốc tế Visa, Mastercard hoặc bằng tiền mặt.
-    Ticketbox được tích hợp hoàn toàn với Cybersource và 123pay.vn`,
-  },
-];
+
 const MyTicket = ({ className }: UserInfoProp) => {
   const getTickets = useGetMyTicketQuery();
   const [open, setOpen] = useState<number>(-1);
@@ -57,7 +39,8 @@ const MyTicket = ({ className }: UserInfoProp) => {
             {getTickets.data?.data?.length > 0 &&
               getTickets.data?.data?.map((item: any, index: number) => (
                 <Accordion
-                  className="rounded-xl border-none p-0 shadow-border-full dark:bg-cs_lightDark"
+                  key={index}
+                  className="rounded-xl border-none  p-0 dark:bg-cs_lightDark"
                   open={open === index}
                 >
                   <AccordionHeader
@@ -69,7 +52,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
                     <div className="relative">
                       <div className="round-2xl absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
                       <img
-                        src={item?.event?.banner[0]?.url}
+                        src={item?.event?.banner[0]?.secureUrl}
                         alt=""
                         className=" h-[180px] w-[100vw] rounded-xl object-cover xl:h-[200px]"
                       />
@@ -95,18 +78,14 @@ const MyTicket = ({ className }: UserInfoProp) => {
                     </div>
                   </AccordionHeader>
                   <AccordionBody>
-                    <div className="rounded-xl border max-h-[41vh] overflow-y-scroll">
+                    <div className="max-h-[60vh] overflow-y-scroll rounded-xl xl:max-h-[40vh]">
                       {Object.entries(item?.myTickets).map(([key, element]: any, index: number) => {
-                        console.log(element);
-
                         return <TicketProfile key={index} data={element} dataSummary={item} />;
                       })}
                     </div>
                   </AccordionBody>
                 </Accordion>
               ))}
-            {/* {getTickets.data?.data?.length > 0 &&
-              getTickets.data?.data?.map((item: any, index: number) => <TicketProfile key={index} data={item} />)} */}
             {getTickets.data?.data?.length === 0 && (
               <div className="flex justify-center py-5 text-center">
                 <div>
