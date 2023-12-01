@@ -74,7 +74,7 @@ const EventInfo = () => {
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
       categories: Yup.mixed()
-        .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
+        .test('cateLength', 'Chọn ít nhất 1 danh mục', (value: any) => {
           if (value && value?.length > 0) {
             return true;
           }
@@ -105,6 +105,8 @@ const EventInfo = () => {
         })
         .required('Yêu cầu banner sự kiện'),
     }),
+    validateOnChange: false, // this one
+    validateOnBlur: false, // and this one
     onSubmit: async (value: IEventInfo) => {
       value.description_img = imageData;
       try {
@@ -125,7 +127,6 @@ const EventInfo = () => {
 
   useEffect(() => {
     if (eventInfo?.description_img) {
-      console.log('gang anh cu');
       setImageData(eventInfo?.description_img);
     }
   }, [eventInfo?.description_img]);
