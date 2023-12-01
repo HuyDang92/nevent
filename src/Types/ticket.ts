@@ -6,6 +6,7 @@ interface ITicket {
   color: string;
   price: number;
   quantity: number;
+  totalPurchase: number;
   desc: string;
 }
 interface IPayloadNotify {

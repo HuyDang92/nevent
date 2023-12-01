@@ -41,7 +41,7 @@ const Dropdown = () => {
   };
   const handleSwapRole = async (type: string) => {
     if (!currentBusiness && type !== 'swap') {
-      navigate('/user/organization-profile');
+      navigate('/organization/organization-profile');
       return;
     }
     await swapRole({
@@ -158,7 +158,7 @@ const Dropdown = () => {
                   </div>
                 ) : (
                   <Link
-                    to={'/user/organization-profile'}
+                    to={'/organization/organization-profile'}
                     className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
                   >
                     <Icon name="calendar" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
@@ -175,7 +175,7 @@ const Dropdown = () => {
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="people" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Ban tổ chức</span>
+                <span className="group-hover:text-cs_light">Hồ sơ ban tổ chức</span>
               </Link>
             ) : (
               <Link
@@ -183,7 +183,7 @@ const Dropdown = () => {
                 className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 px-4 text-cs_lightDark transition-all hover:bg-cs_semi_green hover:text-cs_semi_green hover:shadow-border-light dark:text-cs_light"
               >
                 <Icon name="person" className="text-cs_lightDark group-hover:text-cs_light dark:text-cs_light" />
-                <span className="group-hover:text-cs_light">Thông tin cá nhân</span>
+                <span className="group-hover:text-cs_light">Hồ sơ cá nhân</span>
               </Link>
             )}
           </motion.li>

@@ -127,19 +127,11 @@ const Organization = () => {
       }
       const user = await getProfile().unwrap();
       console.log('user', user);
+       dispatch(setAuthCurrentUser(user?.data));
+      dispatch(setBusinessProfile(user?.data?.setBusinessProfile));
+      // window.location.reload();
     },
   });
-  console.log(userProfile);
-
-  useEffect(() => {
-    if (userProfile?.isSuccess) {
-      if (userProfile?.data?.data?.role?.name === 'user') {
-        navigate('/user/organization-profile');
-      } else {
-        navigate('/organization/organization-profile');
-      }
-    }
-  }, [userProfile.isFetching]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -365,7 +357,12 @@ const Organization = () => {
               value={formik.values.description}
             />
           </div>
-          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin liên lạc</h2>
+          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">
+            Thông tin liên lạc{' '}
+            <span className="text-xs text-[#ccc]">
+              (Thông tin này chỉ dùng cho việc liên hệ giữa Nevent và Ban tổ chức, sẽ không được hiên thị trên website)
+            </span>
+          </h2>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="relative">
               {formik.errors.phone && (

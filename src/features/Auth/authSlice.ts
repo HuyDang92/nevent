@@ -54,7 +54,7 @@ const authSlice = createSlice({
       state.notification = action.payload;
     },
     setBusinessProfile: (state, action) => {
-      state.businessInfo = action.payload;
+      state.businessInfo = action.payload ? action.payload : null;
     },
     setTypeLoggin: (state, action) => {
       state.typeLogin = action.payload;

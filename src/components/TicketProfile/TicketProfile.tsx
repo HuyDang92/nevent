@@ -14,11 +14,12 @@ import Action from './components/Action';
 import Zoom from '../customs/Zoom';
 
 interface IProps {
-  data: ITicket;
+  data: any;
   passTicket?: boolean;
+  dataSummary: any;
 }
 
-const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
+const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
   // const [listQR, setListQR] = useState<any>([]);
   const qrCodeRefs: any = useRef(
     Array(data?.myTickets?.length)
@@ -69,49 +70,45 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
   // }, [data]);
 
   return (
-    <div className={` relative sm:mx-10`}>
+    <div className={` relative m-2 sm:m-5`}>
       <Swiper
         // effect={effect}
         // direction={'vertical'}
         slidesPerView={1}
         spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
         grabCursor={true}
-        modules={[EffectCards, Pagination]}
+        modules={[EffectCards]}
         className="mySwiper"
       >
-        {data?.myTickets?.map((item: Ticket, index: number) => {
+        {data?.map((item: Ticket, index: number) => {
           return (
             <SwiperSlide key={index} className="relative rounded-2xl xl:h-[250px]">
               <div ref={qrCodeRefs.current[index]}>
-                <div className="round-2xl absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
-                <span className="absolute z-10 hidden h-7 w-7 rounded-full bg-cs_light dark:bg-cs_dark xl:-top-3.5 xl:right-52 xl:block"></span>
-                <span className="absolute z-10 hidden h-7 w-7 rounded-full bg-cs_light dark:bg-cs_dark xl:-bottom-3.5 xl:right-52 xl:block"></span>
-                <span className="absolute z-10 hidden h-full w-1 rounded-full border-r-2 border-dashed border-cs_light bg-transparent dark:bg-cs_dark xl:-bottom-3.5 xl:right-[13.8rem] xl:block"></span>
+                <div className="round-2xl absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-70 transition-all group-hover:scale-110"></div>
+                <span className="absolute z-10 hidden h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:-top-3.5 xl:right-52 xl:block"></span>
+                <span className="absolute z-10 hidden h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:-bottom-3.5 xl:right-52 xl:block"></span>
+                <span className="absolute z-10 hidden h-full w-1 rounded-full border-r-2 border-dashed border-cs_light bg-transparent dark:bg-cs_lightDark xl:-bottom-3.5 xl:right-[13.8rem] xl:block"></span>
                 {/* Cho mobile */}
-                <span className="absolute -left-3 top-48 z-10 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_dark xl:hidden"></span>
-                <span className="absolute -right-3 top-48 z-10 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_dark xl:hidden"></span>
+                <span className="absolute -left-3 top-48 z-20 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:hidden"></span>
+                <span className="absolute -right-3 top-48 z-20 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:hidden"></span>
                 <span className="absolute top-[12.8rem] z-10 h-1 w-full rounded-full  border-b-2 border-dashed border-cs_light bg-transparent dark:bg-cs_dark xl:hidden"></span>
                 <img
-                  src={data?.event?.banner[0]?.url}
+                  src={dataSummary?.event?.banner[0]?.url}
                   alt=""
                   className="h-[520px] w-full rounded-xl object-cover xl:h-[250px]"
                 />
                 <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
-                  <div className="xl:w-2/3">
-                    <Link to={`/event-detail/${data?.event?._id}`}>
-                      <p className=" line-clamp-2 text-xl font-bold">{data?.event?.title}</p>
+                  <div className="xl:w-2/3 xl:space-y-3">
+                    <Link to={`/event-detail/${dataSummary?.event?._id}`}>
+                      <p className=" line-clamp-2 text-xl font-bold">{dataSummary?.event?.title}</p>
                     </Link>
                     <span className=" gap-2 text-sm font-semibold">
                       <span>Thời gian: </span>
-                      {moment(data?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
+                      {moment(dataSummary?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
                       <span className="text-sm ">
-                        - {data?.event?.address} {data?.event?.location?.name}
+                        - {dataSummary?.event?.address} {dataSummary?.event?.location?.name}
                       </span>
                     </span>
-                    {/* <p className="text-sm font-semibold">Số vé: {data?.totalTickets}</p> */}
 
                     <p className=" text-sm font-semibold xl:block">
                       Trạng thái: <span className="text-sm text-cs_semi_green">Chưa sử dụng</span>
@@ -125,7 +122,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     <p className="text-sm font-semibold xl:block">
                       Vé:{' '}
                       <span className=" text-sm">
-                        {index + 1}/{data?.myTickets?.length}
+                        {index + 1}/{data?.length}
                       </span>
                     </p>
                     {/* {!passTicket && (
@@ -139,7 +136,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket }) => {
                     /> */}
                   </div>
                   {!passTicket && <Action data={data} onClick={() => handleDownload(item?.title, index)} />}
-                  <div className="absolute -bottom-[150%] right-1/2 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:mt-12 xl:translate-x-0">
+                  <div className="absolute top-60 right-1/2 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-16 xl:translate-x-0">
                     <div className="flex justify-center bg-cs_light text-cs_dark shadow-border-light">
                       <div>
                         {/* <div className="flex justify-between text-xs font-bold">
