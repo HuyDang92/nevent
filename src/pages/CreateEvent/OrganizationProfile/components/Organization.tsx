@@ -17,10 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 import ZoomComp from '~/components/customs/Zoom/Zoom';
 import Icon from '~/components/customs/Icon';
+import { useGetLocationsQuery } from '~/features/location/location.service';
+import { useUploadFile } from '~/hooks/useUpLoadFile';
 
 interface IOrganizationInfo {
   organization_name: string;
-  organization_avatar: string;
   fullName: string;
   CRN: string;
   releasePlace: string;
@@ -30,8 +31,7 @@ interface IOrganizationInfo {
   email: string;
   city: string;
   district: string;
-  road: string;
-  address: string;
+  ward: string;
   cccd: string;
   taxCode: string;
 }
@@ -42,7 +42,13 @@ const Organization = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-  const [getProfile, resultUser] = useLazyGetProfileQuery();
+  const [getProfile] = useLazyGetProfileQuery();
+  const getLocation = useGetLocationsQuery();
+  const { upLoad, loading } = useUploadFile();
+
+  // address
+  const [districtList, setDistrictList] = useState<any[]>([]);
+  const [wardList, setWardList] = useState<any[]>([]);
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -50,10 +56,10 @@ const Organization = () => {
     }
     return null;
   }, [error]);
+
   const formik = useFormik({
     initialValues: {
       organization_name: '',
-      organization_avatar: '',
       fullName: '',
       CRN: '',
       releasePlace: '',
@@ -63,8 +69,7 @@ const Organization = () => {
       email: '',
       city: '',
       district: '',
-      road: '',
-      address: '',
+      ward: '',
       cccd: '',
       taxCode: '',
     },
@@ -81,37 +86,52 @@ const Organization = () => {
         .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
       city: Yup.string().required('Thành phố/Tỉnh không được bỏ trống'),
       district: Yup.string().required('Huyện không được bỏ trống'),
-      road: Yup.string().required('Phường không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
+      ward: Yup.string().required('Phường không được bỏ trống'),
       cccd: Yup.string().required('Căn cước công dân không được bỏ trống'),
       taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
-      await updateBusiness({
-        type: 'business',
-        address: `${value.address},${value.road},${value.district},${value.city}`,
-        cccd: value.cccd,
-        crn: value.CRN,
-        dateOfIssue: value.releaseDate,
-        name: value.fullName,
-        placeOfIssue: value.releasePlace,
-        taxCode: value.taxCode,
-        organization_name: value.organization_name,
-        description: value.description,
-        phone: value.phone,
-        email: value.email,
-      });
+      console.log(value);
+      if (selectedFile) {
+        const avatarId = await upLoad(selectedFile);
+        await updateBusiness({
+          type: 'business',
+          address: `${value.ward}, ${value.district}, ${value.city}`,
+          cccd: value.cccd,
+          crn: value.CRN,
+          dateOfIssue: value.releaseDate,
+          name: value.fullName,
+          placeOfIssue: value.releasePlace,
+          taxCode: value.taxCode,
+          organization_name: value.organization_name,
+          description: value.description,
+          phone: value.phone,
+          email: value.email,
+          avatar: avatarId,
+        });
+      } else {
+        await updateBusiness({
+          type: 'business',
+          address: `${value.ward}, ${value.district}, ${value.city}`,
+          cccd: value.cccd,
+          crn: value.CRN,
+          dateOfIssue: value.releaseDate,
+          name: value.fullName,
+          placeOfIssue: value.releasePlace,
+          taxCode: value.taxCode,
+          organization_name: value.organization_name,
+          description: value.description,
+          phone: value.phone,
+          email: value.email,
+        });
+      }
       const user = await getProfile().unwrap();
-      console.log(user);
-      dispatch(setAuthCurrentUser(user?.data));
+      console.log('user', user);
+       dispatch(setAuthCurrentUser(user?.data));
       dispatch(setBusinessProfile(user?.data?.setBusinessProfile));
       // window.location.reload();
     },
   });
-  // useEffect(() => {
-  //   if (userProfile?.isSuccess) {
-  //   }
-  // }, [userProfile.isFetching]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -120,15 +140,24 @@ const Organization = () => {
     if (isError) {
       errorNotify('Cập nhật thất bại');
     }
-  }, [isLoading]);
+  }, [isSuccess, isError]);
 
   useEffect(() => {
-    if (userProfile.isSuccess && userProfile?.data?.data?.businessProfile) {
-      const location = userProfile?.data?.data?.businessProfile?.address?.split(',');
-      const [address, road, district, city] = location ?? [];
+    if (userProfile?.data?.data?.businessProfile) {
+      // Set business avatar as preview image
+      setImagePreviewUrl(userProfile?.data?.data?.businessProfile?.avatar);
+
+      // Handle locations
+      const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
+      const [ward, district, city] = location ?? [];
+      const districts = getLocation?.data?.find((location: any) => location.name === city)?.districts;
+      setDistrictList(districts);
+      const wards = districts?.find((location: any) => location.name === district)?.wards;
+      setWardList(wards);
+
+      // Set old data
       formik.setValues({
         organization_name: userProfile?.data?.data?.businessProfile?.organization_name,
-        organization_avatar: userProfile?.data?.data?.businessProfile?.organization_avatar,
         fullName: userProfile?.data?.data?.businessProfile?.name,
         CRN: userProfile?.data?.data?.businessProfile?.crn,
         releasePlace: userProfile?.data?.data?.businessProfile?.placeOfIssue,
@@ -138,16 +167,21 @@ const Organization = () => {
         email: userProfile?.data?.data?.businessProfile?.email,
         city: city,
         district: district,
-        road: road,
-        address: address,
+        ward: ward,
         cccd: userProfile?.data?.data?.businessProfile?.cccd,
         taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
       });
+    } else {
+      // Use user data as default
+      formik.initialValues.fullName = userProfile?.data?.data?.fullName;
+      formik.initialValues.email = userProfile?.data?.data?.email;
+      formik.initialValues.phone = userProfile?.data?.data?.phone;
     }
-  }, [userProfile, userProfile?.isSuccess]);
+  }, [userProfile, getLocation]);
+
   return (
     <>
-      {isLoading && <Loading />}
+      {(isLoading || userProfile?.isLoading || getLocation.isLoading || loading) && <Loading />}
       <div className="mt-2">
         <form onSubmit={formik.handleSubmit} className="">
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin nhà tổ chức</h2>
@@ -183,7 +217,7 @@ const Organization = () => {
                 label="Tên người tổ chức"
                 classNameLabel="!text-cs_label_gray !text-sm"
                 classNameInput="!w-full"
-                value={formik.values.fullName}
+                value={formik.values.fullName || userProfile?.data?.data.fullName}
                 onChange={formik.handleChange}
               />
             </div>
@@ -273,11 +307,7 @@ const Organization = () => {
             <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <ZoomComp>
-                  <img
-                    className="h-full w-full object-cover"
-                    src={formik.values.organization_avatar || DefaultAvatar}
-                    alt=""
-                  />
+                  <img className="h-full w-full object-cover" src={DefaultAvatar} alt="" />
                 </ZoomComp>
               )}
               {imagePreviewUrl && (
@@ -366,7 +396,7 @@ const Organization = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
+            {/* <div className="relative">
               {formik.errors.city && (
                 <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.city}
@@ -429,6 +459,89 @@ const Organization = () => {
                 value={formik.values.address}
                 onChange={formik.handleChange}
               />
+            </div> */}
+            <div className="relative pt-3">
+              {formik.errors.city && (
+                <small className="absolute left-[130px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.city}
+                </small>
+              )}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Tỉnh / Thành phố
+              </label>
+              <br />
+              <select
+                name="city"
+                id="city"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.city}
+                onChange={(e) => {
+                  setDistrictList(
+                    getLocation?.data?.find((location: any) => location.name === e.target.value)?.districts,
+                  );
+                  formik.handleChange(e);
+                }}
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {getLocation?.data?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative pt-3">
+              {formik.errors.district && (
+                <small className="absolute left-[110px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.district}
+                </small>
+              )}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Quận / Huyện
+              </label>
+              <br />
+              <select
+                name="district"
+                id="district"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.district}
+                onChange={(e) => {
+                  setWardList(districtList.find((location: any) => location.name === e.target.value)?.wards);
+                  formik.handleChange(e);
+                }}
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {districtList?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative pt-3">
+              {formik.errors.ward && (
+                <small className="absolute left-[100px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.ward}
+                </small>
+              )}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Phường / Xã
+              </label>
+              <br />
+              <select
+                name="ward"
+                id="ward"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.ward}
+                onChange={formik.handleChange}
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {wardList?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="flex w-full justify-end">
