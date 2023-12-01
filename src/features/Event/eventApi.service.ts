@@ -44,11 +44,10 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const eventApi = createApi({
   reducerPath: 'eventApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 0,
+  keepUnusedDataFor: 10,
   tagTypes: ['event'],
   // providesTags: ['event'], // cho query
   // invalidatesTags: ['event'], // cho mutation
-
   endpoints: (builder) => ({
     createEvent: builder.mutation({
       query: (body) => ({

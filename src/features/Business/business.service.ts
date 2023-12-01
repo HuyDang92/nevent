@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const businessApi = createApi({
   reducerPath: 'businessApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 0,
+  keepUnusedDataFor: 10,
   tagTypes: ['Business'],
   endpoints: (builder) => ({
     updateBusiness: builder.mutation({

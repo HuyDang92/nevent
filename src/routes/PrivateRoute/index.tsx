@@ -81,7 +81,7 @@ function PrivateRoute({ allowedRoles = [] }: PrivateRouteProps) {
 
   const authorized: boolean =
     allowedRoles.length > 0 ? allowedRoles.some((role) => role === auth?.currentUser?.role?.name) : true;
-
+  
   return auth.loggedIn ? authorized ? <Outlet /> : <Page403 /> : <Navigate to="/login" />;
 }
 

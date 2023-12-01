@@ -32,6 +32,7 @@ const EventInfo = () => {
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
+  console.log(imageData);
 
   const quillRef = useRef<any>(null);
   // console.log(quillRef.current);
@@ -105,11 +106,7 @@ const EventInfo = () => {
         .required('Yêu cầu banner sự kiện'),
     }),
     onSubmit: async (value: IEventInfo) => {
-      value.description_img = imageData.filter(function (item, index) {
-        return imageData.indexOf(item) == index;
-      });
-      console.log(value);
-
+      value.description_img = imageData;
       try {
         setImagesUploaded(true);
         dispatch(setEventInfo(value));
@@ -125,6 +122,14 @@ const EventInfo = () => {
       setImagePreviewUrl(eventInfo?.banner);
     }
   }, []);
+
+  useEffect(() => {
+    if (eventInfo?.description_img) {
+      console.log('gang anh cu');
+      setImageData(eventInfo?.description_img);
+    }
+  }, [eventInfo?.description_img]);
+
   useEffect(() => {
     if (eventInfo?.categories) {
       const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
@@ -153,6 +158,7 @@ const EventInfo = () => {
       modules: ['Resize', 'DisplaySize'],
     },
   };
+
   return (
     <>
       <div className="">
@@ -263,7 +269,7 @@ const EventInfo = () => {
             </div>
             <div className="relative">
               {formik.errors.address && (
-                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[110px] top-[9px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.address}
                 </small>
               )}

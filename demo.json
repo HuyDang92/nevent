@@ -1,0 +1,207 @@
+[
+    {
+        "totalTickets": 1,
+        "event": {
+            "_id": "6560d4dfde6932b58027795c",
+            "creator": "6560c71fe4c9f93b173a3790",
+            "title": "8 thần tượng K-pop toàn năng nhất: Jungkook BTS còn xếp sau tân binh",
+            "start_date": "2023-11-30T23:55:00.000Z",
+            "location": {
+                "_id": "6545c78092a98643864286e3",
+                "name": "Hà Nội",
+                "code": "500000"
+            },
+            "address": "958/3 Au Co",
+            "desc": "<p>CELLO FUNDAMENTO ĐÃ QUAY TRỞ LẠI</p><p>Chuỗi hoà nhạc quốc tế Cello Fundamento đã quay trở lại với buổi diễn âm nhạc cổ điển Cello Fundamento 7 (CF7) sẽ diễn ra vào ngày 1.12.2023 tại Nhà hát lớn Hà Nội.</p><p>Tiếp nối thành công rực rỡ của những mùa trước, đặc biệt sau chuyến ra khơi OCEANA (CF6) được đón nhận nồng nhiệt bởi khán thính giả cùng giới chuyên môn, nhà sáng lập - nghệ sĩ Đinh Hoài Xuân đã đưa CF7 trở lại với một diện mạo mới: sang trọng, đẳng cấp, tinh tế.</p><p><img src=\"http://res.cloudinary.com/dtvqj8h4b/image/upload/v1700844764/Nevents/nevent-1700844763578.png\" alt=\"🌹\">&nbsp;Được sự hỗ trợ của Đại sứ quán Rumani, “APRÈS UN RÊVE\" là buổi hoà nhạc đẳng cấp quốc tế kết hợp với các nghệ sĩ danh tiếng đến từ kinh đô âm nhạc châu Âu Pháp và Đức, được tổ chức bởi một nghệ sĩ Việt tài hoa và tràn đầy đam mê, muốn lan toả những giá trị nghệ thuật bền vững, chân chính tới đông đảo công chúng và ghi danh quê hương lên bản đồ âm nhạc thế giới.</p><p><img src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t10/2/16/1f339.png\" alt=\"🌹\">&nbsp;Với chủ đề “APRÈS UN RÊVE” - \"SAU MỘT GIẤC MƠ\", CF7 hứa hẹn về một chuyến du lãm diệu kì giữa những thanh âm, một cuộc khám phá mới tới những chân trời xa xôi, nơi âm nhạc trở thành vĩnh cửu, thời gian đọng trong từng khoảnh khắc, một bản đàn có thể kéo lại cả muôn trùng không gian. Cello Fundamento đã có thể giong buồm ra biển lớn, và sau những cuộc mộng viễn dương vĩ đại ấy là nối tiếp đến bất tận những giấc mơ tươi đẹp.</p><p><img src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t5/2/16/1f493.png\" alt=\"💓\">&nbsp;Còn gì lãng mạn hơn một tối mùa đông lạnh giá được cùng người thương đắm chìm trong những giai điệu trong trẻo, nên thơ mà cũng rất quyến rũ và đong đầy xúc cảm.</p><p>Một mùa đông như thế với Cello Fundamento 7, quả thật như một giấc mơ…</p><p>CELLO FUNDAMENTO 7 IS COMING BACK!</p><p>The international concert series Cello Fundamento has returned with the classical music show Cello Fundamento 7 (CF7) which will take place on December 1, 2023 at Hanoi Opera House.</p><p>The new CF7 with the theme \"APRÈS UN RÊVE\" (After a dream) promises to be a luxurious, classy, and ​​sophisticated concert. It is supported by the Romanian Embassy, with the appearance of famous French and German artists.</p><p>There's nothing more romantic than a cold winter evening with your loved one immersed in such beautiful melodies.</p><p>A winter like that with Cello Fundamento 7 is truly like a dream...</p><p>—---------------------------------------</p><p>“Cello Fundamento 7 - APRÈS UN RÊVE”</p><p>Mọi thông tin về buổi diễn, đặt vé, giải đáp thắc mắc vui lòng xem tại:</p><p>Website:&nbsp;https://cf7.cellofundamento.org/</p><p>Fanpage: Cello Fundamento</p><p>#CF7&nbsp;#showsaumotgiacmo&nbsp;#ApresUnReve&nbsp;#CelloFundamento&nbsp;#international&nbsp;#ClassicalMusic&nbsp;#Cello&nbsp;#Classical&nbsp;#Music&nbsp;#DinhHoaiXuan&nbsp;#HanoiOperaHouse</p><p><br></p><p><img src=\"http://res.cloudinary.com/dtvqj8h4b/image/upload/v1700844765/Nevents/nevent-1700844764349.jpg\"></p>",
+            "categories": [
+                {
+                    "_id": "6560cd00e4c9f93b173a3b80",
+                    "name": "Hội họa"
+                }
+            ],
+            "status": "UPCOMING",
+            "approve": false,
+            "hot": false,
+            "hotLevel": 1,
+            "banner": [
+                {
+                    "_id": "6560d4dbde6932b58027794f",
+                    "url": "http://res.cloudinary.com/dtvqj8h4b/image/upload/v1700844762/Nevents/nevent-1700844760969.jpg",
+                    "secureUrl": "https://res.cloudinary.com/dtvqj8h4b/image/upload/v1700844762/Nevents/nevent-1700844760969.jpg",
+                    "publicId": "Nevents/nevent-1700844760969",
+                    "width": 1280,
+                    "height": 720,
+                    "format": "jpg",
+                    "type": "image"
+                }
+            ],
+            "totalTicketIssue": 20100,
+            "salesStartDate": "2023-11-24T23:54:00.000Z",
+            "salesEndDate": "2023-11-25T23:55:00.000Z"
+        },
+        "myTickets": {
+            "2": [
+                {
+                    "status": "unworn",
+                    "_id": "6560d72ade6932b580277c00",
+                    "title": "Hạng B",
+                    "type": "2",
+                    "color": "#13C6B3",
+                    "price": 1000,
+                    "desc": "2",
+                    "qr": "VP7hNRWQr9vpm7yfDzz850uk4d7Df0ssVUzaHAocYu2Po8frGo29AyxHbf1LnLry6tCudxLN9FcqlWpwCZ3GUQ=="
+                }
+            ]
+        }
+    },
+    {
+        "totalTickets": 1,
+        "event": {
+            "_id": "65614f200d7a226697bddb18",
+            "creator": "6560d4e6de6932b580277977",
+            "title": "Test sự kiện",
+            "start_date": "2023-11-26T08:32:00.000Z",
+            "location": {
+                "_id": "6545c75892a98643864286e2",
+                "name": "Hồ Chí Minh",
+                "code": "700000"
+            },
+            "address": "Quan 12",
+            "desc": "<p>Test </p><p><img src=\"http://res.cloudinary.com/dtvqj8h4b/image/upload/v1700876063/Nevents/nevent-1700876061432.jpg\"></p>",
+            "categories": [
+                {
+                    "_id": "656063d6bc2cbe79c1191124",
+                    "name": "Âm nhạc"
+                }
+            ],
+            "status": "UPCOMING",
+            "approve": false,
+            "hot": false,
+            "hotLevel": 1,
+            "banner": [
+                {
+                    "_id": "65614f1d0d7a226697bddb11",
+                    "url": "http://res.cloudinary.com/dtvqj8h4b/image/upload/v1700876060/Nevents/nevent-1700876059055.jpg",
+                    "secureUrl": "https://res.cloudinary.com/dtvqj8h4b/image/upload/v1700876060/Nevents/nevent-1700876059055.jpg",
+                    "publicId": "Nevents/nevent-1700876059055",
+                    "width": 1920,
+                    "height": 1080,
+                    "format": "jpg",
+                    "type": "image"
+                }
+            ],
+            "totalTicketIssue": 150,
+            "salesStartDate": "2023-11-25T08:32:00.000Z",
+            "salesEndDate": "2023-11-25T09:32:00.000Z"
+        },
+        "myTickets": {
+            "Rank 1": [
+                {
+                    "status": "unworn",
+                    "_id": "656150450d7a226697bddbc2",
+                    "title": "Vip",
+                    "type": "Rank 1",
+                    "color": "#13C6B3",
+                    "price": 200000,
+                    "desc": "Vé vip ",
+                    "qr": "HOuCT9Y0MP3T3krbWO4ykgDKzOSTOvoi8u+sjAqDYSj4YHD96BLZ7Gdp1s1ZVDj0tocvnYLPbGR7mfc31fOv2Q=="
+                }
+            ]
+        }
+    },
+    {
+        "totalTickets": 5,
+        "event": {
+            "_id": "65674e6040eb110236b1772a",
+            "creator": "65673fbdf9937336afe65fb5",
+            "title": "Bóng đá ",
+            "start_date": "2023-11-29T21:43:00.000Z",
+            "location": {
+                "_id": "6545c75892a98643864286e2",
+                "name": "Hồ Chí Minh",
+                "code": "700000"
+            },
+            "address": "Quan 12",
+            "desc": "<p>Test <img src=\"http://res.cloudinary.com/dtvqj8h4b/image/upload/v1701269087/Nevents/nevent-1701269085325.jpg\"></p>",
+            "categories": [
+                {
+                    "_id": "6560641abc2cbe79c119112a",
+                    "name": "Thể thao"
+                }
+            ],
+            "status": "UPCOMING",
+            "approve": false,
+            "hot": false,
+            "hotLevel": 1,
+            "banner": [
+                {
+                    "_id": "65674e5d40eb110236b17723",
+                    "url": "http://res.cloudinary.com/dtvqj8h4b/image/upload/v1701269084/Nevents/nevent-1701269082941.jpg",
+                    "secureUrl": "https://res.cloudinary.com/dtvqj8h4b/image/upload/v1701269084/Nevents/nevent-1701269082941.jpg",
+                    "publicId": "Nevents/nevent-1701269082941",
+                    "width": 960,
+                    "height": 425,
+                    "format": "jpg",
+                    "type": "image"
+                }
+            ],
+            "totalTicketIssue": 100,
+            "salesStartDate": "2023-11-29T21:43:00.000Z",
+            "salesEndDate": "2023-11-29T21:43:00.000Z"
+        },
+        "myTickets": {
+            "1": [
+                {
+                    "status": "unworn",
+                    "_id": "656751f840eb110236b17873",
+                    "title": "Hạng 1",
+                    "type": "1",
+                    "color": "#13C6B3",
+                    "price": 100000,
+                    "desc": "",
+                    "qr": "DWpQirw4nbpMq5irg/tF6b6+A5Urwm2fpU7x/T3hEmw0N2AKWeOX5+M849aZWEbMvEzb3WSHT5nGL7ns10E6nw=="
+                },
+                {
+                    "status": "unworn",
+                    "_id": "656751f840eb110236b17874",
+                    "title": "Hạng 1",
+                    "type": "1",
+                    "color": "#13C6B3",
+                    "price": 100000,
+                    "desc": "",
+                    "qr": "fWbT9VGjgn9+nS5mcm5a3XFGkWJ0uEqHjQosEu8BmklT+t2jD3AZGKZilcv/ioqb3baVZx8j6PKdedUAPgJRoQ=="
+                },
+                {
+                    "status": "unworn",
+                    "_id": "656751f840eb110236b17875",
+                    "title": "Hạng 1",
+                    "type": "1",
+                    "color": "#13C6B3",
+                    "price": 100000,
+                    "desc": "",
+                    "qr": "msBS55eggJnzt2uz0QPljo9fdXgbFq88WNn0/imt3vuFEbgOyId6UCI68uovvpjdQp82g4BMxP8+60S0/sm2iA=="
+                },
+                {
+                    "status": "unworn",
+                    "_id": "656751f840eb110236b17876",
+                    "title": "Hạng 1",
+                    "type": "1",
+                    "color": "#13C6B3",
+                    "price": 100000,
+                    "desc": "",
+                    "qr": "CJRowr9G84fF/vBeDJG+kZjKlordhtDjdBR/Jd3WsLGMB7y6wO7gk4wk5htOn/txqWv0zXe1ZZSQ3DGQ05pK0g=="
+                },
+                {
+                    "status": "unworn",
+                    "_id": "656751f840eb110236b17877",
+                    "title": "Hạng 1",
+                    "type": "1",
+                    "color": "#13C6B3",
+                    "price": 100000,
+                    "desc": "",
+                    "qr": "DNl1YuZkfFZhH+rKBu7jhclTuQS4b/yfky3MwlJROnqBs2A0V1EHXiJHRSvyMxq1pqpMLPDrdINbcoUnDKoCRg=="
+                }
+            ]
+        }
+    }
+]

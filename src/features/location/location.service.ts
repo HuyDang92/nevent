@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 
 export const locationApi = createApi({
-  reducerPath: 'bankApi',
+  reducerPath: 'locationApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://provinces.open-api.vn/api',
   }),
