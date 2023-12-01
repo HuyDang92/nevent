@@ -88,10 +88,6 @@ const OverView = () => {
             }),
         )
         .then(async (file) => {
-          if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-            errorNotify(`File vượt quá 1MB`);
-            return null;
-          }
           const urlImg = await upLoadDesc(file);
           resolve(urlImg);
         })
@@ -172,7 +168,7 @@ const OverView = () => {
           });
         console.log(bannerId);
         console.log(eventInfo?.description_img);
-        
+
         if (new_desc !== undefined) {
           // Sử dụng Promise.all để đợi tất cả các promises hoàn thành
           const newImageURLs = await Promise.all((eventInfo?.description_img || []).map((url) => uploadDescImg(url)))
