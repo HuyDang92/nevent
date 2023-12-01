@@ -7,10 +7,10 @@ import DefaultLayout from '~/Layout/DefaultLayout';
 import FAQ from '~/pages/FAQ';
 import ManageEventLayout from '~/Layout/ManageEventLayout';
 import NotFound from '~/pages/NotFound';
-import DetailEvent from '~/pages/DetailEvent';
 import About from '~/pages/About';
-import EditEvent from '~/pages/EditEvent';
 
+const DetailEvent = lazy(() => import('~/pages/DetailEvent'));
+const EditEvent = lazy(() => import('~/pages/EditEvent'));
 const Home = lazy(() => import('~/pages/Home'));
 const LogIn = lazy(() => import('~/pages/Auth/LogIn'));
 const SignUp = lazy(() => import('~/pages/Auth/SignUp'));
