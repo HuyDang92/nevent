@@ -16,11 +16,6 @@ export const useUploadDesc = () => {
     }
 
     // Check if the file size exceeds the limit
-    if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      errorNotify(`File vượt quá 1MB`);
-      setError(true);
-      return null;
-    }
 
     setLoadingDesc(true);
 

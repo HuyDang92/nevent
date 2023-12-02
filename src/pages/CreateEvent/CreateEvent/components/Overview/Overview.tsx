@@ -24,7 +24,7 @@ const OverView = () => {
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
-  const { upLoadDesc, loadingDesc } = useUploadDesc();
+  const { upLoadDesc, loadingDesc, error: errorDesc } = useUploadDesc();
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -37,6 +37,7 @@ const OverView = () => {
       setTimeout(() => {
         successNotify('Thêm sự kiện thành công');
       }, 1000);
+      dispatch(resetForm());
       navigate('/organization/event-list');
     }
     if (isError) {
@@ -167,7 +168,7 @@ const OverView = () => {
           });
         console.log(bannerId);
         console.log(eventInfo?.description_img);
-        
+
         if (new_desc !== undefined) {
           // Sử dụng Promise.all để đợi tất cả các promises hoàn thành
           const newImageURLs = await Promise.all((eventInfo?.description_img || []).map((url) => uploadDescImg(url)))
