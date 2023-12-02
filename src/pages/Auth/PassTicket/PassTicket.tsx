@@ -3,7 +3,7 @@ import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import SearchUser from '~/components/customs/SearchUser';
-import { useAppSelector } from '~/hooks/useActionRedux';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Loading from '~/components/customs/Loading';
@@ -12,9 +12,11 @@ import useSocket from '~/hooks/useConnecrSocket';
 import { Dialog, DialogBody, DialogFooter, Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
 import moment from 'moment';
 import { useLazySendOtpLoginQuery, useVerifySwapTicketMutation } from '~/features/OTP/otpApi.service';
+import { addCode, addSecret } from '~/features/OTP/otpSlice';
 
 function PassTicket() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const socket = useSocket();
   const [code, setCode] = useState<string>('');
   const [secret, setSecret] = useState<string>('');
@@ -57,7 +59,9 @@ function PassTicket() {
       return;
     }
     if (type === 'confirm') {
-      await verify({ myTicketId: idTicket, userId: userReceive?._id, otp: { secret, code: Number(code) } });
+      dispatch(addCode(code));
+      dispatch(addSecret(secret));
+      await verify({ myTicketId: idTicket, userId: userReceive?._id });
     }
   };
 
@@ -70,6 +74,7 @@ function PassTicket() {
       errorNotify('Có lỗi xảy ra');
     }
   }, [resultGetCode.isSuccess, resultGetCode.isError]);
+
   useEffect(() => {
     if (resultVerify.isSuccess) {
       successNotify('Chuyển giao vé thành công');
@@ -77,7 +82,7 @@ function PassTicket() {
         sender: auth?._id,
         recipient: userReceive?._id,
         content: `${auth?.fullName} đã chuyển giao vé cho bạn vé! Kiểm tra ví ngay`,
-        url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
+        url: 'https://nevent.io.vn/user/profile/1',
       } as IPayloadNotify);
       setOpen(false);
       setCode('');
@@ -185,7 +190,7 @@ function PassTicket() {
           <AccordionBody>
             <div className="max-h-[60vh] overflow-y-scroll rounded-xl border xl:max-h-[41vh]">
               {Object.entries(getTickets[0]?.myTickets).map(([key, element]: any, index: number) => {
-                return <TicketProfile key={index} data={element} dataSummary={getTickets[0]} />;
+                return <TicketProfile key={index} data={element} dataSummary={getTickets[0]} passTicket/>;
               })}
             </div>
           </AccordionBody>

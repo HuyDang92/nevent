@@ -1,20 +1,26 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from 'react';
-interface ChartBar {
-  title: string;
-  xAxisData: string[];
-  barData: number[][];
-  names: string[];
-  barColors: string[];
-}
+import { useAnalyticsRevenueChartQuery } from '~/features/Business/business.service';
+import moment from 'moment';
 
 interface ChartBarProps {
-  data?: ChartBar;
+  data?: any;
 }
 
 const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
   const [options, setOptions] = useState({} as any);
-
+  const [revenue, setRevenue] = useState<any>([]);
+  const currentDate = new Date();
+  const oneWeekAgo = moment(currentDate).subtract(7, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  const current = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  const reneue = useAnalyticsRevenueChartQuery({ startDate: oneWeekAgo, endDate: current });
+  useEffect(() => {
+    if (reneue.data) {
+      setRevenue(data);
+    }
+  }, [reneue.isFetching]);
+  console.log(revenue);
+  
   useEffect(() => {
     if (!data) {
       const options = {
@@ -22,7 +28,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
           trigger: 'axis',
         },
         legend: {
-          data: ['Lợi nhuận', 'Doanh thu'],
+          data: ['Số vé', 'Doanh thu'],
         },
         toolbox: {
           show: true,
@@ -37,7 +43,6 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
         xAxis: [
           {
             type: 'category',
-            // prettier-ignore
             data: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
           },
         ],
@@ -50,7 +55,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
           {
             name: 'Số vé',
             type: 'bar',
-            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 65.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             markPoint: {
               data: [
                 { type: 'max', name: 'Max' },
@@ -64,10 +69,10 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
           {
             name: 'Doanh thu',
             type: 'bar',
-            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 200, 48.7, 18.8, 6.0, 2.3],
+            data: revenue,
             markPoint: {
               data: [
-                { name: 'Max', value: 182.2, xAxis: 7, yAxis: 183 },
+                { name: 'Max', value: 0, xAxis: 7, yAxis: 183 },
                 { name: 'Min', value: 2.3, xAxis: 11, yAxis: 3 },
               ],
             },

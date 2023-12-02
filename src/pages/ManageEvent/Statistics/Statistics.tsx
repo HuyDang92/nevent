@@ -10,7 +10,7 @@ import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import ManageEventParameters from '~/pages/CreateEvent/EventManage/components/ManageEventParameters/ManageEventParameters';
-import ChartBar from '~/components/Bar/Bar';
+import ChartBarAverage from '~/components/BarAverage/BarAverage';
 
 const Statistics = () => {
   const { idEvent } = useParams();
@@ -120,7 +120,7 @@ const Statistics = () => {
           />
           <ManageEventParameters title={'Tổng phí dịch vụ'} count={event?.data?.data?.analytics?.fee} />
         </div>
-        <ChartBar />
+        <ChartBarAverage />
 
         <div className="relative mt-8">
           <Carousel

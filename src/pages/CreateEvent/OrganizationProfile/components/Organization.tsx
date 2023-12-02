@@ -22,7 +22,6 @@ import { useUploadFile } from '~/hooks/useUpLoadFile';
 
 interface IOrganizationInfo {
   organization_name: string;
-  fullName: string;
   CRN: string;
   releasePlace: string;
   releaseDate: string;
@@ -32,12 +31,9 @@ interface IOrganizationInfo {
   city: string;
   district: string;
   ward: string;
-  cccd: string;
-  taxCode: string;
 }
 const Organization = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
@@ -48,6 +44,7 @@ const Organization = () => {
   // address
   const [districtList, setDistrictList] = useState<any[]>([]);
   const [wardList, setWardList] = useState<any[]>([]);
+  const [address, setAddress] = useState<string>('');
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -59,7 +56,6 @@ const Organization = () => {
   const formik = useFormik({
     initialValues: {
       organization_name: '',
-      fullName: '',
       CRN: '',
       releasePlace: '',
       releaseDate: '',
@@ -69,12 +65,9 @@ const Organization = () => {
       city: '',
       district: '',
       ward: '',
-      cccd: '',
-      taxCode: '',
     },
     validationSchema: Yup.object({
       organization_name: Yup.string().required('Tên ban tổ chức không được bỏ trống'),
-      fullName: Yup.string().required('Tên người tổ chức không được bỏ trống'),
       CRN: Yup.string().required('Số đăng ký không được bỏ trống'),
       description: Yup.string().required('Giới thiệu ban tổ chức không được bỏ trống'),
       releasePlace: Yup.string().required('Nơi phát hành không được bỏ trống'),
@@ -86,8 +79,6 @@ const Organization = () => {
       city: Yup.string().required('Thành phố/Tỉnh không được bỏ trống'),
       district: Yup.string().required('Huyện không được bỏ trống'),
       ward: Yup.string().required('Phường không được bỏ trống'),
-      cccd: Yup.string().required('Căn cước công dân không được bỏ trống'),
-      taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
       console.log(value);
@@ -95,13 +86,10 @@ const Organization = () => {
         const avatarId = await upLoad(selectedFile);
         await updateBusiness({
           type: 'business',
-          address: `${value.ward}, ${value.district}, ${value.city}`,
-          cccd: value.cccd,
+          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
           crn: value.CRN,
           dateOfIssue: value.releaseDate,
-          name: value.fullName,
           placeOfIssue: value.releasePlace,
-          taxCode: value.taxCode,
           organization_name: value.organization_name,
           description: value.description,
           phone: value.phone,
@@ -111,20 +99,16 @@ const Organization = () => {
       } else {
         await updateBusiness({
           type: 'business',
-          address: `${value.ward}, ${value.district}, ${value.city}`,
-          cccd: value.cccd,
+          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
           crn: value.CRN,
           dateOfIssue: value.releaseDate,
-          name: value.fullName,
           placeOfIssue: value.releasePlace,
-          taxCode: value.taxCode,
           organization_name: value.organization_name,
           description: value.description,
           phone: value.phone,
           email: value.email,
         });
       }
-      // const user = await getProfile().unwrap();
     },
   });
 
@@ -153,16 +137,19 @@ const Organization = () => {
 
       // Handle locations
       const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
+      const address = location[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng ở đầu cuối
+      location.shift(); // Loại bỏ phần tử đầu tiên
       const [ward, district, city] = location ?? [];
+
       const districts = getLocation?.data?.find((location: any) => location.name === city)?.districts;
       setDistrictList(districts);
       const wards = districts?.find((location: any) => location.name === district)?.wards;
       setWardList(wards);
+      setAddress(address);
 
       // Set old data
       formik.setValues({
         organization_name: userProfile?.data?.data?.businessProfile?.organization_name,
-        fullName: userProfile?.data?.data?.businessProfile?.name,
         CRN: userProfile?.data?.data?.businessProfile?.crn,
         releasePlace: userProfile?.data?.data?.businessProfile?.placeOfIssue,
         releaseDate: userProfile?.data?.data?.businessProfile?.dateOfIssue,
@@ -172,12 +159,8 @@ const Organization = () => {
         city: city,
         district: district,
         ward: ward,
-        cccd: userProfile?.data?.data?.businessProfile?.cccd,
-        taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
       });
     } else {
-      // Use user data as default
-      formik.initialValues.fullName = userProfile?.data?.data?.fullName;
       formik.initialValues.email = userProfile?.data?.data?.email;
       formik.initialValues.phone = userProfile?.data?.data?.phone;
     }
@@ -185,7 +168,7 @@ const Organization = () => {
 
   return (
     <>
-      {(isLoading || userProfile?.isLoading || getLocation.isLoading || loading) && <Loading />}
+      {(isLoading || loading) && <Loading />}
       <div className="mt-2">
         <form onSubmit={formik.handleSubmit} className="">
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin nhà tổ chức</h2>
@@ -209,23 +192,7 @@ const Organization = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
-              {formik.errors.fullName && (
-                <small className="absolute left-[140px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.fullName}
-                </small>
-              )}
-              <Input
-                name="fullName"
-                id="fullName"
-                label="Tên người tổ chức"
-                classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!w-full"
-                value={formik.values.fullName || userProfile?.data?.data.fullName}
-                onChange={formik.handleChange}
-                disabled
-              />
-            </div>
+
             <div className="relative">
               {formik.errors.CRN && (
                 <small className="absolute left-[190px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -235,7 +202,7 @@ const Organization = () => {
               <Input
                 name="CRN"
                 id="CRN"
-                label="Số đăng ký công ty (CRN)"
+                label="Mã số đăng ký kinh doanh"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
                 value={formik.values.CRN}
@@ -258,23 +225,8 @@ const Organization = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
-              {formik.errors.cccd && (
-                <small className="absolute left-[150px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.cccd}
-                </small>
-              )}
-              <Input
-                name="cccd"
-                id="cccd"
-                label="Căn cước công dân"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.cccd}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
+
+            {/* <div className="relative">
               {formik.errors.taxCode && (
                 <small className="absolute left-[95px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.taxCode}
@@ -289,7 +241,7 @@ const Organization = () => {
                 value={formik.values.taxCode}
                 onChange={formik.handleChange}
               />
-            </div>
+            </div> */}
             <div className="relative">
               {formik.errors.releaseDate && (
                 <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -312,14 +264,18 @@ const Organization = () => {
             <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <ZoomComp>
-                  <img className="h-full w-full object-cover" src={DefaultAvatar} alt="" />
+                  <img
+                    className="h-full w-full object-cover"
+                    src={DefaultAvatar}
+                    alt=""
+                  />
                 </ZoomComp>
               )}
               {imagePreviewUrl && (
                 <ZoomComp>
                   <img
                     className="h-[90px] w-[90px]  object-cover sm:h-[120px] sm:w-[120px]"
-                    src={imagePreviewUrl}
+                    src={userProfile?.data?.data?.businessProfile?.avatar?.url  ?? imagePreviewUrl}
                     alt=""
                   />
                 </ZoomComp>
@@ -402,70 +358,8 @@ const Organization = () => {
                 disabled
               />
             </div>
-            {/* <div className="relative">
-              {formik.errors.city && (
-                <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.city}
-                </small>
-              )}
-              <Input
-                name="city"
-                id="city"
-                label="Thành phố/Tỉnh"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.city}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
-              {formik.errors.district && (
-                <small className="absolute left-[100px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.district}
-                </small>
-              )}
-              <Input
-                name="district"
-                id="district"
-                label="Quận/Huyện"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.district}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
-              {formik.errors.road && (
-                <small className="absolute left-[90px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.road}
-                </small>
-              )}
-              <Input
-                name="road"
-                id="road"
-                label="Phường/Xã"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.road}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
-              {formik.errors.address && (
-                <small className="absolute left-[60px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.address}
-                </small>
-              )}
-              <Input
-                name="address"
-                id="address"
-                label="Địa chỉ"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.address}
-                onChange={formik.handleChange}
-              />
-            </div> */}
+
+            <h2 className="col-span-2 mb-2 mt-4 text-lg font-semibold dark:text-white">Địa chỉ trụ sở</h2>
             <div className="relative pt-3">
               {formik.errors.city && (
                 <small className="absolute left-[130px] top-[15px] z-10 px-2 text-[12px] text-red-600">
@@ -548,6 +442,22 @@ const Organization = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="relative">
+              {formik.errors.email && (
+                <small className="absolute left-[50px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.email}
+                </small>
+              )}
+              <Input
+                name="address"
+                id="address"
+                label="Địa chỉ"
+                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
+                classNameInput=" !w-full dark:text-white"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </div>
           </div>
           <div className="flex w-full justify-end">

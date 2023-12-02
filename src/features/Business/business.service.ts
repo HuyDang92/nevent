@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const businessApi = createApi({
   reducerPath: 'businessApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 10,
+  keepUnusedDataFor: 0,
   tagTypes: ['Business'],
   endpoints: (builder) => ({
     updateBusiness: builder.mutation({
@@ -65,6 +65,21 @@ export const businessApi = createApi({
       query: () => `/api/events/overview`,
       providesTags: ['Business'],
     }),
+    analyticsRevenueChart: builder.query<any, any>({
+      query: ({ eventId, startDate, endDate }) =>
+        `/api/payments/overview-revenue-chart${eventId ? `/${eventId}` : ''}?startDate=${startDate}&endDate=${endDate}`,
+      keepUnusedDataFor: 5,
+    }),
+    listCustomerPayment: builder.query<any, string>({
+      query: (eventId) => `/api/events/list-payment/${eventId}`,
+    }),
   }),
 });
-export const { useUpdateBusinessMutation, useGetProfileQuery, useLazyGetProfileQuery, useAnalyticsBusinessQuery } = businessApi;
+export const {
+  useUpdateBusinessMutation,
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+  useAnalyticsBusinessQuery,
+  useAnalyticsRevenueChartQuery,
+  useListCustomerPaymentQuery,
+} = businessApi;

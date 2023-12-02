@@ -44,7 +44,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const eventApi = createApi({
   reducerPath: 'eventApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 10,
+  keepUnusedDataFor: 0,
   tagTypes: ['event'],
   // providesTags: ['event'], // cho query
   // invalidatesTags: ['event'], // cho mutation

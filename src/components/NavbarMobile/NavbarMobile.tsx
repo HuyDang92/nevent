@@ -44,7 +44,8 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
             </NavLink>
           </motion.button>
         ))}
-        {auth.loggedIn ? (
+
+        {auth.loggedIn && auth.currentUser?.role?.name === 'user' ? (
           <motion.button whileTap={{ scale: 0.9 }}>
             <NavLink to={'/user/profile/0'} className={`flex items-center justify-between`}>
               <Icon
@@ -54,6 +55,16 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
             </NavLink>
           </motion.button>
         ) : (
+          <motion.button whileTap={{ scale: 0.9 }}>
+            <NavLink to={'/user/profile/0'} className={`flex items-center justify-between`}>
+              <Icon
+                name={location.pathname === '/user/profile/0' ? 'person' : 'person-outline'}
+                className="text-2xl text-cs_semi_green"
+              />
+            </NavLink>
+          </motion.button>
+        )}
+        {!auth.loggedIn && (
           <motion.button whileTap={{ scale: 0.9 }}>
             <NavLink to={'/login'} className={`flex items-center justify-between`}>
               <Icon name={`person-outline`} className="text-2xl text-cs_semi_green" />
