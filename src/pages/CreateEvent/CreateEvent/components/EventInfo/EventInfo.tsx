@@ -13,7 +13,10 @@ import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
 import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+
+Quill.register('modules/imageResize', ImageResize);
 
 const EventInfo = () => {
   const dispatch = useAppDispatch();
@@ -71,7 +74,7 @@ const EventInfo = () => {
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
       categories: Yup.mixed()
-        .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
+        .test('cateLength', 'Chọn ít nhất 1 danh mục', (value: any) => {
           if (value && value?.length > 0) {
             return true;
           }
@@ -102,6 +105,8 @@ const EventInfo = () => {
         })
         .required('Yêu cầu banner sự kiện'),
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: async (value: IEventInfo) => {
       value.description_img = imageData;
       try {
@@ -122,7 +127,6 @@ const EventInfo = () => {
 
   useEffect(() => {
     if (eventInfo?.description_img) {
-      console.log('gang anh cu');
       setImageData(eventInfo?.description_img);
     }
   }, [eventInfo?.description_img]);
@@ -150,6 +154,10 @@ const EventInfo = () => {
       [{ align: [] }],
       ['clean'],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize'],
+    },
   };
 
   return (
