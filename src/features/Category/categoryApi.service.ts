@@ -44,7 +44,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const categoryApi = createApi({
   reducerPath: 'categoryApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 10,
+  keepUnusedDataFor: 0,
   tagTypes: ['cate'],
   // providesTags: ['cate'], // cho query
   // invalidatesTags: ['cate'], // cho mutation

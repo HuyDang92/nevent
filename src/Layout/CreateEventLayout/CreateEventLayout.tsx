@@ -28,7 +28,7 @@ function CreateEventLayout() {
           </div>
           <div className="py-36 text-center">
             <img src={notUse} alt="" className="mx-auto w-[50%]" />
-            <h1 className="text-center font-bold">
+            <h1 className="text-center font-bold dark:text-cs_light">
               Chức năng này chưa được phát triển trên điện thoại vui lòng sử dụng trên máy tính! Xin cảm ơn
             </h1>
             <Link to="/">

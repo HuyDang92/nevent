@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 10,
+  keepUnusedDataFor: 0,
   tagTypes: ['ticket', 'profile'],
   endpoints: (builder) => ({
     signUpWithEmail: builder.mutation({

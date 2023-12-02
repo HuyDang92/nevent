@@ -5,15 +5,48 @@ import Button from '~/components/customs/Button';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate } from 'react-router-dom';
 import { addTicket, removeTicket } from '~/features/Business/businessSlice';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import TicketCard from '~/pages/Payment/components/TicketCard';
 import { errorNotify } from '~/components/customs/Toast';
 import Icon from '~/components/customs/Icon';
+import { Variants, motion } from 'framer-motion';
+import useClickOutside from '~/hooks/useClickOutside';
 const TicketList = () => {
   const dispatch = useAppDispatch();
   const ticketInfo = useAppSelector((state) => state.business.ticketList);
   const [freeTicketCheckbox, setFreeTicketCheckBox] = useState(false);
+  const [openTicketColor, setOpenTicketColor] = useState(false);
+  const ref = useRef(null);
   const navigate = useNavigate();
+  useClickOutside(ref, () => {
+    setOpenTicketColor(false);
+  });
+  const ticketColors = [
+    '#13C6B3',
+    '#2E0249',
+    '#38E54D',
+    '#2192FF',
+    '#CC0E74',
+    '#F9D423',
+    '#5D3A3A',
+    '#342EAD',
+    '#FD5D5D',
+    '#04009A',
+    '#266352',
+    '#6F1E51',
+    '#C70039',
+    '#FFC300',
+    '#FF5733',
+    '#EF4B4B',
+  ];
+  const itemVariants: Variants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 24 },
+    },
+    closed: { opacity: 0, y: 20, transition: { duration: 0.1 } },
+  };
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -166,16 +199,64 @@ const TicketList = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-3 px-6">
+            <div className="flex w-1/2 flex-col gap-3 px-6">
               <span className="dark:text-gray-400">Màu vé ( Phân biệt vé )</span>
-              <input
+
+              {/* Color v1 */}
+              {/* <input
                 name="color"
                 id="color"
                 type="color"
                 value={formik.values.color}
                 onChange={formik.handleChange}
                 className="w-[150px] rounded-lg border-none bg-transparent outline-none"
-              />
+              /> */}
+
+              {/* Color v2 */}
+              <motion.nav initial={false} animate={openTicketColor ? 'open' : 'closed'}>
+                <motion.button
+                  type="button"
+                  ref={ref}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => setOpenTicketColor(!openTicketColor)}
+                  style={{ backgroundColor: formik.values.color }}
+                  className="w-20 h-10"
+                >
+                </motion.button>
+                <motion.ul
+                  variants={{
+                    open: {
+                      clipPath: 'inset(0% 0% 0% 0% round 10px)',
+                      transition: {
+                        type: 'spring',
+                        bounce: 0,
+                        duration: 0.7,
+                        delayChildren: 0.3,
+                        staggerChildren: 0.05,
+                      },
+                    },
+                    closed: {
+                      clipPath: 'inset(10% 50% 90% 50% round 10px)',
+                      transition: {
+                        type: 'spring',
+                        bounce: 0,
+                        duration: 0.3,
+                      },
+                    },
+                  }}
+                  className="flex flex-wrap gap-2 rounded-2xl border bg-cs_light p-2 shadow-border-full"
+                >
+                  {ticketColors.map((color) => (
+                    <motion.li
+                      variants={itemVariants}
+                      key={color}
+                      className="h-10 w-[calc(12.5%-7px)] cursor-pointer"
+                      style={{ backgroundColor: color }}
+                      onClick={() => formik.setFieldValue('color', color)}
+                    ></motion.li>
+                  ))}
+                </motion.ul>
+              </motion.nav>
             </div>
             {/* <div className="flex w-1/4 flex-col justify-between border-l-[1px] px-3">
               <span className="dark:text-gray-400">Số lượng vé tối thiểu cho một lần mua</span>

@@ -72,7 +72,7 @@ const History = ({ className }: UserInfoProp) => {
                 <p className="text-sm font-medium"> {moment(item?.date).format('hh:mm - DD/MM/YYYY')}</p>
               </div>
               <div className="flex justify-between xl:block">
-                <h3 className="pb-2 text-[#ccc] ">Tổng số lượng vé</h3>
+                <h3 className="pb-2 text-[#ccc] ">Tổng số vé</h3>
                 <p className="font-medium">
                   {item?.tickets?.reduce((accumulator, ticket) => accumulator + ticket.totalPurchase, 0)}
                 </p>

@@ -90,7 +90,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
       </div>
       <div
         ref={ref}
-        className={`absolute right-0 top-[130%] w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${
+        className={`absolute right-0 top-[130%] z-20 w-[100%] overflow-hidden overflow-y-scroll rounded-lg bg-cs_light  dark:bg-cs_lightDark ${
           value === '' ? 'h-0 ' : 'max-h-60 border p-3'
         }  space-y-2 shadow-border-full transition-all`}
       >

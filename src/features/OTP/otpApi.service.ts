@@ -50,7 +50,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const otpApi = createApi({
   reducerPath: 'otpApi',
   baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 10,
+  keepUnusedDataFor: 0,
   tagTypes: ['cate'],
   // providesTags: ['cate'], // cho query
   // invalidatesTags: ['cate'], // cho mutation
@@ -96,5 +96,4 @@ export const {
   useSendOtpLoginQuery,
   useLazySendOtpLoginQuery,
   useVerifySwapTicketMutation,
-
 } = otpApi;
