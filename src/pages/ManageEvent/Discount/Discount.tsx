@@ -1,6 +1,13 @@
+import { Dialog } from '@material-tailwind/react';
+import { useState } from 'react';
 import Dropdown from '~/components/Dropdown';
+import Button from '~/components/customs/Button';
 
+import DiscountTable from './components/DiscountTable';
+import CreateDiscount from './components/CreateDiscount';
 const Discount = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const event = {
     _id: '652cd125fc13ae657b6c7cdf',
     title: 'ÅÍÎÏ˝ÓÔÒÚÆ☃',
@@ -42,6 +49,7 @@ const Discount = () => {
     hotLevel: 1,
     updatedAt: '2023-10-16T08:27:36.488Z',
   };
+
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
       <div className="flex justify-between">
@@ -114,18 +122,21 @@ const Discount = () => {
                 <option value="30">Ngày 30</option>
                 <option value="31">Ngày 31</option>
               </select>
+              <Button onClick={() => setIsOpen(!isOpen)} value="Thêm" mode="dark" />
             </div>
           </div>
           <div className="mt-3 flex w-full flex-col items-center justify-center rounded-xl border-2 border-cs_semi_green p-4 text-center text-cs_semi_green">
-            <img
+            {/* <img
               src="https://i.pinimg.com/originals/d1/7b/48/d17b48444021c047dd006dd632da4955.gif"
               alt=""
               className="w-[10rem]"
             />
-            <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1>
+            <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1> */}
+            <DiscountTable />
           </div>
         </div>
       </div>
+      {isOpen && <CreateDiscount isOpen={isOpen} setIsOpen={setIsOpen} />}
     </div>
   );
 };
