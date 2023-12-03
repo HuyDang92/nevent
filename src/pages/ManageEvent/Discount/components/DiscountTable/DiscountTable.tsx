@@ -1,7 +1,7 @@
 import Icon from '~/components/customs/Icon';
 import { Card, Typography, CardBody, Chip, Avatar, IconButton, Tooltip } from '@material-tailwind/react';
 
-const TABLE_HEAD = ['Mã giảm giá', 'Giảm giá', 'Thời hạn', 'Tình trạng', ''];
+const TABLE_HEAD = ['Mã giảm giá', 'Mức giảm', 'Bắt đầu', 'Kết thúc', 'Trạng thái', 'Số đơn hàng dã dùng', 'Thao tác'];
 // code, discount, startDate, endDate, amount
 const TABLE_ROWS = [
   {
@@ -9,6 +9,7 @@ const TABLE_ROWS = [
     discount: '25k',
     startDate: '2023-12-19',
     endDate: '2023-12-26',
+    billCount: 35,
     amount: 35,
   },
   {
@@ -16,6 +17,7 @@ const TABLE_ROWS = [
     discount: '5k',
     startDate: '2023-12-30',
     endDate: '2023-12-31',
+    billCount: 35,
     amount: 0,
   },
   {
@@ -23,6 +25,7 @@ const TABLE_ROWS = [
     discount: '25%',
     startDate: '2023-12-19',
     endDate: '2023-12-26',
+    billCount: 35,
     amount: 35,
   },
   {
@@ -30,6 +33,7 @@ const TABLE_ROWS = [
     discount: '5%',
     startDate: '2023-12-19',
     endDate: '2023-12-26',
+    billCount: 35,
     amount: 35,
   },
 ];
@@ -44,13 +48,13 @@ const getDaysDifference = (startDate: Date, endDate: Date) => {
 
 const DiscountTable = () => {
   return (
-    <Card className="h-full w-full">
-      <CardBody className="overflow-scroll px-0">
+    <Card className="mt-5 h-full w-full border shadow-none">
+      <CardBody className="p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
-                <th key={head} className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50/50 p-4 text-center">
                   <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
                     {head}
                   </Typography>
@@ -59,21 +63,16 @@ const DiscountTable = () => {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(({ code, discount, startDate, endDate, amount }, index) => {
+            {TABLE_ROWS.map(({ code, discount, startDate, endDate, amount, billCount }, index) => {
               const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
-              const startD = new Date(startDate);
-              const endD = new Date(endDate);
-              const days = getDaysDifference(startD, endD);
+              const classes = isLast ? 'p-4 text-center' : 'text-center p-4 border-b border-blue-gray-50';
 
               return (
                 <tr key={index}>
-                  <td className={classes}>
-                    <div className="flex items-center gap-3">
-                      <Typography variant="small" color="blue-gray" className="font-bold">
-                        {code}
-                      </Typography>
-                    </div>
+                  <td className={` ${classes}`}>
+                    <Typography variant="small" color="blue-gray" className="font-bold">
+                      {code}
+                    </Typography>
                   </td>
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
@@ -82,11 +81,16 @@ const DiscountTable = () => {
                   </td>
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {days} ngày
+                      {startDate}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <div className="w-max">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {endDate}
+                    </Typography>
+                  </td>
+                  <td className={`flex justify-center ${classes}`}>
+                    <div className="w-max ">
                       <Tooltip content={`${amount} mã`}>
                         <Chip
                           size="sm"
@@ -96,6 +100,11 @@ const DiscountTable = () => {
                         />
                       </Tooltip>
                     </div>
+                  </td>
+                  <td className={` ${classes}`}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {billCount}
+                    </Typography>
                   </td>
                   <td className={classes}>
                     <Tooltip content="Xóa mã giảm giá">

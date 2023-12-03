@@ -149,6 +149,7 @@ interface IPurchase {
   tickets: Ticket[];
   code: string;
   user: IUserField;
+  event: IEvent;
   date: string;
   status: string;
   amount: number;

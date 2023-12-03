@@ -30,7 +30,7 @@ export function PopupDetailHistory({ data, children }: IPopUpDetailProps) {
             data?.map((item: IPurchase) => (
               <div
                 key={item?._id}
-                className="flex gap-5 justify-between rounded-xl p-4 shadow-border-light dark:bg-cs_lightDark"
+                className="flex justify-between gap-5 rounded-xl p-4 shadow-border-light dark:bg-cs_lightDark"
               >
                 <div className="flex justify-between xl:block">
                   <h3 className="pb-2 text-[#ccc]">Mã giao dịch</h3>
@@ -42,16 +42,19 @@ export function PopupDetailHistory({ data, children }: IPopUpDetailProps) {
                     <span
                       className={`h-2.5 w-2.5 rounded-full ${item?.status === 'success' && 'bg-cs_semi_green'}  ${
                         item?.status === 'pending' && 'bg-yellow-600'
-                      }  ${item?.status === 'failure' && 'bg-red-500'}`}
+                      }  ${item?.status === 'failure' && 'bg-red-500'} ${item?.status === 'canceled' && 'bg-gray-600'}`}
                     ></span>
                     <span
-                      className={`font-medium ${item?.status === 'failure' && 'text-red-500'} ${
-                        item?.status === 'pending' && 'text-yellow-600'
-                      } ${item?.status === 'success' && 'text-cs_semi_green'} `}
+                      className={`font-medium  ${item?.status === 'canceled' && 'text-gray-600'} ${
+                        item?.status === 'failure' && 'text-red-500'
+                      } ${item?.status === 'pending' && 'text-yellow-600'} ${
+                        item?.status === 'success' && 'text-cs_semi_green'
+                      } `}
                     >
                       {item?.status === 'success' && 'Thành công'}
                       {item?.status === 'pending' && 'Chờ thanh toán'}
                       {item?.status === 'failure' && 'Thất bại'}
+                      {item?.status === 'canceled' && 'Đã hủy'}
                     </span>
                   </p>
                 </div>

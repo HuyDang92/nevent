@@ -56,16 +56,12 @@ const Discount = () => {
         <h1 className="text-2xl font-bold dark:text-white">Mã giảm giá</h1>
         <Dropdown />
       </div>
-      <div className="mt-8 overflow-hidden rounded-xl border-[1px] border-cs_semi_green">
-        <div className="bg-cs_semi_green p-5">
-          <h1 className="text-xl font-bold text-cs_light">{event.title}</h1>
-        </div>
+      <div className="overflow-hidden">
         <div className="p-5">
-          <h2 className="text-xl font-bold dark:text-white"> Quản lý mã giảm giá</h2>
-          <div className="mt-3 flex justify-between rounded-xl bg-cs_light_gray p-3">
-            <p className="w-[20%] text-cs_semi_green">Hiển thị trong:</p>
-            <div className="flex w-[80%] justify-between gap-5">
-              <select
+          <div className=" flex items-center gap-3 rounded-xl">
+            {/* <p className=" text-cs_semi_green">Hiển thị trong:</p> */}
+            <div className="flex justify-between gap-5">
+              {/* <select
                 name="month"
                 id="month"
                 className="w-[50%] rounded bg-cs_semi_green px-4 py-1 text-white focus:outline-none"
@@ -121,11 +117,11 @@ const Discount = () => {
                 <option value="29">Ngày 29</option>
                 <option value="30">Ngày 30</option>
                 <option value="31">Ngày 31</option>
-              </select>
+              </select> */}
               <Button onClick={() => setIsOpen(!isOpen)} value="Thêm" mode="dark" />
             </div>
           </div>
-          <div className="mt-3 flex w-full flex-col items-center justify-center rounded-xl border-2 border-cs_semi_green p-4 text-center text-cs_semi_green">
+          <div className="flex w-full flex-col items-center justify-center rounded-xl text-center text-cs_semi_green">
             {/* <img
               src="https://i.pinimg.com/originals/d1/7b/48/d17b48444021c047dd006dd632da4955.gif"
               alt=""

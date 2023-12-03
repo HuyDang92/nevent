@@ -16,14 +16,6 @@ const TABS = [
     value: '',
   },
   {
-    label: 'Đã thanh toán',
-    value: 'COMPLETED',
-  },
-  {
-    label: 'Chưa thanh toán',
-    value: 'UPCOMING',
-  },
-  {
     label: 'Đã check-in',
     value: 'HAPPENING',
   },
@@ -44,7 +36,7 @@ const CustomersManage = () => {
         <h1 className="text-2xl font-bold dark:text-white">Quản lý khách hàng</h1>
         <Dropdown />
       </div>
-      <Tabs value="" className="w-full max-w-[50rem]">
+      {/* <Tabs value="" className="w-full max-w-[50rem]">
         <TabsHeader>
           {TABS.map(({ label, value }) => (
             <Tab key={value} value={value} className="max-w-content py-2 text-sm">
@@ -52,7 +44,7 @@ const CustomersManage = () => {
             </Tab>
           ))}
         </TabsHeader>
-      </Tabs>
+      </Tabs> */}
       <div className="mt-5 overflow-hidden rounded-xl border">
         <CardBody className="p-0">
           {customer.isFetching && (
