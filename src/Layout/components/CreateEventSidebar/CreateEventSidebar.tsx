@@ -11,7 +11,7 @@ type CreateEventSidebarProps = {
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
   const currentAuth = useAppSelector((state) => state.auth.currentUser);
   const cateList =
-    currentAuth?.role?.name === 'user' || !currentAuth?.businessProfile
+    currentAuth?.role?.name === 'user'
       ? [
           {
             name: 'Hồ sơ tổ chức',

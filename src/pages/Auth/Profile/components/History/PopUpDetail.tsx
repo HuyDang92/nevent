@@ -79,7 +79,7 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc] ">Phương thức thanh toán</h3>
-              <p className="font-medium">VNPAY</p>
+              <p className="font-medium">{data?.method}</p>
             </div>
           </div>
         </DialogBody>
