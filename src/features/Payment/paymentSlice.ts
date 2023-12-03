@@ -20,6 +20,7 @@ interface PaymentState {
     purchaseMethod: string;
   };
   discount: number;
+  method: string | null;
 }
 
 const initialState: PaymentState = {
@@ -31,6 +32,7 @@ const initialState: PaymentState = {
     purchaseMethod: '',
   },
   discount: 0,
+  method: null,
 };
 
 const paymentSlice = createSlice({
@@ -43,6 +45,9 @@ const paymentSlice = createSlice({
     },
     addUserInfor: (state, action) => {
       state.userInfor = action.payload;
+    },
+    addMethod: (state, action) => {
+      state.method = action.payload;
     },
     inscreaseTicket: (state, action) => {
       if (state.ticket.find((ticket) => ticket._id === action.payload._id)) {
@@ -66,5 +71,5 @@ const paymentSlice = createSlice({
     },
   },
 });
-export const { addUserInfor, inscreaseTicket, descreaseTicket, refreshPayment } = paymentSlice.actions;
+export const { addUserInfor, inscreaseTicket, descreaseTicket, refreshPayment, addMethod } = paymentSlice.actions;
 export default paymentSlice.reducer;

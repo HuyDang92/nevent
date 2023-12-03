@@ -14,9 +14,6 @@ const PrIframe = () => {
           <div className="absolute left-1/2 top-1/2 h-[90%] w-[80%] -translate-x-1/2 -translate-y-1/2 border-4 border-pink-200">
             <div className="relative h-full w-full p-2">
               <h1 className="w-auto bg-white p-2 font-bold text-pink-200">{event?.data?.data?.title}</h1>
-              <p className="absolute bottom-2 right-2 line-clamp-6 max-w-[20rem] text-sm text-white">
-                {event?.data?.data?.desc}
-              </p>
             </div>
           </div>
         </div>
@@ -33,9 +30,7 @@ const PrIframe = () => {
             <div className="h-full flex-[1.5]">
               <img src={event?.data?.data?.banner[0].url} className="h-full w-full bg-center object-cover" alt="" />
             </div>
-            <div className="relative flex h-full flex-1 items-end justify-end p-2">
-              <p className="line-clamp-6 max-w-[20rem] text-sm text-black">{event?.data?.data?.desc}</p>
-            </div>
+
             <h1 className="absolute left-12 top-12 rounded-lg bg-yellow-800 p-2 font-bold text-white">
               {event?.data?.data?.title}
             </h1>
@@ -46,9 +41,9 @@ const PrIframe = () => {
 
   if (layout === '3')
     return (
-      <div className="fixed bottom-0 left-0 right-0 top-0 flex flex-col border-2 border-teal-200 bg-white">
-        <div className="relative h-full w-full p-4">
-          <div className="relative h-full w-full border-2 border-teal-200">
+      <div className="fixed bottom-0 rounded-lg left-0 right-0 top-0 flex flex-col border-2 border-teal-200 bg-white">
+        <div className="relative h-full w-full p-4 ">
+          <div className="relative h-full w-full border-2 border-teal-200 ">
             <img src={event?.data?.data?.banner[0].url} className="h-full w-full bg-center object-cover" alt="" />
             <p className="absolute bottom-0 left-1/2 min-w-[80%] -translate-x-1/2 translate-y-1/2 bg-white p-1 text-center font-semibold text-teal-300 shadow-border-light">
               {event?.data?.data?.title}

@@ -103,7 +103,7 @@ const EventManage = () => {
       <div className=" my-5 flex flex-col gap-8">
         <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-cs_dark">
           <ManageEventParameters title={'Tổng sự kiện'} count={analytics.data?.data?.totalEvents} border />
-          <ManageEventParameters title={'Đang chờ duyệt'} count={analytics.data?.data?.totalEventReviews} border />
+          <ManageEventParameters title={'Sự kiện chờ duyệt'} count={analytics.data?.data?.totalEventReviews} border />
           <ManageEventParameters
             title={'Tổng doanh thu (VNĐ)'}
             count={analytics.data?.data?.totalRevenue.toLocaleString('vi')}
@@ -187,7 +187,7 @@ const EventManage = () => {
                       </td>
                       <td className={`w-56 ${classes}`}>
                         <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
-                          <Link to={`/event-detail/${item?._id}`}>{item.title}</Link>
+                          <Link to={`/organization/manage-event/statistics/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -255,13 +255,15 @@ const EventManage = () => {
                         </Typography>
                       </td>
                       <td className={` ${classes}`}>
-                        <Tooltip content="Sửa sự kiện">
-                          <Link to={`/organization/edit-event/${item?._id}/0`}>
-                            <IconButton variant="text">
-                              <Icon name="pencil-outline" className="text-xl" />
-                            </IconButton>
-                          </Link>
-                        </Tooltip>
+                        {item.status === 'PREVIEW' && (
+                          <Tooltip content="Sửa sự kiện">
+                            <Link to={`/organization/edit-event/${item?._id}/0`}>
+                              <IconButton variant="text">
+                                <Icon name="pencil-outline" className="text-xl" />
+                              </IconButton>
+                            </Link>
+                          </Tooltip>
+                        )}
                         <Tooltip content="Xem chi tiết">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>
                             <IconButton variant="text">

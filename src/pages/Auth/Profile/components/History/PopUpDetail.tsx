@@ -30,7 +30,12 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc]">Mô tả</h3>
-              <p className="line-clamp-2 font-semibold">Thanh toán vé</p>
+              <p className="w-[80%] cursor-pointer font-semibold">
+                Thanh toán vé:{' '}
+                <a target="_blank" href={`/event-detail/${data?.event?._id}`}>
+                  {data?.event?.title}
+                </a>
+              </p>
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc]">Trạng thái</h3>
@@ -38,16 +43,19 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
                 <span
                   className={`h-2.5 w-2.5 rounded-full ${data?.status === 'success' && 'bg-cs_semi_green'}  ${
                     data?.status === 'pending' && 'bg-yellow-600'
-                  }  ${data?.status === 'failure' && 'bg-red-500'}`}
+                  }  ${data?.status === 'failure' && 'bg-red-500'} ${data?.status === 'canceled' && 'bg-gray-600'}`}
                 ></span>
                 <span
-                  className={`font-medium ${data?.status === 'failure' && 'text-red-500'} ${
-                    data?.status === 'pending' && 'text-yellow-600'
-                  } ${data?.status === 'success' && 'text-cs_semi_green'} `}
+                  className={`font-medium  ${data?.status === 'canceled' && 'text-gray-600'} ${
+                    data?.status === 'failure' && 'text-red-500'
+                  } ${data?.status === 'pending' && 'text-yellow-600'} ${
+                    data?.status === 'success' && 'text-cs_semi_green'
+                  } `}
                 >
                   {data?.status === 'success' && 'Thành công'}
                   {data?.status === 'pending' && 'Chờ thanh toán'}
                   {data?.status === 'failure' && 'Thất bại'}
+                  {data?.status === 'canceled' && 'Đã hủy'}
                 </span>
               </p>
             </div>
@@ -79,7 +87,7 @@ export function PopUpDetail({ data, children, onClick }: IPopUpDetailProps) {
             </div>
             <div className="flex justify-between border-b">
               <h3 className="pb-2 text-[#ccc] ">Phương thức thanh toán</h3>
-              <p className="font-medium">VNPAY</p>
+              <p className="font-medium">{data?.method}</p>
             </div>
           </div>
         </DialogBody>

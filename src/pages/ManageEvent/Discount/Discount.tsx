@@ -1,6 +1,13 @@
+import { Dialog } from '@material-tailwind/react';
+import { useState } from 'react';
 import Dropdown from '~/components/Dropdown';
+import Button from '~/components/customs/Button';
 
+import DiscountTable from './components/DiscountTable';
+import CreateDiscount from './components/CreateDiscount';
 const Discount = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const event = {
     _id: '652cd125fc13ae657b6c7cdf',
     title: 'ÅÍÎÏ˝ÓÔÒÚÆ☃',
@@ -42,22 +49,19 @@ const Discount = () => {
     hotLevel: 1,
     updatedAt: '2023-10-16T08:27:36.488Z',
   };
+
   return (
     <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold dark:text-white">Mã giảm giá</h1>
         <Dropdown />
       </div>
-      <div className="mt-8 overflow-hidden rounded-xl border-[1px] border-cs_semi_green">
-        <div className="bg-cs_semi_green p-5">
-          <h1 className="text-xl font-bold text-cs_light">{event.title}</h1>
-        </div>
+      <div className="overflow-hidden">
         <div className="p-5">
-          <h2 className="text-xl font-bold dark:text-white"> Quản lý mã giảm giá</h2>
-          <div className="mt-3 flex justify-between rounded-xl bg-cs_light_gray p-3">
-            <p className="w-[20%] text-cs_semi_green">Hiển thị trong:</p>
-            <div className="flex w-[80%] justify-between gap-5">
-              <select
+          <div className=" flex items-center gap-3 rounded-xl">
+            {/* <p className=" text-cs_semi_green">Hiển thị trong:</p> */}
+            <div className="flex justify-between gap-5">
+              {/* <select
                 name="month"
                 id="month"
                 className="w-[50%] rounded bg-cs_semi_green px-4 py-1 text-white focus:outline-none"
@@ -113,19 +117,22 @@ const Discount = () => {
                 <option value="29">Ngày 29</option>
                 <option value="30">Ngày 30</option>
                 <option value="31">Ngày 31</option>
-              </select>
+              </select> */}
+              <Button onClick={() => setIsOpen(!isOpen)} value="Thêm" mode="dark" />
             </div>
           </div>
-          <div className="mt-3 flex w-full flex-col items-center justify-center rounded-xl border-2 border-cs_semi_green p-4 text-center text-cs_semi_green">
-            <img
+          <div className="flex w-full flex-col items-center justify-center rounded-xl text-center text-cs_semi_green">
+            {/* <img
               src="https://i.pinimg.com/originals/d1/7b/48/d17b48444021c047dd006dd632da4955.gif"
               alt=""
               className="w-[10rem]"
             />
-            <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1>
+            <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1> */}
+            <DiscountTable />
           </div>
         </div>
       </div>
+      {isOpen && <CreateDiscount isOpen={isOpen} setIsOpen={setIsOpen} />}
     </div>
   );
 };

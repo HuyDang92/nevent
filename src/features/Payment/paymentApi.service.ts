@@ -47,9 +47,16 @@ export const paymentApi = createApi({
   baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
-    payTicket: builder.mutation({
+    vnPay: builder.mutation({
       query: (body) => ({
         url: '/api/payments/vnpay',
+        method: 'POST',
+        body: body,
+      }),
+    }),
+    vietQr: builder.mutation({
+      query: (body) => ({
+        url: '/api/payments/payOs',
         method: 'POST',
         body: body,
       }),
@@ -63,4 +70,4 @@ export const paymentApi = createApi({
   }),
 });
 
-export const { usePayTicketMutation, useGetHistoryQuery, useLazyPayBackTicketQuery } = paymentApi;
+export const { useVnPayMutation, useVietQrMutation, useGetHistoryQuery, useLazyPayBackTicketQuery } = paymentApi;

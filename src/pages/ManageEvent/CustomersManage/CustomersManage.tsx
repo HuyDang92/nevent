@@ -7,20 +7,13 @@ import { useListCustomerPaymentQuery } from '~/features/Business/business.servic
 import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 import Icon from '~/components/customs/Icon';
 import nothing from '~/assets/images/nothing.svg';
-import { PopUpDetail } from '../components/PopUpDetail';
+import DefaultAvatar from '~/assets/images/default-avatar.jpg';
+import { PopupDetailHistory } from './PopupDetailHistory';
 
 const TABS = [
   {
     label: 'Tất cả',
     value: '',
-  },
-  {
-    label: 'Đã thanh toán',
-    value: 'COMPLETED',
-  },
-  {
-    label: 'Chưa thanh toán',
-    value: 'UPCOMING',
   },
   {
     label: 'Đã check-in',
@@ -43,7 +36,7 @@ const CustomersManage = () => {
         <h1 className="text-2xl font-bold dark:text-white">Quản lý khách hàng</h1>
         <Dropdown />
       </div>
-      <Tabs value="" className="w-full max-w-[50rem]">
+      {/* <Tabs value="" className="w-full max-w-[50rem]">
         <TabsHeader>
           {TABS.map(({ label, value }) => (
             <Tab key={value} value={value} className="max-w-content py-2 text-sm">
@@ -51,7 +44,7 @@ const CustomersManage = () => {
             </Tab>
           ))}
         </TabsHeader>
-      </Tabs>
+      </Tabs> */}
       <div className="mt-5 overflow-hidden rounded-xl border">
         <CardBody className="p-0">
           {customer.isFetching && (
@@ -59,7 +52,7 @@ const CustomersManage = () => {
               <LoadingLocal />
             </div>
           )}
-          {customer.data?.data.length !== 0 ? (
+          {customer.data?.data?.length === 0 ? (
             <div className="flex justify-center py-20 text-center">
               <div>
                 <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
@@ -80,8 +73,8 @@ const CustomersManage = () => {
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3, 4].map((_, index) => {
-                  const isLast = index === [1, 2, 3, 4].length - 1;
+                {customer.data?.data.map((item: { user: IUserField; payments: IPurchase }, index: number) => {
+                  const isLast = index === customer.data?.data.length - 1;
                   const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
                   return (
                     <tr key={index}>
@@ -91,38 +84,38 @@ const CustomersManage = () => {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <div className="flex max-w-[20rem] items-center justify-start gap-4 rounded-lg bg-[#f5f5f5] px-4 py-2">
+                        <div className="flex max-w-[20rem] items-center justify-start gap-4 rounded-lg px-4 py-2">
                           <div className="h-[3rem] w-[3rem] overflow-hidden rounded-full">
                             <img
-                              src="https://i.pinimg.com/736x/71/be/39/71be397a811d4555a0cc2d48d970e5b8.jpg"
+                              src={item?.user?.avatar?.url ?? DefaultAvatar}
                               alt="0"
                               className="h-full w-full object-cover"
                             />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold">Nguyễn Văn A</p>
+                            <p className="text-sm font-semibold">{item?.user?.fullName}</p>
                           </div>
                         </div>
                       </td>
                       <td className={classes}>
                         <Typography variant="paragraph" color="blue-gray" className="font-normal">
-                          <p className="font-semibold text-gray-700">minull1810@gmail.com</p>
+                          <p className="font-semibold text-gray-700">{item?.user?.email}</p>
                         </Typography>
                       </td>
                       <td className={classes}>
                         <Typography variant="paragraph" color="blue-gray" className="font-normal">
-                          <p className="font-semibold text-gray-700">+84 9812 123 112</p>
+                          <p className="font-semibold text-gray-700">{item?.user?.phone}</p>
                         </Typography>
                       </td>
                       <td className={classes}>
                         <div className="flex items-center gap-4">
-                          <Tooltip content="Thông tin mua vé">
-                            <PopUpDetail data={{}}>
+                          <PopupDetailHistory data={item?.payments}>
+                            <Tooltip content="Thông tin mua vé">
                               <IconButton variant="text">
                                 <Icon name="information-circle-outline" className="text-xl" />
                               </IconButton>
-                            </PopUpDetail>
-                          </Tooltip>
+                            </Tooltip>
+                          </PopupDetailHistory>
                         </div>
                       </td>
                     </tr>
