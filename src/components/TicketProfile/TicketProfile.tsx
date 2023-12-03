@@ -33,6 +33,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
       domToImage
         .toPng(qrCodeDom)
         .then((dataUrl) => {
+          console.log(dataUrl);
           const link = document.createElement('a');
           link.href = dataUrl;
           link.download = `${typeTicket}.png`; // Tên file khi tải về
@@ -93,7 +94,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                 <span className="absolute -right-3 top-48 z-20 h-7 w-7 rounded-full bg-cs_light dark:bg-cs_lightDark xl:hidden"></span>
                 <span className="absolute top-[12.8rem] z-10 h-1 w-full rounded-full  border-b-2 border-dashed border-cs_light bg-transparent dark:bg-cs_dark xl:hidden"></span>
                 <img
-                  src={dataSummary?.event?.banner[0]?.url}
+                  src={dataSummary?.event?.banner[0]?.secureUrl}
                   alt=""
                   className="h-[520px] w-full rounded-xl object-cover xl:h-[250px]"
                 />
@@ -112,9 +113,6 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
 
                     <p className=" text-sm font-semibold xl:block">
                       Trạng thái: <span className="text-sm text-cs_semi_green">Chưa sử dụng</span>
-                    </p>
-                    <p className=" text-sm font-semibold xl:block">
-                      Loại vé: <span className=" text-sm">{item?.title}</span>
                     </p>
                     <p className="text-sm font-semibold xl:block">
                       Mô tả vé: <span className=" text-sm">{item?.desc}</span>
@@ -135,14 +133,13 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                       onClick={() => handleDownload(item?.title, index)}
                     /> */}
                   </div>
-                  {!passTicket && <Action data={data} onClick={() => handleDownload(item?.title, index)} />}
-                  <div className="absolute top-60 right-1/2 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-16 xl:translate-x-0">
+                  {!passTicket && <Action data={dataSummary} onClick={() => handleDownload(item?.title, index)} />}
+                  <div className="absolute right-1/2 top-60 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-8 xl:translate-x-0">
+                    <p className="py-2 text-center text-sm font-semibold xl:block">
+                      Vé: <span className=" text-sm">{item?.title}</span>
+                    </p>
                     <div className="flex justify-center bg-cs_light text-cs_dark shadow-border-light">
                       <div>
-                        {/* <div className="flex justify-between text-xs font-bold">
-                          <span>Vé: {item?.type}</span>
-                          <span>{item?.status === 'unworn' ? 'Chưa sử dụng' : 'Đã sử dụng'}</span>
-                        </div> */}
                         <Zoom>
                           <QRCode
                             className="h- w- border-2 border-cs_dark bg-cs_light p-2 xl:h-40 xl:w-40"
