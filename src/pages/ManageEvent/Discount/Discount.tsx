@@ -6,6 +6,7 @@ import Dropdown from '~/components/Dropdown';
 import Button from '~/components/customs/Button';
 import * as Yup from 'yup';
 import Input from '~/components/customs/Input';
+import DiscountTable from './components/DiscountTable';
 const Discount = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const date = new Date();
@@ -168,6 +169,7 @@ const Discount = () => {
               className="w-[10rem]"
             />
             <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1> */}
+            <DiscountTable />
           </div>
         </div>
       </div>
