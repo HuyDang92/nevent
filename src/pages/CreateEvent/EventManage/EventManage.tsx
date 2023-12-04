@@ -112,7 +112,8 @@ const EventManage = () => {
           <ManageEventParameters title={'Tổng vé đã bán'} count={analytics.data?.data?.totalTickets} />
         </div>
       </div>
-      <ChartBarAverage />
+      <ChartBarAverage type={'revenue'} />
+      <ChartBarAverage type={'ticket'} />
       <div className="mt-5  flex items-center justify-between gap-7">
         <Tabs value="" className="w-full max-w-[50rem] ">
           <TabsHeader

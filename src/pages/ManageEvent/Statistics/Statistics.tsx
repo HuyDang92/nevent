@@ -153,8 +153,9 @@ const Statistics = () => {
             </ul>
           </div>
         </div>
-        <ChartBarAverage />
-
+        <ChartBarAverage type={'revenue'} />
+        <ChartBarAverage type={'ticket'} />
+        
         <div className="relative mt-8">
           <Carousel
             className={`w-[80vw] rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
