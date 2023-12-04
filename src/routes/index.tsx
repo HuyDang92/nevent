@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { NotLoggedMiddleware } from './RouteMiddleware';
 import LoadingPage from '~/pages/LoadingPage';
 import NotFound from '~/pages/NotFound';
+import VerifyEmail from '~/pages/Auth/VerifyEmail';
 
 const FAQ = lazy(() => import('~/pages/FAQ'));
 const PrivateRoute = lazy(() => import('./PrivateRoute'));
@@ -58,15 +59,15 @@ const AppRoutes = () => {
         </Route>
         {/* FAQ */}
         <Route path="/help-center" element={<FAQ />} />
-
         <Route element={<NotLoggedMiddleware />}>
           {/* đăng nhập */}
           <Route path="/login" element={<LogIn />} />
           {/* đăng ký */}
           <Route path="/signup" element={<SignUp />} />
-
           {/* đăng quên mật khẩu */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* verify email*/}
+          <Route path="/verify/:email" element={<VerifyEmail />} />
         </Route>
 
         {/* user */}
