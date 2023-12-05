@@ -61,7 +61,6 @@ function LogIn() {
       dispatch(setAuthCurrentUser(data?.data?.user));
       dispatch(setBusinessProfile(data?.data?.businessProfile));
       dispatch(setTypeLoggin('password'));
-
       if (data?.data?.user?.role?.name === 'business') {
         // navigate('/organization/organization-profile');
         window.location.href = '/organization/event-list';

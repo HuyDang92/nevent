@@ -46,7 +46,11 @@ const History = ({ className }: UserInfoProp) => {
             >
               <div className="flex justify-between xl:block">
                 <h3 className="pb-2 text-[#ccc]">Mô tả</h3>
-                <p className="line-clamp-2 font-semibold">Thanh toán vé</p>
+                <p className="line-clamp-2 text-sm font-semibold">
+                  <a target="_blank" href={`/event-detail/${item?.event?._id}`}>
+                    Thanh toán vé: {item?.event?.title}
+                  </a>
+                </p>
               </div>
               <div className="flex justify-between xl:block">
                 <h3 className="pb-2 text-[#ccc]">Trạng thái</h3>
@@ -54,14 +58,19 @@ const History = ({ className }: UserInfoProp) => {
                   <span
                     className={`h-2.5 w-2.5 rounded-full ${item?.status === 'success' && 'bg-cs_semi_green'}  ${
                       item?.status === 'pending' && 'bg-yellow-600'
-                    }  ${item?.status === 'failure' && 'bg-red-500'}`}
+                    }  ${item?.status === 'failure' && 'bg-red-500'} ${item?.status === 'canceled' && 'bg-gray-600'}`}
                   ></span>
                   <span
-                    className={`font-medium ${item?.status === 'failure' && 'text-red-500'} ${
-                      item?.status === 'pending' && 'text-yellow-600'
-                    } ${item?.status === 'success' && 'text-cs_semi_green'} `}
+                    className={`font-medium  ${item?.status === 'canceled' && 'text-gray-600'} ${
+                      item?.status === 'failure' && 'text-red-500'
+                    } ${item?.status === 'pending' && 'text-yellow-600'} ${
+                      item?.status === 'success' && 'text-cs_semi_green'
+                    } `}
                   >
-                    {item?.status}
+                    {item?.status === 'success' && 'Thành công'}
+                    {item?.status === 'pending' && 'Chờ thanh toán'}
+                    {item?.status === 'failure' && 'Thất bại'}
+                    {item?.status === 'canceled' && 'Đã hủy'}
                   </span>
                 </p>
               </div>
@@ -70,8 +79,10 @@ const History = ({ className }: UserInfoProp) => {
                 <p className="text-sm font-medium"> {moment(item?.date).format('hh:mm - DD/MM/YYYY')}</p>
               </div>
               <div className="flex justify-between xl:block">
-                <h3 className="pb-2 text-[#ccc] ">Số lượng vé</h3>
-                <p className="font-medium">{item?.tickets?.length}</p>
+                <h3 className="pb-2 text-[#ccc] ">Tổng số vé</h3>
+                <p className="font-medium">
+                  {item?.tickets?.reduce((accumulator, ticket) => accumulator + ticket.totalPurchase, 0)}
+                </p>
               </div>
               <div className="flex justify-between xl:block">
                 <h3 className="pb-2 text-[#ccc] ">Tổng giá</h3>

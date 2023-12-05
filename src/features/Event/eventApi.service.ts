@@ -48,7 +48,6 @@ export const eventApi = createApi({
   tagTypes: ['event'],
   // providesTags: ['event'], // cho query
   // invalidatesTags: ['event'], // cho mutation
-
   endpoints: (builder) => ({
     createEvent: builder.mutation({
       query: (body) => ({

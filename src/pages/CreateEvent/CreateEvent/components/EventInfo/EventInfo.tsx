@@ -13,7 +13,10 @@ import { setEventInfo } from '~/features/Business/businessSlice';
 import { useGetLocationsQuery } from '~/features/Event/eventApi.service';
 import MyCarousel from '~/components/customs/MyCarousel';
 import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+
+Quill.register('modules/imageResize', ImageResize);
 
 const EventInfo = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +32,7 @@ const EventInfo = () => {
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
+  console.log(imageData);
 
   const quillRef = useRef<any>(null);
   // console.log(quillRef.current);
@@ -70,7 +74,7 @@ const EventInfo = () => {
       location: Yup.string().required('Địa điểm tổ chức không được bỏ trống'),
       address: Yup.string().required('Địa chỉ không được bỏ trống'),
       categories: Yup.mixed()
-        .test('cateLength', 'Chọn ít nhat 1 danh mục', (value: any) => {
+        .test('cateLength', 'Chọn ít nhất 1 danh mục', (value: any) => {
           if (value && value?.length > 0) {
             return true;
           }
@@ -101,12 +105,10 @@ const EventInfo = () => {
         })
         .required('Yêu cầu banner sự kiện'),
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: async (value: IEventInfo) => {
-      value.description_img = imageData.filter(function (item, index) {
-        return imageData.indexOf(item) == index;
-      });
-      console.log(value);
-
+      value.description_img = imageData;
       try {
         setImagesUploaded(true);
         dispatch(setEventInfo(value));
@@ -122,6 +124,13 @@ const EventInfo = () => {
       setImagePreviewUrl(eventInfo?.banner);
     }
   }, []);
+
+  useEffect(() => {
+    if (eventInfo?.description_img) {
+      setImageData(eventInfo?.description_img);
+    }
+  }, [eventInfo?.description_img]);
+
   useEffect(() => {
     if (eventInfo?.categories) {
       const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
@@ -145,7 +154,12 @@ const EventInfo = () => {
       [{ align: [] }],
       ['clean'],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize'],
+    },
   };
+
   return (
     <>
       <div className="">
@@ -256,7 +270,7 @@ const EventInfo = () => {
             </div>
             <div className="relative">
               {formik.errors.address && (
-                <small className="absolute left-[90px] top-[9px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[110px] top-[9px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.address}
                 </small>
               )}
@@ -280,7 +294,7 @@ const EventInfo = () => {
                 Danh mục sự kiện
               </label>
               <br />
-              <Input value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
+              <Input classNameInput='w-full' value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
               {categoryIpt !== '' && (
                 <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
                   {categories.data

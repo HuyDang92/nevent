@@ -1,28 +1,53 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from 'react';
-interface ChartBar {
-  title: string;
-  xAxisData: string[];
-  barData: number[][];
-  names: string[];
-  barColors: string[];
-}
+import { useLazyAnalyticsRevenueChartQuery } from '~/features/Business/business.service';
+import moment from 'moment';
+import LoadingLocal from '../customs/Loading/LoadingLocal';
+import { useParams } from 'react-router-dom';
 
 interface ChartBarProps {
-  data?: ChartBar;
+  type?: string;
 }
 
-const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
+const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
+  const { idEvent } = useParams();
   const [options, setOptions] = useState({} as any);
+  const currentDate = new Date();
+  const [dateData, setDateData] = useState<any>([]);
+  const oneWeekAgo = moment(currentDate).subtract(7, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  const current = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  const [reneue, result] = useLazyAnalyticsRevenueChartQuery();
+  useEffect(() => {
+    if (idEvent) {
+      reneue({ eventId: idEvent, startDate: oneWeekAgo, endDate: current });
+    } else {
+      reneue({ startDate: oneWeekAgo, endDate: current });
+    }
+  }, []);
+  // useEffect(() => {
+  //   if (result.data) {
+  //     const reData = result.data?.data?.map((item: any) => ({
+  //       value: parseFloat(item?.revenue.replace(/,/g, '')),
+  //       itemStyle: {
+  //         color: '#13C6B3',
+  //       },
+  //     }));
+  //     const ticketsData = result.data?.data?.map((item: any) => item?.totalTickets);
+  //     const dateData = result.data?.data?.map((item: any) => item?.date);
+  //     setRevenue(reData);
+  //     setTickets(ticketsData);
+  //     setDateData(dateData);
+  //   }
+  // }, [result.isFetching]);
 
   useEffect(() => {
-    if (!data) {
+    if (result.isSuccess) {
       const options = {
         tooltip: {
           trigger: 'axis',
         },
         legend: {
-          data: ['Lợi nhuận', 'Doanh thu'],
+          data: type === 'revenue' ? ['Doanh thu'] : ['Số vé'],
         },
         toolbox: {
           show: true,
@@ -37,8 +62,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
         xAxis: [
           {
             type: 'category',
-            // prettier-ignore
-            data: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+            data: result.data?.data?.map((item: any) => item?.date),
           },
         ],
         yAxis: [
@@ -46,43 +70,51 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
             type: 'value',
           },
         ],
-        series: [
-          {
-            name: 'Số vé',
-            type: 'bar',
-            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 65.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-            markPoint: {
-              data: [
-                { type: 'max', name: 'Max' },
-                { type: 'min', name: 'Min' },
-              ],
-            },
-            markLine: {
-              data: [{ type: 'average', name: 'Avg' }],
-            },
-          },
-          {
-            name: 'Doanh thu',
-            type: 'bar',
-            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 200, 48.7, 18.8, 6.0, 2.3],
-            markPoint: {
-              data: [
-                { name: 'Max', value: 182.2, xAxis: 7, yAxis: 183 },
-                { name: 'Min', value: 2.3, xAxis: 11, yAxis: 3 },
-              ],
-            },
-            markLine: {
-              data: [{ type: 'average', name: 'Avg' }],
-            },
-          },
-        ],
+        series:
+          type === 'ticket'
+            ? {
+                name: 'Số vé',
+                type: 'bar',
+                data: result.data?.data?.map((item: any) => item?.totalTickets),
+                markPoint: {
+                  data: [
+                    { type: 'max', name: 'Max' },
+                    { type: 'min', name: 'Min' },
+                  ],
+                },
+                markLine: {
+                  data: [{ type: 'average', name: 'Avg' }],
+                },
+              }
+            : {
+                name: 'Doanh thu',
+                type: 'bar',
+                data: result.data?.data?.map((item: any) => ({
+                  value: parseFloat(item?.revenue.replace(/,/g, '')),
+                  itemStyle: {
+                    color: '#13C6B3',
+                  },
+                })),
+                markPoint: {
+                  data: [
+                    { type: 'max', name: 'Max' },
+                    { type: 'min', name: 'Min' },
+                  ],
+                },
+                markLine: {
+                  data: [{ type: 'average', name: 'Avg' }],
+                },
+              },
       };
-
       setOptions(options);
     }
-  }, [data]);
+  }, [result.isFetching]);
 
-  return <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />;
+  return result.isFetching ? (
+    <LoadingLocal />
+  ) : (
+    <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />
+  );
 };
 
 export default ChartBarAverage;

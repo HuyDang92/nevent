@@ -1,20 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tab, Tabs, TabsContent, TabsHeader, TabsBody } from '~/components/Tabs';
 import Icon from '~/components/customs/Icon';
 import { Icon as Iconify } from '@iconify/react';
 import Button from '~/components/customs/Button';
 import { useGetBankListQuery } from '~/features/Payment/bankApi.service';
-import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCurrentViewportView } from '~/hooks/useViewPort';
+import { useAppDispatch } from '~/hooks/useActionRedux';
+import { addMethod } from '~/features/Payment/paymentSlice';
 
 const Purchase = () => {
   const { idEvent } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [method, setMethod] = useState(0);
-  const { isFetching, data, isError } = useGetBankListQuery();
-  const bankList = data?.data;
+  // const { isFetching, data, isError } = useGetBankListQuery();
+  // const bankList = data?.data;
   const currentViewPort = useCurrentViewportView();
+  useEffect(() => {
+    if (method === 0) {
+      dispatch(addMethod('VNPAY'));
+    } else {
+      dispatch(addMethod('VIETQR'));
+    }
+  }, [method]);
   return (
     <div>
       <div className="relative flex h-[60px] items-center border-b-[0.5px] px-5">
@@ -32,7 +41,7 @@ const Purchase = () => {
       </div>
       <div className="m-3">
         <Tabs>
-          <TabsHeader className="!rounded-[10px]">
+          <TabsHeader className="w-[50%] !rounded-[10px]">
             <Tab onClick={() => setMethod(0)} className="flex items-center" index={0}>
               <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
@@ -55,11 +64,11 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <Iconify icon="solar:card-broken" className="text-3xl dark:text-cs_light md:text-base" />
-                <span className="hidden text-sm md:block">Thẻ tín dụng</span>
+                <Iconify icon="solar:vietqr" className="text-3xl dark:text-cs_light md:text-base" />
+                <span className="hidden text-sm md:block">VIETQR</span>
               </div>
             </Tab>
-            <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
+            {/* <Tab onClick={() => setMethod(2)} className="flex items-center" index={2}>
               <div className="flex h-full w-full items-center justify-center gap-[10px] md:justify-normal">
                 <input
                   onChange={() => {}}
@@ -71,7 +80,7 @@ const Purchase = () => {
                 <Iconify icon="clarity:bank-line" className="text-3xl dark:text-cs_light md:text-base" />
                 <span className="hidden text-sm md:block">Internet Banking</span>
               </div>
-            </Tab>
+            </Tab> */}
           </TabsHeader>
           <TabsBody className="">
             <TabsContent index={0} className="p-5">
@@ -81,11 +90,12 @@ const Purchase = () => {
               </p>
             </TabsContent>
             <TabsContent index={1} className="p-5">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas, reiciendis. Exercitationem quasi quod et?
-              Expedita molestias, dolore, velit dolores ab amet quia debitis soluta consequatur rem qui voluptatem nobis
-              delectus!
+              <p>
+                <b>Lưu ý:</b> Khi khách hàng thanh toán bằng VIETQR, xin vui lòng không tắt cửa sổ trình duyệt khi đang
+                thanh toán. Vui lòng chờ đến khi có thông báo thành công.
+              </p>
             </TabsContent>
-            <TabsContent index={2}>
+            {/* <TabsContent index={2}>
               <div className="flex flex-wrap gap-[15px] p-1 md:p-5">
                 {isFetching && (
                   <>
@@ -113,7 +123,7 @@ const Purchase = () => {
                 )}
                 {isError && <div>Something went wrong</div>}
               </div>
-            </TabsContent>
+            </TabsContent> */}
           </TabsBody>
         </Tabs>
       </div>

@@ -27,11 +27,11 @@ const cateList = [
     link: '/help-center',
     icon: 'call',
   },
-  {
-    name: 'Cài đặt',
-    link: '/setting',
-    icon: 'settings',
-  },
+  // {
+  //   name: 'Cài đặt',
+  //   link: '/setting',
+  //   icon: 'settings',
+  // },
 ];
 const cateListNoLayout = [
   {

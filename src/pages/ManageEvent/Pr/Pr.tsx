@@ -10,8 +10,8 @@ import { successNotify } from '~/components/customs/Toast';
 const Pr = () => {
   const { idEvent } = useParams();
   const event = useGetEventByIdQuery(idEvent || '');
-  const [widthIpt, setWidthIpt] = useState('650px');
-  const [heightIpt, setHeightIpt] = useState('350px');
+  const [widthIpt, setWidthIpt] = useState('550px');
+  const [heightIpt, setHeightIpt] = useState('300px');
   const width = useDebounce(widthIpt, 500).searchValue;
   const height = useDebounce(heightIpt, 500).searchValue;
   const [isLayout, setIsLayout] = useState(0);
@@ -76,8 +76,20 @@ const Pr = () => {
                 </div>
               </div>
               <div className=" mt-4">
-                <h1 className="font-semibold">Mẫu sẵn</h1>
+                <h1 className="font-semibold">Mẫu</h1>
                 <div className="mt-4 flex gap-4">
+                  <Button
+                    className={`border-2 bg-cs_semi_green px-8 py-2 text-sm font-semibold ${
+                      isLayout === 0 ? 'border-[#616161]' : 'border-transparent'
+                    }`}
+                    mode="dark"
+                    value="Mặc định"
+                    onClick={() => {
+                      setIsLayout(0);
+                      setWidthIpt('550px');
+                      setHeightIpt('300px');
+                    }}
+                  />
                   <Button
                     className={`border-2 bg-pink-200 px-8 py-2 text-sm font-semibold ${
                       isLayout === 1 ? 'border-[#616161]' : 'border-transparent'
@@ -87,7 +99,7 @@ const Pr = () => {
                     onClick={() => {
                       setIsLayout(1);
                       setWidthIpt('550px');
-                      setHeightIpt('850px');
+                      setHeightIpt('300px');
                     }}
                   />
                   <Button
@@ -99,7 +111,7 @@ const Pr = () => {
                     onClick={() => {
                       setIsLayout(2);
                       setWidthIpt('550px');
-                      setHeightIpt('550px');
+                      setHeightIpt('300px');
                     }}
                   />
                   <Button
@@ -110,8 +122,8 @@ const Pr = () => {
                     value="Mẫu 03"
                     onClick={() => {
                       setIsLayout(3);
-                      setWidthIpt('100%');
-                      setHeightIpt('350px');
+                      setWidthIpt('550px');
+                      setHeightIpt('300px');
                     }}
                   />
                 </div>

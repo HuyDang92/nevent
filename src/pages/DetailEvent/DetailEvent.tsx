@@ -1,7 +1,6 @@
 import Button from '~/components/customs/Button';
 import SectionTitle from '~/components/SectionTitle';
-import des from '~/assets/images/detail.png';
-import des2 from '~/assets/images/detail2.png';
+import avtDefault from '~/assets/images/default-avatar.jpg';
 import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -237,7 +236,7 @@ function DetailEvent() {
                   <div className="flex gap-4 ">
                     <Zoom>
                       <img
-                        src={detailEventQuery?.data?.data?.banner[0]?.url}
+                        src={detailEventQuery?.data?.data?.creator?.avatar?.url ?? avtDefault}
                         alt=""
                         className="h-[90px] w-[90px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
                       />

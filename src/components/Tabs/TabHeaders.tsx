@@ -7,7 +7,8 @@ interface Padding {
 }
 const TabsHeader = ({ className, children, orientation, activeTab, setActiveTab }: TabsHeaderProp) => {
   const elementRef = useRef(null);
-
+  console.log(React.Children.count(children));
+  
   const [headersTabpadding, setHeadersTabPadding] = useState<Padding>({ x: 0, y: 0 });
   const tabsWidth = orientation == 'horizontal' ? 100 : 100 / React.Children.count(children);
   useEffect(() => {

@@ -15,7 +15,11 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
       ? [
           {
             name: 'Hồ sơ tổ chức',
-            link: '/user/organization-profile',
+            link: '/organization/organization-profile',
+          },
+          {
+            name: 'Thông tin ngân hàng',
+            link: '/organizer-information-banking',
           },
         ]
       : [
@@ -47,7 +51,7 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
         </div>
       </Link>
       <div className="flex h-full flex-col items-center justify-between py-5">
-        <List className={`px-4 pe-7 text-cs_semi_green`}>
+        <List className={`px-4 pe-4 text-cs_semi_green`}>
           {cateList.map((item, index) => (
             <NavLink
               key={index}

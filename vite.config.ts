@@ -5,39 +5,36 @@ import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
+// VitePWA({
+//   manifest: {
+//     icons: [
+//       {
+//         src: '/logo.png',
+//         sizes: '512x512',
+//         type: 'image/png',
+//         purpose: 'any maskable',
+//       },
+//     ],
+//   },
+//   workbox: {
+//     runtimeCaching: [
+//       {
+//         urlPattern: ({ url }) => {
+//           return url.pathname.startsWith('/api');
+//         },
+//         handler: 'CacheFirst' as const,
+//         options: {
+//           cacheName: 'api-cache',
+//           cacheableResponse: {
+//             statuses: [0, 200],
+//           },
+//         },
+//       },
+//     ],
+//   },
+// }),
 export default defineConfig({
-  plugins: [
-    react(),
-    svgr(),
-    VitePWA({
-      manifest: {
-        icons: [
-          {
-            src: '/logo.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
-      },
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: ({ url }) => {
-              return url.pathname.startsWith('/api');
-            },
-            handler: 'CacheFirst' as const,
-            options: {
-              cacheName: 'api-cache',
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
-      },
-    }),
-  ],
+  plugins: [react(), svgr()],
   assetsInclude: ['**/*.riv'],
   resolve: {
     alias: {

@@ -17,8 +17,8 @@ export const useUploadFile = () => {
     }
 
     // Check if the file size exceeds the limit
-    if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      errorNotify(`File vượt quá 1MB`);
+    if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024 * 20) {
+      errorNotify(`File vượt quá 20MB`);
       setError(true);
       return null;
     }

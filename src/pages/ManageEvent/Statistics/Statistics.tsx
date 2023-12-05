@@ -10,7 +10,7 @@ import { errorNotify, successNotify } from '~/components/customs/Toast';
 import Loading from '~/components/customs/Loading';
 import { isFetchBaseQueryError } from '~/utils/helper';
 import ManageEventParameters from '~/pages/CreateEvent/EventManage/components/ManageEventParameters/ManageEventParameters';
-import ChartBar from '~/components/Bar/Bar';
+import ChartBarAverage from '~/components/BarAverage/BarAverage';
 
 const Statistics = () => {
   const { idEvent } = useParams();
@@ -120,11 +120,45 @@ const Statistics = () => {
           />
           <ManageEventParameters title={'Tổng phí dịch vụ'} count={event?.data?.data?.analytics?.fee} />
         </div>
-        <ChartBar />
+        <div className="my-8">
+          <b className="mb-5 block dark:text-cs_light">Thống kê bán vé</b>
 
+          {/* Div box */}
+          <div className="rounded-xl border border-[#ccc] p-2 text-[14px]">
+            <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-4 py-4 font-bold">
+              <span className="w-[calc(100%/6)] text-center text-base">Tên vé</span>
+              <span className="w-[calc(100%/6)] text-center text-base">Loại vé</span>
+              <span className="w-[calc(100%/6)] text-center text-base">Giá vé (VNĐ) </span>
+              <span className="w-[calc(100%/6)] text-center text-base">Số lượng vé</span>
+              <span className="w-[calc(100%/6)] text-center text-base">Đã bán</span>
+              <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
+            </div>
+            <ul>
+              {event.data?.data?.tickets?.map((ticket: ITicket, index: number) => {
+                const classes = event.data?.data?.tickets.length - 1 === index ? '' : 'border-b-[1px] border-[#ccc]';
+                return (
+                  <li
+                    key={index}
+                    className={`${classes} my-2 flex justify-between gap-3 px-4 py-4 font-semibold dark:text-cs_light`}
+                  >
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.type}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.price?.toLocaleString('vi')}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.sold}</span>
+                    <span className="w-[calc(100%/6)] text-center">{ticket?.revenue.toLocaleString('vi')}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+        <ChartBarAverage type={'revenue'} />
+        <ChartBarAverage type={'ticket'} />
+        
         <div className="relative mt-8">
           <Carousel
-            className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
+            className={`w-[80vw] rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
             prevArrow={({ handlePrev }) => (
               <IconButton
                 variant="text"
@@ -166,8 +200,8 @@ const Statistics = () => {
               </IconButton>
             )}
           >
-            {event?.data?.data?.event?.banner?.map((image: any) => (
-              <img src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+            {event?.data?.data?.event?.banner?.map((image: any, index: number) => (
+              <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
             ))}
           </Carousel>
           <div className="absolute left-[15px] top-[15px] flex flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter">
@@ -205,108 +239,17 @@ const Statistics = () => {
                 value={<Iconfy icon="bxs:edit" className="text-2xl text-cs_light" />}
               />
             </Link>
-            <Button
-              onClick={() => setOpen(true)}
-              value={<Iconfy icon="solar:trash-bin-minimalistic-bold" className="text-2xl text-cs_light" />}
-              className="!bg-red-700 !p-2"
-            ></Button>
+            {event?.data?.data?.event?.status === 'REVIEW' && (
+              <Button
+                onClick={() => setOpen(true)}
+                value={<Iconfy icon="solar:trash-bin-minimalistic-bold" className="text-2xl text-cs_light" />}
+                className="!bg-red-700 !p-2"
+              ></Button>
+            )}
           </div>
         </div>
-        {/* <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4">
-          <div className="flex justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-            <b>Lợi nhuận: </b>
-            <span className="font-bold text-cs_semi_green">0 VNĐ</span>
-          </div>
-          <div className="my-3 flex justify-between gap-3">
-            <div className="flex w-1/2 justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-              <b>Doanh số: </b>
-              <span className="font-bold text-cs_semi_green">0 VNĐ</span>
-            </div>
-            <div className="flex w-1/2 justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-              <b>Hoa hồng / vé: </b>
-              <span className="font-bold text-cs_semi_green">3% / vé</span>
-            </div>
-          </div>
-          <div className="flex w-[calc(50%-6px)] justify-between rounded-lg bg-cs_light_gray px-4 py-3">
-            <b>Phí dịch vụ: </b>
-            <span className="font-bold text-cs_semi_green">0 VNĐ</span>
-          </div>
-        </div> */}
-        {/* <div className="mt-8 flex gap-10 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
-          <div>
-            <b>Thời gian bán vé: </b>
-            <div className="mt-2 flex items-center gap-4">
-              <b>Từ: </b> <div className="rounded border-[1px] border-cs_semi_green px-6 py-2">12/12/2023</div>
-              <b>Đến: </b> <div className="rounded border-[1px] border-cs_semi_green px-6 py-2">12/12/2023</div>
-            </div>
-          </div>
-          <div>
-            <b>Tình trạng vé: </b>
-            <div className="mt-2 flex gap-5">
-              <div className="flex h-8 w-32 items-center justify-center rounded-md bg-cs_semi_green text-[14px] font-semibold text-cs_light">
-                Tổng : {event?.data?.data.totalTicketIssue}
-              </div>
-              <div className="flex h-8 w-32 items-center justify-center rounded-md bg-cs_green text-[14px] font-semibold text-cs_light">
-                Đã bán : 0
-              </div>
-            </div>
-          </div>
-        </div> */}
-        <div className="mt-8">
-          <b className="mb-5 block dark:text-cs_light">Tóm tắt vé</b>
-          {/* Div box */}
-          <div className="text-[14px]">
-            <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-4 py-4 font-bold">
-              <span className="w-[calc(100%/6)] text-center text-base">Tên vé</span>
-              <span className="w-[calc(100%/6)] text-center text-base">Loại vé</span>
-              <span className="w-[calc(100%/6)] text-center text-base">Giá vé (VNĐ) </span>
-              <span className="w-[calc(100%/6)] text-center text-base">Số lượng vé</span>
-              <span className="w-[calc(100%/6)] text-center text-base">Đã bán</span>
-              <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
-            </div>
-            <ul>
-              {event.data?.data?.tickets?.map((ticket: ITicket) => {
-                console.log(ticket);
-                return (
-                  <li className="my-2 flex justify-between gap-3 rounded-lg border-[1px] border-cs_gray px-4 py-4 font-semibold dark:text-cs_light">
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.title}</span>
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.type}</span>
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.price?.toLocaleString('vi')}</span>
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.sold}</span>
-                    <span className="w-[calc(100%/6)] text-center">{ticket?.revenue.toLocaleString('vi')}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
 
-          {/* Table */}
-
-          {/* <table className='w-full border-separate border-spacing-y-2 text-center'>
-            <thead className='bg-cs_gray rounded-lg'>
-              <tr>
-                <th className='py-4'>Tên vé</th>
-                <th>Loại vé</th>
-                <th>Giá vé</th>
-                <th>Số lượng vé</th>
-                <th>Đã bán</th>
-                <th>Doanh số (VNĐ)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className='bg-cs_light_gray'>
-                <td className='py-4'>AAA</td>
-                <td>VVIP</td>
-                <td>10.000</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-            </tbody>
-          </table> */}
-        </div>
-        <div className="mt-8 rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
+        <div className="mt-8 w-[80vw] overflow-hidden rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
           <b>Giới thiệu sự kiện </b>
           {event?.data?.data?.event?.desc && (
             <div dangerouslySetInnerHTML={{ __html: event?.data?.data?.event?.desc }} />

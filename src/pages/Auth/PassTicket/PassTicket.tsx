@@ -3,21 +3,20 @@ import Button from '~/components/customs/Button';
 import Icon from '~/components/customs/Icon';
 import Input from '~/components/customs/Input';
 import SearchUser from '~/components/customs/SearchUser';
-import { useAppSelector } from '~/hooks/useActionRedux';
-import {
-  useLazyGetCodeVerifySwapTicketQuery,
-  useSwapTicketMutation,
-  useVerifySwapTicketMutation,
-} from '~/features/Auth/authApi.service';
+import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Loading from '~/components/customs/Loading';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import useSocket from '~/hooks/useConnecrSocket';
-import { Dialog, DialogBody, DialogFooter } from '@material-tailwind/react';
+import { Dialog, DialogBody, DialogFooter, Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
+import moment from 'moment';
+import { useLazySendOtpLoginQuery, useVerifySwapTicketMutation } from '~/features/OTP/otpApi.service';
+import { addCode, addSecret } from '~/features/OTP/otpSlice';
 
 function PassTicket() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const socket = useSocket();
   const [code, setCode] = useState<string>('');
   const [secret, setSecret] = useState<string>('');
@@ -28,9 +27,9 @@ function PassTicket() {
   const [idTicket, setIdTicket] = useState<string>('');
   const auth = useAppSelector((state) => state.auth.currentUser);
   const getTickets = useAppSelector((state) => state.ticket.ticketByEvent);
-  const [getCode, resultGetCode] = useLazyGetCodeVerifySwapTicketQuery();
-  // const [swap, result] = useSwapTicketMutation();
+  const [getCode, resultGetCode] = useLazySendOtpLoginQuery();
   const [verify, resultVerify] = useVerifySwapTicketMutation();
+  const [openTicket, setOpenTicket] = useState<boolean>(false);
 
   const handleSwapTicket = async () => {
     if (!userReceive) {
@@ -60,7 +59,9 @@ function PassTicket() {
       return;
     }
     if (type === 'confirm') {
-      await verify({ myTicketId: idTicket, userId: userReceive?._id, otp: { secret, code: Number(code) } });
+      dispatch(addCode(code));
+      dispatch(addSecret(secret));
+      await verify({ myTicketId: idTicket, userId: userReceive?._id });
     }
   };
 
@@ -73,6 +74,7 @@ function PassTicket() {
       errorNotify('Có lỗi xảy ra');
     }
   }, [resultGetCode.isSuccess, resultGetCode.isError]);
+
   useEffect(() => {
     if (resultVerify.isSuccess) {
       successNotify('Chuyển giao vé thành công');
@@ -80,7 +82,7 @@ function PassTicket() {
         sender: auth?._id,
         recipient: userReceive?._id,
         content: `${auth?.fullName} đã chuyển giao vé cho bạn vé! Kiểm tra ví ngay`,
-        url: import.meta.env.VITE_CLIENT_URL + '/user/profile/1',
+        url: 'https://nevent.io.vn/user/profile/1',
       } as IPayloadNotify);
       setOpen(false);
       setCode('');
@@ -149,9 +151,50 @@ function PassTicket() {
         <Icon name="return-up-back-outline" />
         <span className="">Trở về</span>
       </Link>
-      <div className="py-2 xl:mx-40">
-        {getTickets.length > 0 &&
-          getTickets.map((item: ITicket, index: number) => <TicketProfile passTicket key={index} data={item} />)}
+      <div className="py-2 xl:mx-40 xl:my-5">
+        <Accordion className="rounded-xl  border-none p-0 shadow-border-full dark:bg-cs_lightDark" open={openTicket}>
+          <AccordionHeader
+            className={`${
+              openTicket ? 'border-none' : 'border-none'
+            } block h-[180px] overflow-hidden p-0 text-cs_light hover:text-cs_semi_green xl:h-[200px]`}
+            onClick={() => setOpenTicket(!openTicket)}
+          >
+            <div className="relative">
+              <div className="round-2xl absolute z-10 h-full w-full rounded-2xl bg-cs_dark opacity-60 transition-all group-hover:scale-110"></div>
+              <img
+                src={getTickets[0]?.event?.banner[0]?.url}
+                alt=""
+                className=" h-[180px] w-[100vw] rounded-xl object-cover xl:h-[200px]"
+              />
+              <div className="absolute left-4 top-4 z-10 w-[80%] xl:w-[90%]">
+                <Link to={`/event-detail/${getTickets[0]?.event?._id}`}>
+                  <p className=" line-clamp-2 text-xl font-bold ">{getTickets[0]?.event?.title}</p>
+                </Link>
+                <span className=" gap-2 text-sm font-semibold">
+                  <span>Thời gian: </span>
+                  {moment(getTickets[0]?.event?.start_date).format('hh:mm - DD/MM/YYYY')}
+                  <span className="text-sm ">
+                    - {getTickets[0]?.event?.address} {getTickets[0]?.event?.location?.name}
+                  </span>
+                </span>
+                <p className="text-sm font-semibold">Tổng số vé: {getTickets[0]?.totalTickets}</p>
+              </div>
+              <Icon
+                name="caret-down-circle-outline"
+                className={`${
+                  openTicket ? 'rotate-180' : ''
+                } absolute right-2 top-1/2 z-10 -translate-y-1/2 text-[2rem] text-cs_light transition-all xl:right-10`}
+              />
+            </div>
+          </AccordionHeader>
+          <AccordionBody>
+            <div className="max-h-[60vh] overflow-y-scroll rounded-xl border xl:max-h-[41vh]">
+              {Object.entries(getTickets[0]?.myTickets).map(([key, element]: any, index: number) => {
+                return <TicketProfile key={index} data={element} dataSummary={getTickets[0]} passTicket/>;
+              })}
+            </div>
+          </AccordionBody>
+        </Accordion>
       </div>
       <div className="items-center gap-5 space-y-2 sm:flex">
         <SearchUser setUserReceive={setUserReceive} className="rounded-lg shadow-border-light" />
@@ -162,13 +205,13 @@ function PassTicket() {
           id=""
         >
           <option>Chọn vé</option>
-          {getTickets[0]?.myTickets?.map((item: Ticket, index: number) => {
-            return (
-              <option key={index} value={item?._id}>
+          {Object.entries(getTickets[0]?.myTickets).map(([key, element]: any, index: number) =>
+            element.map((item: any, index: number) => (
+              <option key={item?._id} value={item?._id}>
                 {item?.title}
               </option>
-            );
-          })}
+            )),
+          )}
         </select>
       </div>
       <div className="flex flex-col items-center gap-8 rounded-xl p-5 shadow-border-inset dark:bg-cs_dark sm:flex-row">

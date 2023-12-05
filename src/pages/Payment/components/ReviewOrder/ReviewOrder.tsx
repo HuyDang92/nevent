@@ -7,8 +7,8 @@ import { useAppSelector } from '~/hooks/useActionRedux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Loading from '~/components/customs/Loading';
-import { usePayTicketMutation } from '~/features/Payment/paymentApi.service';
 import { useEffect } from 'react';
+import { useVietQrMutation, useVnPayMutation } from '~/features/Payment/paymentApi.service';
 interface Prop {
   className?: string;
   event?: IEvent;
@@ -19,8 +19,10 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
   const navigate = useNavigate();
   const tickets: any[] = useAppSelector((state) => state.payment.ticket);
   const userInfor = useAppSelector((state) => state.payment.userInfor);
+  const method = useAppSelector((state) => state.payment.method);
 
-  const [buyTicket, result] = usePayTicketMutation();
+  const [vnPay, resultVnPay] = useVnPayMutation();
+  const [vietQr, resultVietQr] = useVietQrMutation();
 
   const handleBuyTicket = async () => {
     const body = tickets.map((ticket) => {
@@ -30,17 +32,24 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
       };
     });
     console.log(body);
-    await buyTicket({ eventId: idEvent, tickets: body });
+    if (method === 'VIETQR') {
+      await vietQr({ eventId: idEvent, tickets: body });
+    } else {
+      await vnPay({ eventId: idEvent, tickets: body });
+    }
     // navigate(`/user/payment/3`);
   };
   useEffect(() => {
-    if (result.isSuccess) {
-      window.location.href = result.data?.data;
+    if (resultVnPay.isSuccess) {
+      window.location.href = resultVnPay.data?.data;
     }
-  }, [result.isLoading]);
+    if (resultVietQr.isSuccess) {
+      window.location.href = resultVietQr.data?.data?.paymentUrl;
+    }
+  }, [resultVnPay.isLoading, resultVietQr.isSuccess]);
   return (
     <div className={`mb-10 rounded-[12px] p-4 shadow-border-full dark:text-cs_light xl:w-[30%] ${className}`}>
-      {result.isLoading && <Loading />}
+      {(resultVnPay.isLoading || resultVietQr.isLoading) && <Loading />}
       <div className="relative flex h-[60px] items-center border-b-[0.5px]">
         <button
           onClick={() => {
@@ -100,12 +109,14 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
         })}
       </div>
       {/* /// */}
-      <div className="border-b-[0.5px] py-4">
-        <div className="flex w-1/3 items-center gap-2 rounded-xl border p-2 font-semibold shadow-lg">
-          <Iconify icon="arcticons:v-vnpay" className="text-2xl dark:text-cs_light" />
-          <span>VNPAY</span>
+      {method && (
+        <div className="border-b-[0.5px] py-4">
+          <div className="flex w-1/3 items-center gap-2 rounded-xl border p-2 font-semibold shadow-lg">
+            <Iconify icon="arcticons:v-vnpay" className="text-2xl dark:text-cs_light" />
+            <span>{method}</span>
+          </div>
         </div>
-      </div>
+      )}
       {/* /// */}
       <div className="border-b-[0.5px] py-4">
         <Input placeholder="Nhập mã giảm giá" className="" classNameInput="w-full !shadow-none !border-2" />
@@ -128,14 +139,14 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
             {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0) >= 5000 ? (
+        {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0) >= 10000 ? (
           <Button
             onClick={handleBuyTicket}
             value="Thanh toán"
             className="w-full !bg-cs_semi_green text-white !shadow-none"
           />
         ) : (
-          <p className="pt-3 text-center text-xs text-red-500">Tổng thanh toán phải trên 5.000đ</p>
+          <p className="pt-3 text-center text-xs text-red-500">Tổng thanh toán phải trên 10.000đ </p>
         )}
         {/* {(activeTab === 2 || activeTab === 4) && (
         )} */}

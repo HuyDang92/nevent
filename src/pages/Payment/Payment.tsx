@@ -8,9 +8,8 @@ import { useParams } from 'react-router-dom';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
 import Header from '~/Layout/components/Header';
 import { useGetEventByIdQuery } from '~/features/Event/eventApi.service';
-import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
-import { refreshPayment } from '~/features/Payment/paymentSlice';
 import { useEffect } from 'react';
+
 const Payment = () => {
   const { step, idEvent } = useParams();
   const activeStep = Number(step);

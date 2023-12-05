@@ -17,11 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '~/assets/images/default-avatar.jpg';
 import ZoomComp from '~/components/customs/Zoom/Zoom';
 import Icon from '~/components/customs/Icon';
+import { useGetLocationsQuery } from '~/features/location/location.service';
+import { useUploadFile } from '~/hooks/useUpLoadFile';
 
 interface IOrganizationInfo {
   organization_name: string;
-  organization_avatar: string;
-  fullName: string;
   CRN: string;
   releasePlace: string;
   releaseDate: string;
@@ -30,19 +30,21 @@ interface IOrganizationInfo {
   email: string;
   city: string;
   district: string;
-  road: string;
-  address: string;
-  cccd: string;
-  taxCode: string;
+  ward: string;
 }
 const Organization = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [updateBusiness, { data, isError, isLoading, error, isSuccess }] = useUpdateBusinessMutation();
   const userProfile = useGetProfileQuery();
-  const [getProfile] = useLazyGetProfileQuery();
+  const getLocation = useGetLocationsQuery();
+  const { upLoad, loading } = useUploadFile();
+
+  // address
+  const [districtList, setDistrictList] = useState<any[]>([]);
+  const [wardList, setWardList] = useState<any[]>([]);
+  const [address, setAddress] = useState<string>('');
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -50,11 +52,10 @@ const Organization = () => {
     }
     return null;
   }, [error]);
+
   const formik = useFormik({
     initialValues: {
       organization_name: '',
-      organization_avatar: '',
-      fullName: '',
       CRN: '',
       releasePlace: '',
       releaseDate: '',
@@ -63,14 +64,10 @@ const Organization = () => {
       email: '',
       city: '',
       district: '',
-      road: '',
-      address: '',
-      cccd: '',
-      taxCode: '',
+      ward: '',
     },
     validationSchema: Yup.object({
       organization_name: Yup.string().required('Tên ban tổ chức không được bỏ trống'),
-      fullName: Yup.string().required('Tên người tổ chức không được bỏ trống'),
       CRN: Yup.string().required('Số đăng ký không được bỏ trống'),
       description: Yup.string().required('Giới thiệu ban tổ chức không được bỏ trống'),
       releasePlace: Yup.string().required('Nơi phát hành không được bỏ trống'),
@@ -81,41 +78,49 @@ const Organization = () => {
         .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
       city: Yup.string().required('Thành phố/Tỉnh không được bỏ trống'),
       district: Yup.string().required('Huyện không được bỏ trống'),
-      road: Yup.string().required('Phường không được bỏ trống'),
-      address: Yup.string().required('Địa chỉ không được bỏ trống'),
-      cccd: Yup.string().required('Căn cước công dân không được bỏ trống'),
-      taxCode: Yup.string().required('Mã số thuế không được bỏ trống'),
+      ward: Yup.string().required('Phường không được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
-      await updateBusiness({
-        type: 'business',
-        address: `${value.address},${value.road},${value.district},${value.city}`,
-        cccd: value.cccd,
-        crn: value.CRN,
-        dateOfIssue: value.releaseDate,
-        name: value.fullName,
-        placeOfIssue: value.releasePlace,
-        taxCode: value.taxCode,
-        organization_name: value.organization_name,
-        description: value.description,
-        phone: value.phone,
-        email: value.email,
-      });
-      const user = await getProfile().unwrap();
-      dispatch(setAuthCurrentUser(user?.data));
-      dispatch(setBusinessProfile(user?.data?.setBusinessProfile));
-      if (user?.data?.role?.name === 'user') {
-        navigate('/user/organization-profile');
+      console.log(value);
+      if (selectedFile) {
+        const avatarId = await upLoad(selectedFile);
+        await updateBusiness({
+          type: 'business',
+          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
+          crn: value.CRN,
+          dateOfIssue: value.releaseDate,
+          placeOfIssue: value.releasePlace,
+          organization_name: value.organization_name,
+          description: value.description,
+          phone: value.phone,
+          email: value.email,
+          avatar: avatarId,
+        });
       } else {
-        navigate('/organization/organization-profile');
-        console.log(user);
+        await updateBusiness({
+          type: 'business',
+          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
+          crn: value.CRN,
+          dateOfIssue: value.releaseDate,
+          placeOfIssue: value.releasePlace,
+          organization_name: value.organization_name,
+          description: value.description,
+          phone: value.phone,
+          email: value.email,
+        });
       }
     },
   });
-  // useEffect(() => {
-  //   if (userProfile?.isSuccess) {
-  //   }
-  // }, [userProfile.isFetching]);
+
+  useEffect(() => {
+    if (userProfile.isSuccess) {
+      dispatch(setAuthCurrentUser(userProfile.data?.data));
+    }
+    if (userProfile.data?.data?.businessProfile) {
+      dispatch(setBusinessProfile(userProfile.data?.data?.businessProfile));
+    }
+  }, [userProfile.isFetching]);
+
   useEffect(() => {
     if (isSuccess) {
       successNotify('Cập nhật thành công');
@@ -123,16 +128,28 @@ const Organization = () => {
     if (isError) {
       errorNotify('Cập nhật thất bại');
     }
-  }, [isLoading]);
+  }, [isSuccess, isError]);
 
   useEffect(() => {
-    if (userProfile.isSuccess && userProfile?.data?.data?.businessProfile) {
-      const location = userProfile?.data?.data?.businessProfile?.address?.split(',');
-      const [address, road, district, city] = location ?? [];
+    if (userProfile?.data?.data?.businessProfile) {
+      // Set business avatar as preview image
+      setImagePreviewUrl(userProfile?.data?.data?.businessProfile?.avatar);
+
+      // Handle locations
+      const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
+      const address = location[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng ở đầu cuối
+      location.shift(); // Loại bỏ phần tử đầu tiên
+      const [ward, district, city] = location ?? [];
+
+      const districts = getLocation?.data?.find((location: any) => location.name === city)?.districts;
+      setDistrictList(districts);
+      const wards = districts?.find((location: any) => location.name === district)?.wards;
+      setWardList(wards);
+      setAddress(address);
+
+      // Set old data
       formik.setValues({
         organization_name: userProfile?.data?.data?.businessProfile?.organization_name,
-        organization_avatar: userProfile?.data?.data?.businessProfile?.organization_avatar,
-        fullName: userProfile?.data?.data?.businessProfile?.name,
         CRN: userProfile?.data?.data?.businessProfile?.crn,
         releasePlace: userProfile?.data?.data?.businessProfile?.placeOfIssue,
         releaseDate: userProfile?.data?.data?.businessProfile?.dateOfIssue,
@@ -141,16 +158,17 @@ const Organization = () => {
         email: userProfile?.data?.data?.businessProfile?.email,
         city: city,
         district: district,
-        road: road,
-        address: address,
-        cccd: userProfile?.data?.data?.businessProfile?.cccd,
-        taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
+        ward: ward,
       });
+    } else {
+      formik.initialValues.email = userProfile?.data?.data?.email;
+      formik.initialValues.phone = userProfile?.data?.data?.phone;
     }
-  }, [userProfile, userProfile?.isSuccess]);
+  }, [userProfile, getLocation]);
+
   return (
     <>
-      {isLoading && <Loading />}
+      {(isLoading || loading) && <Loading />}
       <div className="mt-2">
         <form onSubmit={formik.handleSubmit} className="">
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin nhà tổ chức</h2>
@@ -174,22 +192,7 @@ const Organization = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
-              {formik.errors.fullName && (
-                <small className="absolute left-[140px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.fullName}
-                </small>
-              )}
-              <Input
-                name="fullName"
-                id="fullName"
-                label="Tên người tổ chức"
-                classNameLabel="!text-cs_label_gray !text-sm"
-                classNameInput="!w-full"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
-              />
-            </div>
+
             <div className="relative">
               {formik.errors.CRN && (
                 <small className="absolute left-[190px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -199,7 +202,7 @@ const Organization = () => {
               <Input
                 name="CRN"
                 id="CRN"
-                label="Số đăng ký công ty (CRN)"
+                label="Mã số đăng ký kinh doanh"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
                 value={formik.values.CRN}
@@ -222,23 +225,8 @@ const Organization = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative">
-              {formik.errors.cccd && (
-                <small className="absolute left-[150px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.cccd}
-                </small>
-              )}
-              <Input
-                name="cccd"
-                id="cccd"
-                label="Căn cước công dân"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.cccd}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div className="relative">
+
+            {/* <div className="relative">
               {formik.errors.taxCode && (
                 <small className="absolute left-[95px] top-[10px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.taxCode}
@@ -253,7 +241,7 @@ const Organization = () => {
                 value={formik.values.taxCode}
                 onChange={formik.handleChange}
               />
-            </div>
+            </div> */}
             <div className="relative">
               {formik.errors.releaseDate && (
                 <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -278,7 +266,7 @@ const Organization = () => {
                 <ZoomComp>
                   <img
                     className="h-full w-full object-cover"
-                    src={formik.values.organization_avatar || DefaultAvatar}
+                    src={DefaultAvatar}
                     alt=""
                   />
                 </ZoomComp>
@@ -287,7 +275,7 @@ const Organization = () => {
                 <ZoomComp>
                   <img
                     className="h-[90px] w-[90px]  object-cover sm:h-[120px] sm:w-[120px]"
-                    src={imagePreviewUrl}
+                    src={userProfile?.data?.data?.businessProfile?.avatar?.url  ?? imagePreviewUrl}
                     alt=""
                   />
                 </ZoomComp>
@@ -330,7 +318,12 @@ const Organization = () => {
               value={formik.values.description}
             />
           </div>
-          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin liên lạc</h2>
+          <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">
+            Thông tin liên lạc{' '}
+            <span className="text-xs text-[#ccc]">
+              (Thông tin này chỉ dùng cho việc liên hệ giữa Nevent và Ban tổ chức, sẽ không được hiên thị trên website)
+            </span>
+          </h2>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="relative">
               {formik.errors.phone && (
@@ -344,7 +337,7 @@ const Organization = () => {
                 label="Số điện thoại"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.phone}
+                value={formik.values.phone || ''}
                 onChange={formik.handleChange}
               />
             </div>
@@ -360,72 +353,110 @@ const Organization = () => {
                 label="Email"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.email}
+                value={formik.values.email || ''}
                 onChange={formik.handleChange}
+                disabled
               />
             </div>
-            <div className="relative">
+
+            <h2 className="col-span-2 mb-2 mt-4 text-lg font-semibold dark:text-white">Địa chỉ trụ sở</h2>
+            <div className="relative pt-3">
               {formik.errors.city && (
-                <small className="absolute left-[125px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[130px] top-[15px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.city}
                 </small>
               )}
-              <Input
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Tỉnh / Thành phố
+              </label>
+              <br />
+              <select
                 name="city"
                 id="city"
-                label="Thành phố/Tỉnh"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
                 value={formik.values.city}
-                onChange={formik.handleChange}
-              />
+                onChange={(e) => {
+                  setDistrictList(
+                    getLocation?.data?.find((location: any) => location.name === e.target.value)?.districts,
+                  );
+                  formik.handleChange(e);
+                }}
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {getLocation?.data?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="relative">
+            <div className="relative pt-3">
               {formik.errors.district && (
-                <small className="absolute left-[100px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                <small className="absolute left-[110px] top-[15px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.district}
                 </small>
               )}
-              <Input
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Quận / Huyện
+              </label>
+              <br />
+              <select
                 name="district"
                 id="district"
-                label="Quận/Huyện"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
                 value={formik.values.district}
-                onChange={formik.handleChange}
-              />
+                onChange={(e) => {
+                  setWardList(districtList.find((location: any) => location.name === e.target.value)?.wards);
+                  formik.handleChange(e);
+                }}
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {districtList?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="relative">
-              {formik.errors.road && (
-                <small className="absolute left-[90px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.road}
+            <div className="relative pt-3">
+              {formik.errors.ward && (
+                <small className="absolute left-[100px] top-[15px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.ward}
                 </small>
               )}
-              <Input
-                name="road"
-                id="road"
-                label="Phường/Xã"
-                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
-                classNameInput=" !w-full dark:text-white"
-                value={formik.values.road}
+              <label htmlFor="type" className="ml-2 text-sm font-medium text-cs_label_gray dark:text-gray-400">
+                Phường / Xã
+              </label>
+              <br />
+              <select
+                name="ward"
+                id="ward"
+                className=" w-[100%] rounded-xl p-[10px] shadow-border-light dark:border-none dark:bg-cs_formDark dark:text-white"
+                value={formik.values.ward}
                 onChange={formik.handleChange}
-              />
+              >
+                <option value={''}>Hãy chọn địa chỉ </option>
+                {wardList?.map((location: any, index: number) => (
+                  <option key={index} value={location.name}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="relative">
-              {formik.errors.address && (
-                <small className="absolute left-[60px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.address}
+              {formik.errors.email && (
+                <small className="absolute left-[50px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.email}
                 </small>
               )}
               <Input
                 name="address"
                 id="address"
-                label="Địa chỉ"
+                label="Địa chỉ"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={formik.values.address}
-                onChange={formik.handleChange}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
           </div>

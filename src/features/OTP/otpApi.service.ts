@@ -1,12 +1,19 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store/store';
 import { assignNewToken, logout } from '../Auth/authSlice';
+
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth?.loggedIn && (getState() as RootState).auth?.accessToken?.token;
+    const code = (getState() as RootState).otp.code;
+    const secret = (getState() as RootState).otp.secret;
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
+    }
+    if (code && secret) {
+      headers.set('otp', code);
+      headers.set('otp-secret', secret);
     }
     return headers;
   },
@@ -40,47 +47,53 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   // Trả về kết quả cuối cùng của yêu cầu
   return result;
 };
-export const businessApi = createApi({
-  reducerPath: 'businessApi',
+export const otpApi = createApi({
+  reducerPath: 'otpApi',
   baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 0,
-  tagTypes: ['Business'],
+  tagTypes: ['cate'],
+  // providesTags: ['cate'], // cho query
+  // invalidatesTags: ['cate'], // cho mutation
+
   endpoints: (builder) => ({
-    updateBusiness: builder.mutation({
+    forgotPassWord: builder.mutation({
       query: (body) => ({
-        url: '/api/business-profile/update',
-        method: 'PATCH',
+        url: '/api/users/forgot-password',
+        method: 'POST',
         headers: {
           Accept: 'application/json',
         },
         body: body,
       }),
-      invalidatesTags: ['Business'],
     }),
-    getProfile: builder.query<any, void>({
-      query: () => `/api/auth/profile`,
-      providesTags: ['Business'],
+    verifySwapTicket: builder.mutation({
+      query: (body) => ({
+        url: '/api/my-tickets/swap-ticket',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: body,
+      }),
     }),
-    analyticsBusiness: builder.query<any, void>({
-      query: () => `/api/events/overview`,
-      providesTags: ['Business'],
+    sendOtpNoLogin: builder.mutation({
+      query: (body) => ({
+        url: '/api/otp',
+        method: 'POST',
+        body: body,
+      }),
     }),
-    analyticsRevenueChart: builder.query<any, any>({
-      query: ({ eventId, startDate, endDate }) =>
-        `/api/payments/overview-revenue-chart${eventId ? `/${eventId}` : ''}?startDate=${startDate}&endDate=${endDate}`,
-      keepUnusedDataFor: 5,
-    }),
-    listCustomerPayment: builder.query<any, string>({
-      query: (eventId) => `/api/events/list-payment/${eventId}`,
+
+    sendOtpLogin: builder.query<any, void>({
+      query: () => `/api/otp`,
     }),
   }),
 });
+
 export const {
-  useUpdateBusinessMutation,
-  useGetProfileQuery,
-  useLazyGetProfileQuery,
-  useAnalyticsBusinessQuery,
-  useAnalyticsRevenueChartQuery,
-  useLazyAnalyticsRevenueChartQuery,
-  useListCustomerPaymentQuery,
-} = businessApi;
+  useForgotPassWordMutation,
+  useSendOtpNoLoginMutation,
+  useSendOtpLoginQuery,
+  useLazySendOtpLoginQuery,
+  useVerifySwapTicketMutation,
+} = otpApi;

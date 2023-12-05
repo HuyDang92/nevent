@@ -24,7 +24,7 @@ const OverView = () => {
   const { data: categories } = useGetAllCategoryQuery();
   const [createEvent, { data, isError, isSuccess, isLoading, error }] = useCreateEventMutation();
   const { upLoad, loading } = useUploadFile();
-  const { upLoadDesc, loadingDesc } = useUploadDesc();
+  const { upLoadDesc, loadingDesc, error: errorDesc } = useUploadDesc();
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -33,9 +33,11 @@ const OverView = () => {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
+      dispatch(resetForm());
       setTimeout(() => {
         successNotify('Thêm sự kiện thành công');
       }, 1000);
+      dispatch(resetForm());
       navigate('/organization/event-list');
     }
     if (isError) {
@@ -155,7 +157,7 @@ const OverView = () => {
         bannerId = await Promise.all(eventInfo?.banner.map((url) => upLoadImg(url)))
           .then((images) => {
             // 'images' is an array containing the results of all the promises
-            console.log('All images fetched successfully:', images);
+            console.log('All banner fetched successfully:', images);
             return images;
             // Further processing or rendering of images can be done here
           })
@@ -165,11 +167,13 @@ const OverView = () => {
             return [];
           });
         console.log(bannerId);
+        console.log(eventInfo?.description_img);
+
         if (new_desc !== undefined) {
           // Sử dụng Promise.all để đợi tất cả các promises hoàn thành
           const newImageURLs = await Promise.all((eventInfo?.description_img || []).map((url) => uploadDescImg(url)))
             .then((images) => {
-              console.log('All images fetched successfully:', images);
+              console.log('All desc images fetched successfully:', images);
               return images;
             })
             .catch((error) => {
@@ -181,7 +185,6 @@ const OverView = () => {
           newImageURLs.forEach((newImageURL, index) => {
             if (eventInfo?.description_img) {
               const oldImageData = eventInfo?.description_img[index];
-              console.log(oldImageData);
               if (typeof newImageURL === 'string') {
                 new_desc = new_desc?.replace(oldImageData, newImageURL);
               }
@@ -189,6 +192,22 @@ const OverView = () => {
           });
         }
         console.log(new_desc);
+        console.log({
+          title: eventInfo?.name,
+          categories: eventInfo?.categories,
+          location: eventInfo?.location,
+          address: eventInfo?.address,
+          start_date: eventTime ? mergeDate(eventTime?.happendDate, eventTime?.happendTime) : '',
+          desc: new_desc,
+          totalTicketIssue: ticketList.reduce(
+            (accumulator: number, ticket: TicketListInfo) => accumulator + ticket.quantity,
+            0,
+          ),
+          tickets: ticketList,
+          banner: bannerId,
+          salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
+          salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
+        });
 
         await createEvent({
           title: eventInfo?.name,
@@ -206,7 +225,6 @@ const OverView = () => {
           salesStartDate: eventTime ? mergeDate(eventTime?.beginDate, eventTime?.beginTime) : '',
           salesEndDate: eventTime ? mergeDate(eventTime?.endDate, eventTime?.endTime) : '',
         });
-        dispatch(resetForm());
       }
     } catch (err) {
       console.log(err);
