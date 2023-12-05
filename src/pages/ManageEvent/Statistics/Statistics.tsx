@@ -157,7 +157,7 @@ const Statistics = () => {
 
         <div className="relative mt-8">
           <Carousel
-            className={`w-[80vw] rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
+            className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
             prevArrow={({ handlePrev }) => (
               <IconButton
                 variant="text"
@@ -200,7 +200,7 @@ const Statistics = () => {
             )}
           >
             {event?.data?.data?.event?.banner?.map((image: any, index: number) => (
-              <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover " />
+              <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover" />
             ))}
           </Carousel>
           <div className="absolute left-[15px] top-[15px] flex flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter">

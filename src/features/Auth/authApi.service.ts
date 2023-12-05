@@ -40,7 +40,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   // Trả về kết quả cuối cùng của yêu cầu
   return result;
 };
-export const authApi = createApi({
+export const authApi: any = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 0,

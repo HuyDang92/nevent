@@ -52,8 +52,8 @@ const EventTime = () => {
     },
     validationSchema: Yup.object({
       beginDate: Yup.date()
-        .required('Ngày bắt đầu không được bỏ trống')
-        .min(date, 'Ngày bắt đầu bán vé không thể trước hôm nay'),
+        .required('Ngày bắt đầu không được bỏ trống'),
+        // .min(date, 'Ngày bắt đầu bán vé không thể trước hôm nay'),
       beginTime: Yup.string().required('Thời gian bắt đầu không được bỏ trống'),
       endDate: Yup.date()
         .required('Ngày kết thúc không được bỏ trống')
