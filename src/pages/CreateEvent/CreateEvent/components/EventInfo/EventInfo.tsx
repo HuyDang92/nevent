@@ -15,6 +15,7 @@ import MyCarousel from '~/components/customs/MyCarousel';
 import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+import './style.css';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -294,7 +295,7 @@ const EventInfo = () => {
                 Danh mục sự kiện
               </label>
               <br />
-              <Input classNameInput='w-full' value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
+              <Input classNameInput="w-full" value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
               {categoryIpt !== '' && (
                 <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
                   {categories.data
@@ -358,7 +359,6 @@ const EventInfo = () => {
               onChange={(value) => {
                 formik.setFieldValue('description', value);
               }}
-              className="mb-8 h-[300px]"
               modules={modules}
               ref={quillRef}
             />
