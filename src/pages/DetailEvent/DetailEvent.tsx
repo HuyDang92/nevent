@@ -3,7 +3,7 @@ import SectionTitle from '~/components/SectionTitle';
 import avtDefault from '~/assets/images/default-avatar.jpg';
 import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '~/components/EventCard';
 import {
   useGetEventByIdQuery,
@@ -22,15 +22,22 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Zoom from '~/components/customs/Zoom';
+import { setHistoryUrl } from '~/features/Auth/authSlice';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const history = useLocation();
   const auth = useAppSelector((state) => state.auth.currentUser);
   const event = useGetAllEventQuery({ page: 1, limit: 9, status: 'UPCOMING' });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
+
+  useEffect(() => {
+    dispatch(setHistoryUrl(history.pathname));
+  }, []);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,

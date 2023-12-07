@@ -58,6 +58,11 @@ const EventManage = () => {
     status: status,
   });
 
+  const handleStatus = (value: string) => {
+    console.log(value);
+    setStatus(value);
+    setCurrentPage(1);
+  };
   const handlePageChange = (selectedPage: any) => {
     setCurrentPage(selectedPage.selected + 1);
   };
@@ -77,7 +82,7 @@ const EventManage = () => {
       </div>
       <div className="flex gap-5">
         <select className="w-40 rounded-lg border p-2">
-          <option value="2023" selected>
+          <option value="2023" defaultValue={2023}>
             Năm 2023
           </option>
         </select>
@@ -127,7 +132,7 @@ const EventManage = () => {
                 key={value}
                 value={value}
                 className="max-w-content py-2 text-sm dark:text-cs_light"
-                onClick={() => setStatus(value)}
+                onClick={() => handleStatus(value)}
               >
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
               </Tab>

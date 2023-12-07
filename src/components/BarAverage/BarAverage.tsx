@@ -13,15 +13,15 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
   const { idEvent } = useParams();
   const [options, setOptions] = useState({} as any);
   const currentDate = new Date();
-  const [dateData, setDateData] = useState<any>([]);
-  const oneWeekAgo = moment(currentDate).subtract(7, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  const firstDayOfMonth = moment(currentDate).startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+
   const current = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
   const [reneue, result] = useLazyAnalyticsRevenueChartQuery();
   useEffect(() => {
     if (idEvent) {
-      reneue({ eventId: idEvent, startDate: oneWeekAgo, endDate: current });
+      reneue({ eventId: idEvent, startDate: firstDayOfMonth, endDate: current });
     } else {
-      reneue({ startDate: oneWeekAgo, endDate: current });
+      reneue({ startDate: firstDayOfMonth, endDate: current });
     }
   }, []);
   // useEffect(() => {
@@ -62,7 +62,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
         xAxis: [
           {
             type: 'category',
-            data: result.data?.data?.map((item: any) => item?.date),
+            data: result.data?.data?.map((item: any) => item?.date) ?? [],
           },
         ],
         yAxis: [
@@ -75,7 +75,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
             ? {
                 name: 'Số vé',
                 type: 'bar',
-                data: result.data?.data?.map((item: any) => item?.totalTickets),
+                data: result.data?.data?.map((item: any) => item?.totalTickets) ?? [],
                 markPoint: {
                   data: [
                     { type: 'max', name: 'Max' },
@@ -89,12 +89,13 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
             : {
                 name: 'Doanh thu',
                 type: 'bar',
-                data: result.data?.data?.map((item: any) => ({
-                  value: parseFloat(item?.revenue.replace(/,/g, '')),
-                  itemStyle: {
-                    color: '#13C6B3',
-                  },
-                })),
+                data:
+                  result.data?.data?.map((item: any) => ({
+                    value: parseFloat(item?.revenue.replace(/,/g, '')),
+                    itemStyle: {
+                      color: '#13C6B3',
+                    },
+                  })) ?? [],
                 markPoint: {
                   data: [
                     { type: 'max', name: 'Max' },
@@ -113,7 +114,14 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
   return result.isFetching ? (
     <LoadingLocal />
   ) : (
-    <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />
+    <>
+      {type === 'ticket' ? (
+        <h3 className="text-xl font-bold">Biểu đồ bán vé</h3>
+      ) : (
+        <h3 className="text-xl font-bold">Biểu đồ doanh thu</h3>
+      )}
+      <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />
+    </>
   );
 };
 

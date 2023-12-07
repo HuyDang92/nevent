@@ -13,6 +13,7 @@ interface AuthState {
   currentUser: IUserField | null;
   businessInfo: IBusinessField | null;
   notification: boolean;
+  historyUrl: string | null;
 }
 
 const initialState: AuthState = {
@@ -27,6 +28,7 @@ const initialState: AuthState = {
   currentUser: null,
   businessInfo: null,
   notification: false,
+  historyUrl: null,
 };
 
 const authSlice = createSlice({
@@ -58,6 +60,9 @@ const authSlice = createSlice({
     },
     setTypeLoggin: (state, action) => {
       state.typeLogin = action.payload;
+    },
+    setHistoryUrl: (state, action) => {
+      state.historyUrl = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -92,6 +97,7 @@ export const {
   setNotification,
   setBusinessProfile,
   setTypeLoggin,
+  setHistoryUrl,
 } = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;
