@@ -15,9 +15,15 @@ type InputProps = {
   label?: string;
   rounded_full?: boolean;
   disabled?: boolean;
+  onFocus?: () => void;
+  onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+  ref?: any;
 };
 
 const Input = ({
+  ref,
+  onFocus,
+  onBlur,
   readonly = false,
   value,
   onChange,
@@ -52,6 +58,7 @@ const Input = ({
       )}
       <p className="relative">
         <input
+          ref={ref}
           placeholder={placeholder}
           className={`${
             readonly ? 'cursor-not-allowed' : ''
@@ -63,7 +70,11 @@ const Input = ({
           onChange={onChange}
           id={id}
           name={name}
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            if (onFocus) onFocus();
+            setIsFocused(true);
+          }}
+          onBlur={onBlur}
           readOnly={readonly}
           disabled={disabled}
           // onBlur={() => setIsFocused(false)}

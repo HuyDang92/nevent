@@ -15,6 +15,7 @@ import MyCarousel from '~/components/customs/MyCarousel';
 import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+import useClickOutside from '~/hooks/useClickOutside';
 import './style.css';
 
 Quill.register('modules/imageResize', ImageResize);
@@ -33,8 +34,7 @@ const EventInfo = () => {
   const [categoryArr, setCategoryArr] = useState<ICategory[]>([]);
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
-  console.log(imageData);
-
+  const [focusCategory, setFocusCategory] = useState<boolean>(false);
   const quillRef = useRef<any>(null);
   // console.log(quillRef.current);
 
@@ -132,17 +132,24 @@ const EventInfo = () => {
     }
   }, [eventInfo?.description_img]);
 
+  // Category
   useEffect(() => {
     if (eventInfo?.categories) {
       const cateArr = categories?.data.filter((cate: ICategory) => eventInfo?.categories.includes(cate._id));
       setCategoryArr(cateArr);
     }
-  }, [categories]);
+  }, [eventInfo, categories]);
 
   useEffect(() => {
     const cateList = categoryArr?.map((cate: ICategory) => cate._id);
     formik.setFieldValue('categories', cateList);
   }, [categoryArr]);
+
+  const ref = useRef<any>(null);
+  useClickOutside(ref, () => {
+    setFocusCategory(false);
+  });
+  // ========
 
   const modules = {
     toolbar: [
@@ -285,7 +292,7 @@ const EventInfo = () => {
                 onChange={formik.handleChange}
               />
             </div>
-            <div className="relative pt-3">
+            <div className="relative pt-3" ref={ref}>
               {formik.errors.categories && (
                 <small className="absolute left-[140px] top-[15px] z-10 px-2 text-[12px] text-red-600">
                   {formik.errors.categories}
@@ -295,8 +302,13 @@ const EventInfo = () => {
                 Danh mục sự kiện
               </label>
               <br />
-              <Input classNameInput="w-full" value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
-              {categoryIpt !== '' && (
+              <Input
+                onFocus={() => setFocusCategory(true)}
+                classNameInput="w-full"
+                value={categoryIpt}
+                onChange={(e) => setCategoryIpt(e.target.value)}
+              />
+              {categoryIpt !== '' ? (
                 <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
                   {categories.data
                     ?.filter((cate: ICategory) => cate.name.includes(categoryIpt))
@@ -315,6 +327,29 @@ const EventInfo = () => {
                       </div>
                     ))}
                 </div>
+              ) : (
+                <>
+                  {focusCategory && (
+                    // This is div I want click without run input's onBlur event
+                    <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
+                      {categories.data.map((cate: ICategory, index: number) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setCategoryIpt('');
+                            setFocusCategory(false);
+                            if (!categoryArr.includes(cate)) {
+                              setCategoryArr([...categoryArr, cate]);
+                            }
+                          }}
+                          className="category my-1 cursor-pointer rounded-lg p-1 pl-3 hover:bg-cs_semi_green"
+                        >
+                          {cate.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
               <div className="mt-3 flex flex-wrap gap-2">
                 {categoryArr?.map((cate: ICategory, index: number) => (
