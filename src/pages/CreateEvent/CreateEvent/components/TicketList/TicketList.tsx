@@ -15,7 +15,7 @@ const TicketList = () => {
   const dispatch = useAppDispatch();
   const ticketInfo = useAppSelector((state) => state.business.ticketList);
   const [freeTicketCheckbox, setFreeTicketCheckBox] = useState(false);
-  const [openTicketColor, setOpenTicketColor] = useState(false);
+  const [openTicketColor, setOpenTicketColor] = useState<boolean>(false);
   const ref = useRef(null);
   const navigate = useNavigate();
   useClickOutside(ref, () => {
@@ -173,7 +173,7 @@ const TicketList = () => {
                   </small>
                 )}
                 <Input
-                  readonly={freeTicketCheckbox}
+                  // readonly={freeTicketCheckbox}
                   type="number"
                   name="price"
                   value={formik.values.price}
@@ -220,9 +220,8 @@ const TicketList = () => {
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setOpenTicketColor(!openTicketColor)}
                   style={{ backgroundColor: formik.values.color }}
-                  className="w-20 h-10"
-                >
-                </motion.button>
+                  className="h-10 w-20"
+                ></motion.button>
                 <motion.ul
                   variants={{
                     open: {

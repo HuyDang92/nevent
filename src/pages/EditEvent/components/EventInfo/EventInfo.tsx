@@ -17,9 +17,13 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
 import { useUploadDesc } from '~/hooks/useUploadDesc';
+import useClickOutside from '~/hooks/useClickOutside';
+Quill.register('modules/imageResize', ImageResize);
+
 const EventInfo = () => {
   const { idEvent } = useParams();
   const dispatch = useAppDispatch();
@@ -39,6 +43,7 @@ const EventInfo = () => {
   const [updateEvent, { isLoading, isSuccess, isError, error }] = useUpdateEventMutation();
   const [imageData, setImageData] = useState<string[]>([]);
   const [imagesUploaded, setImagesUploaded] = useState<boolean>(false);
+  const [focusCategory, setFocusCategory] = useState<boolean>(false);
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -148,6 +153,10 @@ const EventInfo = () => {
       [{ align: [] }],
       ['clean'],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize'],
+    },
   };
 
   useEffect(() => {
@@ -341,10 +350,15 @@ const EventInfo = () => {
   //   }
   // }, [categories, eventInfo]);
 
+  // Category
   useEffect(() => {
     const cateList = categoryArr?.map((cate: ICategory) => cate._id);
     formik.setFieldValue('categories', cateList);
   }, [categoryArr]);
+  const ref = useRef<any>(null);
+  useClickOutside(ref, () => {
+    setFocusCategory(false);
+  });
   return (
     <>
       {(event.isLoading || loadingDesc || isLoading || loading) && <Loading />}
@@ -484,8 +498,13 @@ const EventInfo = () => {
                 Danh mục sự kiện
               </label>
               <br />
-              <Input value={categoryIpt} onChange={(e) => setCategoryIpt(e.target.value)} />
-              {categoryIpt !== '' && (
+              <Input
+                value={categoryIpt}
+                onFocus={() => setFocusCategory(true)}
+                classNameInput="w-full"
+                onChange={(e) => setCategoryIpt(e.target.value)}
+              />
+              {categoryIpt !== '' ? (
                 <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
                   {categories.data
                     ?.filter((cate: ICategory) => cate.name.includes(categoryIpt))
@@ -504,6 +523,29 @@ const EventInfo = () => {
                       </div>
                     ))}
                 </div>
+              ) : (
+                <>
+                  {focusCategory && (
+                    // This is div I want click without run input's onBlur event
+                    <div className="absolute z-20 w-full rounded border-[1px] border-cs_light bg-cs_light p-3 shadow-border-full dark:bg-cs_lightDark dark:text-cs_light">
+                      {categories.data.map((cate: ICategory, index: number) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setCategoryIpt('');
+                            setFocusCategory(false);
+                            if (!categoryArr.includes(cate)) {
+                              setCategoryArr([...categoryArr, cate]);
+                            }
+                          }}
+                          className="category my-1 cursor-pointer rounded-lg p-1 pl-3 hover:bg-cs_semi_green"
+                        >
+                          {cate.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
               <div className="mt-3 flex flex-wrap gap-2">
                 {categoryArr?.map((cate: ICategory, index: number) => (
@@ -540,7 +582,6 @@ const EventInfo = () => {
               onChange={(value) => {
                 formik.setFieldValue('description', value);
               }}
-              className="mb-8"
               modules={modules}
               ref={quillRef}
             />

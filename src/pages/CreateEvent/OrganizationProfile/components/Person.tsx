@@ -23,6 +23,7 @@ interface IPersonInfo {
   city: string;
   district: string;
   ward: string;
+  specificAddress: string;
 }
 const Person = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ const Person = () => {
   //address
   const [districtList, setDistrictList] = useState<any[]>([]);
   const [wardList, setWardList] = useState<any[]>([]);
+  const [address, setAddress] = useState<string>('');
 
   const errorForm = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
@@ -40,7 +42,6 @@ const Person = () => {
     }
     return null;
   }, [error]);
-  console.log(userProfile);
 
   const formik = useFormik({
     initialValues: {
@@ -53,6 +54,7 @@ const Person = () => {
       city: '',
       district: '',
       ward: '',
+      specificAddress: '',
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Tên tổ chức không được bỏ trống'),
@@ -66,11 +68,12 @@ const Person = () => {
       city: Yup.string().required('Thành phố/Tỉnh không được bỏ trống'),
       district: Yup.string().required('Huyện không được bỏ trống'),
       ward: Yup.string().required('Phường không được bỏ trống'),
+      specificAddress: Yup.string().required('Địa chỉ cụ thể không được bỏ trống'),
     }),
     onSubmit: async (value: IPersonInfo) => {
       await updateBusiness({
         type: 'personal',
-        address: `${value.ward}, ${value.district}, ${value.city}`,
+        address: `${value.specificAddress.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
         cccd: value.cccd,
         taxCode: value.taxCode,
         name: value.fullName,
@@ -82,21 +85,35 @@ const Person = () => {
   });
 
   useEffect(() => {
-    if (userProfile?.isSuccess) {
-      if (userProfile?.data?.data?.role?.name === 'user') {
-        navigate('/user/organization-profile');
-      } else {
-        dispatch(setAuthCurrentUser(userProfile?.data?.data));
-        dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
-        navigate('/organization/organization-profile');
-      }
+    if (userProfile.isSuccess) {
+      dispatch(setAuthCurrentUser(userProfile.data?.data));
+    }
+    if (userProfile.data?.data?.businessProfile) {
+      dispatch(setBusinessProfile(userProfile.data?.data?.businessProfile));
     }
   }, [userProfile.isFetching]);
 
+  // useEffect(() => {
+  //   if (userProfile?.isSuccess) {
+  //     if (userProfile?.data?.data?.role?.name === 'user') {
+  //       navigate('/user/organization-profile');
+  //     } else {
+  //       dispatch(setAuthCurrentUser(userProfile?.data?.data));
+  //       dispatch(setBusinessProfile(userProfile?.data?.data?.setBusinessProfile));
+  //       navigate('/organization/organization-profile');
+  //     }
+  //   }
+  // }, [userProfile.isFetching]);
+
   useEffect(() => {
     if (userProfile?.data?.data?.businessProfile) {
+      // Handle locations
       const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
+
+      const specificAddress = location[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng ở đầu cuối
+      location.shift(); // Loại bỏ phần tử đầu tiên
       const [ward, district, city] = location ?? [];
+
       const districts = getLocation?.data?.find((location: any) => location.name === city)?.districts;
       setDistrictList(districts);
       const wards = districts?.find((location: any) => location.name === district)?.wards;
@@ -111,6 +128,7 @@ const Person = () => {
         ward: ward,
         cccd: userProfile?.data?.data?.businessProfile?.cccd,
         taxCode: userProfile?.data?.data?.businessProfile?.taxCode,
+        specificAddress: specificAddress,
       });
     } else {
       console.log(userProfile?.data?.data?.fullName);
@@ -118,7 +136,7 @@ const Person = () => {
       formik.initialValues.email = userProfile?.data?.data?.email;
       formik.initialValues.phone = userProfile?.data?.data?.phone;
     }
-  }, [userProfile]);
+  }, [userProfile, getLocation]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -325,6 +343,22 @@ const Person = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="relative">
+              {formik.errors.specificAddress && (
+                <small className="absolute left-[60px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.specificAddress}
+                </small>
+              )}
+              <Input
+                name="specificAddress"
+                id="specificAddress"
+                label="Địa chỉ"
+                classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
+                classNameInput=" !w-full dark:text-white"
+                value={formik.values.specificAddress}
+                onChange={formik.handleChange}
+              />
             </div>
           </div>
           <div className="flex w-full justify-end">

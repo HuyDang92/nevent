@@ -25,7 +25,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   if (result.error && result.error.status === 401) {
     // Thử lấy token mới thông qua yêu cầu '/refreshToken'
     const refreshResult: any = await baseQuery(`/api/auth/refresh/${refheshToken}`, api, extraOptions);
-
     if (refreshResult.data) {
       // Lưu trữ token mới vào Redux store thông qua action `tokenReceived`
       api.dispatch(assignNewToken(refreshResult?.data?.data?.token?.accessToken));
@@ -67,7 +66,20 @@ export const paymentApi = createApi({
     payBackTicket: builder.query<any, string>({
       query: (paymentId) => `/api/payments/vnpay/repayment/${paymentId}`,
     }),
+    updateInformationBanking: builder.mutation({
+      query: (body) => ({
+        url: '/api/banks',
+        method: 'PUT',
+        body: body,
+      }),
+    }),
   }),
 });
 
-export const { useVnPayMutation, useVietQrMutation, useGetHistoryQuery, useLazyPayBackTicketQuery } = paymentApi;
+export const {
+  useVnPayMutation,
+  useVietQrMutation,
+  useGetHistoryQuery,
+  useLazyPayBackTicketQuery,
+  useUpdateInformationBankingMutation,
+} = paymentApi;

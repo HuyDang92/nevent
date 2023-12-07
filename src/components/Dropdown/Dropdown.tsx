@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../customs/Button';
 import { logout, setAuthCurrentUser, setBusinessProfile } from '~/features/Auth/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks/useActionRedux';
 import Icon from '../customs/Icon';
 import useClickOutside from '~/hooks/useClickOutside';
@@ -28,6 +28,7 @@ const Dropdown = () => {
   const ref = useRef(null);
   const currentBusiness = useAppSelector((state) => state.auth.businessInfo);
   const auth = useAppSelector((state) => state.auth.currentUser);
+  const historyUrl = useAppSelector((state) => state.auth.historyUrl);
 
   const [swapRole, resultSwap] = useSwapRoleMutation();
 
@@ -56,11 +57,11 @@ const Dropdown = () => {
       dispatch(setAuthCurrentUser(resultSwap.data?.data?.user));
       dispatch(setBusinessProfile(resultSwap.data?.data?.businessProfile));
       if (auth?.role?.name === 'business' && resultSwap.data?.data?.user?.role?.name === 'user') {
-        navigate('/');
         successNotify('Đã chuyển sang  vai trò người dùng');
+        navigate(historyUrl ?? '/');
       } else if (auth?.role?.name === 'user' && resultSwap.data?.data?.user?.role?.name === 'business') {
-        navigate('/organization/event-list');
         successNotify('Đã chuyển sang vai trò ban tổ chức');
+        navigate('/organization/event-list');
       }
     }
   }, [resultSwap.isLoading]);

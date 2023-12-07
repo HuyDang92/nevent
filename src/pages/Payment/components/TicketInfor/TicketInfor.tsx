@@ -13,6 +13,7 @@ const TicketInfor = () => {
   const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Giá vé'];
   const tickets = useAppSelector((state) => state.payment.ticket);
   const eventTicket = useGetTicketByEventIdQuery(idEvent || '');
+  console.log(tickets);
 
   // Functions
 
@@ -86,26 +87,40 @@ const TicketInfor = () => {
               {eventTicket?.data?.data?.map((ticket: ITicket) => {
                 const ExistedTicket = tickets.find((t) => t._id === ticket._id);
                 return (
-                  <tr key={ticket._id}>
+                  <tr key={ticket?._id}>
                     <td className="border-t border-[#eee] p-4">
                       <TicketCard
-                        title={ticket.title}
-                        tooltip={ticket.desc}
-                        className={`${ticket.quantity === 0 && 'bg-[#ccc]'}`}
+                        title={ticket?.title}
+                        tooltip={ticket?.desc}
+                        className={`${Number(ticket?.quantity) === Number(ticket?.sold) && 'bg-[#ccc]'}`}
                       />
                     </td>
                     <td className="border-t border-[#eee] p-4">
-                      {ticket.quantity > 0 ? (
-                        <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
-                      ) : (
+                      {Number(ticket?.quantity) === Number(ticket?.sold) ? (
                         <div className="mx-auto w-20 rounded-full bg-red-400 p-1 text-center text-white">Hết vé</div>
+                      ) : (
+                        <div className="mx-auto w-20 rounded-full bg-cs_green p-1 text-center text-white">Còn vé</div>
                       )}
                     </td>
                     <td className="border-t border-[#eee] p-4">
-                      <div className="mx-auto flex w-[80px] justify-around rounded-[5px] font-bold text-cs_semi_green shadow-border-full">
-                        <button onClick={() => descreaseTicketQuantity(ticket)}>-</button>
+                      <div
+                        className={`${
+                          Number(ticket?.quantity) === Number(ticket?.sold) ? 'text-cs_grayText' : 'text-cs_semi_green'
+                        } mx-auto flex w-[80px] justify-around rounded-[5px] font-bold  shadow-border-full`}
+                      >
+                        <button
+                          disabled={Number(ticket?.quantity) === Number(ticket?.sold)}
+                          onClick={() => descreaseTicketQuantity(ticket)}
+                        >
+                          -
+                        </button>
                         <span>{ExistedTicket ? ExistedTicket.orderQuantity : 0}</span>
-                        <button onClick={() => inscreaseTicketQuantity(ticket)}>+</button>
+                        <button
+                          disabled={Number(ticket?.quantity) === Number(ticket?.sold)}
+                          onClick={() => inscreaseTicketQuantity(ticket)}
+                        >
+                          +
+                        </button>
                       </div>
                     </td>
                     <td className="border-t border-[#eeeeee] p-4 text-right font-bold dark:text-cs_light">

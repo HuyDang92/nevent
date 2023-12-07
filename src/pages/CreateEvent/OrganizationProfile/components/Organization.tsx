@@ -31,6 +31,7 @@ interface IOrganizationInfo {
   city: string;
   district: string;
   ward: string;
+  specificAddress: string;
 }
 const Organization = () => {
   const dispatch = useAppDispatch();
@@ -65,6 +66,7 @@ const Organization = () => {
       city: '',
       district: '',
       ward: '',
+      specificAddress: '',
     },
     validationSchema: Yup.object({
       organization_name: Yup.string().required('Tên ban tổ chức không được bỏ trống'),
@@ -79,6 +81,7 @@ const Organization = () => {
       city: Yup.string().required('Thành phố/Tỉnh không được bỏ trống'),
       district: Yup.string().required('Huyện không được bỏ trống'),
       ward: Yup.string().required('Phường không được bỏ trống'),
+      specificAddress: Yup.string().required('Địa cụ thể được bỏ trống'),
     }),
     onSubmit: async (value: IOrganizationInfo) => {
       console.log(value);
@@ -86,7 +89,7 @@ const Organization = () => {
         const avatarId = await upLoad(selectedFile);
         await updateBusiness({
           type: 'business',
-          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
+          address: `${value.specificAddress.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
           crn: value.CRN,
           dateOfIssue: value.releaseDate,
           placeOfIssue: value.releasePlace,
@@ -99,7 +102,7 @@ const Organization = () => {
       } else {
         await updateBusiness({
           type: 'business',
-          address: `${address.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
+          address: `${value.specificAddress.replace(',', ' ').trim()}, ${value.ward}, ${value.district}, ${value.city}`,
           crn: value.CRN,
           dateOfIssue: value.releaseDate,
           placeOfIssue: value.releasePlace,
@@ -137,7 +140,8 @@ const Organization = () => {
 
       // Handle locations
       const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
-      const address = location[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng ở đầu cuối
+
+      const specificAddress = location[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng ở đầu cuối
       location.shift(); // Loại bỏ phần tử đầu tiên
       const [ward, district, city] = location ?? [];
 
@@ -145,7 +149,6 @@ const Organization = () => {
       setDistrictList(districts);
       const wards = districts?.find((location: any) => location.name === district)?.wards;
       setWardList(wards);
-      setAddress(address);
 
       // Set old data
       formik.setValues({
@@ -159,6 +162,7 @@ const Organization = () => {
         city: city,
         district: district,
         ward: ward,
+        specificAddress: specificAddress,
       });
     } else {
       formik.initialValues.email = userProfile?.data?.data?.email;
@@ -264,18 +268,14 @@ const Organization = () => {
             <div className="h-[90px] w-[90px] overflow-hidden rounded-full border-[2px] border-cs_semi_green sm:h-[120px] sm:w-[120px]">
               {!imagePreviewUrl && (
                 <ZoomComp>
-                  <img
-                    className="h-full w-full object-cover"
-                    src={DefaultAvatar}
-                    alt=""
-                  />
+                  <img className="h-full w-full object-cover" src={DefaultAvatar} alt="" />
                 </ZoomComp>
               )}
               {imagePreviewUrl && (
                 <ZoomComp>
                   <img
                     className="h-[90px] w-[90px]  object-cover sm:h-[120px] sm:w-[120px]"
-                    src={userProfile?.data?.data?.businessProfile?.avatar?.url  ?? imagePreviewUrl}
+                    src={userProfile?.data?.data?.businessProfile?.avatar?.url ?? imagePreviewUrl}
                     alt=""
                   />
                 </ZoomComp>
@@ -444,19 +444,19 @@ const Organization = () => {
               </select>
             </div>
             <div className="relative">
-              {formik.errors.email && (
-                <small className="absolute left-[50px] top-[10px] z-10 px-2 text-[12px] text-red-600">
-                  {formik.errors.email}
+              {formik.errors.specificAddress && (
+                <small className="absolute left-[60px] top-[10px] z-10 px-2 text-[12px] text-red-600">
+                  {formik.errors.specificAddress}
                 </small>
               )}
               <Input
-                name="address"
-                id="address"
+                name="specificAddress"
+                id="specificAddress"
                 label="Địa chỉ"
                 classNameLabel="dark:!text-gray-400 !text-cs_label_gray !text-sm"
                 classNameInput=" !w-full dark:text-white"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                value={formik.values.specificAddress}
+                onChange={formik.handleChange}
               />
             </div>
           </div>
