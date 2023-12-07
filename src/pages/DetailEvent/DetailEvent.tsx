@@ -53,7 +53,7 @@ function DetailEvent() {
       {!detailEventQuery.isFetching && (
         <>
           <div className="flex-row-reverse gap-4 xl:flex ">
-            <div className="mb-5 h-fit rounded-xl bg-cs_light p-3 text-[14px] shadow-border-blur dark:border xl:sticky xl:top-20 xl:mb-0 xl:w-[350px]">
+            <div className="mb-5 h-fit rounded-xl bg-cs_light p-3 text-[14px] shadow-border-blur dark:border dark:border-none dark:bg-cs_icon_black xl:sticky xl:top-20 xl:mb-0 xl:w-[350px]">
               <Swiper
                 slidesPerView={1}
                 spaceBetween={15}
