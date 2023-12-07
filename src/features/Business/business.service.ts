@@ -81,5 +81,6 @@ export const {
   useLazyGetProfileQuery,
   useAnalyticsBusinessQuery,
   useAnalyticsRevenueChartQuery,
+  useLazyAnalyticsRevenueChartQuery,
   useListCustomerPaymentQuery,
 } = businessApi;

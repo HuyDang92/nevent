@@ -16,6 +16,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
 import useClickOutside from '~/hooks/useClickOutside';
+import './style.css';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -393,7 +394,6 @@ const EventInfo = () => {
               onChange={(value) => {
                 formik.setFieldValue('description', value);
               }}
-              className="mb-8 h-[300px]"
               modules={modules}
               ref={quillRef}
             />
