@@ -10,7 +10,7 @@ const TicketInfor = () => {
   const navigate = useNavigate();
   const { idEvent } = useParams();
   const dispatch = useAppDispatch();
-  const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Giá vé'];
+  const TABLE_HEAD = ['Loại vé', 'Trạng thái', 'Số lượng', 'Còn lại', 'Giá vé'];
   const tickets = useAppSelector((state) => state.payment.ticket);
   const eventTicket = useGetTicketByEventIdQuery(idEvent || '');
   console.log(tickets);
@@ -92,7 +92,7 @@ const TicketInfor = () => {
                       <TicketCard
                         title={ticket?.title}
                         tooltip={ticket?.desc}
-                        className={`${Number(ticket?.quantity) === Number(ticket?.sold) && 'bg-[#ccc]'}`}
+                        color={Number(ticket?.quantity) === Number(ticket?.sold) ? '#ccc' : ticket?.color}
                       />
                     </td>
                     <td className="border-t border-[#eee] p-4">
@@ -122,6 +122,9 @@ const TicketInfor = () => {
                           +
                         </button>
                       </div>
+                    </td>
+                    <td className="border-t border-[#eeeeee] p-4 text-center font-bold dark:text-cs_light">
+                      {ticket?.quantity - ticket?.sold} vé
                     </td>
                     <td className="border-t border-[#eeeeee] p-4 text-right font-bold dark:text-cs_light">
                       {ticket.price?.toLocaleString('vi')} VNĐ

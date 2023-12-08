@@ -98,7 +98,7 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
           return (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <TicketCard title={ticket.title} tooltip="Tooltip here" className="w-full" />
+                <TicketCard title={ticket.title} tooltip="Tooltip here" className="w-full" color={ticket?.color} />
                 <span className="font-bold text-cs_gray"> x{ticket.orderQuantity} </span>
               </div>
               {/* <span className="text-lg font-bold text-cs_icon_black dark:text-cs_light">
@@ -139,14 +139,14 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
             {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0) >= 10000 ? (
+        {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0) >= 2000 ? (
           <Button
             onClick={handleBuyTicket}
             value="Thanh toán"
             className="w-full !bg-cs_semi_green text-white !shadow-none"
           />
         ) : (
-          <p className="pt-3 text-center text-xs text-red-500">Tổng thanh toán phải trên 10.000đ </p>
+          <p className="pt-3 text-center text-xs text-red-500">Tổng thanh toán phải trên 2.000đ </p>
         )}
         {/* {(activeTab === 2 || activeTab === 4) && (
         )} */}

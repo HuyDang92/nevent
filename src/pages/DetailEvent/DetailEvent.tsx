@@ -108,11 +108,18 @@ function DetailEvent() {
                       {eventTickets?.data?.data?.map((ticket: ITicket) => (
                         <li
                           key={ticket?._id}
-                          style={{ backgroundColor: ticket?.color }}
+                          style={{
+                            backgroundColor: Number(ticket?.quantity) === Number(ticket.sold) ? '#ccc' : ticket?.color,
+                          }}
                           className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                         >
                           <span className="flex justify-between">
-                            <span>{ticket?.title}</span>
+                            <span>
+                              {ticket?.title}{' '}
+                              {Number(ticket?.quantity) === Number(ticket.sold)
+                                ? `(Hết vé)`
+                                : `(còn ${Number(ticket?.quantity) - Number(ticket.sold)} vé)`}
+                            </span>
                             {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
                           </span>
                         </li>

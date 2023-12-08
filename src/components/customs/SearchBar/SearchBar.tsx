@@ -52,7 +52,7 @@ const SearchBar = ({ className, size = 'md', classNameInput }: SearchBarProps) =
       localStorage.setItem('search-history', JSON.stringify(history));
     }
 
-    navigate(`/event-categories/${value}`);
+    navigate(`/event-categories-search/${value}`);
     setValue('');
   };
 

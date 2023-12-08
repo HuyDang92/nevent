@@ -134,7 +134,7 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                     /> */}
                   </div>
                   {!passTicket && <Action data={dataSummary} onClick={() => handleDownload(item?.title, index)} />}
-                  <div className="absolute right-1/2 top-60 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-8 xl:translate-x-0">
+                  <div className="absolute right-1/2 top-52 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-8 xl:translate-x-0">
                     <p className="py-2 text-center text-sm font-semibold xl:block">
                       Vé: <span className=" text-sm">{item?.title}</span>
                     </p>
