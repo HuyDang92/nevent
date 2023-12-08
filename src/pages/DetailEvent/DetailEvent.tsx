@@ -3,7 +3,7 @@ import SectionTitle from '~/components/SectionTitle';
 import avtDefault from '~/assets/images/default-avatar.jpg';
 import Icon from '~/components/customs/Icon';
 import BreadcrumbsComponent from '~/components/Breadcrumbs/Breadcrumbs';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '~/components/EventCard';
 import {
   useGetEventByIdQuery,
@@ -22,15 +22,22 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Zoom from '~/components/customs/Zoom';
+import { setHistoryUrl } from '~/features/Auth/authSlice';
 
 function DetailEvent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const history = useLocation();
   const auth = useAppSelector((state) => state.auth.currentUser);
   const event = useGetAllEventQuery({ page: 1, limit: 9, status: 'UPCOMING' });
   const { idEvent } = useParams();
   const detailEventQuery = useGetEventByIdQuery(idEvent ? idEvent : '');
   const eventTickets = useGetTicketByEventIdQuery(idEvent ? idEvent : '');
+
+  useEffect(() => {
+    dispatch(setHistoryUrl(history.pathname));
+  }, []);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -53,7 +60,7 @@ function DetailEvent() {
       {!detailEventQuery.isFetching && (
         <>
           <div className="flex-row-reverse gap-4 xl:flex ">
-            <div className="mb-5 h-fit rounded-xl bg-cs_light p-3 text-[14px] shadow-border-blur dark:border xl:sticky xl:top-20 xl:mb-0 xl:w-[350px]">
+            <div className="mb-5 h-fit rounded-xl bg-cs_light p-3 text-[14px] shadow-border-blur dark:border dark:border-none dark:bg-cs_icon_black xl:sticky xl:top-20 xl:mb-0 xl:w-[350px]">
               <Swiper
                 slidesPerView={1}
                 spaceBetween={15}
@@ -101,11 +108,18 @@ function DetailEvent() {
                       {eventTickets?.data?.data?.map((ticket: ITicket) => (
                         <li
                           key={ticket?._id}
-                          style={{ backgroundColor: ticket?.color }}
+                          style={{
+                            backgroundColor: Number(ticket?.quantity) === Number(ticket.sold) ? '#ccc' : ticket?.color,
+                          }}
                           className={`rounded-lg ${ticket?.color ? '' : 'bg-[#FF3232]'} p-2 text-cs_light`}
                         >
                           <span className="flex justify-between">
-                            <span>{ticket?.title}</span>
+                            <span>
+                              {ticket?.title}{' '}
+                              {Number(ticket?.quantity) === Number(ticket.sold)
+                                ? `(Hết vé)`
+                                : `(còn ${Number(ticket?.quantity) - Number(ticket.sold)} vé)`}
+                            </span>
                             {ticket?.price === 0 ? 'Miễn phí' : <span>{ticket?.price.toLocaleString('vi')}đ</span>}
                           </span>
                         </li>

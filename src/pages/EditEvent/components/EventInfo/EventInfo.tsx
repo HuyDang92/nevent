@@ -17,10 +17,13 @@ import { isFetchBaseQueryError } from '~/utils/helper';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import { uploadApi } from '~/features/Upload/uploadApi.service';
 import { useUploadFile } from '~/hooks/useUpLoadFile';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
 import { useUploadDesc } from '~/hooks/useUploadDesc';
 import useClickOutside from '~/hooks/useClickOutside';
+Quill.register('modules/imageResize', ImageResize);
+
 const EventInfo = () => {
   const { idEvent } = useParams();
   const dispatch = useAppDispatch();
@@ -150,6 +153,10 @@ const EventInfo = () => {
       [{ align: [] }],
       ['clean'],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize'],
+    },
   };
 
   useEffect(() => {
@@ -575,7 +582,6 @@ const EventInfo = () => {
               onChange={(value) => {
                 formik.setFieldValue('description', value);
               }}
-              className="mb-8"
               modules={modules}
               ref={quillRef}
             />

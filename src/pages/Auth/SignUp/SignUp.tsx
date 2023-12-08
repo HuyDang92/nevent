@@ -62,21 +62,22 @@ function LogIn() {
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
     onSubmit: async (value: ISignUp) => {
-      await signUp({ email: value.email, password: value.password, fullName: value.name });
+      // await signUp({ email: value.email, password: value.password, fullName: value.name });
+      navigate(`/verify/:${value.email}`);
     },
   });
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data.data);
-      dispatch(setAuthCurrentUser(data.data.user));
-      dispatch(assignNewToken(data.data.token.accessToken));
-      dispatch(assignNewRefreshToken(data.data.token.refreshToken));
-      navigate('/');
-    }
-    if (isError) {
-      errorNotify('Đăng ký thất bại');
-    }
-  }, [isSuccess, isError]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log(data.data);
+  //     dispatch(setAuthCurrentUser(data.data.user));
+  //     dispatch(assignNewToken(data.data.token.accessToken));
+  //     dispatch(assignNewRefreshToken(data.data.token.refreshToken));
+  //     navigate('/');
+  //   }
+  //   if (isError) {
+  //     errorNotify('Đăng ký thất bại');
+  //   }
+  // }, [isSuccess, isError]);
   return (
     <>
       {isLoading && <Loading />}
@@ -112,7 +113,7 @@ function LogIn() {
               {errorForm && (
                 <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
               )}
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 {isSubmitted && formik.errors.name && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.name}</small>
                 )}
@@ -125,7 +126,7 @@ function LogIn() {
                   onChange={formik.handleChange}
                   value={formik.values.name}
                 />
-              </div>
+              </div> */}
               <div className="space-y-1">
                 {isSubmitted && formik.errors.email && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.email}</small>
@@ -140,7 +141,7 @@ function LogIn() {
                   onChange={formik.handleChange}
                 />
               </div>
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 {isSubmitted && formik.errors.password && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.password}</small>
                 )}
@@ -167,7 +168,7 @@ function LogIn() {
                   value={formik.values.repassword}
                   onChange={formik.handleChange}
                 />
-              </div>
+              </div> */}
 
               <div className="flex items-center text-sm">
                 <Checkbox

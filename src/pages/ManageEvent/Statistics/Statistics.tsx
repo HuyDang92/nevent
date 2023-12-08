@@ -153,7 +153,8 @@ const Statistics = () => {
             </ul>
           </div>
         </div>
-        <ChartBarAverage />
+        <ChartBarAverage type={'revenue'} />
+        <ChartBarAverage type={'ticket'} />
 
         <div className="relative mt-8">
           <Carousel
@@ -228,9 +229,9 @@ const Statistics = () => {
               </span>
             </div>
           </div>
-          <Link className="absolute right-[15px] top-[15px]" to={`/organization/manage-event/scan-ticket/${idEvent}`}>
+          <a className="absolute right-[15px] top-[15px]" href={`/scan-ticket/${idEvent}`} target="_blank" >
             <Button mode="dark" value="Check in" />
-          </Link>
+          </a>
           <div className="absolute bottom-[15px] right-[15px] flex gap-4">
             <Link to={`/organization/edit-event/${idEvent}/0`}>
               <Button

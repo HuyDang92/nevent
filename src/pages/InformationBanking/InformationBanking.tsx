@@ -52,7 +52,7 @@ export default function InformationBanking() {
         bank_number: userProfile?.data?.data.bank?.bank_number,
         branch: userProfile?.data?.data.bank?.branch,
         owner: userProfile?.data?.data.bank?.owner,
-      })
+      });
     }
   }, [userProfile]);
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function InformationBanking() {
   }, [isSuccess, isError]);
   return (
     <>
-      {(isLoading || userProfile.isLoading) && <Loading />}
+      {isLoading && <Loading />}
       <section className="min-h-screen rounded-xl bg-white p-8">
         <h1 className="text-2xl font-semibold">Thông tin ngân hàng</h1>
         <div className="mt-4 rounded-xl p-10 shadow-border-light">
@@ -97,7 +97,7 @@ export default function InformationBanking() {
                   label="Chủ tài khoản"
                   classNameLabel="!text-cs_label_gray !text-sm"
                   classNameInput="!w-full"
-                  value={formik.values.owner}
+                  value={formik.values.owner ?? ''}
                   onChange={formik.handleChange}
                 />
               </div>
@@ -114,7 +114,7 @@ export default function InformationBanking() {
                   label="Số tài khoản"
                   classNameLabel="!text-cs_label_gray !text-sm"
                   classNameInput="!w-full"
-                  value={formik.values.bank_number}
+                  value={formik.values.bank_number ?? ''}
                   onChange={formik.handleChange}
                 />
               </div>
@@ -130,7 +130,7 @@ export default function InformationBanking() {
                   label="Ngân hàng"
                   classNameLabel="!text-cs_label_gray !text-sm"
                   classNameInput="!w-full"
-                  value={formik.values.bank_name}
+                  value={formik.values.bank_name ?? ''}
                   onChange={formik.handleChange}
                 />
               </div>
@@ -146,7 +146,7 @@ export default function InformationBanking() {
                   label="Chi nhánh"
                   classNameLabel="!text-cs_label_gray !text-sm"
                   classNameInput="!w-full"
-                  value={formik.values.branch}
+                  value={formik.values.branch ?? ''}
                   onChange={formik.handleChange}
                 />
               </div>
