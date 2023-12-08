@@ -45,7 +45,7 @@ const AppRoutes = () => {
           <Route path="/event-detail/:idEvent" element={<DetailEvent />} />
           <Route path="/event-categories" element={<Categories />} />
           <Route path="/event-categories/:idCate" element={<Categories />} />
-          <Route path="/event-categories/:keyword" element={<Categories />} />
+          <Route path="/event-categories-search/:keyword" element={<Categories />} />
           <Route path="/search" element={<SearchMobile />} />
         </Route>
 
@@ -103,6 +103,7 @@ const AppRoutes = () => {
             <Route path="scan-ticket/:idEvent" element={<Scan />} />
           </Route>
         </Route>
+        <Route path="scan-ticket/:idEvent" element={<Scan />} />
         <Route path="/pr/:idEvent/:layout" element={<PrIframe />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
