@@ -19,7 +19,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ data }) => {
       setRevenue(data);
     }
   }, [reneue.isFetching]);
-  console.log(revenue);
+  // console.log(revenue);
   
   useEffect(() => {
     if (!data) {
