@@ -1,7 +1,7 @@
 import Dropdown from '~/components/Dropdown';
 import ManageEventParameters from './components/ManageEventParameters/ManageEventParameters';
-import { useGetEventBusinessQuery } from '~/features/Event/eventApi.service';
-import { useState } from 'react';
+import { useGetEventBusinessQuery, useUpdateEventMutation } from '~/features/Event/eventApi.service';
+import { useEffect, useState } from 'react';
 import { useDebounce } from '~/hooks/useDebounce';
 import { IconButton, Tab, Tabs, TabsHeader, Tooltip, Typography } from '@material-tailwind/react';
 import Input from '~/components/customs/Input';
@@ -50,6 +50,7 @@ const EventManage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [status, setStatus] = useState<string>('');
   const analytics = useAnalyticsBusinessQuery();
+  const [updateEvent, { isLoading: isLoadingUpdate }] = useUpdateEventMutation();
 
   const event = useGetEventBusinessQuery({
     limit: limit,
@@ -57,6 +58,26 @@ const EventManage = () => {
     search: searchValue,
     status: status,
   });
+  console.log(event);
+  
+  const updateCompleteEvent = async (id: string) => {
+    await updateEvent({
+      eventId: id,
+      body: {
+        status: 'COMPLETED',
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (event?.data?.data?.docs) {
+      event?.data?.data?.docs?.map((item: IEvent) => {
+        if (new Date(item.start_date) < new Date()) {
+          updateCompleteEvent(item._id);
+        }
+      });
+    }
+  }, [event]);
 
   const handleStatus = (value: string) => {
     console.log(value);
