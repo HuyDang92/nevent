@@ -64,7 +64,7 @@ const Purchase = () => {
                   type="radio"
                   name="payment"
                 />
-                <Iconify icon="solar:vietqr" className="text-3xl dark:text-cs_light md:text-base" />
+                <Iconify icon="icon-park-twotone:pay-code-one" className="text-3xl dark:text-cs_light md:text-base" />
                 <span className="hidden text-sm md:block">VIETQR</span>
               </div>
             </Tab>

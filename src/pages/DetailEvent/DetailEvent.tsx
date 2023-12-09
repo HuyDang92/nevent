@@ -150,10 +150,10 @@ function DetailEvent() {
                 )}
               </div>
             </div>
-            <div className="xl:w-[71%]">
+            <div className="xl:w-[71%] 3xl:w-[77%]">
               <div className="hidden xl:block">
                 <Carousel
-                  className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[410px]`}
+                  className={` rounded-xl object-cover sm:h-[320px] xl:h-[410px]`}
                   prevArrow={({ handlePrev }) => (
                     <IconButton
                       variant="text"
