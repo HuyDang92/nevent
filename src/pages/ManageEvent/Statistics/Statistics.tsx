@@ -18,7 +18,6 @@ const Statistics = () => {
   const navigate = useNavigate();
   const [deleteEvent, { isLoading, isSuccess, isError, error }] = useDeleteEventMutation();
   const event = useGetEventAnalyticsQuery(idEvent || '');
-
   const deleteErr = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -37,6 +36,7 @@ const Statistics = () => {
       errorNotify('Xóa sự kiện thất bại');
     }
   }, [isSuccess, isError]);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
