@@ -63,7 +63,7 @@ export default function Scan() {
   };
 
   return (
-    <div className="flex h-screen gap-5 bg-cs_light p-5">
+    <div className="h-screen gap-5 bg-cs_light p-5 xl:flex">
       <div>
         <h1 className="text-center font-bold">Khu vực quét vé</h1>
         <div className="h-[30rem] w-[30rem] overflow-hidden rounded-lg border-4 border-cs_semi_green">
@@ -96,7 +96,7 @@ export default function Scan() {
           </div>
         </div>
         <div className="my-5 flex gap-5 ">
-          <div className="relative  w-[70%] overflow-x-scroll rounded-xl p-3 shadow-border-full">
+          <div className="relative  hidden w-full xl:w-[70%] overflow-x-scroll rounded-xl p-3 shadow-border-full xl:block">
             <h3 className="text-lg font-semibold">Lịch sử checkin</h3>
             <div className="mt-2 w-[120%] text-[14px] ">
               <div className="stickfl top-0 mb-3 flex h-10 justify-between rounded-lg bg-cs_light_gray py-2 font-medium">
@@ -125,7 +125,7 @@ export default function Scan() {
               </ul>
             </div>
           </div>
-          <div className="h-fit w-[30%] rounded-xl p-3 shadow-border-full">
+          <div className="h-fit xl:w-[30%] w-full rounded-xl p-3 shadow-border-full">
             <h3 className="text-lg font-semibold">Danh sách vé</h3>
             <ul className="space-y-1 pt-5 font-medium">
               <li className="flex justify-between">
