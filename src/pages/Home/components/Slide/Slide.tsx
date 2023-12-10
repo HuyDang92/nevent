@@ -67,7 +67,7 @@ function Slide({ data }: Props) {
                 />
                 <div className="absolute bottom-0 left-0 right-0 top-0 rounded-xl bg-black bg-opacity-0 transition-all group-hover:scale-[98%] group-hover:bg-opacity-50"></div>
                 <div className="absolute bottom-0 left-0 right-0 top-0 hidden p-4 text-cs_light group-hover:block">
-                  <h2 className="pb-3 font-bold">{item?.title}</h2>
+                  <h2 className="pb-3 font-bold line-clamp-3">{item?.title}</h2>
                   <span className="text-sm font-medium">
                     {/* <Icon name="time-outline" /> */}
                     <span className="flex items-center gap-2">
