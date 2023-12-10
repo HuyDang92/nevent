@@ -7,24 +7,22 @@ import Slide from './components/Slide';
 import ProductCard from '~/components/EventCard';
 import { useGetAllCategoryQuery } from '~/features/Category/categoryApi.service';
 import SkeletonCategories from '~/components/customs/Skeleton/SkeletonCategories';
-import { useGetAllEventQuery } from '~/features/Event/eventApi.service';
+import { useGetAllEventQuery, useGetEventBannerQuery } from '~/features/Event/eventApi.service';
 import SkeletonEventHot from '~/components/customs/Skeleton/SkeletonEventHot';
 import SkeletonEventList from '~/components/customs/Skeleton/SkeletonEventList';
 import nothing from '~/assets/images/nothing.svg';
 
 function Home() {
   const event = useGetAllEventQuery({ page: 1, limit: 12, status: 'UPCOMING' });
-  const eventHot = useGetAllEventQuery({ page: 1, limit: 12, hotLevel: 3 });
   const categories = useGetAllCategoryQuery();
+  const eventBanner = useGetEventBannerQuery();
 
   return (
     <>
       <div className="mb-6 w-full">
-        {!event.isFetching && event.data?.data?.docs?.length > 0 && (
-          <Banner data={event.data?.data?.docs?.slice(0, 4)} />
-        )}
-        {eventHot.isFetching && <SkeletonEventHot />}
-        <SectionTitle value="Danh mục được yêu thích" to="/event-categories" />
+        {!eventBanner.isFetching && eventBanner.data?.data?.length > 0 && <Banner data={eventBanner.data?.data} />}
+        {eventBanner.isFetching && <SkeletonEventHot />}
+        <SectionTitle value="Danh mục được yêu thích" to="/event-categories" className='pt-10'/>
         {categories.isFetching && <SkeletonCategories />}
         <div className="w-full grid-cols-1 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {!categories.isFetching &&
@@ -32,7 +30,7 @@ function Home() {
               ?.slice(0, 6)
               .map((item: ICategory, index: number) => <CategoryCard key={index} data={item} />)}
         </div>
-        <SectionTitle value="Sự kiện nổi bật" to="/event-categories" />
+        <SectionTitle value="Sự kiện nổi bật" to="/event-categories" className='pt-5'/>
         {event.data?.data?.docs?.length === 0 && (
           <div className="my-24 flex justify-center text-center">
             <div>
@@ -43,7 +41,7 @@ function Home() {
         )}
         {event.isFetching && <SkeletonCategories />}
         {event.data?.data?.docs?.length !== 0 && <Slide data={event.data?.data?.docs} />}
-        <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" />
+        <SectionTitle value="Sự kiện sắp diễn ra" to="/event-categories" className='pt-5'/>
         {event.isFetching && <SkeletonEventList />}
         {event.data?.data?.docs?.length === 0 && (
           <div className="my-24 flex justify-center text-center">

@@ -32,7 +32,7 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 interface IProps {
-  data: IEvent[];
+  data: any[];
 }
 
 const Banner: React.FC<IProps> = ({ data }) => {
@@ -80,7 +80,7 @@ const Banner: React.FC<IProps> = ({ data }) => {
             <motion.img
               className=" h-full w-full cursor-pointer rounded-xl object-cover "
               key={page}
-              src={`${data[imageIndex].banner[0].url}`}
+              src={`${data[imageIndex]?.event?.banner[0].url}`}
               custom={direction}
               variants={variants}
               initial="enter"
@@ -104,9 +104,9 @@ const Banner: React.FC<IProps> = ({ data }) => {
               }}
             />
             <View className="absolute left-0 top-0 hidden h-full w-full bg-gradient-to-r from-[#0000008f] p-8 text-white duration-150 lg:block ">
-              <h1 className="max-w-[50rem] text-2xl font-bold">{data[imageIndex].title}</h1>
-              <p className="text-sm">{moment(data[imageIndex].start_date).format('hh:mm - DD/MM/YYYY')}</p>
-              <Link to={`/event-detail/${data[imageIndex]?._id}`}>
+              <h1 className="max-w-[50rem] text-2xl font-bold">{data[imageIndex]?.event?.title}</h1>
+              <p className="text-sm">{moment(data[imageIndex]?.event?.start_date).format('hh:mm - DD/MM/YYYY')}</p>
+              <Link to={`/event-detail/${data[imageIndex]?.event?._id}`}>
                 <motion.button
                   className="mt-8 rounded-lg bg-[#ffffffa9] px-6 py-2 text-sm font-semibold text-[#242424]"
                   whileTap={{ scale: 0.9 }}
@@ -133,7 +133,7 @@ const Banner: React.FC<IProps> = ({ data }) => {
                   setCurrentImageIndex(index);
                   setPage([index, 0]);
                 }}
-                src={`${item.banner[0].url}`}
+                src={`${item.event.banner[0].url}`}
               />
             );
           })}
@@ -151,25 +151,6 @@ const Banner: React.FC<IProps> = ({ data }) => {
           className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 bg-opacity-20 p-0.5 text-[1.5rem] text-cs_light transition-all hover:scale-110 hover:bg-opacity-30 sm:text-[2.3rem]"
         />
       </button>
-
-      <View className="absolute right-[10px] top-[10px] z-10 flex items-center gap-[20px] lg:right-[30px] lg:top-[30px]">
-        {/* <motion.button
-          className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-[#ffffff90]"
-          whileTap={{ scale: 0.9 }}
-        >
-          <IonIcon name="help-circle-outline" className=" border-cs_semi_green text-2xl" />
-        </motion.button> */}
-        {/* <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
-                    whileTap={{ scale: 0.9 }}
-                >
-                    <IonIcon name='person-outline' className='text-2xl text-cs_semiborder-cs_semi_green' />
-                </motion.button>
-                <motion.button className='bg-[#ffffff90] rounded-lg w-[40px] h-[40px] flex justify-center items-center'
-                    whileTap={{ scale: 0.9 }}
-                >
-                    <IonIcon name='map-outline' className='text-2xl text-cs_semiborder-cs_semi_green' />
-                </motion.button> */}
-      </View>
     </View>
   );
 };

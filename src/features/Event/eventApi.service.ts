@@ -93,6 +93,11 @@ export const eventApi = createApi({
         url: `/api/events/overview/${eventId}`,
       }),
     }),
+    getEventBanner: builder.query<any, void>({
+      query: () => ({
+        url: `/api/events/banner`,
+      }),
+    }),
     updateEvent: builder.mutation({
       query: ({ eventId, body }) => ({
         url: `/api/events/update/${eventId}`,
@@ -137,4 +142,5 @@ export const {
   useAddTicketMutation,
   useDeleteTicketMutation,
   useUpdateTicketMutation,
+  useGetEventBannerQuery,
 } = eventApi;
