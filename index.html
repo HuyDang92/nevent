@@ -53,8 +53,19 @@
   <body>
     <div id="root" class="dark:bg-cs_dark"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-74FKLVS8RT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-74FKLVS8RT');
+  </script>
+
     <!-- Messenger Plugin chat Code -->
-    <!-- <div id="fb-root"></div>
+    <div id="fb-root"></div>
 
     <div id="fb-customer-chat" class="fb-customerchat"></div>
 
@@ -81,6 +92,6 @@
         js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
         fjs.parentNode.insertBefore(js, fjs);
       })(document, 'script', 'facebook-jssdk');
-    </script> -->
+    </script>
   </body>
 </html>
