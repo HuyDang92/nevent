@@ -17,10 +17,6 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
             name: 'Hồ sơ tổ chức',
             link: '/organization/organization-profile',
           },
-          {
-            name: 'Thông tin ngân hàng',
-            link: '/organizer-information-banking',
-          },
         ]
       : [
           {

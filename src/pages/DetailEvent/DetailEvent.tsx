@@ -263,7 +263,7 @@ function DetailEvent() {
                     </div>
                   </div>
                 </div>
-                <SectionTitle value="Sự kiện sắp diễn ra" />
+                <SectionTitle value="Sự kiện dành cho bạn" />
                 {event.isFetching && <SkeletonEventList />}
 
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 3xl:grid-cols-4">
