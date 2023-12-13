@@ -7,9 +7,10 @@ import { useParams } from 'react-router-dom';
 
 interface ChartBarProps {
   type?: string;
+  className?: string;
 }
 
-const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
+const ChartBarAverage: React.FC<ChartBarProps> = ({ type, className }) => {
   const { idEvent } = useParams();
   const [options, setOptions] = useState({} as any);
   const currentDate = new Date();
@@ -49,6 +50,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
         legend: {
           data: type === 'revenue' ? ['Doanh thu'] : ['Số vé'],
         },
+        
         toolbox: {
           show: true,
           feature: {
@@ -114,14 +116,14 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type }) => {
   return result.isFetching ? (
     <LoadingLocal />
   ) : (
-    <>
+    <div className={`${className}`}>
       {type === 'ticket' ? (
         <h3 className="text-xl font-bold">Biểu đồ bán vé</h3>
       ) : (
         <h3 className="text-xl font-bold">Biểu đồ doanh thu</h3>
       )}
       <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />
-    </>
+    </div>
   );
 };
 

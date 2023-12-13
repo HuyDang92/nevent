@@ -13,6 +13,7 @@ import LoadingLocal from '~/components/customs/Loading/LoadingLocal';
 import ChartBarAverage from '~/components/BarAverage/BarAverage';
 import { useAnalyticsBusinessQuery } from '~/features/Business/business.service';
 import nothing from '~/assets/images/nothing.svg';
+import { useCurrentViewportView } from '~/hooks/useViewPort';
 
 const TABS = [
   {
@@ -41,8 +42,6 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ['STT', 'Tên sự kiện', 'Hình ảnh', 'Trạng thái', 'Thời gian', 'Địa điểm', 'Danh mục', 'Thao tác'];
-
 const EventManage = () => {
   const [limit, setLimit] = useState<number>(5);
   const [keyword, setKeyword] = useState<string>('');
@@ -52,6 +51,12 @@ const EventManage = () => {
   const analytics = useAnalyticsBusinessQuery();
   const [updateEvent, { isLoading: isLoadingUpdate }] = useUpdateEventMutation();
 
+  const { width } = useCurrentViewportView();
+  const TABLE_HEAD =
+    width < 1280
+      ? ['STT', 'Tên sự kiện', 'Thao tác']
+      : ['STT', 'Tên sự kiện', 'Hình ảnh', 'Trạng thái', 'Thời gian', 'Địa điểm', 'Danh mục', 'Thao tác'];
+
   const event = useGetEventBusinessQuery({
     limit: limit,
     page: currentPage,
@@ -59,7 +64,7 @@ const EventManage = () => {
     status: status,
   });
   console.log(event);
-  
+
   const updateCompleteEvent = async (id: string) => {
     await updateEvent({
       eventId: id,
@@ -96,12 +101,12 @@ const EventManage = () => {
   };
 
   return (
-    <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
+    <div className="h-full w-full rounded-2xl bg-cs_light p-3 xl:p-7 dark:bg-cs_lightDark">
       <div className=" flex justify-between">
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
-      <div className="flex gap-5">
+      <div className="my-3 flex gap-1 xl:gap-5">
         <select className="w-40 rounded-lg border p-2">
           <option value="2023" defaultValue={2023}>
             Năm 2023
@@ -127,7 +132,7 @@ const EventManage = () => {
         </div>
       </div>
       <div className=" my-5 flex flex-col gap-8">
-        <div className="flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-cs_dark">
+        <div className="flex w-full flex-wrap items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-cs_dark">
           <ManageEventParameters title={'Tổng sự kiện'} count={analytics.data?.data?.totalEvents} border />
           <ManageEventParameters title={'Sự kiện chờ duyệt'} count={analytics.data?.data?.totalEventReviews} border />
           <ManageEventParameters
@@ -138,8 +143,8 @@ const EventManage = () => {
           <ManageEventParameters title={'Tổng vé đã bán'} count={analytics.data?.data?.totalTickets} />
         </div>
       </div>
-      <ChartBarAverage type={'revenue'} />
-      <ChartBarAverage type={'ticket'} />
+      <ChartBarAverage type={'revenue'} className="hidden xl:block" />
+      <ChartBarAverage type={'ticket'} className="hidden xl:block" />
       <div className="mt-5  flex items-center justify-between gap-7">
         <Tabs value="" className="w-full max-w-[50rem] ">
           <TabsHeader
@@ -161,7 +166,7 @@ const EventManage = () => {
           </TabsHeader>
         </Tabs>
       </div>
-      <div className="flex w-full items-center justify-between">
+      <div className="flex flex-wrap w-full items-center justify-between">
         <Input
           className="my-5 w-full max-w-[30rem]"
           classNameInput="w-full"
@@ -171,7 +176,7 @@ const EventManage = () => {
         />
         <Link
           to={'/organization/create-event/0'}
-          className="flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
+          className="xl:mb-0 mb-5 flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
         >
           <Icon name="add-circle" className="text-xl" />
           <button>Tạo sự kiện</button>
@@ -183,11 +188,11 @@ const EventManage = () => {
         </div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-blue-gray-100">
-          <table className="w-full min-w-max table-auto rounded-lg  text-left">
+          <table className="w-full xl:min-w-max table-auto rounded-lg text-left">
             <thead>
               <tr className="">
                 {TABLE_HEAD.map((head) => (
-                  <th key={head} className="border-b  border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50/50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
@@ -217,10 +222,10 @@ const EventManage = () => {
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
-                      <td className={classes}>
+                      <td className={`${classes} hidden xl:table-cell`}>
                         <img src={item?.banner[0]?.url} alt="Image" className="h-16 w-32 rounded-lg object-cover" />
                       </td>
-                      <td className={`w-36 ${classes}`}>
+                      <td className={`w-36 ${classes} hidden xl:table-cell`}>
                         <div className="flex items-center gap-2">
                           <div
                             className={`h-3 w-3 rounded-full ${
@@ -260,15 +265,15 @@ const EventManage = () => {
                           </span>
                         </div>
                       </td>
-                      <td className={classes}>
+                      <td className={`${classes} hidden xl:table-cell`}>
                         <span className="w-[90%] dark:text-cs_light">
                           {moment(item?.start_date).format('HH:mm - DD MMMM YY')}
                         </span>
                       </td>
-                      <td className={classes}>
+                      <td className={`${classes} hidden xl:table-cell`}>
                         <span className="w-[90%] dark:text-cs_light">{item?.location?.name}&nbsp;</span>
                       </td>
-                      <td className={`w-36 ${classes}`}>
+                      <td className={`w-36 ${classes} hidden xl:table-cell`}>
                         <Typography
                           variant="small"
                           color="blue-gray"

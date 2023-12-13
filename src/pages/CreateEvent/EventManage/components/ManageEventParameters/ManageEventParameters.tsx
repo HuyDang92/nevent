@@ -9,7 +9,7 @@ type ItemProps = {
 
 export default function ManageEventParameters({ title, count, border }: ItemProps) {
   return (
-    <div className={`"flex flex-1 flex-col gap-4 ${border ? 'border-r' : ''} border-cs_semi_green px-4 3xl:p-4 `}>
+    <div className={`flex w-full xl:w-auto xl:flex-1 flex-col gap-4 ${border ? 'xl:border-r xl:border-b-0 border-b' : ''} border-cs_semi_green px-4 3xl:p-4 `}>
       <div className="flex w-full items-center justify-between">
         <p className=" font-semibold text-cs_semi_green">{title}</p>
         <button className="flex items-center justify-center">

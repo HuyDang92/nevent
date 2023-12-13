@@ -29,7 +29,7 @@ const OrganizationProfile = () => {
           <Dropdown />
         </div>
         <div className="mt-2 flex justify-between">
-          <div className="w-[72%]">
+          <div className="w-full xl:w-[72%]">
             {auth?.currentUser?.role.name === 'business' && (
               <>
                 <span className="dark:text-cs_light">
@@ -64,7 +64,7 @@ const OrganizationProfile = () => {
               {selectedValue === 'personal' && <Person />}
             </div>
           </div>
-          <div className="w-[25%] space-y-10">
+          <div className="hidden xl:block xl:w-[25%] space-y-10">
             <RecommendCard title="Gói đề xuất sự kiện" sale="30" price={9000000} theme_color="green" />
             <RecommendCard title="Gói tiêu diệt đối thủ" sale="80" price={12000000} theme_color="yellow" />
           </div>

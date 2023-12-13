@@ -36,7 +36,7 @@ const EditEvent = () => {
   return (
     <>
       <div className="">
-        <Dialog
+        {/* <Dialog
           open={open}
           handler={handleOpen}
           className="dark:bg-cs_lightDark"
@@ -74,7 +74,7 @@ const EditEvent = () => {
           <DialogFooter>
             <Button value="Đã hiểu" className="!bg-cs_semi_green !text-white" onClick={handleOpen} />
           </DialogFooter>
-        </Dialog>
+        </Dialog> */}
       </div>
       <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
         <div className="flex justify-between">

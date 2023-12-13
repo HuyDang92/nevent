@@ -41,7 +41,8 @@ const Organization = () => {
   const userProfile = useGetProfileQuery();
   const getLocation = useGetLocationsQuery();
   const { upLoad, loading } = useUploadFile();
-
+  console.log(imagePreviewUrl);
+  
   // address
   const [districtList, setDistrictList] = useState<any[]>([]);
   const [wardList, setWardList] = useState<any[]>([]);
@@ -136,7 +137,7 @@ const Organization = () => {
   useEffect(() => {
     if (userProfile?.data?.data?.businessProfile) {
       // Set business avatar as preview image
-      setImagePreviewUrl(userProfile?.data?.data?.businessProfile?.avatar);
+      setImagePreviewUrl(userProfile?.data?.data?.businessProfile?.avatar?.url);
 
       // Handle locations
       const location = userProfile?.data?.data?.businessProfile?.address?.split(', ');
@@ -179,7 +180,7 @@ const Organization = () => {
           {errorForm && (
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
           )}
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-1 gap-2 xl:grid-cols-2">
             <div className="relative">
               {formik.errors.organization_name && (
                 <small className="absolute left-[130px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -275,7 +276,7 @@ const Organization = () => {
                 <ZoomComp>
                   <img
                     className="h-[90px] w-[90px]  object-cover sm:h-[120px] sm:w-[120px]"
-                    src={userProfile?.data?.data?.businessProfile?.avatar?.url ?? imagePreviewUrl}
+                    src={imagePreviewUrl}
                     alt=""
                   />
                 </ZoomComp>
@@ -324,7 +325,7 @@ const Organization = () => {
               (Thông tin này chỉ dùng cho việc liên hệ giữa Nevent và Ban tổ chức, sẽ không được hiên thị trên website)
             </span>
           </h2>
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-1 gap-2 xl:grid-cols-2">
             <div className="relative">
               {formik.errors.phone && (
                 <small className="absolute left-[100px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -358,8 +359,9 @@ const Organization = () => {
                 disabled
               />
             </div>
-
-            <h2 className="col-span-2 mb-2 mt-4 text-lg font-semibold dark:text-white">Địa chỉ trụ sở</h2>
+          </div>
+          <h2 className="col-span-2 mb-2 mt-4 text-lg font-semibold dark:text-white">Địa chỉ trụ sở</h2>
+          <div className="grid w-full grid-cols-1 gap-2 xl:grid-cols-2">
             <div className="relative pt-3">
               {formik.errors.city && (
                 <small className="absolute left-[130px] top-[15px] z-10 px-2 text-[12px] text-red-600">
@@ -463,7 +465,7 @@ const Organization = () => {
           <div className="flex w-full justify-end">
             <Button
               type="submit"
-              className="mt-3 w-1/5 !bg-cs_semi_green font-semibold text-white"
+              className="mt-3 w-full xl:w-1/5 !bg-cs_semi_green font-semibold text-white"
               value="Lưu thông tin"
             />
           </div>
