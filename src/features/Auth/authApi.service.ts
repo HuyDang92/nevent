@@ -46,13 +46,6 @@ export const authApi: any = createApi({
   keepUnusedDataFor: 0,
   tagTypes: ['ticket', 'profile'],
   endpoints: (builder) => ({
-    signUpWithEmail: builder.mutation({
-      query: (body) => ({
-        url: '/api/auth/register',
-        method: 'POST',
-        body: body,
-      }),
-    }),
     logInWithEmail: builder.mutation({
       query: (body) => ({
         url: '/api/auth/login',
@@ -139,7 +132,6 @@ export const authApi: any = createApi({
 });
 
 export const {
-  useSignUpWithEmailMutation,
   useLogInWithEmailMutation,
   useGetTokenFromRefreshTokenQuery,
   useLazyGetTokenFromRefreshTokenQuery,

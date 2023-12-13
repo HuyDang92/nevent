@@ -67,7 +67,7 @@ const AppRoutes = () => {
           {/* đăng quên mật khẩu */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           {/* verify email*/}
-          <Route path="/verify/:email" element={<VerifyEmail />} />
+          <Route path="/verify" element={<VerifyEmail />} />
         </Route>
 
         {/* user */}
