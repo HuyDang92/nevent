@@ -16,11 +16,10 @@ export default function Scan() {
   const [historyCheckin, setHistoryCheckin] = useState<any>(null);
   const [verifyTicket, result] = useVerifyTicketMutation();
   const event = useGetEventByIdQuery(idEvent ? idEvent : '');
-  console.log(event);
   
   useEffect(() => { 
     console.log(scanSuccess);
-
+    
     if (socket) {
       socket.emit('check-in-event', idEvent);
       socket.on('check-in-event', (data) => {

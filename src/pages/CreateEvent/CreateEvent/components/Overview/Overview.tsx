@@ -283,12 +283,15 @@ const OverView = () => {
                 <div className="flex items-center gap-[15px]">
                   <Icon name="location-outline" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
                   <span className="w-[90%] dark:text-cs_light">
-                    <span>{locations?.data.find((item: ILocation) => item._id === eventInfo?.location)?.name}</span>
+                    <span>
+                      {eventInfo?.address}{' '}
+                      {locations?.data.find((item: ILocation) => item._id === eventInfo?.location)?.name}
+                    </span>
                   </span>
                 </div>
               </div>
             </div>
-            <div className="space-y-4 px-2 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
+            <div className="space-y-4 py-2 pt-5 text-[14px] dark:text-cs_light sm:px-0  sm:text-[16px]">
               <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[1.5rem]">Mô tả</h1>
               <div className=" leading-8">
                 <h3>

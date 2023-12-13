@@ -22,7 +22,7 @@ import { otpApi } from '~/features/OTP/otpApi.service';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'payment', 'ticket'],
+  whitelist: ['auth', 'payment', 'ticket', 'otp'],
 };
 
 const rootReducer = combineReducers({

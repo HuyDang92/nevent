@@ -83,7 +83,13 @@ export const otpApi = createApi({
         body: body,
       }),
     }),
-
+    signUpWithEmail: builder.mutation({
+      query: (body) => ({
+        url: '/api/auth/register',
+        method: 'POST',
+        body: body,
+      }),
+    }),
     sendOtpLogin: builder.query<any, void>({
       query: () => `/api/otp`,
     }),
@@ -91,6 +97,7 @@ export const otpApi = createApi({
 });
 
 export const {
+  useSignUpWithEmailMutation,
   useForgotPassWordMutation,
   useSendOtpNoLoginMutation,
   useSendOtpLoginQuery,

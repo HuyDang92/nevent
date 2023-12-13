@@ -8,14 +8,15 @@ import Input from '~/components/customs/Input';
 import { Checkbox } from '@material-tailwind/react';
 import { motion } from 'framer-motion';
 import { useState, useMemo, useEffect } from 'react';
-import { useLogInGoogleMutation, useSignUpWithEmailMutation } from '~/features/Auth/authApi.service';
+import { useLogInGoogleMutation } from '~/features/Auth/authApi.service';
 import Loading from '~/components/customs/Loading';
 import { errorNotify } from '~/components/customs/Toast';
 import { isFetchBaseQueryError } from '~/utils/helper';
-import { assignNewRefreshToken, assignNewToken, setAuthCurrentUser } from '~/features/Auth/authSlice';
 import { useAppDispatch } from '~/hooks/useActionRedux';
 import logo from '~/assets/images/logo.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useSendOtpNoLoginMutation } from '~/features/OTP/otpApi.service';
+import { addSecret, addSignUpInfo } from '~/features/OTP/otpSlice';
 
 interface ISignUp {
   name: string;
@@ -29,7 +30,7 @@ function LogIn() {
   const dispatch = useAppDispatch();
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [signUp, { data, isError, isLoading, error, isSuccess }] = useSignUpWithEmailMutation();
+  const [sendOtp, { data, isError, isLoading, error, isSuccess }] = useSendOtpNoLoginMutation();
   const [loginGoogle] = useLogInGoogleMutation();
 
   const errorForm = useMemo(() => {
@@ -62,22 +63,19 @@ function LogIn() {
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
     onSubmit: async (value: ISignUp) => {
-      // await signUp({ email: value.email, password: value.password, fullName: value.name });
-      navigate(`/verify/:${value.email}`);
+      await sendOtp({ email: value.email });
+      dispatch(addSignUpInfo({ email: value.email, password: value.password, fullName: value.name }));
     },
   });
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     console.log(data.data);
-  //     dispatch(setAuthCurrentUser(data.data.user));
-  //     dispatch(assignNewToken(data.data.token.accessToken));
-  //     dispatch(assignNewRefreshToken(data.data.token.refreshToken));
-  //     navigate('/');
-  //   }
-  //   if (isError) {
-  //     errorNotify('Đăng ký thất bại');
-  //   }
-  // }, [isSuccess, isError]);
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(addSecret(data?.data?.secret));
+      navigate(`/verify`);
+    }
+    if (isError) {
+      errorNotify('Có lỗi xảy ra vui lòng thử lại!');
+    }
+  }, [isSuccess, isError]);
   return (
     <>
       {isLoading && <Loading />}
@@ -113,7 +111,7 @@ function LogIn() {
               {errorForm && (
                 <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
               )}
-              {/* <div className="space-y-1">
+              <div className="space-y-1">
                 {isSubmitted && formik.errors.name && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.name}</small>
                 )}
@@ -126,7 +124,7 @@ function LogIn() {
                   onChange={formik.handleChange}
                   value={formik.values.name}
                 />
-              </div> */}
+              </div>
               <div className="space-y-1">
                 {isSubmitted && formik.errors.email && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.email}</small>
@@ -141,7 +139,7 @@ function LogIn() {
                   onChange={formik.handleChange}
                 />
               </div>
-              {/* <div className="space-y-1">
+              <div className="space-y-1">
                 {isSubmitted && formik.errors.password && (
                   <small className="px-2 text-[12px] text-red-600">{formik.errors.password}</small>
                 )}
@@ -168,7 +166,7 @@ function LogIn() {
                   value={formik.values.repassword}
                   onChange={formik.handleChange}
                 />
-              </div> */}
+              </div>
 
               <div className="flex items-center text-sm">
                 <Checkbox

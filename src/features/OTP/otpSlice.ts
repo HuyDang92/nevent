@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState: any = {
   code: null,
   secret: null,
+  signUpInfo: null,
 };
 
 const otpSlice = createSlice({
@@ -15,8 +16,11 @@ const otpSlice = createSlice({
     addSecret: (state, action) => {
       state.secret = action.payload;
     },
+    addSignUpInfo: (state, action) => {
+      state.signUpInfo = action.payload;
+    },
   },
 });
-export const { addCode, addSecret } = otpSlice.actions;
+export const { addCode, addSecret, addSignUpInfo } = otpSlice.actions;
 const otpReducer = otpSlice.reducer;
 export default otpReducer;
