@@ -18,6 +18,8 @@ const Statistics = () => {
   const navigate = useNavigate();
   const [deleteEvent, { isLoading, isSuccess, isError, error }] = useDeleteEventMutation();
   const event = useGetEventAnalyticsQuery(idEvent || '');
+  console.log(event);
+
   const deleteErr = useMemo(() => {
     if (isFetchBaseQueryError(error)) {
       return error;
@@ -93,7 +95,7 @@ const Statistics = () => {
   return (
     <>
       {isLoading && <Loading />}
-      <div className="h-full w-full rounded-2xl bg-cs_light p-7 dark:bg-cs_lightDark">
+      <div className="h-full w-full rounded-2xl bg-cs_light p-3 dark:bg-cs_lightDark xl:p-7">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold dark:text-white">Thống kê sự kiện</h1>
           <Dropdown />
@@ -102,7 +104,7 @@ const Statistics = () => {
           <small className="px-2 text-center text-[12px] text-red-600">{(deleteErr.data as any).message}</small>
         )}
 
-        <div className="my-5 flex w-full items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
+        <div className="my-5 flex w-full flex-wrap items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-[#3f3c3c]">
           <ManageEventParameters
             title={'Số vé bán được'}
             count={event?.data?.data?.analytics?.totalTicketPurchases}
@@ -153,12 +155,36 @@ const Statistics = () => {
             </ul>
           </div>
         </div>
-        <ChartBarAverage type={'revenue'} />
-        <ChartBarAverage type={'ticket'} />
-
+        <ChartBarAverage type={'revenue'} className="hidden xl:block" />
+        <ChartBarAverage type={'ticket'} className="hidden xl:block" />
+        <div className="mt-8 flex flex-col gap-1 overflow-hidden rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light xl:hidden">
+          <h1 className="text-lg font-bold dark:text-cs_light">{event?.data?.data?.event?.title}</h1>
+          {renderStatus(event?.data?.data?.event?.status)}
+          <div className="flex items-center gap-[15px]">
+            <Iconfy icon="ph:timer-bold" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+            <span className="w-[90%] dark:text-cs_light">
+              {' '}
+              {moment(event?.data?.data?.event?.start_date).format('hh:mm')}&nbsp;
+              {moment(event?.data?.data?.event?.salesStartDate).format('DD/MM/YYYY')}-
+              {moment(event?.data?.data?.event?.salesEndDate).format('DD/MM/YYYY')}&nbsp;
+            </span>
+          </div>
+          <div className="flex items-center gap-[15px]">
+            <Iconfy icon="solar:calendar-bold" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+            <span className="w-[90%] dark:text-cs_light">
+              {moment(event?.data?.data?.event?.start_date).format('dddd, DD MMMM YY')}&nbsp;
+            </span>
+          </div>
+          <div className="flex items-center gap-[15px]">
+            <Iconfy icon="carbon:location-filled" className="w-[10%] text-[15px] dark:text-cs_light md:text-xl" />
+            <span className="w-[90%] dark:text-cs_light">
+              <span>{event?.data?.data?.event?.location.name}</span>
+            </span>
+          </div>
+        </div>
         <div className="relative mt-8">
           <Carousel
-            className={`w-full rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
+            className={`h-[200px] w-full rounded-xl object-cover sm:h-[320px] xl:h-[500px]`}
             prevArrow={({ handlePrev }) => (
               <IconButton
                 variant="text"
@@ -201,10 +227,12 @@ const Statistics = () => {
             )}
           >
             {event?.data?.data?.event?.banner?.map((image: any, index: number) => (
-              <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover" />
+              <div className="h-full w-full">
+                <img key={index} src={image.url} alt="banner" className="h-full w-full rounded-xl object-cover" />
+              </div>
             ))}
           </Carousel>
-          <div className="absolute left-[15px] top-[15px] flex flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter">
+          <div className="absolute left-[15px] top-[15px] hidden flex-col gap-1 rounded-md border-[1px] border-cs_grayText bg-gray-600 bg-opacity-20 bg-clip-padding p-3 text-[14px] text-cs_light backdrop-blur-sm backdrop-filter xl:flex">
             <h1 className="text-lg font-bold text-cs_light">{event?.data?.data?.event?.title}</h1>
             {renderStatus(event?.data?.data?.event?.status)}
             <div className="flex items-center gap-[15px]">
@@ -229,7 +257,7 @@ const Statistics = () => {
               </span>
             </div>
           </div>
-          <a className="absolute right-[15px] top-[15px]" href={`/scan-ticket/${idEvent}`} target="_blank" >
+          <a className="absolute right-[15px] top-[15px]" href={`/scan-ticket/${idEvent}`} target="_blank">
             <Button mode="dark" value="Check in" />
           </a>
           <div className="absolute bottom-[15px] right-[15px] flex gap-4">
@@ -248,8 +276,7 @@ const Statistics = () => {
             )}
           </div>
         </div>
-
-        <div className="mt-8 w-[80vw] overflow-hidden rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
+        <div className="mt-8 overflow-hidden rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
           <b>Giới thiệu sự kiện </b>
           {event?.data?.data?.event?.desc && (
             <div dangerouslySetInnerHTML={{ __html: event?.data?.data?.event?.desc }} />

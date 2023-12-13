@@ -158,7 +158,7 @@ const Person = () => {
           {errorForm && (
             <small className="px-2 text-center text-[12px] text-red-600">{(errorForm.data as any).message}</small>
           )}
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full xl:grid-cols-2 grid-cols-1 gap-2">
             <div className="relative">
               {formik.errors.fullName && (
                 <small className="absolute left-[70px] top-[10px] z-10 px-2 text-[12px] text-red-600">
@@ -260,7 +260,7 @@ const Person = () => {
             />
           </div>
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Địa chỉ thường trú</h2>
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full xl:grid-cols-2 grid-cols-1 gap-2">
             <div className="relative pt-3">
               {formik.errors.city && (
                 <small className="absolute left-[130px] top-[15px] z-10 px-2 text-[12px] text-red-600">
@@ -364,7 +364,7 @@ const Person = () => {
           <div className="flex w-full justify-end">
             <Button
               type="submit"
-              className="mt-3 w-1/5 !bg-cs_semi_green font-semibold text-white"
+              className="mt-3 w-full xl:w-1/5 !bg-cs_semi_green font-semibold text-white"
               value="Lưu thông tin"
             />
           </div>
