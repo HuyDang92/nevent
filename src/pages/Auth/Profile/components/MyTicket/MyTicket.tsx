@@ -27,7 +27,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
     <div className={`${className}`}>
       <h1 className="text-xl font-bold">Vé của tôi</h1>
       <Tabs>
-        <TabsHeader className="mt-3 shadow-none sm:w-[40%]">
+        <TabsHeader className="mt-3 shadow-none sm:w-[60%]">
           <Tab
             className="flex items-center justify-center"
             index={0}
