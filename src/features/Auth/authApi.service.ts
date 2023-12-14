@@ -1,6 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store/store';
 import { assignNewToken, logout } from '../Auth/authSlice';
+import { StatusMyTicket } from '~/Types/myTicket';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
@@ -124,8 +125,8 @@ export const authApi: any = createApi({
       query: () => `/api/auth/profile`,
       // providesTags: ['profile'],
     }),
-    getMyTicket: builder.query<any, void>({
-      query: () => `/api/my-tickets`,
+    getMyTicket: builder.query<any, StatusMyTicket>({
+      query: (status) => `/api/my-tickets?status=${status}`,
       providesTags: ['ticket'],
     }),
   }),
