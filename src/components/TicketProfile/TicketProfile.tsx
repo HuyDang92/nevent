@@ -12,6 +12,7 @@ import { EffectCards, Pagination } from 'swiper/modules';
 import domToImage from 'dom-to-image';
 import Action from './components/Action';
 import Zoom from '../customs/Zoom';
+import { StatusMyTicket } from '~/Types/myTicket';
 
 interface IProps {
   data: any;
@@ -112,7 +113,14 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                     </span>
 
                     <p className=" text-sm font-semibold xl:block">
-                      Trạng thái: <span className="text-sm text-cs_semi_green">Chưa sử dụng</span>
+                      Trạng thái:{' '}
+                      <span
+                        className={`text-sm ${
+                          item?.status === StatusMyTicket.UNWORN ? 'text-cs_semi_green' : 'text-cs_red'
+                        }`}
+                      >
+                        {item?.status === StatusMyTicket.UNWORN ? 'Chưa sử dụng' : 'Đã sử dụng'}
+                      </span>
                     </p>
                     <p className="text-sm font-semibold xl:block">
                       Mô tả vé: <span className=" text-sm">{item?.desc}</span>
