@@ -101,34 +101,58 @@ const EventManage = () => {
   };
 
   return (
-    <div className="h-full w-full rounded-2xl bg-cs_light p-3 xl:p-7 dark:bg-cs_lightDark">
+    <div className="h-full w-full rounded-2xl bg-cs_light p-3 dark:bg-cs_lightDark xl:p-7">
       <div className=" flex justify-between">
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
       <div className="my-3 flex gap-1 xl:gap-5">
-        <select className="w-40 rounded-lg border p-2">
-          <option value="2023" defaultValue={2023}>
+        <select className="w-40 rounded-lg border p-2 dark:bg-cs_lightDark dark:text-cs_light">
+          <option value="2023" defaultValue={2023} className="dark:bg-cs_lightDark dark:text-cs_light">
             Năm 2023
           </option>
         </select>
-        <select className="w-40 rounded-lg border p-2">
+        <select className="w-40 rounded-lg border p-2 dark:bg-cs_lightDark dark:text-cs_light">
           <option>Chọn tháng</option>
-          <option value="1">Tháng 1</option>
-          <option value="2">Tháng 2</option>
-          <option value="3">Tháng 3</option>
-          <option value="4">Tháng 4</option>
-          <option value="5">Tháng 5</option>
-          <option value="6">Tháng 6</option>
-          <option value="7">Tháng 7</option>
-          <option value="8">Tháng 8</option>
-          <option value="9">Tháng 9</option>
-          <option value="10">Tháng 10</option>
-          <option value="11">Tháng 11</option>
-          <option value="12">Tháng 12</option>
+          <option value="1" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 1
+          </option>
+          <option value="2" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 2
+          </option>
+          <option value="3" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 3
+          </option>
+          <option value="4" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 4
+          </option>
+          <option value="5" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 5
+          </option>
+          <option value="6" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 6
+          </option>
+          <option value="7" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 7
+          </option>
+          <option value="8" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 8
+          </option>
+          <option value="9" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 9
+          </option>
+          <option value="10" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 10
+          </option>
+          <option value="11" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 11
+          </option>
+          <option value="12" className="dark:bg-cs_lightDark dark:text-cs_light">
+            Tháng 12
+          </option>
         </select>
         <div className="cursor-pointer rounded-lg border p-2 px-3 pb-1">
-          <Icon name="backspace-outline" className="text-xl" />
+          <Icon name="backspace-outline" className="text-xl dark:text-cs_light" />
         </div>
       </div>
       <div className=" my-5 flex flex-col gap-8">
@@ -166,7 +190,7 @@ const EventManage = () => {
           </TabsHeader>
         </Tabs>
       </div>
-      <div className="flex flex-wrap w-full items-center justify-between">
+      <div className="flex w-full flex-wrap items-center justify-between">
         <Input
           className="my-5 w-full max-w-[30rem]"
           classNameInput="w-full"
@@ -176,7 +200,7 @@ const EventManage = () => {
         />
         <Link
           to={'/organization/create-event/0'}
-          className="xl:mb-0 mb-5 flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
+          className="mb-5 flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white xl:mb-0"
         >
           <Icon name="add-circle" className="text-xl" />
           <button>Tạo sự kiện</button>
@@ -188,7 +212,7 @@ const EventManage = () => {
         </div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-blue-gray-100">
-          <table className="w-full xl:min-w-max table-auto rounded-lg text-left">
+          <table className="w-full table-auto rounded-lg text-left xl:min-w-max">
             <thead>
               <tr className="">
                 {TABLE_HEAD.map((head) => (
@@ -213,12 +237,16 @@ const EventManage = () => {
                   return (
                     <tr key={item._id}>
                       <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
+                        <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                           {index + 1}
                         </Typography>
                       </td>
                       <td className={`w-56 ${classes}`}>
-                        <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="max-w-[28rem] font-normal dark:text-cs_light"
+                        >
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
@@ -291,7 +319,7 @@ const EventManage = () => {
                           <Tooltip content="Sửa sự kiện">
                             <Link to={`/organization/edit-event/${item?._id}/0`}>
                               <IconButton variant="text">
-                                <Icon name="pencil-outline" className="text-xl" />
+                                <Icon name="pencil-outline" className="text-xl dark:text-cs_light" />
                               </IconButton>
                             </Link>
                           </Tooltip>
@@ -299,7 +327,7 @@ const EventManage = () => {
                         <Tooltip content="Xem chi tiết">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>
                             <IconButton variant="text">
-                              <Icon name="eye-outline" className="text-xl" />
+                              <Icon name="eye-outline" className="text-xl dark:text-cs_light" />
                             </IconButton>
                           </Link>
                         </Tooltip>
@@ -313,7 +341,7 @@ const EventManage = () => {
                     <div className="flex justify-center py-5 text-center">
                       <div>
                         <img src={nothing} alt="QRCode" className="pointer-events-none w-[80%] ps-10" />
-                        <h3 className="font-medium text-[#ccc]">Không có vé</h3>
+                        <h3 className="font-medium text-[#ccc]">Không có sự kiện nào</h3>
                       </div>
                     </div>
                     {/* <div className="relative flex w-full justify-center">

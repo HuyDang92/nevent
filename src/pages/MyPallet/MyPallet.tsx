@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function MyPallet() {
   return (
-    <section className="min-h-screen rounded-xl bg-white p-8 dark:bg-cs_lightDark">
+    <div className="h-full w-full rounded-2xl bg-cs_light p-3 dark:bg-cs_lightDark dark:text-cs_light xl:p-7">
       <h1 className="text-2xl font-semibold">
         Tài khoản ví: <span className="ml-2 text-cs_semi_green">1.223.000.000 USD</span>
       </h1>
@@ -49,7 +49,7 @@ export default function MyPallet() {
                     font-size="12"
                     text-anchor="middle"
                     alignment-baseline="middle"
-                    className="text-xl font-black"
+                    className="text-xl font-bold dark:fill-cs_light"
                   >
                     70%
                   </text>
@@ -89,6 +89,6 @@ export default function MyPallet() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

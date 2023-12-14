@@ -81,11 +81,31 @@ const EditEvent = () => {
           <h1 className="text-2xl font-bold dark:text-cs_light"> Chỉnh sửa sự kiện</h1>
           <Dropdown />
         </div>
-        <div className="w-[80%]">
-          <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
-            <EditEventStepper />
+        <div className="flex gap-10">
+          <div className="w-4/5">
+            <div className="hidden h-[135px] items-center justify-center rounded-[15px] md:flex">
+              <EditEventStepper />
+            </div>
+            <div className="w-full dark:bg-cs_lightDark">{renderContent(activeStep)}</div>
           </div>
-          <div className="w-full dark:bg-cs_lightDark">{renderContent(activeStep)}</div>
+          <div className="w-[calc(20%-40px)]">
+            <h1 className="flex text-xl font-semibold text-cs_red">Lưu ý: </h1>
+            <ul className="list-decimal dark:text-cs_light">
+              <li>
+                Vui lòng không hiển thị thông tin liên hệ của Ban tổ chức (ví dụ: Số điện thoại/ Email/ Website/
+                Facebook/ Instagram…) trên banner và trong nội dung. Chỉ sử dụngHotline Ticketbox - 1900.6408.
+              </li>
+              <li>
+                Trong trường hợp Ban tổ chức tạo hoặc cập nhật sự kiện không đúng quy định trên, Ticketbox có quyền từ
+                chối phê duyệt sự kiện.
+              </li>
+              <li>
+                Ticketbox sẽ liên tục kiểm tra thông tin các sự kiện đang hiển thị trên nền tảng, nếu phát hiện có sai
+                sót liên quan đến nội dung hình ảnh/bài đăng, Ticketbox có quyền gỡ bỏ hoặc từ chối cung cấp dịch vụ,
+                tuân theo khoản 2.9 của Thỏa thuận dịch vụ.
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

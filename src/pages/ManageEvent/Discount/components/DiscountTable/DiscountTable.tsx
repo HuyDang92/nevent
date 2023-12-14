@@ -48,14 +48,14 @@ const getDaysDifference = (startDate: Date, endDate: Date) => {
 
 const DiscountTable = () => {
   return (
-    <Card className="mt-5 h-full w-full border shadow-none">
+    <Card className="mt-5 h-full w-full border shadow-none bg-transparent dark:text-cs_light">
       <CardBody className="p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50/50 p-4 text-center">
-                  <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
+                  <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70 dark:text-cs_light">
                     {head}
                   </Typography>
                 </th>
@@ -70,31 +70,31 @@ const DiscountTable = () => {
               return (
                 <tr key={index}>
                   <td className={` ${classes}`}>
-                    <Typography variant="small" color="blue-gray" className="font-bold">
+                    <Typography variant="small" color="blue-gray" className="font-bold dark:text-cs_light">
                       {code}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                       {discount}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                       {startDate}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                       {endDate}
                     </Typography>
                   </td>
-                  <td className={`flex justify-center ${classes}`}>
-                    <div className="w-max ">
+                  <td className={`${classes}`}>
+                    <div className="flex justify-center items-center ">
                       <Tooltip content={`${amount} mã`}>
                         <Chip
                           size="sm"
-                          variant="ghost"
+                          variant="gradient"
                           value={amount !== 0 ? 'Còn mã' : 'Hết mã'}
                           color={amount !== 0 ? 'green' : 'red'}
                         />
@@ -102,14 +102,14 @@ const DiscountTable = () => {
                     </div>
                   </td>
                   <td className={` ${classes}`}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                       {billCount}
                     </Typography>
                   </td>
                   <td className={classes}>
                     <Tooltip content="Xóa mã giảm giá">
                       <IconButton variant="text">
-                        <Icon name="trash-outline" className="text-2xl" />
+                        <Icon name="trash-outline" className="text-2xl dark:text-cs_light" />
                       </IconButton>
                     </Tooltip>
                   </td>
