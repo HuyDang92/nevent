@@ -50,7 +50,7 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type, className }) => {
         legend: {
           data: type === 'revenue' ? ['Doanh thu'] : ['Số vé'],
         },
-        
+
         toolbox: {
           show: true,
           feature: {
@@ -118,9 +118,9 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type, className }) => {
   ) : (
     <div className={`${className}`}>
       {type === 'ticket' ? (
-        <h3 className="text-xl font-bold">Biểu đồ bán vé</h3>
+        <h3 className="text-xl font-bold dark:text-white">Biểu đồ bán vé</h3>
       ) : (
-        <h3 className="text-xl font-bold">Biểu đồ doanh thu</h3>
+        <h3 className="text-xl font-bold dark:text-white">Biểu đồ doanh thu</h3>
       )}
       <ReactECharts option={options} style={{ height: '332px', width: '100%' }} opts={{ renderer: 'svg' }} />
     </div>

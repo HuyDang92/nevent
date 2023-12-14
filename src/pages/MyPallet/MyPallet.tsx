@@ -4,7 +4,7 @@ import React from 'react';
 export default function MyPallet() {
   return (
     <section className="min-h-screen rounded-xl bg-white p-8 dark:bg-cs_lightDark">
-      <h1 className="text-2xl font-semibold">
+      <h1 className="text-2xl font-semibold dark:text-white">
         Tài khoản ví: <span className="ml-2 text-cs_semi_green">1.223.000.000 USD</span>
       </h1>
       <div className="mt-8 flex gap-8">
@@ -14,12 +14,12 @@ export default function MyPallet() {
             alt=""
             className="w-[10rem]"
           />
-          <h1 className="animate-pulse font-bold">Đang tải dữ liệu</h1>
+          <h1 className="animate-pulse font-bold dark:text-white">Đang tải dữ liệu</h1>
         </div>
         <div className="flex max-w-[24rem] flex-1 flex-col gap-4">
           <div className=" rounded-xl p-4 shadow-border-light">
             <div className="flex items-center justify-between">
-              <h1 className="text-lg font-semibold">Tỷ lệ doanh thu</h1>
+              <h1 className="text-lg font-semibold dark:text-white">Tỷ lệ doanh thu</h1>
               <IonIcon name="arrow-up" className="text-2xl text-cs_semi_green " />
             </div>
             <div className="mt-4 flex items-center justify-start gap-4">
@@ -56,7 +56,9 @@ export default function MyPallet() {
                 </svg>
               </div>
               <div className="relative">
-                <h1 className="text-sm font-semibold text-gray-700">Biến động hơn so với tháng trước</h1>
+                <h1 className="text-sm font-semibold text-gray-700 dark:text-white">
+                  Biến động hơn so với tháng trước
+                </h1>
                 <div className="mt-4 rounded-full bg-[#13c6b434] px-4 py-1">
                   <span className="text-xs font-semibold text-cs_semi_green">+ 20% so với tháng trước</span>
                 </div>
@@ -65,7 +67,7 @@ export default function MyPallet() {
           </div>
           <div className=" rounded-xl p-4 shadow-border-light">
             <div className="flex items-center justify-between gap-2">
-              <h1 className="text-lg font-semibold">Doanh thu sự kiện</h1>
+              <h1 className="text-lg font-semibold dark:text-white">Doanh thu sự kiện</h1>
               <i className="text-xs text-gray-600 underline">So với ngày đăng</i>
             </div>
             <div className="mt-4">
@@ -79,7 +81,7 @@ export default function MyPallet() {
                       />
                     </div>
                     <div className="flex flex-1 flex-col">
-                      <h1 className="text-base font-semibold">RAIN SHIT CHUBIN</h1>
+                      <h1 className="text-base font-semibold dark:text-white">M-TP Entertaiment Event</h1>
                       <span className="text-sm font-semibold text-gray-600">Tăng 12%</span>
                     </div>
                   </div>

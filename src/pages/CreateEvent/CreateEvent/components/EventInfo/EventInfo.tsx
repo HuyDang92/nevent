@@ -396,6 +396,7 @@ const EventInfo = () => {
               }}
               modules={modules}
               ref={quillRef}
+              className="dark:text-white"
             />
             {/* <div className="">{value}</div> */}
           </div>

@@ -101,18 +101,18 @@ const EventManage = () => {
   };
 
   return (
-    <div className="h-full w-full rounded-2xl bg-cs_light p-3 xl:p-7 dark:bg-cs_lightDark">
+    <div className="h-full w-full rounded-2xl bg-cs_light p-3 dark:bg-cs_lightDark xl:p-7">
       <div className=" flex justify-between">
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
       <div className="my-3 flex gap-1 xl:gap-5">
-        <select className="w-40 rounded-lg border p-2">
+        <select className="w-40 rounded-lg border p-2 focus:outline-none dark:border-none dark:bg-cs_formDark dark:text-white">
           <option value="2023" defaultValue={2023}>
             Năm 2023
           </option>
         </select>
-        <select className="w-40 rounded-lg border p-2">
+        <select className="w-40 rounded-lg border p-2 focus:outline-none dark:border-none dark:bg-cs_formDark dark:text-white">
           <option>Chọn tháng</option>
           <option value="1">Tháng 1</option>
           <option value="2">Tháng 2</option>
@@ -127,7 +127,7 @@ const EventManage = () => {
           <option value="11">Tháng 11</option>
           <option value="12">Tháng 12</option>
         </select>
-        <div className="cursor-pointer rounded-lg border p-2 px-3 pb-1">
+        <div className="cursor-pointer rounded-lg border p-2 px-3 pb-1 focus:outline-none dark:border-none dark:bg-cs_formDark dark:text-white">
           <Icon name="backspace-outline" className="text-xl" />
         </div>
       </div>
@@ -166,7 +166,7 @@ const EventManage = () => {
           </TabsHeader>
         </Tabs>
       </div>
-      <div className="flex flex-wrap w-full items-center justify-between">
+      <div className="flex w-full flex-wrap items-center justify-between">
         <Input
           className="my-5 w-full max-w-[30rem]"
           classNameInput="w-full"
@@ -176,7 +176,7 @@ const EventManage = () => {
         />
         <Link
           to={'/organization/create-event/0'}
-          className="xl:mb-0 mb-5 flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white"
+          className="mb-5 flex w-fit items-center gap-2 rounded-lg bg-cs_semi_green px-4 py-2 font-semibold text-white xl:mb-0"
         >
           <Icon name="add-circle" className="text-xl" />
           <button>Tạo sự kiện</button>
@@ -188,7 +188,7 @@ const EventManage = () => {
         </div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-blue-gray-100">
-          <table className="w-full xl:min-w-max table-auto rounded-lg text-left">
+          <table className="w-full table-auto rounded-lg text-left xl:min-w-max">
             <thead>
               <tr className="">
                 {TABLE_HEAD.map((head) => (
@@ -213,12 +213,16 @@ const EventManage = () => {
                   return (
                     <tr key={item._id}>
                       <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
+                        <Typography variant="small" color="blue-gray" className="font-normal dark:text-white">
                           {index + 1}
                         </Typography>
                       </td>
                       <td className={`w-56 ${classes}`}>
-                        <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="max-w-[28rem] font-normal dark:text-white"
+                        >
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
@@ -299,7 +303,7 @@ const EventManage = () => {
                         <Tooltip content="Xem chi tiết">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>
                             <IconButton variant="text">
-                              <Icon name="eye-outline" className="text-xl" />
+                              <Icon name="eye-outline" className="text-xl dark:text-white" />
                             </IconButton>
                           </Link>
                         </Tooltip>
