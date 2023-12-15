@@ -19,9 +19,9 @@ const SearchUser = ({ className, size = 'md', classNameInput, setUserReceive }: 
   const { searchValue } = useDebounce(value, 500);
   const ref = useRef(null);
 
-  useClickOutside(ref, () => {
-    setValue('');
-  });
+  // useClickOutside(ref, () => {
+  //   setValue('');
+  // });
   useEffect(() => {
     if (searchValue === '') return;
     getUser(searchValue);

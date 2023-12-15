@@ -38,7 +38,6 @@ function ForgotPassword() {
     }
     if (type === 'confirm') {
       dispatch(addCode(code));
-      dispatch(addSecret(secret));
       await verify({ email: email });
     }
   };
@@ -60,7 +59,8 @@ function ForgotPassword() {
   useEffect(() => {
     if (result.isSuccess) {
       setOpen(false);
-      setSecret(result.data?.data?.secret);
+      // setSecret(result.data?.data?.secret);
+      dispatch(addSecret(result.data?.data?.secret));
     }
   }, [result.isLoading]);
 

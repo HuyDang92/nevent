@@ -30,6 +30,7 @@ function VerifyEmail() {
       await sendOtp({ email: info?.email });
       setCount(count + 60);
       setCode('');
+      setSecret('');
       return;
     }
     if (type === 'confirm') {
@@ -94,7 +95,7 @@ function VerifyEmail() {
           }}
           className="flex items-center justify-center"
         >
-          <div className="mt-40 w-full space-y-4 rounded-xl dark:bg-cs_lightDark p-5 shadow-border-full xl:w-[400px]">
+          <div className="mt-40 w-full space-y-4 rounded-xl p-5 shadow-border-full dark:bg-cs_lightDark xl:w-[400px]">
             <p className="text-center text-lg font-bold uppercase text-cs_semi_green">Xác nhận Email</p>
             <span className="">
               Mã OTP đã được gửi đến email: <span className="font-semibold">{info?.email}</span> . Vui lòng kiểm tra
