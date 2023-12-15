@@ -102,7 +102,9 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                 <div className="absolute left-0 top-0 z-10 flex w-full justify-between p-4 text-cs_light">
                   <div className="xl:w-2/3 xl:space-y-3">
                     <Link to={`/event-detail/${dataSummary?.event?._id}`}>
-                      <p className=" line-clamp-2 text-xl font-bold">{dataSummary?.event?.title}</p>
+                      <p className=" line-clamp-2 text-xl font-bold hover:text-cs_semi_green">
+                        {dataSummary?.event?.title}
+                      </p>
                     </Link>
                     <span className=" gap-2 text-sm font-semibold">
                       <span>Thời gian: </span>
@@ -141,7 +143,9 @@ const TicketProfile: React.FC<IProps> = ({ data, passTicket, dataSummary }) => {
                       onClick={() => handleDownload(item?.title, index)}
                     /> */}
                   </div>
-                  {!passTicket && <Action data={dataSummary} onClick={() => handleDownload(item?.title, index)} />}
+                  {!passTicket && item.status === StatusMyTicket.UNWORN && (
+                    <Action data={dataSummary} onClick={() => handleDownload(item?.title, index)} />
+                  )}
                   <div className="absolute right-1/2 top-52 translate-x-1/2 xl:-bottom-[3rem] xl:right-7 xl:top-8 xl:translate-x-0">
                     <p className="py-2 text-center text-sm font-semibold xl:block">
                       Vé: <span className=" text-sm">{item?.title}</span>

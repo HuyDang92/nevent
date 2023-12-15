@@ -49,7 +49,7 @@ const Payment = () => {
     <>
       <Header />
       <div className="mx-auto min-h-screen py-5 md:w-5/6 ">
-        <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={`${event?.title}`} />
+        <BreadcrumbsComponent baseLink="Trang chủ" linkBack="/" link={event?.title ? event?.title : ''} />
         <div className="mx-2 sm:mx-0 ">
           <div className="hidden items-center justify-center rounded-[15px] bg-cs_light shadow-border-full dark:bg-cs_lightDark md:flex">
             <PaymentStepper />

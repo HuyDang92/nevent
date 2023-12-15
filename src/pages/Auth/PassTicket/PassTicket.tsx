@@ -56,19 +56,22 @@ function PassTicket() {
       await getCode();
       setCode('');
       setCount(30);
+
       return;
     }
     if (type === 'confirm') {
       dispatch(addCode(code));
-      dispatch(addSecret(secret));
       await verify({ myTicketId: idTicket, userId: userReceive?._id });
     }
   };
 
   useEffect(() => {
+    console.log(resultGetCode);
+
     if (resultGetCode.isSuccess) {
       setOpen(true);
-      setSecret(resultGetCode.data?.data?.secret);
+      // setSecret(resultGetCode.data?.data?.secret);
+      dispatch(addSecret(resultGetCode.data?.data?.secret));
     }
     if (resultGetCode.isError) {
       errorNotify('Có lỗi xảy ra');
@@ -141,7 +144,7 @@ function PassTicket() {
           <Button
             disabled={!code}
             value="Xác nhận"
-            className={` !text-white ${code ? '!bg-cs_semi_green' : 'cursor-not-allowed bg-cs_grayText'}`}
+            className={` ${code ? '!bg-cs_semi_green !text-white' : 'text-cs_grayText cursor-not-allowed bg-cs_grayText'}`}
             onClick={() => handleSubmit('confirm')}
           />
         </DialogFooter>
@@ -190,7 +193,7 @@ function PassTicket() {
           <AccordionBody>
             <div className="max-h-[60vh] overflow-y-scroll rounded-xl border xl:max-h-[41vh]">
               {Object.entries(getTickets[0]?.myTickets).map(([key, element]: any, index: number) => {
-                return <TicketProfile key={index} data={element} dataSummary={getTickets[0]} passTicket/>;
+                return <TicketProfile key={index} data={element} dataSummary={getTickets[0]} passTicket />;
               })}
             </div>
           </AccordionBody>
