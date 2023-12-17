@@ -247,7 +247,7 @@ function DetailEvent() {
                   <h1 className="text-[18px] font-bold text-cs_dark dark:text-cs_light md:text-[20px]">
                     Thông tin nhà tổ chức
                   </h1>
-                  <div className="flex gap-4 text-center ">
+                  <div className="flex gap-4 ">
                     <div className='space-y-2'>
                       <Zoom>
                         <img

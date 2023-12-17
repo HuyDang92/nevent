@@ -106,7 +106,7 @@ const EventManage = () => {
         <h1 className="text-2xl font-bold dark:text-white">Quản lý sự kiện</h1>
         <Dropdown />
       </div>
-      <div className="my-3 flex gap-1 xl:gap-5">
+      {/* <div className="my-3 flex gap-1 xl:gap-5">
         <select className="w-40 rounded-lg border p-2">
           <option value="2023" defaultValue={2023}>
             Năm 2023
@@ -130,7 +130,7 @@ const EventManage = () => {
         <div className="cursor-pointer rounded-lg border p-2 px-3 pb-1">
           <Icon name="backspace-outline" className="text-xl" />
         </div>
-      </div>
+      </div> */}
       <div className=" my-5 flex flex-col gap-8">
         <div className="flex w-full flex-wrap items-start justify-start gap-5 rounded-2xl bg-white p-4 shadow-border-light dark:bg-cs_dark">
           <ManageEventParameters title={'Tổng sự kiện'} count={analytics.data?.data?.totalEvents} border />
@@ -218,7 +218,7 @@ const EventManage = () => {
                         </Typography>
                       </td>
                       <td className={`w-56 ${classes}`}>
-                        <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal">
+                        <Typography variant="small" color="blue-gray" className="max-w-[28rem] font-normal dark:text-cs_light">
                           <Link to={`/organization/manage-event/statistics/${item?._id}`}>{item.title}</Link>
                         </Typography>
                       </td>
