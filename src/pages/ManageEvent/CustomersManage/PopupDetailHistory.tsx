@@ -15,7 +15,7 @@ export function PopupDetailHistory({ data, children }: IPopUpDetailProps) {
   return (
     <>
       <div onClick={() => setOpen(true)}>{children}</div>
-      <Dialog open={open} handler={setOpen} size="xxl">
+      <Dialog open={open} handler={setOpen} size="xxl" className='dark:bg-cs_lightDark'>
         <h2 className="py-5 text-center text-xl font-bold">Chi tiết mua vé</h2>
         <DialogBody>
           {data?.length === 0 && (

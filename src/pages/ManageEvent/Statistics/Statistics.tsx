@@ -261,12 +261,14 @@ const Statistics = () => {
             <Button mode="dark" value="Check in" />
           </a>
           <div className="absolute bottom-[15px] right-[15px] flex gap-4">
-            <Link to={`/organization/edit-event/${idEvent}/0`}>
-              <Button
-                className="!bg-cs_yellow-500 !p-2"
-                value={<Iconfy icon="bxs:edit" className="text-2xl text-cs_light" />}
-              />
-            </Link>
+            {event?.data?.data?.event?.status === 'REVIEW' && (
+              <Link to={`/organization/edit-event/${idEvent}/0`}>
+                <Button
+                  className="!bg-cs_yellow-500 !p-2"
+                  value={<Iconfy icon="bxs:edit" className="text-2xl text-cs_light" />}
+                />
+              </Link>
+            )}
             {event?.data?.data?.event?.status === 'REVIEW' && (
               <Button
                 onClick={() => setOpen(true)}

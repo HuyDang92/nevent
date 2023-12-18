@@ -87,6 +87,7 @@ export const eventApi = createApi({
           status ? '&status=' + status : ''
         }`,
       }),
+      providesTags: ['event'],
     }),
     getEventAnalytics: builder.query<any, any>({
       query: (eventId) => ({
@@ -104,6 +105,7 @@ export const eventApi = createApi({
         method: 'PATCH',
         body: body,
       }),
+      invalidatesTags: ['event'],
     }),
     addTicket: builder.mutation({
       query: (body) => ({

@@ -65,7 +65,7 @@ const CustomersManage = () => {
                 <tr>
                   {TABLE_HEAD.map((head) => (
                     <th key={head} className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                      <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
+                      <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70 dark:text-cs_lightDark">
                         {head}
                       </Typography>
                     </th>
@@ -79,7 +79,7 @@ const CustomersManage = () => {
                   return (
                     <tr key={index}>
                       <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
+                        <Typography variant="small" color="blue-gray" className="font-normal dark:text-cs_light">
                           {index + 1}
                         </Typography>
                       </td>
@@ -93,18 +93,18 @@ const CustomersManage = () => {
                             />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold">{item?.user?.fullName}</p>
+                            <p className="text-sm font-semibold dark:text-cs_light">{item?.user?.fullName}</p>
                           </div>
                         </div>
                       </td>
                       <td className={classes}>
                         <Typography variant="paragraph" color="blue-gray" className="font-normal">
-                          <p className="font-semibold text-gray-700">{item?.user?.email}</p>
+                          <p className="font-semibold text-gray-700 dark:text-cs_light">{item?.user?.email}</p>
                         </Typography>
                       </td>
                       <td className={classes}>
                         <Typography variant="paragraph" color="blue-gray" className="font-normal">
-                          <p className="font-semibold text-gray-700">{item?.user?.phone}</p>
+                          <p className="font-semibold text-gray-700 dark:text-cs_light">{item?.user?.phone}</p>
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -112,7 +112,7 @@ const CustomersManage = () => {
                           <PopupDetailHistory data={item?.payments}>
                             <Tooltip content="Thông tin mua vé">
                               <IconButton variant="text">
-                                <Icon name="information-circle-outline" className="text-xl" />
+                                <Icon name="information-circle-outline" className="text-xl dark:text-cs_light" />
                               </IconButton>
                             </Tooltip>
                           </PopupDetailHistory>

@@ -21,10 +21,10 @@ const cateList = [
     name: 'Quảng bá',
     link: '/organization/manage-event/pr',
   },
-  {
-    name: 'Mã giảm giá',
-    link: '/organization/manage-event/discount',
-  },
+  // {
+  //   name: 'Mã giảm giá',
+  //   link: '/organization/manage-event/discount',
+  // },
 ];
 
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {

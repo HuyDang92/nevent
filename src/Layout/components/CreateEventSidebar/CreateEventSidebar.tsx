@@ -27,10 +27,10 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
             name: 'Quản lý sự kiện',
             link: '/organization/event-list',
           },
-          {
-            name: 'Tài khoản ví của tôi',
-            link: '/organizer-my-pallet',
-          },
+          // {
+          //   name: 'Tài khoản ví của tôi',
+          //   link: '/organizer-my-pallet',
+          // },
           {
             name: 'Thông tin ngân hàng',
             link: '/organizer-information-banking',

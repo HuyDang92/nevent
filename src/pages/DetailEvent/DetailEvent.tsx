@@ -248,15 +248,18 @@ function DetailEvent() {
                     Thông tin nhà tổ chức
                   </h1>
                   <div className="flex gap-4 ">
-                    <Zoom>
-                      <img
-                        src={detailEventQuery?.data?.data?.creator?.avatar?.url ?? avtDefault}
-                        alt=""
-                        className="h-[90px] w-[90px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
-                      />
-                    </Zoom>
+                    <div className='space-y-2'>
+                      <Zoom>
+                        <img
+                          src={detailEventQuery?.data?.data?.creator?.avatar?.url ?? avtDefault}
+                          alt=""
+                          className="h-[90px] w-[90px] rounded-lg object-cover sm:h-[120px] sm:w-[120px]"
+                        />
+                      </Zoom>
+                      <span className="text-center text-cs_semi_green font-semibold p-1 hover:bg-[#eee] cursor-pointer rounded-lg ">Liên hệ</span>
+                    </div>
                     <div className="w-[70%] sm:w-[80%]">
-                      <h3 className="font-bold ">{detailEventQuery?.data?.data?.creator?.name}</h3>
+                      <h3 className="font-bold ">{detailEventQuery?.data?.data?.creator?.organization_name}</h3>
                       <p className="line-clamp-4 text-xs sm:line-clamp-none sm:text-[16px] ">
                         {detailEventQuery?.data?.data?.creator?.description}
                       </p>
