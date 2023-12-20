@@ -173,7 +173,7 @@ const Organization = () => {
 
   return (
     <>
-      {(isLoading || loading) && <Loading />}
+      {(isLoading || loading || userProfile.isLoading) && <Loading />}
       <div className="mt-2">
         <form onSubmit={formik.handleSubmit} className="">
           <h2 className="mb-2 mt-4 text-lg font-semibold dark:text-white">Thông tin nhà tổ chức</h2>
