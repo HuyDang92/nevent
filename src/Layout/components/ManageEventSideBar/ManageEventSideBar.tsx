@@ -21,10 +21,10 @@ const cateList = [
     name: 'Quảng bá',
     link: '/organization/manage-event/pr',
   },
-  {
-    name: 'Mã giảm giá',
-    link: '/organization/manage-event/discount',
-  },
+  // {
+  //   name: 'Mã giảm giá',
+  //   link: '/organization/manage-event/discount',
+  // },
 ];
 
 const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
@@ -33,13 +33,13 @@ const CreateEventSidebar = ({ className }: CreateEventSidebarProps) => {
     <Card
       className={`scrollbar-hide sticky top-0 flex h-[100vh] flex-col rounded-none bg-cs_semi_green pt-1 shadow-none dark:bg-cs_dark ${className}`}
     >
-      <Link to="/" className="flex items-center p-5">
+      <Link to="/" className="flex h-[10%] items-center p-5">
         <div className="flex items-center gap-2">
           <img src={logoWhite} alt="logo" className="h-[20px] w-[40px]" />
           <span className="text-xl font-extrabold text-cs_light">NEVENT</span>
         </div>
       </Link>
-      <div className="flex h-full flex-col items-center justify-between py-5">
+      <div className="flex h-[90%] flex-col items-center justify-between py-5">
         <List className={`px-4 pe-7 text-cs_semi_green`}>
           <NavLink
             to={`/organization/event-list`}

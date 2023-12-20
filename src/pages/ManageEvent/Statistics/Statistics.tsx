@@ -257,10 +257,27 @@ const Statistics = () => {
               </span>
             </div>
           </div>
-          <a className="absolute right-[15px] top-[15px]" href={`/scan-ticket/${idEvent}`} target="_blank">
-            <Button mode="dark" value="Check in" />
-          </a>
-          <div className="absolute bottom-[15px] right-[15px] flex gap-4">
+          {event?.data?.data?.event.status === 'HAPPENING' && (
+            <a className="absolute right-[15px] top-[15px]" href={`/scan-ticket/${idEvent}`} target="_blank">
+              <Button mode="dark" value="Check in" />
+            </a>
+          )}
+          {event?.data?.data?.event.status === 'REVIEW' && (
+            <div className="absolute bottom-[15px] right-[15px] flex gap-4">
+              <Link to={`/organization/edit-event/${idEvent}/0`}>
+                <Button
+                  className="!bg-cs_yellow-500 !p-2"
+                  value={<Iconfy icon="bxs:edit" className="text-2xl text-cs_light" />}
+                />
+              </Link>
+              <Button
+                onClick={() => setOpen(true)}
+                value={<Iconfy icon="solar:trash-bin-minimalistic-bold" className="text-2xl text-cs_light" />}
+                className="!bg-red-700 !p-2"
+              ></Button>
+            </div>
+          )}
+          {/* <div className="absolute bottom-[15px] right-[15px] flex gap-4">
             {event?.data?.data?.event?.status === 'REVIEW' && (
               <Link to={`/organization/edit-event/${idEvent}/0`}>
                 <Button
@@ -276,7 +293,7 @@ const Statistics = () => {
                 className="!bg-red-700 !p-2"
               ></Button>
             )}
-          </div>
+          </div> */}
         </div>
         <div className="mt-8 overflow-hidden rounded-xl border-[1px] border-cs_semi_green p-4 dark:text-cs_light">
           <b>Giới thiệu sự kiện </b>

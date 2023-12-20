@@ -27,7 +27,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
     <div className={`${className}`}>
       <h1 className="text-xl font-bold">Vé của tôi</h1>
       <Tabs>
-        <TabsHeader className="mt-3 shadow-none sm:w-[60%]">
+        <TabsHeader className="mt-3 shadow-none sm:w-[40%]">
           <Tab
             className="flex items-center justify-center"
             index={0}
@@ -35,12 +35,12 @@ const MyTicket = ({ className }: UserInfoProp) => {
           >
             <span className="text-[16px]">Vé của tôi</span>
           </Tab>
-          <Tab className="flex items-center justify-center" index={1}>
+          {/* <Tab className="flex items-center justify-center" index={1}>
             <span className="text-[16px]">Mã giảm giá</span>
-          </Tab>
+          </Tab> */}
           <Tab
             className="flex items-center justify-center"
-            index={2}
+            index={1}
             onClick={() => setStatusMyTicket(StatusMyTicket.USED)}
           >
             <span className="text-[16px]">Vé đã sử dụng</span>
@@ -111,7 +111,7 @@ const MyTicket = ({ className }: UserInfoProp) => {
               </div>
             )}
           </TabsContent>
-          <TabsContent index={1} className="">
+          {/* <TabsContent index={1} className="">
             {code.length > 0 ? (
               <>Có mã</>
             ) : (
@@ -122,8 +122,8 @@ const MyTicket = ({ className }: UserInfoProp) => {
                 </div>
               </div>
             )}
-          </TabsContent>
-          <TabsContent index={2} className="space-y-4">
+          </TabsContent> */}
+          <TabsContent index={1} className="space-y-4">
             {getTickets.isFetching && <LoadingLocal />}
             {getTickets.data?.data?.length > 0 &&
               getTickets.data?.data?.map((item: any, index: number) => (

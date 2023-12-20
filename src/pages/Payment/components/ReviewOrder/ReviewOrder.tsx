@@ -118,10 +118,10 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
         </div>
       )}
       {/* /// */}
-      <div className="border-b-[0.5px] py-4">
+      {/* <div className="border-b-[0.5px] py-4">
         <Input placeholder="Nhập mã giảm giá" className="" classNameInput="w-full !shadow-none !border-2" />
         <Button value="Xác nhận" className="mt-2 w-full border-2 border-cs_semi_green !shadow-none" />
-      </div>
+      </div> */}
       {/* /// */}
       <div className="border-b-[0.5px] px-1 py-4">
         <p className="flex items-center justify-between font-semibold text-cs_gray">
@@ -130,9 +130,9 @@ const ReviewOrder = ({ className, event, activeTab }: Prop) => {
             {tickets.reduce((total, item) => total + item.price * item.orderQuantity, 0).toLocaleString('vi')}đ
           </span>
         </p>
-        <p className="my-2 flex items-center justify-between font-semibold text-cs_gray">
+        {/* <p className="my-2 flex items-center justify-between font-semibold text-cs_gray">
           Mã giảm giá <span className="text-sm">{'0'}đ</span>
-        </p>
+        </p> */}
         <p className="my-2 flex items-center justify-between text-lg font-bold">
           Thành tiền{' '}
           <span className="text-base text-cs_semi_green">
