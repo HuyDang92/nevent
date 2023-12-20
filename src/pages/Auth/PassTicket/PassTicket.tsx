@@ -9,7 +9,15 @@ import { useEffect, useState } from 'react';
 import Loading from '~/components/customs/Loading';
 import { errorNotify, successNotify } from '~/components/customs/Toast';
 import useSocket from '~/hooks/useConnecrSocket';
-import { Dialog, DialogBody, DialogFooter, Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+  Spinner,
+} from '@material-tailwind/react';
 import moment from 'moment';
 import { useLazySendOtpLoginQuery, useVerifySwapTicketMutation } from '~/features/OTP/otpApi.service';
 import { addCode, addSecret } from '~/features/OTP/otpSlice';
@@ -19,7 +27,7 @@ function PassTicket() {
   const dispatch = useAppDispatch();
   const socket = useSocket();
   const [code, setCode] = useState<string>('');
-  const [secret, setSecret] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
 
@@ -31,7 +39,7 @@ function PassTicket() {
   const [verify, resultVerify] = useVerifySwapTicketMutation();
   const [openTicket, setOpenTicket] = useState<boolean>(false);
 
-  const handleSwapTicket = async () => {
+  const handleGetOTP = async () => {
     if (!userReceive) {
       errorNotify('Vui lòng chọn người nhận');
       return;
@@ -50,24 +58,26 @@ function PassTicket() {
     }
     await getCode();
     setCount(30);
+    setError('');
   };
-  const handleSubmit = async (type: string) => {
-    if (type === 'send') {
-      await getCode();
-      setCode('');
-      setCount(30);
+  // const handleGetOTP = async (type: string) => {
+  //   if (type === 'send') {
+  //     await getCode();
+  //     setCount(30);
+  //     setError('');
+  //     return;
+  //   }
+  // };
 
-      return;
-    }
-    if (type === 'confirm') {
-      dispatch(addCode(code));
+  const handleSubmitCode = async (value: string) => {
+    if (value.length < 6) return;
+    if (value.length === 6) {
+      dispatch(addCode(value));
       await verify({ myTicketId: idTicket, userId: userReceive?._id });
     }
   };
 
   useEffect(() => {
-    console.log(resultGetCode);
-
     if (resultGetCode.isSuccess) {
       setOpen(true);
       // setSecret(resultGetCode.data?.data?.secret);
@@ -88,13 +98,12 @@ function PassTicket() {
         url: 'https://nevent.io.vn/user/profile/1',
       } as IPayloadNotify);
       setOpen(false);
-      setCode('');
       navigate('/user/profile/1');
     }
     if (resultVerify.isError) {
-      errorNotify('Xác thực thất bại');
       setCode('');
-      setOpen(false);
+      setError('Mã OTP không chính xác');
+      // setOpen(false);
     }
   }, [resultVerify.isSuccess, resultVerify.isError]);
 
@@ -108,7 +117,7 @@ function PassTicket() {
   }, [count]);
   return (
     <div className="space-y-5">
-      {(resultGetCode.isFetching || resultVerify.isLoading) && <Loading />}
+      {resultGetCode.isFetching && <Loading />}
       <Dialog
         open={open}
         handler={setOpen}
@@ -122,17 +131,25 @@ function PassTicket() {
         <DialogBody className="relative space-y-5 text-center font-normal">
           <p className="text-center text-lg font-bold uppercase text-cs_semi_green">Nhập mã OTP</p>
           <span className="">Email: {auth?.email}</span>
-          <Input
+          {/* <Input
             placeholder="Nhập mã OTP"
             classNameInput="w-full"
             value={code}
             onChange={(e) => setCode(e.target.value)}
+          /> */}
+          <p className="flex justify-center">{resultVerify.isLoading && <Spinner color="teal" />}</p>
+          {error && <p className="text-sm text-red-500">{error}</p>}
+          <Input
+            placeholder="Nhập mã OTP"
+            classNameInput="w-full"
+            // value={code}
+            onChange={(e) => handleSubmitCode(e.target.value)}
           />
 
           <p className="">
             Gửi lại mã sau{' '}
             {count === 0 ? (
-              <span className="cursor-pointer text-cs_semi_green" onClick={() => handleSubmit('send')}>
+              <span className="cursor-pointer text-cs_semi_green" onClick={handleGetOTP}>
                 Gửi lại mã
               </span>
             ) : (
@@ -140,14 +157,14 @@ function PassTicket() {
             )}
           </p>
         </DialogBody>
-        <DialogFooter className="flex justify-center pt-0">
+        {/* <DialogFooter className="flex justify-center pt-0">
           <Button
             disabled={!code}
             value="Xác nhận"
             className={` ${code ? '!bg-cs_semi_green !text-white' : 'text-cs_grayText cursor-not-allowed bg-cs_grayText'}`}
-            onClick={() => handleSubmit('confirm')}
+            onClick={() => handleGetOTP('confirm')}
           />
-        </DialogFooter>
+        </DialogFooter> */}
       </Dialog>
       <h1 className="text-lg font-bold dark:text-cs_light">Chuyển giao vé</h1>
       <Link to="/user/profile/1" className="flex w-fit cursor-pointer items-center gap-3 rounded-lg bg-[#eee] px-3">
@@ -269,7 +286,7 @@ function PassTicket() {
       </div>
       <div className="flex justify-end gap-2">
         <Button onClick={() => setUserReceive(null)} value="Reset" className="w-32 border border-cs_semi_green" />
-        <Button onClick={handleSwapTicket} value="Xác nhận" className="w-32 border border-cs_semi_green" mode="dark" />
+        <Button onClick={handleGetOTP} value="Xác nhận" className="w-32 border border-cs_semi_green" mode="dark" />
       </div>
     </div>
   );
