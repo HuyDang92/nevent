@@ -70,7 +70,7 @@ const NavbarMobile = ({ className }: NavbarMobileProps) => {
               <Icon name={`person-outline`} className="text-2xl text-cs_semi_green" />
             </NavLink>
           </motion.button>
-        )}
+      )}
       </div>
     </>
   );

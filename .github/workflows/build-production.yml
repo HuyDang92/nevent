@@ -40,5 +40,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            cd nevent-client 
-            ./deploy.sh
+            cd nevent-config
+            bash deploy.sh
