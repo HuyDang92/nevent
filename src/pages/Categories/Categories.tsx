@@ -90,7 +90,7 @@ function Categories() {
     previous: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Previous"
     next: 'mx-2 hover:scale-105 transition-all text-cs_semi_green border rounded-xl shadow-border-full', // Thêm lớp CSS cho nút "Next"
   };
-  
+
   return (
     <>
       <div className="">
@@ -99,7 +99,7 @@ function Categories() {
         </h1>
         <div className="mt-5 items-center justify-between xl:flex">
           {/* Cate tabs */}
-          <div className="flex flex-wrap gap-2 xl:w-1/2">
+          <div className="flex flex-wrap gap-2 xl:w-2/3">
             {categories?.data?.data.map((item: ICategory, index: number) => (
               <button
                 key={index}
@@ -142,7 +142,7 @@ function Categories() {
                 </option>
               </select>
             </div> */}
-            <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
+            {/* <div className="flex w-fit items-center gap-1 overflow-hidden rounded-xl bg-cs_light px-3 shadow-border-full dark:border dark:bg-cs_lightDark">
               <Icon className=" text-xl text-cs_semi_green transition-all dark:border-cs_light" name="calendar" />
               <select className="bg-cs_light px-1 py-2.5 text-cs_semi_green outline-none dark:bg-cs_lightDark">
                 <option className="p-2" value="">
@@ -161,7 +161,7 @@ function Categories() {
                   Tháng này
                 </option>
               </select>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="px-1 pt-2 text-[#ccc]">
