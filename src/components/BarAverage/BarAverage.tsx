@@ -151,11 +151,17 @@ const ChartBarAverage: React.FC<ChartBarProps> = ({ type, className }) => {
   ) : (
     <div className={`${className}`}>
       {type === 'ticket' ? (
-        <div className="mb-5 flex justify-between">
+        <div>
+          {/* {!idEvent && (
+            <select onChange={(e) => handleChangeDate(e.target.value)} className="rounded-lg border p-1">
+              <option value="">Chọn tháng </option>
+              <option value="12">Tháng {currentMonth} năm 2023</option>
+              <option value="11">Tháng {Number(currentMonth) - 1} năm 2023</option>
+            </select>
+          )} */}
           <h3 className="text-xl font-bold dark:text-cs_light">
             Biểu đồ bán vé {!idEvent && `(Tháng ${currentMonth})`}
           </h3>
-          {/* <Button onClick={exportDSSV} value={'Xuất thống kê'} /> */}
         </div>
       ) : (
         <div className="my-5 flex justify-between">

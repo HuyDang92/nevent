@@ -111,7 +111,7 @@ const Statistics = () => {
             border
           />
           <ManageEventParameters
-            title={'Doanh thu (VND)'}
+            title={'Tổng doanh thu (VND)'}
             count={event?.data?.data?.analytics?.revenue.toLocaleString('vi')}
             border
           />
@@ -127,13 +127,16 @@ const Statistics = () => {
 
           {/* Div box */}
           <div className="rounded-xl border border-[#ccc] p-2 text-[14px]">
-            <div className="mb-3 flex justify-between rounded-lg bg-cs_light_gray  px-4 py-4 font-bold">
+            <div className="mb-3 flex items-center justify-between rounded-lg bg-cs_light_gray  px-4 py-4 font-bold">
               <span className="w-[calc(100%/6)] text-center text-base">Tên vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Loại vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Giá vé (VNĐ) </span>
               <span className="w-[calc(100%/6)] text-center text-base">Số lượng vé</span>
               <span className="w-[calc(100%/6)] text-center text-base">Đã bán</span>
               <span className="w-[calc(100%/6)] text-center text-base">Doanh số (VNĐ) </span>
+              {/* <span className="w-[calc(100%/6)] text-center text-base">
+                Phí dịch vụ <br /> <span className='text-xs'>(5% + 10.000 VND / vé)</span>{' '}
+              </span> */}
             </div>
             <ul>
               {event.data?.data?.tickets?.map((ticket: ITicket, index: number) => {
@@ -149,6 +152,9 @@ const Statistics = () => {
                     <span className="w-[calc(100%/6)] text-center">{ticket?.quantity}</span>
                     <span className="w-[calc(100%/6)] text-center">{ticket?.sold}</span>
                     <span className="w-[calc(100%/6)] text-center">{ticket?.revenue.toLocaleString('vi')}</span>
+                    {/* <span className="w-[calc(100%/7)] text-center">
+                      {(ticket?.price * 0.05 + ticket?.sold * 10000).toLocaleString('vi')}
+                    </span> */}
                   </li>
                 );
               })}
