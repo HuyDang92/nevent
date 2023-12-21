@@ -65,7 +65,11 @@ const EventManage = () => {
   const [isUnCompleteEvent, setIsUnCompleteEvent] = useState<boolean>(false);
   const navigator = useNavigate();
   const [open, setOpen] = useState(true);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const handleConfirm = () => {
+    setOpenConfirm(!openConfirm);
+  };
 
   const { width } = useCurrentViewportView();
   const TABLE_HEAD =
@@ -79,10 +83,6 @@ const EventManage = () => {
     search: searchValue,
     status: status,
   });
-  console.log(isUnCompleteEvent);
-  
-  console.log('re-render');
-  console.log(event);
 
   const updateEventStatus = async (id: string, status: string) => {
     await updateEvent({
@@ -93,18 +93,35 @@ const EventManage = () => {
     });
   };
 
+  // useEffect(() => {
+  //   if (event?.data?.data?.docs) {
+  //     event?.data?.data?.docs?.map((item: IEvent) => {
+  //       if (new Date(item.start_date) == new Date()) {
+  //         updateEventStatus(item._id, 'HAPPENING');
+  //       }
+  //       if (item.status === 'HAPPENING') {
+  //         setIsUnCompleteEvent(true);
+  //       }
+  //     });
+  //   }
+  // }, [event]);
   useEffect(() => {
     if (event?.data?.data?.docs) {
       event?.data?.data?.docs?.map((item: IEvent) => {
-        if (new Date(item.start_date) == new Date()) {
+        const currentDate = moment();
+        const eventStartDate = moment(item.start_date);
+
+        // So sánh ngày, tháng, và năm
+        if (currentDate.format('DD/MM/YYYY') === eventStartDate.format('DD/MM/YYYY')) {
           updateEventStatus(item._id, 'HAPPENING');
         }
+
         if (item.status === 'HAPPENING') {
           setIsUnCompleteEvent(true);
         }
       });
     }
-  }, [event]);
+  }, []);
 
   const handleStatus = (value: string) => {
     console.log(value);
@@ -154,6 +171,28 @@ const EventManage = () => {
             <Button value="Đã hiểu" className="!bg-cs_semi_green !text-white" onClick={handleOpen} />
           </DialogFooter>
         </Dialog>
+        {/* <Dialog
+          open={openConfirm}
+          handler={setOpenConfirm}
+          className="dark:bg-cs_lightDark"
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0.9, y: -100 },
+          }}
+        >
+          <h2 className="pt-3 text-center text-xl font-bold uppercase text-cs_semi_green">
+            Bạn có chắc muốn hoàn thành sự kiện
+          </h2>
+          <DialogBody className="text-center text-sm font-normal">
+            <p>Khi hoàn thành sẽ không thể quay lại</p>
+          </DialogBody>
+          <DialogFooter>
+            <div className="space-x-3">
+              <Button value="Hủy" mode="light" onClick={() => setOpenConfirm(false)} />
+              <Button value="Xác nhận" className="!bg-cs_semi_green !text-white" onClick={handleOpen} />
+            </div>
+          </DialogFooter>
+        </Dialog> */}
       </div>
       <div className="h-full w-full rounded-2xl bg-cs_light p-3 dark:bg-cs_lightDark xl:p-7">
         <div className=" flex justify-between">
@@ -308,7 +347,7 @@ const EventManage = () => {
                         <td className={`${classes} hidden xl:table-cell`}>
                           <img src={item?.banner[0]?.url} alt="Image" className="h-16 w-32 rounded-lg object-cover" />
                         </td>
-                        <td className={`w-36 ${classes} hidden xl:table-cell`}>
+                        <td className={`w-40 ${classes} hidden xl:table-cell`}>
                           <div className="flex items-center gap-2">
                             <div
                               className={`h-3 w-3 rounded-full ${
@@ -350,7 +389,7 @@ const EventManage = () => {
                         </td>
                         <td className={`${classes} hidden xl:table-cell`}>
                           <span className="w-[90%] dark:text-cs_light">
-                            {moment(item?.start_date).format('HH:mm - DD MMMM YY')}
+                            {moment(item?.start_date).format('HH:mm - DD/MM/YYYY')}
                           </span>
                         </td>
                         <td className={`${classes} hidden xl:table-cell`}>
@@ -391,10 +430,7 @@ const EventManage = () => {
                               <IconButton
                                 variant="text"
                                 color="red"
-                                onClick={async () => {
-                                  await updateEventStatus(item?._id, 'COMPLETED');
-                                  // setIsUnCompleteEvent(false);
-                                }}
+                                onClick={() => updateEventStatus(item?._id, 'COMPLETED')}
                               >
                                 <Icon name="checkmark-outline" className="text-xl dark:text-cs_light" />
                               </IconButton>
