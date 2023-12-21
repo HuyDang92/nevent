@@ -120,7 +120,7 @@ const Statistics = () => {
             count={event?.data?.data?.analytics?.numberOfCustomers}
             border
           />
-          <ManageEventParameters title={'Tổng phí dịch vụ'} count={event?.data?.data?.analytics?.fee} />
+          <ManageEventParameters title={'Tổng phí dịch vụ (VND)'} count={event?.data?.data?.analytics?.fee} />
         </div>
         <div className="my-8">
           <b className="mb-5 block dark:text-cs_light">Thống kê bán vé</b>
