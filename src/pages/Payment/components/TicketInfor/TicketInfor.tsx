@@ -118,6 +118,9 @@ const TicketInfor = () => {
                         <button
                           disabled={Number(ticket?.quantity) === Number(ticket?.sold)}
                           onClick={() => {
+                            if(!ExistedTicket) {
+                              inscreaseTicketQuantity(ticket);
+                            }
                             if (ExistedTicket && ticket?.quantity - ticket?.sold !== ExistedTicket.orderQuantity) {
                               inscreaseTicketQuantity(ticket);
                             }
