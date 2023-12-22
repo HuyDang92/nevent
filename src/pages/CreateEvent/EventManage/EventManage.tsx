@@ -114,14 +114,15 @@ const EventManage = () => {
         // So sánh ngày, tháng, và năm
         if (currentDate.format('DD/MM/YYYY') === eventStartDate.format('DD/MM/YYYY')) {
           updateEventStatus(item._id, 'HAPPENING');
+          console.log('??????');
+          
         }
-
         if (item.status === 'HAPPENING') {
           setIsUnCompleteEvent(true);
         }
       });
     }
-  }, []);
+  }, [event.isLoading]);
 
   const handleStatus = (value: string) => {
     console.log(value);
