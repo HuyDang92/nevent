@@ -11,6 +11,7 @@ import useClickOutside from '~/hooks/useClickOutside';
 import { useSwapRoleMutation } from '~/features/Auth/authApi.service';
 import Loading from '../customs/Loading';
 import { successNotify } from '../customs/Toast';
+import { addUserInfor } from '~/features/Payment/paymentSlice';
 
 const itemVariants: Variants = {
   open: {
@@ -38,6 +39,7 @@ const Dropdown = () => {
   const handleLogOut = () => {
     dispatch(logout());
     dispatch(setBusinessProfile(null));
+    dispatch(addUserInfor(null));
     navigate('/login');
   };
   const handleSwapRole = async (type: string) => {
